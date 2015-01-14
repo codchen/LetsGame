@@ -30,7 +30,7 @@ extension SKNode {
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate {
 
     let motionManager: CMMotionManager = CMMotionManager()
-    let serviceType = "LCOC-Chat"
+    let serviceType = "LetsGame"
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
