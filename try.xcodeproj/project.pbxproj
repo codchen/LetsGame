@@ -39,7 +39,7 @@
 		FF6C10561A6572FC00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6C10571A6572FC00A5C7D7 /* tryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tryTests.swift; sourceTree = "<group>"; };
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
-		FF6C10801A658A2200A5C7D7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = ../../RawGame/RawGame/GameScene.sks; sourceTree = "<group>"; };
+		FF6C10801A658A2200A5C7D7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		FF6C10841A670BED00A5C7D7 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C10851A670BED00A5C7D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,10 +171,11 @@
 				TargetAttributes = {
 					FF6C103B1A6572FB00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 8A273HS9WT;
+						DevelopmentTeam = EZLTDL7P7G;
 					};
 					FF6C10501A6572FC00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = EZLTDL7P7G;
 						TestTargetID = FF6C103B1A6572FB00A5C7D7;
 					};
 				};
@@ -426,6 +427,7 @@
 				FF6C105D1A6572FC00A5C7D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF6C105E1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "tryTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +436,7 @@
 				FF6C10601A6572FC00A5C7D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
