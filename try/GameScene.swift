@@ -13,11 +13,14 @@ class GameScene: SKScene{
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
     var dot: SKSpriteNode!
+    var ball: SKSpriteNode!
+    var hole: SKSpriteNode!
     var peers: Dictionary<String, (CGPoint, CGVector, Bool)> = Dictionary<String, (CGPoint, CGVector, Bool)>()
     let steerDeadZone = CGFloat(0.15)
     let maxSpeed = CGFloat(1000)
     var lastUpdateTime: NSTimeInterval = 0
     var dt: NSTimeInterval = 0
+    var counter: Int = 5
     
     
     override func didMoveToView(view: SKView) {
@@ -27,14 +30,22 @@ class GameScene: SKScene{
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        ball = childNodeWithName("ball") as SKSpriteNode
+        ball.physicsBody = SKPhysicsBody(rectangleOfSize: ball.size)
+        hole = childNodeWithName("blackHole") as SKSpriteNode
+        hole.position = CGPointMake(size.width/2, size.height/2)
+        hole.zPosition = -1
         dot = SKSpriteNode(imageNamed: "circle")
         dot.name = "dot" + connection.session.myPeerID.displayName
         dot.position = CGPoint(x: playableMargin/2, y: playableRect.height/2)
     	dot.physicsBody = SKPhysicsBody(circleOfRadius: dot.size.width/2)
+        dot.physicsBody?.mass = 5
         addChild(dot)
-        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-        println("Sent pos is: \(dot.position)")
+
+        
+//        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+//            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+//        println("Sent pos is: \(dot.position)")
     }
     
     func normalize98(raw: CGVector) -> CGVector{
@@ -69,7 +80,6 @@ class GameScene: SKScene{
         if fabs(rawInput.y) < steerDeadZone{
             rawInput.y = 0
         }
-        //let dot = childNodeWithName("dot") as SKSpriteNode
         dot.physicsBody?.velocity = CGVector(dx: CGFloat(rawInput.x * maxSpeed), dy: CGFloat(rawInput.y * maxSpeed))
     }
     
@@ -82,30 +92,40 @@ class GameScene: SKScene{
         }
         lastUpdateTime = currentTime
         
-        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-        println("Sent pos is: \(dot.position)")
-        updatePeers(dt)
+        if counter > 0 {
+            counter--
+        } else {
+            counter = 5
+            connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+                posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+            println("Sent pos is: \(dot.position)")
+        }
+
+        updatePeers()
         moveFromAcceleration()
         
     }
     
-    func updatePeers(dt: NSTimeInterval) {
+    func updatePeers() {
         for peer in peers {
             let node = childNodeWithName(peer.0) as SKSpriteNode
-            if node.position != peer.1.0 && !peer.1.2{
-                node.physicsBody?.velocity = peer.1.1
-                node.runAction(SKAction.moveTo(peer.1.0, duration: dt))
-                peers.updateValue((peer.1.0, peer.1.1, true), forKey: peer.0)
-            }
+            
+            node.physicsBody?.velocity = peer.1.1
+            node.runAction(SKAction.moveTo(peer.1.0, duration: dt))
+            peers.updateValue((peer.1.0, peer.1.1, true), forKey: peer.0)
+//            if node.position != peer.1.0 && !peer.1.2 {
+//                
+////                var maxDistanceToTravel = node.physicsBody!.velocity * CGFloat(currentTime - lastUpdateTime)
+//
+//            }
         }
     }
     
     func updatePeerPos(posX: Float, posY: Float, dx: Float, dy: Float, rotation: Float, peer: SKNode) {
         
-//        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-//            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-//        println("Sent pos is: \(dot.position)")
+        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+        println("Sent pos is: \(dot.position)")
         
         let pos = CGPoint(x: CGFloat(posX), y: CGFloat(posY))
         let velocity = CGVector(dx: CGFloat(dx), dy: CGFloat(dy))
@@ -130,6 +150,9 @@ class GameScene: SKScene{
         peerDot.position.x = CGFloat(posX)
         peerDot.position.y = CGFloat(posY)
         addChild(peerDot)
+//        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+//        	posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+//        println("Sent pos is: \(dot.position)")
     }
     
 }

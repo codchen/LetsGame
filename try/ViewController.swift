@@ -33,6 +33,7 @@ class ViewController: UIViewController {
 
     var connectionManager: ConnectionManager!
     var currentScene: GameScene!
+    var alias: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
