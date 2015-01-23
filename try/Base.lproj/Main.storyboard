@@ -37,9 +37,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="s3f-hw-3gc" secondAttribute="centerY" constant="-10" id="WN4-ao-aba"/>
+                            <constraint firstAttribute="centerY" secondItem="s3f-hw-3gc" secondAttribute="centerY" constant="-10" id="WN4-ao-aba" userLabel="Center Y Alignment - (-20) - View - Play"/>
                             <constraint firstAttribute="centerX" secondItem="s3f-hw-3gc" secondAttribute="centerX" id="mMS-gx-9sK"/>
-                            <constraint firstAttribute="centerY" secondItem="yTQ-1G-Z4F" secondAttribute="centerY" constant="10" id="maE-dc-dSo"/>
+                            <constraint firstAttribute="centerY" secondItem="yTQ-1G-Z4F" secondAttribute="centerY" constant="10" id="maE-dc-dSo" userLabel="Center Y Alignment - (20) - View - Connect"/>
                             <constraint firstAttribute="centerX" secondItem="yTQ-1G-Z4F" secondAttribute="centerX" id="phY-Vg-CAo"/>
                         </constraints>
                     </view>

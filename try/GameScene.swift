@@ -92,15 +92,10 @@ class GameScene: SKScene{
         }
         lastUpdateTime = currentTime
         
-        if counter > 0 {
-            counter--
-        } else {
-            counter = 5
-            connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-                posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-            println("Sent pos is: \(dot.position)")
-        }
-
+        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+        var writer = "sent pos \(dot.position) \(NSDate.timeIntervalSinceReferenceDate())"
+		println(writer)
         updatePeers()
         moveFromAcceleration()
         
@@ -112,27 +107,20 @@ class GameScene: SKScene{
             
             node.physicsBody?.velocity = peer.1.1
             node.runAction(SKAction.moveTo(peer.1.0, duration: dt))
+            println("movedTo pos \(peer.1.0) \(NSDate.timeIntervalSinceReferenceDate())")
             peers.updateValue((peer.1.0, peer.1.1, true), forKey: peer.0)
-//            if node.position != peer.1.0 && !peer.1.2 {
-//                
-////                var maxDistanceToTravel = node.physicsBody!.velocity * CGFloat(currentTime - lastUpdateTime)
-//
-//            }
+
         }
     }
     
     func updatePeerPos(posX: Float, posY: Float, dx: Float, dy: Float, rotation: Float, peer: SKNode) {
-        
-        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-        println("Sent pos is: \(dot.position)")
         
         let pos = CGPoint(x: CGFloat(posX), y: CGFloat(posY))
         let velocity = CGVector(dx: CGFloat(dx), dy: CGFloat(dy))
         let updated = false
         peers[peer.name!] = (pos, velocity, updated)
         
-        println("Received pos from \(peer.name!) is \(pos)")
+        println("received pos \(pos) \(NSDate.timeIntervalSinceReferenceDate())")
         
 //        peer.physicsBody?.velocity = CGVector(dx: CGFloat(dx), dy: CGFloat(dy))
 //        let newPos = CGPoint(x: CGFloat(posX), y: CGFloat(posY))
