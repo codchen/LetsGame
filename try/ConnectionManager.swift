@@ -106,9 +106,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
-            controller.updatePeerPos(messageMove.dx,
-            dy: messageMove.dy, posX: messageMove.posX, posY: messageMove.posY,
-            rotation: messageMove.rotate, peer: peerID)
+            controller.updatePeerPos(messageMove, peer: peerID)
         }
 
     }

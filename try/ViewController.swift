@@ -77,7 +77,7 @@ class ViewController: UIViewController {
     }
 	
     
-    func updatePeerPos(dx: Float, dy: Float, posX: Float, posY: Float, rotation: Float, peer: MCPeerID) {
+    func updatePeerPos(message: ConnectionManager.MessageMove, peer: MCPeerID) {
         
 //        if self.currentScene != nil{
 //            if let existed = self.currentScene.childNodeWithName("dot" + peer.displayName){
@@ -91,9 +91,9 @@ class ViewController: UIViewController {
             //var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
             if self.currentScene != nil{
                 if let existed = self.currentScene.childNodeWithName("dot" + peer.displayName){
-                    self.currentScene.updatePeerPos(posX, posY: posY, dx: dx, dy: dy, rotation: rotation, peer: existed)
+                    self.currentScene.updatePeerPos(message, peer: existed)
                 } else {
-                    self.currentScene.addPlayer(posX, posY: posY, name: peer.displayName)
+                    self.currentScene.addPlayer(message.posX, posY: message.posY, name: peer.displayName)
                 }
             }
         }
