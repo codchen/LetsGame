@@ -13,6 +13,7 @@ class GameScene: SKScene{
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
     var dot: SKSpriteNode!
+    var bornPos: CGPoint!
     var ball: SKSpriteNode!
     var hole: SKSpriteNode!
     var peers: Dictionary<String, (CGPoint, CGVector, Bool)> = Dictionary<String, (CGPoint, CGVector, Bool)>()
@@ -22,25 +23,30 @@ class GameScene: SKScene{
     var dt: NSTimeInterval = 0
     var counter: Int = 5
     
+    var margin: CGFloat!
+    var dropped = false
+    
     
     override func didMoveToView(view: SKView) {
         let maxAspectRatio: CGFloat = 16.0/9.0
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
+        margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        ball = childNodeWithName("ball") as SKSpriteNode
-        ball.physicsBody = SKPhysicsBody(rectangleOfSize: ball.size)
-        hole = childNodeWithName("blackHole") as SKSpriteNode
-        hole.position = CGPointMake(size.width/2, size.height/2)
-        hole.zPosition = -1
-        dot = SKSpriteNode(imageNamed: "circle")
+        //ball = childNodeWithName("ball") as SKSpriteNode
+        //ball.physicsBody = SKPhysicsBody(rectangleOfSize: ball.size)
+//        hole = childNodeWithName("hole") as SKSpriteNode
+//        hole.position = CGPointMake(size.width/2, size.height/2)
+        //hole.zPosition = -1
+        dot = childNodeWithName("ball") as SKSpriteNode
         dot.name = "dot" + connection.session.myPeerID.displayName
-        dot.position = CGPoint(x: playableMargin/2, y: playableRect.height/2)
+        dot.position = randomPos()
+        bornPos = dot.position
     	dot.physicsBody = SKPhysicsBody(circleOfRadius: dot.size.width/2)
-        dot.physicsBody?.mass = 5
-        addChild(dot)
+//        dot.physicsBody?.mass = 5
+        //addChild(dot)
 
         
 //        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
@@ -74,13 +80,45 @@ class GameScene: SKScene{
         }
 //        physicsWorld.gravity = normalize98(CGVector(dx: motionManager.accelerometerData.acceleration.y, dy: -1 * motionManager.accelerometerData.acceleration.x))
         var rawInput = CGPoint(x: CGFloat(motionManager.accelerometerData.acceleration.y), y: CGFloat(-1 * motionManager.accelerometerData.acceleration.x))
-        if fabs(rawInput.x) < steerDeadZone{
-            rawInput.x = 0
-        }
-        if fabs(rawInput.y) < steerDeadZone{
-            rawInput.y = 0
-        }
+//        if fabs(rawInput.x) < steerDeadZone{
+//            rawInput.x = 0
+//        }
+//        if fabs(rawInput.y) < steerDeadZone{
+//            rawInput.y = 0
+//        }
         dot.physicsBody?.velocity = CGVector(dx: CGFloat(rawInput.x * maxSpeed), dy: CGFloat(rawInput.y * maxSpeed))
+    }
+    
+    func checkDrop(){
+        enumerateChildNodesWithName("hole"){node, _ in
+            if self.circleIntersection(node.position, center2: self.dot.position, radius1: 5, radius2: 25){
+                self.dropped = true
+                self.dot.runAction(SKAction.sequence([SKAction.scaleTo(0, duration: 0.1),
+                                                        SKAction.waitForDuration(0.3),
+                                                        SKAction.runBlock(){
+                                                            self.reScale()
+                                                            self.dot.position = self.randomPos()
+                                                            println(self.dot.position)
+                                                            self.dot.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                                                            self.dropped = false
+                                                        }]))
+            }
+        }
+    }
+    
+    func reScale(){
+        dot.setScale(1)
+    }
+    
+    func randomPos() -> CGPoint{
+        return CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 200, max: size.height - 2 * margin - 200))
+    }
+    
+    func circleIntersection(center1: CGPoint, center2: CGPoint, radius1: CGFloat, radius2: CGFloat) -> Bool{
+        if sqrt(pow(center1.x - center2.x, 2.0) + pow(center1.y - center2.y, 2.0)) < radius1 + radius2{
+            return true
+        }
+        return false
     }
     
     override func update(currentTime: NSTimeInterval) {
@@ -92,11 +130,16 @@ class GameScene: SKScene{
         }
         lastUpdateTime = currentTime
         
-        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+        if peers.count > 0{
+            connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
             posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+        }
         var writer = "sent pos \(dot.position) \(NSDate.timeIntervalSinceReferenceDate())"
-		println(writer)
+		//println(writer)
         updatePeers()
+        if !dropped{
+            checkDrop()
+        }
         moveFromAcceleration()
         
     }
@@ -105,9 +148,9 @@ class GameScene: SKScene{
         for peer in peers {
             let node = childNodeWithName(peer.0) as SKSpriteNode
             
-            node.physicsBody?.velocity = peer.1.1
+            //node.physicsBody?.velocity = peer.1.1
             node.runAction(SKAction.moveTo(peer.1.0, duration: dt))
-            println("movedTo pos \(peer.1.0) \(NSDate.timeIntervalSinceReferenceDate())")
+            //println("movedTo pos \(peer.1.0) \(NSDate.timeIntervalSinceReferenceDate())")
             peers.updateValue((peer.1.0, peer.1.1, true), forKey: peer.0)
 
         }
@@ -120,7 +163,7 @@ class GameScene: SKScene{
         let updated = false
         peers[peer.name!] = (pos, velocity, updated)
         
-        println("received pos \(pos) \(NSDate.timeIntervalSinceReferenceDate())")
+        //println("received pos \(pos) \(NSDate.timeIntervalSinceReferenceDate())")
         
 //        peer.physicsBody?.velocity = CGVector(dx: CGFloat(dx), dy: CGFloat(dy))
 //        let newPos = CGPoint(x: CGFloat(posX), y: CGFloat(posY))

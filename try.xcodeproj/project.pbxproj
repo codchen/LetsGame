@@ -31,6 +31,12 @@
 		FF6C106A1A65807500A5C7D7 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */; };
 		FF6C10861A670BED00A5C7D7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10841A670BED00A5C7D7 /* GameScene.swift */; };
 		FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10851A670BED00A5C7D7 /* ViewController.swift */; };
+		FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */; };
+		FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */; };
+		FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */; };
+		FFB3F5701A754DB100DEE6B3 /* 2048x1536_board.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56C1A754DB100DEE6B3 /* 2048x1536_board.png */; };
+		FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */; };
+		FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +78,12 @@
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		FF6C10841A670BED00A5C7D7 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C10851A670BED00A5C7D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 50x50_ball_with_shadow.png; path = ../interstellar/50x50_ball_with_shadow.png; sourceTree = "<group>"; };
+		FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 50x50_ball.png; path = ../interstellar/50x50_ball.png; sourceTree = "<group>"; };
+		FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2048x1536_board_with_boarder.png; path = ../interstellar/2048x1536_board_with_boarder.png; sourceTree = "<group>"; };
+		FFB3F56C1A754DB100DEE6B3 /* 2048x1536_board.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2048x1536_board.png; path = ../interstellar/2048x1536_board.png; sourceTree = "<group>"; };
+		FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 110x110_hole.png; path = ../Archive/110x110_hole.png; sourceTree = "<group>"; };
+		FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2048x1536_board_plain.png; path = ../Archive/2048x1536_board_plain.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +127,12 @@
 		FF6C10331A6572FB00A5C7D7 = {
 			isa = PBXGroup;
 			children = (
+				FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */,
+				FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */,
+				FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */,
+				FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */,
+				FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */,
+				FFB3F56C1A754DB100DEE6B3 /* 2048x1536_board.png */,
 				66F8667B1A6F0B72007EE9FF /* SKTUtils */,
 				66C206F91A6EF6B700F4782C /* circle.png */,
 				FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */,
@@ -224,11 +242,11 @@
 				TargetAttributes = {
 					FF6C103B1A6572FB00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = EZLTDL7P7G;
+						DevelopmentTeam = 8A273HS9WT;
 					};
 					FF6C10501A6572FC00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = EZLTDL7P7G;
+						DevelopmentTeam = 8A273HS9WT;
 						TestTargetID = FF6C103B1A6572FB00A5C7D7;
 					};
 				};
@@ -257,12 +275,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
+				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				66F8667A1A6F062A007EE9FF /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
 				66C593511A72D4AA00B53817 /* log.txt in Resources */,
+				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
+				FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
+				FFB3F5701A754DB100DEE6B3 /* 2048x1536_board.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,
+				FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
