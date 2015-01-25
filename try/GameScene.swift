@@ -9,7 +9,7 @@
 import SpriteKit
 import CoreMotion
 
-class GameScene: SKScene{
+class GameScene: SKScene, SKPhysicsContactDelegate{
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
     var dot: SKSpriteNode!
@@ -25,6 +25,12 @@ class GameScene: SKScene{
     
     var margin: CGFloat!
     var dropped = false
+    
+    let ay = Vector3(x: 0.63, y: 0.0, z: -0.92)
+    let az = Vector3(x: 0.0, y: 1.0, z: 0.0)
+    let ax = Vector3.crossProduct(Vector3(x: 0.0, y: 1.0, z: 0.0),
+        right: Vector3(x: 0.63, y: 0.0, z: -0.92)).normalized()
+    var hasContacted: Bool = false
     
     
     override func didMoveToView(view: SKView) {
@@ -78,15 +84,30 @@ class GameScene: SKScene{
         if motionManager.accelerometerData == nil{
             return
         }
-//        physicsWorld.gravity = normalize98(CGVector(dx: motionManager.accelerometerData.acceleration.y, dy: -1 * motionManager.accelerometerData.acceleration.x))
-        var rawInput = CGPoint(x: CGFloat(motionManager.accelerometerData.acceleration.y), y: CGFloat(-1 * motionManager.accelerometerData.acceleration.x))
-//        if fabs(rawInput.x) < steerDeadZone{
-//            rawInput.x = 0
-//        }
-//        if fabs(rawInput.y) < steerDeadZone{
-//            rawInput.y = 0
-//        }
-        dot.physicsBody?.velocity = CGVector(dx: CGFloat(rawInput.x * maxSpeed), dy: CGFloat(rawInput.y * maxSpeed))
+        var raw = Vector3(
+            x: CGFloat(motionManager.accelerometerData.acceleration.x),
+            y: CGFloat(motionManager.accelerometerData.acceleration.y),
+            z: CGFloat(motionManager.accelerometerData.acceleration.z))
+        
+        var accel2D = CGPointZero
+        accel2D.x = Vector3.dotProduct(raw, right: az)
+        accel2D.y = Vector3.dotProduct(raw, right: ax)
+        accel2D.normalize()
+        
+        if fabs(accel2D.x) < steerDeadZone{
+            accel2D.x = 0
+        }
+        if fabs(accel2D.y) < steerDeadZone{
+            accel2D.y = 0
+        }
+        
+        if hasContacted {
+            dot.physicsBody?.velocity += CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
+            hasContacted = false
+        }
+        else if accel2D.x != 0 || accel2D.y != 0{
+            dot.physicsBody?.velocity = CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
+        }
     }
     
     func checkDrop(){
