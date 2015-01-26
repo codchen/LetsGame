@@ -20,7 +20,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var controller: ViewController!
     
     enum MessageType: Int {
-        case GameInit, Move, GameOver
+        case GameInit, Move, GameOver, Drop
     }
     
     struct Message {
@@ -39,6 +39,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     struct MessageGameOver {
         let message: Message
+    }
+    
+    struct MessageDrop {
+        let message: Message
+        let bornPosX: Float
+        let bornPosY: Float
+        
     }
     
     override init() {
@@ -68,6 +75,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data)
         
+    }
+    
+    func sendDrop(bornPosX: Float, bornPosY: Float) {
+    	var message = MessageDrop(message: Message(messageType: MessageType.Drop), bornPosX: bornPosX, bornPosY: bornPosY)
+        let data = NSData(bytes: &message, length: sizeof(MessageDrop))
+        sendData(data)
     }
     
     func sendData(data: NSData){
@@ -108,6 +121,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
             controller.updatePeerPos(messageMove, peer: peerID)
+        } else if message.messageType == MessageType.Drop {
+            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
+            controller.updatePeerDrop(messageDrop, peer: peerID)
         }
 
     }

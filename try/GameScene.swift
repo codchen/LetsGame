@@ -45,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         bornPos = dot.position
     	dot.physicsBody = SKPhysicsBody(circleOfRadius: dot.size.width/2)
         dot.physicsBody?.categoryBitMask = UInt32(1)
+        dot.physicsBody?.allowsRotation = false
         
     }
     
@@ -108,21 +109,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         enumerateChildNodesWithName("hole"){node, _ in
             if self.circleIntersection(node.position, center2: self.dot.position, radius1: 5, radius2: 25){
                 self.dropped = true
-                self.dot.runAction(SKAction.sequence([SKAction.scaleTo(0, duration: 0.1),
-                                                        SKAction.waitForDuration(0.3),
-                                                        SKAction.runBlock(){
-                                                            self.reScale()
-                                                            self.dot.position = self.randomPos()
-                                                            println(self.dot.position)
-                                                            self.dot.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                                                            self.dropped = false
-                                                        }]))
+                var newPos = self.randomPos()
+                self.connection.sendDrop(Float(newPos.x), bornPosY: Float(newPos.y))
+                self.dot.runAction(self.dropAnimation(self.dot, pos: newPos))
             }
         }
     }
     
-    func reScale(){
-        dot.setScale(1)
+    func dropAnimation(node: SKSpriteNode, pos: CGPoint) -> SKAction {
+        return SKAction.sequence([SKAction.scaleTo(0, duration: 0.1),
+            	SKAction.waitForDuration(0.3),
+            	SKAction.runBlock(){
+                	self.reScale(node)
+                	node.position = pos
+                    println(node.position)
+                	node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    self.dropped = false
+                    if node.name != self.dot.name {
+                        self.peers[node.name!] = Array<ConnectionManager.MessageMove>()
+                    }
+            }])
+    }
+    
+    func reScale(node: SKSpriteNode){
+        node.setScale(1)
     }
     
     func randomPos() -> CGPoint{
@@ -145,21 +155,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         lastUpdateTime = currentTime
         
+        println("Sent pos is \(dot.position)")
         moveFromAcceleration()
         connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
             posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation), dt: Float(dt))
-        println("Sent pos is \(dot.position)")
-        updatePeers()
         if !dropped{
             checkDrop()
         }
-        
-        
+        updatePeers()
     }
     
     func updatePeers() {
         for (peer, message) in peers {
-            let node = childNodeWithName(peer.0) as SKSpriteNode
+            let node = childNodeWithName(peer) as SKSpriteNode
             if !message.isEmpty {
                 var copyMes = message
                 var update = copyMes.removeAtIndex(0)
@@ -184,12 +192,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
     }
     
+    func dropPlayer(message: ConnectionManager.MessageDrop, peer: String) {
+    	let player = childNodeWithName("dot" + peer) as SKSpriteNode
+        let pos = CGPoint(x: CGFloat(message.bornPosX), y: CGFloat(message.bornPosY))
+        player.runAction(self.dropAnimation(player, pos: pos))
+    }
+    
     func addPlayer(posX: Float, posY: Float, name: String) {
-        var peerDot = SKSpriteNode(imageNamed: "50x50_ball")
+        var peerDot = SKSpriteNode(imageNamed: "50x50_ball_with_shadow")
         peerDot.physicsBody = SKPhysicsBody(circleOfRadius: peerDot.size.width/2)
         peerDot.name = "dot" + name
         peerDot.position = CGPoint(x: CGFloat(posX), y: CGFloat(posY))
         peerDot.physicsBody?.categoryBitMask = UInt32(1)
+        peerDot.physicsBody?.allowsRotation = false
         addChild(peerDot)
     }
     

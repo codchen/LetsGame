@@ -57,9 +57,9 @@ class ViewController: UIViewController {
                     // Configure the view.
                     let skView = SKView(frame: self.view.frame)
                     self.view.addSubview(skView)
-                    skView.showsFPS = true
-                    skView.showsNodeCount = true
-                    skView.showsPhysics = true
+                    skView.showsFPS = false
+                    skView.showsNodeCount = false
+                    skView.showsPhysics = false
                     
         
                     /* Sprite Kit applies additional optimizations to improve rendering performance */
@@ -85,15 +85,6 @@ class ViewController: UIViewController {
 	
     
     func updatePeerPos(message: ConnectionManager.MessageMove, peer: MCPeerID) {
-        
-//        if self.currentScene != nil{
-//            if let existed = self.currentScene.childNodeWithName("dot" + peer.displayName){
-//                self.currentScene.updatePeerPos(posX, posY: posY, dx: dx, dy: dy, rotation: rotation, peer: existed)
-//            } else {
-//                self.currentScene.addPlayer(posX, posY: posY, name: peer.displayName)
-//            }
-//        }
-
         dispatch_async(dispatch_get_main_queue()) {
             //var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
             if self.currentScene != nil{
@@ -104,7 +95,14 @@ class ViewController: UIViewController {
                 }
             }
         }
-
+    }
+    
+    func updatePeerDrop(message: ConnectionManager.MessageDrop, peer: MCPeerID) {
+        dispatch_async(dispatch_get_main_queue()){
+            if self.currentScene != nil {
+                self.currentScene.dropPlayer(message, peer: peer.displayName)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
