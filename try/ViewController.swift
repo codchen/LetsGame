@@ -34,9 +34,16 @@ class ViewController: UIViewController {
     var connectionManager: ConnectionManager!
     var currentScene: GameScene!
     var alias: String!
+    @IBOutlet weak var btnConnect: UIButton!
+    @IBOutlet weak var btnPlay: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "2048x1536_board_with_boarder")!)
+		btnConnect.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+        btnConnect.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+        btnPlay.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+        btnPlay.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
         connectionManager = ConnectionManager()
         connectionManager.controller = self
     }

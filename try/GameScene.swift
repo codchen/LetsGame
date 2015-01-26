@@ -27,6 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var dropped = false
     
     var hasContacted: Bool = false
+	var collisionCounter: Int = 50
     
     
     override func didMoveToView(view: SKView) {
@@ -91,8 +92,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         
         if hasContacted {
-            dot.physicsBody?.velocity += CGVector(dx: accel2D.x * maxSpeed, dy: accel2D.y * maxSpeed)
-            hasContacted = false
+//            dot.physicsBody?.velocity = CGVector(dx: accel2D.x * maxSpeed, dy: accel2D.y * maxSpeed)
+            counter--
+            if counter == 0 {
+                hasContacted = false
+                counter = 50
+            }
         }
         else if accel2D.x != 0 || accel2D.y != 0{
             dot.physicsBody?.velocity = CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
@@ -142,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         moveFromAcceleration()
         connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
+            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation), dt: Float(dt))
         println("Sent pos is \(dot.position)")
         updatePeers()
         if !dropped{
@@ -162,7 +167,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 var newPos = CGPoint(x: CGFloat(update.posX), y: CGFloat(update.posY))
                 node.physicsBody?.velocity = newVel
                 node.zRotation = CGFloat(update.rotate)
-                node.runAction(SKAction.moveTo(newPos, duration: dt))
+                node.position = newPos
+//                node.runAction(SKAction.moveTo(newPos, duration: NSTimeInterval(update.dt)))
                 peers[peer] = copyMes
             }
         }

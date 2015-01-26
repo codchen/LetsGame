@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3f-hw-3gc">
-                                <rect key="frame" x="285" y="307" width="30" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                 <state key="normal" title="Play">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -25,8 +25,8 @@
                                     <action selector="showGameScene:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6uw-cg-Esq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTQ-1G-Z4F">
-                                <rect key="frame" x="271" y="246" width="59" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTQ-1G-Z4F">
+                                <rect key="frame" x="221" y="285" width="59" height="30"/>
                                 <state key="normal" title="Connect">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -35,14 +35,18 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="s3f-hw-3gc" secondAttribute="centerY" constant="-10" id="WN4-ao-aba" userLabel="Center Y Alignment - (-20) - View - Play"/>
-                            <constraint firstAttribute="centerX" secondItem="s3f-hw-3gc" secondAttribute="centerX" id="mMS-gx-9sK"/>
-                            <constraint firstAttribute="centerY" secondItem="yTQ-1G-Z4F" secondAttribute="centerY" constant="10" id="maE-dc-dSo" userLabel="Center Y Alignment - (20) - View - Connect"/>
-                            <constraint firstAttribute="centerX" secondItem="yTQ-1G-Z4F" secondAttribute="centerX" id="phY-Vg-CAo"/>
+                            <constraint firstAttribute="centerX" secondItem="s3f-hw-3gc" secondAttribute="centerX" constant="-100" id="5Er-BP-Ckb"/>
+                            <constraint firstAttribute="centerX" secondItem="yTQ-1G-Z4F" secondAttribute="centerX" constant="50" id="9Y9-FY-oHU"/>
+                            <constraint firstAttribute="centerY" secondItem="s3f-hw-3gc" secondAttribute="centerY" id="eQH-XP-uUc"/>
+                            <constraint firstAttribute="centerY" secondItem="yTQ-1G-Z4F" secondAttribute="centerY" id="gjh-hT-si1"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnConnect" destination="yTQ-1G-Z4F" id="oBa-KK-tmv"/>
+                        <outlet property="btnPlay" destination="s3f-hw-3gc" id="zuY-8c-zaB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

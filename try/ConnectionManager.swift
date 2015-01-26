@@ -34,6 +34,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         let posX: Float
         let posY: Float
         let rotate: Float
+        let dt: Float
     }
     
     struct MessageGameOver {
@@ -61,9 +62,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         self.assistant.start()
     }
     
-    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float){
+    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float){
         var message = MessageMove(message: Message(messageType: MessageType.Move), dx: dx, dy: dy,
-        	posX: posX, posY: posY, rotate: rotate)
+            posX: posX, posY: posY, rotate: rotate, dt: dt)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data)
         
