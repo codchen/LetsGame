@@ -242,11 +242,11 @@
 				TargetAttributes = {
 					FF6C103B1A6572FB00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 8A273HS9WT;
+						DevelopmentTeam = EZLTDL7P7G;
 					};
 					FF6C10501A6572FC00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 8A273HS9WT;
+						DevelopmentTeam = EZLTDL7P7G;
 						TestTargetID = FF6C103B1A6572FB00A5C7D7;
 					};
 				};

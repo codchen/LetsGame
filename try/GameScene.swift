@@ -26,10 +26,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var margin: CGFloat!
     var dropped = false
     
-    let ay = Vector3(x: 0.63, y: 0.0, z: -0.92)
-    let az = Vector3(x: 0.0, y: 1.0, z: 0.0)
-    let ax = Vector3.crossProduct(Vector3(x: 0.0, y: 1.0, z: 0.0),
-        right: Vector3(x: 0.63, y: 0.0, z: -0.92)).normalized()
     var hasContacted: Bool = false
     
     
@@ -41,23 +37,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        //ball = childNodeWithName("ball") as SKSpriteNode
-        //ball.physicsBody = SKPhysicsBody(rectangleOfSize: ball.size)
-//        hole = childNodeWithName("hole") as SKSpriteNode
-//        hole.position = CGPointMake(size.width/2, size.height/2)
-        //hole.zPosition = -1
+        physicsWorld.contactDelegate = self
         dot = childNodeWithName("ball") as SKSpriteNode
         dot.name = "dot" + connection.session.myPeerID.displayName
         dot.position = randomPos()
         bornPos = dot.position
     	dot.physicsBody = SKPhysicsBody(circleOfRadius: dot.size.width/2)
-//        dot.physicsBody?.mass = 5
-        //addChild(dot)
-
+        dot.physicsBody?.categoryBitMask = UInt32(1)
         
-//        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
-//            posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-//        println("Sent pos is: \(dot.position)")
     }
     
     func normalize98(raw: CGVector) -> CGVector{
@@ -80,19 +67,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return CGVector(dx: CGFloat(sign1) * deltax, dy: CGFloat(sign2) * deltay)
     }
     
+    func didBeginContact(contact: SKPhysicsContact) {
+        if contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask == 2 {
+            hasContacted = true
+        }
+    }
+    
     func moveFromAcceleration(){
         if motionManager.accelerometerData == nil{
             return
         }
-        var raw = Vector3(
-            x: CGFloat(motionManager.accelerometerData.acceleration.x),
-            y: CGFloat(motionManager.accelerometerData.acceleration.y),
-            z: CGFloat(motionManager.accelerometerData.acceleration.z))
         
         var accel2D = CGPointZero
-        accel2D.x = Vector3.dotProduct(raw, right: az)
-        accel2D.y = Vector3.dotProduct(raw, right: ax)
-        accel2D.normalize()
+        accel2D.x = CGFloat(motionManager.accelerometerData.acceleration.y)
+        accel2D.y = -1 * CGFloat(motionManager.accelerometerData.acceleration.x)
+//        accel2D.normalize()
         
         if fabs(accel2D.x) < steerDeadZone{
             accel2D.x = 0
@@ -102,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         
         if hasContacted {
-            dot.physicsBody?.velocity += CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
+            dot.physicsBody?.velocity += CGVector(dx: accel2D.x * maxSpeed, dy: accel2D.y * maxSpeed)
             hasContacted = false
         }
         else if accel2D.x != 0 || accel2D.y != 0{
@@ -152,11 +141,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         lastUpdateTime = currentTime
         
         moveFromAcceleration()
-        if peers.count > 0{
-            connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
+        connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
             posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation))
-        }
-        
+        println("Sent pos is \(dot.position)")
         updatePeers()
         if !dropped{
             checkDrop()
@@ -166,15 +153,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func updatePeers() {
-        for (peer, var message) in peers {
+        for (peer, message) in peers {
             let node = childNodeWithName(peer.0) as SKSpriteNode
             if !message.isEmpty {
-                var update = message.removeAtIndex(0)
+                var copyMes = message
+                var update = copyMes.removeAtIndex(0)
                 var newVel = CGVector(dx: CGFloat(update.dx), dy: CGFloat(update.dy))
                 var newPos = CGPoint(x: CGFloat(update.posX), y: CGFloat(update.posY))
                 node.physicsBody?.velocity = newVel
                 node.zRotation = CGFloat(update.rotate)
                 node.runAction(SKAction.moveTo(newPos, duration: dt))
+                peers[peer] = copyMes
             }
         }
     }
@@ -184,16 +173,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         if peers[peer.name!] == nil {
             peers[peer.name!] = Array<ConnectionManager.MessageMove>()
         }
+        println("Received pos is \(CGPoint(x:CGFloat(message.posX), y: CGFloat(message.posY)))")
         peers[peer.name!]?.append(message)
         
     }
     
     func addPlayer(posX: Float, posY: Float, name: String) {
-        var peerDot = SKSpriteNode(imageNamed: "circle")
+        var peerDot = SKSpriteNode(imageNamed: "50x50_ball")
         peerDot.physicsBody = SKPhysicsBody(circleOfRadius: peerDot.size.width/2)
         peerDot.name = "dot" + name
-        peerDot.position.x = CGFloat(posX)
-        peerDot.position.y = CGFloat(posY)
+        peerDot.position = CGPoint(x: CGFloat(posX), y: CGFloat(posY))
+        peerDot.physicsBody?.categoryBitMask = UInt32(1)
         addChild(peerDot)
     }
     
