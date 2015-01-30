@@ -37,6 +37,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var btnPlay: UIButton!
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(patternImage: UIImage(named: "2048x1536_board_with_boarder")!)
@@ -103,6 +105,10 @@ class ViewController: UIViewController {
                 self.currentScene.dropPlayer(message, peer: peer.displayName)
             }
         }
+    }
+    
+    func addScore(message: ConnectionManager.MessageAddScore) {
+        self.currentScene.addScore(message.name)
     }
 
     override func didReceiveMemoryWarning() {

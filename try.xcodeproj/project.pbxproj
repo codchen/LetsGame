@@ -10,6 +10,8 @@
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
 		66C206FA1A6EF6B700F4782C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C206F91A6EF6B700F4782C /* circle.png */; };
 		66C593511A72D4AA00B53817 /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66C593501A72D4AA00B53817 /* log.txt */; };
+		66D5BDF41A797FC100A34A42 /* soccer.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D5BDF31A797FC100A34A42 /* soccer.png */; };
+		66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D5BDF61A79BF2000A34A42 /* Message.swift */; };
 		66F8667A1A6F062A007EE9FF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 66F866791A6F062A007EE9FF /* GameScene.sks */; };
 		66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */; };
 		66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */; };
@@ -52,6 +54,8 @@
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		66C206F91A6EF6B700F4782C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		66C593501A72D4AA00B53817 /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
+		66D5BDF31A797FC100A34A42 /* soccer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccer.png; sourceTree = "<group>"; };
+		66D5BDF61A79BF2000A34A42 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		66F866791A6F062A007EE9FF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
@@ -103,6 +107,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66D5BDF51A79BEC200A34A42 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				66D5BDF31A797FC100A34A42 /* soccer.png */,
+				FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */,
+				FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */,
+				FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */,
+				FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */,
+				FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		66F8667B1A6F0B72007EE9FF /* SKTUtils */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,11 +142,8 @@
 		FF6C10331A6572FB00A5C7D7 = {
 			isa = PBXGroup;
 			children = (
-				FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */,
-				FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */,
-				FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */,
-				FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */,
-				FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */,
+				66D5BDF61A79BF2000A34A42 /* Message.swift */,
+				66D5BDF51A79BEC200A34A42 /* images */,
 				66F8667B1A6F0B72007EE9FF /* SKTUtils */,
 				66C206F91A6EF6B700F4782C /* circle.png */,
 				FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */,
@@ -272,6 +286,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
@@ -303,6 +318,7 @@
 				66F8668E1A6F0B72007EE9FF /* SKColor+Extensions.swift in Sources */,
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
 				66F8668C1A6F0B72007EE9FF /* SKAction+Extensions.swift in Sources */,
+				66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */,
 				FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */,
 				66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */,
 				66F866901A6F0B72007EE9FF /* SKTAudio.swift in Sources */,

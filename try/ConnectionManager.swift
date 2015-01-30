@@ -18,9 +18,17 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var session : MCSession!
     var peerID: MCPeerID!
     var controller: ViewController!
+    var randomNumber: UInt32!
+    var gameState: GameState!
+    var isPlayer1: Bool = false
+    var receivedAllRandomNumbers: Bool = false
+    
+    enum GameState: Int {
+        case WaitingForMatch, WaitingForRandomNumber, WaitingForStart, Playing, Done
+    }
     
     enum MessageType: Int {
-        case GameInit, Move, GameOver, Drop
+        case GameInit, Move, GameOver, Drop, AddScore
     }
     
     struct Message {
@@ -48,8 +56,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
     }
     
+    struct MessageAddScore {
+        let message: Message
+        let name: String
+    }
+    
     override init() {
-        
         super.init()
         // Do any additional setup after loading the view, typically from a nib.
         self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
@@ -69,6 +81,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         self.assistant.start()
     }
     
+//    func generateRandomNumber(){
+//        self.randomNumber = arc4random()
+//        gameState = GameState.WaitingForMatch
+//    }
+    
     func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float){
         var message = MessageMove(message: Message(messageType: MessageType.Move), dx: dx, dy: dy,
             posX: posX, posY: posY, rotate: rotate, dt: dt)
@@ -81,6 +98,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     	var message = MessageDrop(message: Message(messageType: MessageType.Drop), bornPosX: bornPosX, bornPosY: bornPosY)
         let data = NSData(bytes: &message, length: sizeof(MessageDrop))
         sendData(data)
+    }
+    
+    func sendAddScore(peer: String){
+        var message = MessageAddScore(message: Message(messageType: MessageType.AddScore), name: peer)
+        let data = NSData(bytes: &message, length: sizeof(MessageAddScore))
     }
     
     func sendData(data: NSData){
@@ -124,6 +146,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.Drop {
             let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
             controller.updatePeerDrop(messageDrop, peer: peerID)
+        } else if message.messageType == MessageType.AddScore {
+            let messageAddScore = UnsafePointer<MessageAddScore>(data.bytes).memory
+            controller.addScore(messageAddScore)
         }
 
     }
