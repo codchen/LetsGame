@@ -23,10 +23,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var peers: Dictionary<String, Array<ConnectionManager.MessageMove>> = Dictionary<String, Array<ConnectionManager.MessageMove>>()
     let steerDeadZone = CGFloat(0.15)
+    
     let maxSpeed = CGFloat(1000)
+    let maxForce = CGFloat(2000)
+    let staticFriction = CGFloat(0.4)
+    let kineticFriction = CGFloat(0.2)
+    let maxImpulse = CGFloat(1000)
     var lastUpdateTime: NSTimeInterval = 0
+    var force = CGVector(dx: 0, dy: 0)
+    var moveDir = CGVector(dx: 0, dy: 0)
+    var friction = CGFloat(0)
+    var frictionForce = CGVector(dx: 0, dy: 0)
+    
     var dt: NSTimeInterval = 0
-    var counter: Int = 5
+    var counter: Int = 100
     
     var margin: CGFloat!
     var dropped = false
@@ -62,7 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: -dot.size.width, y: playableMargin - dot.size.height, width: size.width + dot.size.width * 2, height: size.height - playableMargin * 2 + dot.size.height * 2)
         self.physicsBody = SKPhysicsBody()
-        physicsBody?.dynamic = false
+        physicsBody?.dynamic = true
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
         dot = childNodeWithName("ball") as SKSpriteNode
@@ -97,28 +107,71 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         return CGVector(dx: CGFloat(sign1) * deltax, dy: CGFloat(sign2) * deltay)
     }
     
-    func didBeginContact(contact: SKPhysicsContact) {
-
-        if (contact.bodyA.node?.name == dot.name || contact.bodyB.node?.name == dot.name) && contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask == 2 {
-            hasContacted = true
-            if contact.bodyA.node?.name == dot.name {
-                contactBuddy = contact.bodyB.node as SKSpriteNode
-            } else {
-                contactBuddy = contact.bodyA.node as SKSpriteNode
-            }
-
-        }
-        
+//    func didBeginContact(contact: SKPhysicsContact) {
+//
+//        if (contact.bodyA.node?.name == dot.name || contact.bodyB.node?.name == dot.name) && contact.bodyA.categoryBitMask + contact.bodyB.categoryBitMask == 2 {
+//
+//            hasContacted = true
+//            counter = 100
+//            if contact.bodyA.node?.name == dot.name {
+//                contactBuddy = contact.bodyB.node as SKSpriteNode
+//            } else {
+//                contactBuddy = contact.bodyA.node as SKSpriteNode
+//            }
+//            collision(dot, node2: contactBuddy, point: contact.contactPoint)
+////            println(dot.physicsBody?.velocity.dx)
+////            println(dot.physicsBody?.velocity.dy)
+//        }
+//        
+//    }
+    
+    func collision(node1: SKSpriteNode, node2: SKSpriteNode, point: CGPoint){
+//        node1.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+//        println(dot.physicsBody?.velocity.dx)
+//        println(dot.physicsBody?.velocity.dy)
+//        let impulseDir = CGVector(dx: node1.position.x - point.x, dy: node1.position.y - point.y).normalized()
+//        let previousV = node1.physicsBody!.velocity as CGVector
+//        let totalImpulse = CGFloat(node1.physicsBody!.velocity.length() * cos(node1.physicsBody!.velocity.angle - CGVector(dx: -impulseDir.dx, dy: -impulseDir.dy).angle) + node2.physicsBody!.velocity.length() * cos(node2.physicsBody!.velocity.angle - impulseDir.angle))
+//        node1.physicsBody!.applyImpulse(CGVector(dx: totalImpulse * impulseDir.dx, dy: totalImpulse * impulseDir.dy))
+//        if (node1.physicsBody!.velocity.dx == previousV.dx && node1.physicsBody!.velocity.dy == previousV.dy){
+//            println("error")
+//        }
+//        else{
+//            println(node1.physicsBody!.velocity.dx - previousV.dx)
+//            println(node1.physicsBody!.velocity.dy - previousV.dy)
+//        }
+//        println(totalImpulse * impulseDir.dx)
+//        println(totalImpulse * impulseDir.dy)
+//        println()
+        let perpendicular = getPerpendicularVector(node1.position, point2: node2.position)
+        let tangiential = CGVector(dx: -1 * perpendicular.dy, dy: perpendicular.dx)
+        let per_vel = (vectorProjection(node1.physicsBody!.velocity, baseVector: perpendicular) + vectorProjection(node2.physicsBody!.velocity, baseVector: perpendicular)) / 2 as CGVector
+        let tan_vel = vectorProjection(node1.physicsBody!.velocity, baseVector: tangiential) as CGVector
+        node1.physicsBody!.velocity = per_vel + tan_vel
+    }
+    
+    func getPerpendicularVector(point1: CGPoint, point2: CGPoint) -> CGVector{
+        return CGVector(dx: point2.x - point1.x, dy: point2.y - point1.y)
+    }
+    
+    func vectorProjection(vector: CGVector, baseVector: CGVector) -> CGVector{
+        return CGVector(dx: baseVector.dx * (vector.dx * baseVector.dx + vector.dy * baseVector.dy) / (baseVector.dx * baseVector.dx + baseVector.dy * baseVector.dy), dy: baseVector.dy * (vector.dx * baseVector.dx + vector.dy * baseVector.dy) / (baseVector.dx * baseVector.dx + baseVector.dy * baseVector.dy))
     }
     
     func moveFromAcceleration(){
         if motionManager.accelerometerData == nil{
             return
         }
+        force.dx = CGFloat(motionManager.accelerometerData.acceleration.y) * maxForce
+        force.dy = -1 * CGFloat(motionManager.accelerometerData.acceleration.x) * maxForce
+//        
+//        println(force.dx)
+//        println(force.dy)
+//        println()
+        if ifMove(force, mass: dot.physicsBody!.mass){
+
+            dot.physicsBody?.applyForce(force)}
         
-        var accel2D = CGPointZero
-        accel2D.x = CGFloat(motionManager.accelerometerData.acceleration.y)
-        accel2D.y = -1 * CGFloat(motionManager.accelerometerData.acceleration.x)
 //        accel2D.normalize()
         
 //        if fabs(accel2D.x) < steerDeadZone{
@@ -128,17 +181,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 //            accel2D.y = 0
 //        }
         
-        if hasContacted {
-//            dot.physicsBody?.velocity = CGVector(dx: accel2D.x * maxSpeed, dy: accel2D.y * maxSpeed)
-            counter--
-            if counter == 0 {
-                hasContacted = false
-                contactBuddy = nil
-                counter = 50
-            }
+//        if hasContacted {
+////            dot.physicsBody?.velocity = CGVector(dx: accel2D.x * maxSpeed, dy: accel2D.y * maxSpeed)
+//            counter--
+//            if counter == 0 {
+//                hasContacted = false
+//                contactBuddy = nil
+//                counter = 50
+//            }
+//        }
+//        else if accel2D.x != 0 || accel2D.y != 0{
+//            dot.physicsBody?.velocity = CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
+//        }
+    }
+    
+    func ifMove(force: CGVector, mass: CGFloat) -> Bool{
+        if force.length() < mass * 9.8 * staticFriction{
+            return false;
         }
-        else if accel2D.x != 0 || accel2D.y != 0{
-            dot.physicsBody?.velocity = CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
+        return true;
+    }
+    
+    func applyFriction(){
+        if dot.physicsBody!.velocity.length() > 0.5{
+            moveDir = dot.physicsBody!.velocity.normalize()
+            friction = CGFloat(dot.physicsBody!.mass * 9.8 * kineticFriction)
+            frictionForce = CGVector(dx: -moveDir.dx * friction, dy: -moveDir.dy * friction)
+            dot.physicsBody!.applyForce(force)
         }
     }
     
@@ -223,6 +292,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func update(currentTime: NSTimeInterval) {
+//        println(dot.physicsBody!.velocity.dx)
+//        println(dot.physicsBody!.velocity.dy)
         
         if lastUpdateTime > 0 {
             dt = currentTime - lastUpdateTime
@@ -231,7 +302,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         lastUpdateTime = currentTime
         
-        moveFromAcceleration()
+        if hasContacted{
+            counter--
+            
+            if counter == 0 {
+                hasContacted = false
+                contactBuddy = nil
+                counter = 100
+            }
+        }
+        else{
+            moveFromAcceleration()
+        }
+        
+        applyFriction()
+        
         connection.sendMove(Float(dot.physicsBody!.velocity.dx), dy: Float(dot.physicsBody!.velocity.dy),
             posX: Float(dot.position.x), posY: Float(dot.position.y), rotate: Float(dot.zRotation), dt: Float(dt))
         if !dropped{
@@ -259,7 +344,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 var newVel = CGVector(dx: CGFloat(update.dx), dy: CGFloat(update.dy))
                 var newPos = CGPoint(x: CGFloat(update.posX), y: CGFloat(update.posY))
                 node.physicsBody?.velocity = newVel
-                node.zRotation = CGFloat(update.rotate)
+                //node.zRotation = CGFloat(update.rotate)
                 node.position = newPos
 //                node.runAction(SKAction.moveTo(newPos, duration: NSTimeInterval(update.dt)))
                 peers[peer] = copyMes
