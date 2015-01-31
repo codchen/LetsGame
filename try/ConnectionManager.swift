@@ -17,6 +17,10 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID: MCPeerID!
+    var hostID: [AnyObject] = []
+    var peersIn: [MCPeerID] = []
+    var state = 0
+    var playerID = 1
     var controller: ViewController!
     var randomNumber: UInt32!
     var gameState: GameState!
@@ -105,6 +109,20 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         let data = NSData(bytes: &message, length: sizeof(MessageAddScore))
     }
     
+    func sendToHost(data: NSData){
+        var error: NSError?
+        if hostID.count > 0{
+            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Reliable, error: &error)
+            
+            if !success{
+                if let error = error{
+                    println("Error sending data:\(error.localizedDescription)")
+
+                }
+            }
+        }
+    }
+    
     func sendData(data: NSData){
         
         var error : NSError?
@@ -137,19 +155,29 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func session(session: MCSession!, didReceiveData data: NSData!,
         fromPeer peerID: MCPeerID!)  {
+            if state == 0 && !contains(peersIn, peerID){
+                if playerID == 1{
+                    hostID.append(peerID)
+                }
+                peersIn.append(peerID)
+                playerID++
+            }
+            else{
+                controller.updatePeerPos(data, peer: peerID)
+            }
             // Called when a peer sends an NSData to us
-        var message = UnsafePointer<Message>(data.bytes).memory
-        
-        if message.messageType == MessageType.Move {
-            let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
-            controller.updatePeerPos(messageMove, peer: peerID)
-        } else if message.messageType == MessageType.Drop {
-            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
-            controller.updatePeerDrop(messageDrop, peer: peerID)
-        } else if message.messageType == MessageType.AddScore {
-            let messageAddScore = UnsafePointer<MessageAddScore>(data.bytes).memory
-            controller.addScore(messageAddScore)
-        }
+//        var message = UnsafePointer<Message>(data.bytes).memory
+//        
+//        if message.messageType == MessageType.Move {
+//            let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
+//            controller.updatePeerPos(messageMove, peer: peerID)
+//        } else if message.messageType == MessageType.Drop {
+//            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
+//            controller.updatePeerDrop(messageDrop, peer: peerID)
+//        } else if message.messageType == MessageType.AddScore {
+//            let messageAddScore = UnsafePointer<MessageAddScore>(data.bytes).memory
+//            controller.addScore(messageAddScore)
+//        }
 
     }
     
