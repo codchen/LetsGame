@@ -24,6 +24,7 @@ struct MessageMove {
     let posY: Float
     let rotate: Float
     let dt: Float
+    let number: Int
 }
 
 struct MessageGameOver {

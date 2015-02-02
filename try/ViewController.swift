@@ -108,10 +108,20 @@ class ViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             //var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
             if self.currentScene != nil{
-                if contains(self.currentScene.peerList, "ball" + peer.displayName){
-                    self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
-                } else {
-                    self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
+                if self.currentScene.identity == "Host"{
+                    if contains(self.currentScene.peerList, "ball" + peer.displayName){
+                        self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
+                    } else {
+                        self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
+                    }
+                }
+                else{
+                    var message = UnsafePointer<MessageMove>(data.bytes).memory
+                    if contains(self.currentScene.peerList, String(message.number)){
+                        self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
+                    } else {
+                        self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
+                    }
                 }
             }
         }

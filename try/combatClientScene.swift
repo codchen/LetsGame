@@ -13,6 +13,9 @@ import CoreMotion
 
 class combatClientScene: combatScene{
     
+    //var peerNode: SKSpriteNode!
+    var numberPeers: Dictionary<Int, String> = Dictionary<Int, String>()
+    
     override func didMoveToView(view: SKView) {
         identity = "Client"
         
@@ -50,10 +53,10 @@ class combatClientScene: combatScene{
         
         checkDrop()
         
-        if nodes.count == 1{
-            println(nodes[0].name)
-            println(nodes[0].position.x)
-        }
+//        if nodes.count == 1{
+//            println(nodes[0].name)
+//            println(nodes[0].position.x)
+//        }
         
         if let data = motionManager.accelerometerData{
             let toSend = NSKeyedArchiver.archivedDataWithRootObject(data)
@@ -63,19 +66,19 @@ class combatClientScene: combatScene{
     
     override func updatePeers(data: NSData, peer: String){
         var message = UnsafePointer<MessageMove>(data.bytes).memory
-        var node = childNodeWithName(peer) as SKSpriteNode
+        var node = childNodeWithName(String(message.number)) as SKSpriteNode
         node.position = CGPoint(x: CGFloat(message.posX), y: CGFloat(message.posY))
-
+        //println(node.position.x)
         node.physicsBody!.velocity = CGVector(dx: CGFloat(message.dx), dy: CGFloat(message.dy))
     }
     
     override func addPlayer(data: NSData, peer: String){
         var message = UnsafePointer<MessageMove>(data.bytes).memory
         var node = SKSpriteNode(imageNamed: "50x50_ball")
-        node.name = peer
+        node.name = String(message.number)
         node.position = CGPoint(x: CGFloat(message.posX), y: CGFloat(message.posY))
-        peerList.append(peer)
-        nodesInfo[peer] = nodeInfo(node: node, bornPos: node.position, dropped: false)
+        peerList.append(node.name!)
+        nodesInfo[node.name!] = nodeInfo(node: node, bornPos: node.position, dropped: false)
         nodes.append(node)
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
         node.physicsBody!.velocity = CGVector(dx: CGFloat(message.dx), dy: CGFloat(message.dy))

@@ -47,6 +47,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         let posY: Float
         let rotate: Float
         let dt: Float
+        let number: Int
     }
     
     struct MessageGameOver {
@@ -90,12 +91,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //        gameState = GameState.WaitingForMatch
 //    }
     
-    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float){
+    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float, number: Int){
         var message = MessageMove(message: Message(messageType: MessageType.Move), dx: dx, dy: dy,
-            posX: posX, posY: posY, rotate: rotate, dt: dt)
+            posX: posX, posY: posY, rotate: rotate, dt: dt, number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data)
-        
     }
     
     func sendDrop(bornPosX: Float, bornPosY: Float) {
@@ -112,7 +112,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func sendToHost(data: NSData){
         var error: NSError?
         if hostID.count > 0{
-            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Reliable, error: &error)
+            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Unreliable, error: &error)
             
             if !success{
                 if let error = error{
@@ -163,6 +163,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 playerID++
             }
             else{
+                println(peerID.displayName)
                 controller.updatePeerPos(data, peer: peerID)
             }
             // Called when a peer sends an NSData to us

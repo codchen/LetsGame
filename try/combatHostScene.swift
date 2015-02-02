@@ -16,6 +16,8 @@ class combatHostScene: combatScene{
     var me: SKSpriteNode!
 
     var peers: Dictionary<String, CMAccelerometerData!> = Dictionary<String, CMAccelerometerData!>()
+    var peersNumber: Dictionary<String, Int> = Dictionary<String, Int>()
+    var number = 0
     
     let maxForce = CGFloat(300)
     let staticFriction = CGFloat(0.8)
@@ -49,6 +51,9 @@ class combatHostScene: combatScene{
         me.physicsBody = SKPhysicsBody(circleOfRadius: me.size.width/2)
         
         nodes.append(me)
+        
+        peersNumber[me.name!] = number
+        number++
         
         addChild(me)
     }
@@ -126,7 +131,7 @@ class combatHostScene: combatScene{
         
         for everyNode in nodes{
             connection.sendMove(Float(everyNode.physicsBody!.velocity.dx), dy: Float(everyNode.physicsBody!.velocity.dy),
-                posX: Float(everyNode.position.x), posY: Float(everyNode.position.y), rotate: Float(everyNode.zRotation), dt: Float(dt))
+                posX: Float(everyNode.position.x), posY: Float(everyNode.position.y), rotate: Float(everyNode.zRotation), dt: Float(dt), number: peersNumber[everyNode.name!]!)
         }
     }
     
@@ -142,6 +147,8 @@ class combatHostScene: combatScene{
         nodesInfo[peer] = nodeInfo(node: node, bornPos: randomPos(), dropped: false)
         nodes.append(node)
         peers[peer] = NSKeyedUnarchiver.unarchiveObjectWithData(data) as CMAccelerometerData
+        peersNumber[peer] = number
+        number++
         addChild(node)
     }
 }
