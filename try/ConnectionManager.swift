@@ -31,40 +31,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         case WaitingForMatch, WaitingForRandomNumber, WaitingForStart, Playing, Done
     }
     
-    enum MessageType: Int {
-        case GameInit, Move, GameOver, Drop, AddScore
-    }
-    
-    struct Message {
-        let messageType: MessageType
-    }
-    
-    struct MessageMove {
-        let message: Message
-        let dx: Float
-        let dy: Float
-        let posX: Float
-        let posY: Float
-        let rotate: Float
-        let dt: Float
-        let number: Int
-    }
-    
-    struct MessageGameOver {
-        let message: Message
-    }
-    
-    struct MessageDrop {
-        let message: Message
-        let bornPosX: Float
-        let bornPosY: Float
-        
-    }
-    
-    struct MessageAddScore {
-        let message: Message
-        let name: String
-    }
     
     override init() {
         super.init()
@@ -91,7 +57,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //        gameState = GameState.WaitingForMatch
 //    }
     
-    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float, number: Int){
+    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float, number: UInt32){
         var message = MessageMove(message: Message(messageType: MessageType.Move), dx: dx, dy: dy,
             posX: posX, posY: posY, rotate: rotate, dt: dt, number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
@@ -104,10 +70,26 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data)
     }
     
-    func sendAddScore(peer: String){
-        var message = MessageAddScore(message: Message(messageType: MessageType.AddScore), name: peer)
-        let data = NSData(bytes: &message, length: sizeof(MessageAddScore))
+
+    
+    func sendRawData(dx: Float, dy: Float){
+        var message = MessageRawData(message: Message(messageType: MessageType.RawData), dx: dx, dy: dy)
+        let data = NSData(bytes: &message, length: sizeof(MessageRawData))
+        sendToHost(data)
     }
+//    
+//    func sendDataTo(data: NSData, peer: MCPeerID){
+//        var error : NSError?
+//        if session.connectedPeers.count != 0 {
+//            let success = session.sendData(data, toPeers: [peer], withMode: MCSessionSendDataMode.Reliable, error: &error)
+//            
+//            if !success {
+//                if let error = error {
+//                    println("Error sending data:\(error.localizedDescription)")
+//                }
+//            }
+//        }
+//    }
     
     func sendToHost(data: NSData){
         var error: NSError?
@@ -155,16 +137,25 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func session(session: MCSession!, didReceiveData data: NSData!,
         fromPeer peerID: MCPeerID!)  {
+            
             if state == 0 && !contains(peersIn, peerID){
                 if playerID == 1{
                     hostID.append(peerID)
                 }
+                
                 peersIn.append(peerID)
                 playerID++
             }
-            else{
-                println(peerID.displayName)
+            
+            else if contains(peersIn, peerID){
+//                println(peerID.displayName)
+//                println(hostID[0])
                 controller.updatePeerPos(data, peer: peerID)
+            }
+            
+            else {
+                peersIn.append(peerID)
+                println("lalala \(peersIn)")
             }
             // Called when a peer sends an NSData to us
 //        var message = UnsafePointer<Message>(data.bytes).memory

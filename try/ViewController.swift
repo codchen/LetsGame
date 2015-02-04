@@ -62,13 +62,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showGameScene(sender: UIButton) {
-        if connectionManager.session.connectedPeers.count > 0{
-            var error: NSError?
-            connectionManager.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(1), toPeers: connectionManager.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &error)
-            if (error != nil){
-                println(error?.description)
-            }
-        }
+//        if connectionManager.session.connectedPeers.count > 0{
+//            var error: NSError?
+//            connectionManager.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(1), toPeers: connectionManager.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &error)
+//            if (error != nil){
+//                println(error?.description)
+//            }
+//        }
         
         var scene: combatScene!
         if connectionManager.playerID == 1{
@@ -92,7 +92,8 @@ class ViewController: UIViewController {
         scene.scaleMode = .AspectFill
         
         scene.connection = connectionManager
-        
+        connectionManager.state = 1
+
         skView.presentScene(scene)
         
         motionManager.accelerometerUpdateInterval = 0.05
@@ -107,20 +108,27 @@ class ViewController: UIViewController {
     func updatePeerPos(data: NSData, peer: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
             //var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
+            
             if self.currentScene != nil{
                 if self.currentScene.identity == "Host"{
                     if contains(self.currentScene.peerList, "ball" + peer.displayName){
                         self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
+//                        println("bibibi")
                     } else {
                         self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
+//                    	println("oh bi")
                     }
                 }
-                else{
+                else {
                     var message = UnsafePointer<MessageMove>(data.bytes).memory
+                    println("\(message.number) + is what")
+                    println(self.currentScene.peerList)
                     if contains(self.currentScene.peerList, String(message.number)){
                         self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
+//                        println("bi")
                     } else {
                         self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
+                        println("bibi")
                     }
                 }
             }

@@ -15,18 +15,18 @@ class combatHostScene: combatScene{
     
     var me: SKSpriteNode!
 
-    var peers: Dictionary<String, CMAccelerometerData!> = Dictionary<String, CMAccelerometerData!>()
-    var peersNumber: Dictionary<String, Int> = Dictionary<String, Int>()
-    var number = 0
+    var peers: Dictionary<String, Array<MessageRawData>> = Dictionary<String, Array<MessageRawData>>()
+    var peersNumber: Dictionary<String, UInt32> = Dictionary<String, UInt32>()
+    var number: UInt32 = 0
     
-    let maxForce = CGFloat(300)
-    let staticFriction = CGFloat(0.8)
-    let kineticFriction = CGFloat(0.4)
-    
-    var force = CGVector(dx: 0, dy: 0)
-    var moveDir = CGVector(dx: 0, dy: 0)
-    var friction = CGFloat(0)
-    var frictionForce = CGVector(dx: 0, dy: 0)
+    let maxSpeed = CGFloat(1000)
+//    let staticFriction = CGFloat(0.8)
+//    let kineticFriction = CGFloat(0.4)
+//    
+//    var force = CGVector(dx: 0, dy: 0)
+//    var moveDir = CGVector(dx: 0, dy: 0)
+//    var friction = CGFloat(0)
+//    var frictionForce = CGVector(dx: 0, dy: 0)
 
     
     override func didMoveToView(view: SKView) {
@@ -39,7 +39,7 @@ class combatHostScene: combatScene{
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: -me.size.width, y: playableMargin - me.size.height, width: size.width + me.size.width * 2, height: size.height - playableMargin * 2 + me.size.height * 2)
-
+		println(playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
@@ -62,44 +62,42 @@ class combatHostScene: combatScene{
         if motionManager.accelerometerData == nil{
             return
         }
-        force.dx = CGFloat(motionManager.accelerometerData.acceleration.y) * maxForce
-        force.dy = -1 * CGFloat(motionManager.accelerometerData.acceleration.x) * maxForce
-
-        if ifMove(force, mass: me.physicsBody!.mass){
-            if me.physicsBody!.velocity.length() < 500{
-                me.physicsBody?.applyForce(force)
-            }
+        
+        var accel2D = CGPointZero
+        accel2D.x = CGFloat(motionManager.accelerometerData.acceleration.y)
+        accel2D.y = -1 * CGFloat(motionManager.accelerometerData.acceleration.x)
+        
+		if accel2D.x != 0 || accel2D.y != 0{
+            me.physicsBody?.velocity = CGVector(dx: CGFloat(accel2D.x * maxSpeed), dy: CGFloat(accel2D.y * maxSpeed))
         }
-        applyFriction(me)
     }
     
     func movePeers(){
         for (name, data) in peers{
-            if data == nil{
+            if data.isEmpty {
                 continue
             }
-            var peerForce = CGVector(dx: CGFloat(data.acceleration.y) * maxForce, dy: CGFloat(-1 * data.acceleration.x) * maxForce)
-            if ifMove(peerForce, mass: me.physicsBody!.mass){
-                if nodesInfo[name]!.node.physicsBody!.velocity.length() < 500{
-                    nodesInfo[name]!.node.physicsBody!.applyForce(peerForce)
-                }
-            }
-            applyFriction(nodesInfo[name]!.node)
+            var temp = data
+            var rawData = temp.removeAtIndex(0)
+            var peerVel = CGVector(dx: CGFloat(rawData.dx) * maxSpeed, dy: CGFloat(-1 * rawData.dy) * maxSpeed)
+            let node = childNodeWithName(name) as SKSpriteNode
+            node.physicsBody?.velocity = peerVel
+            peers[name] = temp
         }
     }
     
-    func ifMove(force: CGVector, mass: CGFloat) -> Bool{
-        if force.length() < mass * 9.8 * staticFriction{
-            return false;
-        }
-        return true;
-    }
-    
-    func applyFriction(node: SKSpriteNode){
-        if node.physicsBody!.velocity.length() > 0.5{
-            node.physicsBody!.applyForce(node.physicsBody!.velocity.normalized() * CGFloat(-1 * node.physicsBody!.mass * 9.8 * kineticFriction))
-        }
-    }
+//    func ifMove(force: CGVector, mass: CGFloat) -> Bool{
+//        if force.length() < mass * 9.8 * staticFriction{
+//            return false;
+//        }
+//        return true;
+//    }
+//    
+//    func applyFriction(node: SKSpriteNode){
+//        if node.physicsBody!.velocity.length() > 0.5{
+//            node.physicsBody!.applyForce(node.physicsBody!.velocity.normalized() * CGFloat(-1 * node.physicsBody!.mass * 9.8 * kineticFriction))
+//        }
+//    }
     
 //    func checkWrap(){
 //        if me.position.x > size.width + me.size.width / 2.0 {
@@ -130,25 +128,34 @@ class combatHostScene: combatScene{
         checkDrop()
         
         for everyNode in nodes{
-            connection.sendMove(Float(everyNode.physicsBody!.velocity.dx), dy: Float(everyNode.physicsBody!.velocity.dy),
-                posX: Float(everyNode.position.x), posY: Float(everyNode.position.y), rotate: Float(everyNode.zRotation), dt: Float(dt), number: peersNumber[everyNode.name!]!)
+            println("Sent pos \(everyNode.name): \(everyNode.position) \(peersNumber[everyNode.name!])")
+            connection.sendMove(Float(everyNode.physicsBody!.velocity.dx), dy: Float(everyNode.physicsBody!.velocity.dy), posX: Float(everyNode.position.x), posY: Float(everyNode.position.y), rotate: Float(everyNode.zRotation), dt: Float(dt), number: peersNumber[everyNode.name!]!)
         }
     }
     
     override func updatePeers(data: NSData, peer: String){
-        peers[peer] = NSKeyedUnarchiver.unarchiveObjectWithData(data) as CMAccelerometerData
+        var message = UnsafePointer<MessageRawData>(data.bytes).memory
+        peers[peer]?.append(message)
     }
     
     override func addPlayer(data: NSData, peer: String){
+        var message = UnsafePointer<MessageRawData>(data.bytes).memory
         var node = SKSpriteNode(imageNamed: "50x50_ball")
         node.name = peer
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
+
         peerList.append(peer)
-        nodesInfo[peer] = nodeInfo(node: node, bornPos: randomPos(), dropped: false)
+        let pos = randomPos()
+        node.position = pos
+        nodesInfo[peer] = nodeInfo(node: node, bornPos: pos, dropped: false)
         nodes.append(node)
-        peers[peer] = NSKeyedUnarchiver.unarchiveObjectWithData(data) as CMAccelerometerData
+        
+        peers[peer] = Array<MessageRawData>()
+        peers[peer]?.append(message)
+        
         peersNumber[peer] = number
         number++
+        
         addChild(node)
     }
 }

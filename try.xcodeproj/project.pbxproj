@@ -12,7 +12,6 @@
 		66C593511A72D4AA00B53817 /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66C593501A72D4AA00B53817 /* log.txt */; };
 		66D5BDF41A797FC100A34A42 /* soccer.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D5BDF31A797FC100A34A42 /* soccer.png */; };
 		66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D5BDF61A79BF2000A34A42 /* Message.swift */; };
-		66F8667A1A6F062A007EE9FF /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 66F866791A6F062A007EE9FF /* GameScene.sks */; };
 		66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */; };
 		66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */; };
 		66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667E1A6F0B72007EE9FF /* CGVector+Extensions.swift */; };
@@ -35,7 +34,6 @@
 		FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */; };
 		FF6C10581A6572FC00A5C7D7 /* tryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10571A6572FC00A5C7D7 /* tryTests.swift */; };
 		FF6C106A1A65807500A5C7D7 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */; };
-		FF6C10861A670BED00A5C7D7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10841A670BED00A5C7D7 /* GameScene.swift */; };
 		FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10851A670BED00A5C7D7 /* ViewController.swift */; };
 		FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */; };
 		FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */; };
@@ -60,7 +58,6 @@
 		66C593501A72D4AA00B53817 /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		66D5BDF31A797FC100A34A42 /* soccer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccer.png; sourceTree = "<group>"; };
 		66D5BDF61A79BF2000A34A42 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		66F866791A6F062A007EE9FF /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		66F8667E1A6F0B72007EE9FF /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
@@ -87,7 +84,6 @@
 		FF6C10561A6572FC00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6C10571A6572FC00A5C7D7 /* tryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tryTests.swift; sourceTree = "<group>"; };
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
-		FF6C10841A670BED00A5C7D7 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C10851A670BED00A5C7D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_with_shadow.png; sourceTree = "<group>"; };
 		FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball.png; sourceTree = "<group>"; };
@@ -173,9 +169,7 @@
 		FF6C103E1A6572FB00A5C7D7 /* try */ = {
 			isa = PBXGroup;
 			children = (
-				66F866791A6F062A007EE9FF /* GameScene.sks */,
 				FF53011C1A7C689500F04937 /* combatScene.sks */,
-				FF6C10841A670BED00A5C7D7 /* GameScene.swift */,
 				FF5301191A7C67F000F04937 /* combatHostScene.swift */,
 				FF5301221A7D4B4900F04937 /* combatClientScene.swift */,
 				66C593501A72D4AA00B53817 /* log.txt */,
@@ -265,7 +259,7 @@
 				TargetAttributes = {
 					FF6C103B1A6572FB00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 8A273HS9WT;
+						DevelopmentTeam = EZLTDL7P7G;
 					};
 					FF6C10501A6572FC00A5C7D7 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -303,7 +297,6 @@
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
-				66F8667A1A6F062A007EE9FF /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
 				66C593511A72D4AA00B53817 /* log.txt in Resources */,
 				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
@@ -342,7 +335,6 @@
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
 				66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */,
 				FF5301231A7D4B4900F04937 /* combatClientScene.swift in Sources */,
-				FF6C10861A670BED00A5C7D7 /* GameScene.swift in Sources */,
 				66F8668B1A6F0B72007EE9FF /* Int+Extensions.swift in Sources */,
 				66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,

@@ -9,7 +9,7 @@
 import Foundation
 
 enum MessageType: Int {
-    case GameInit, Move, GameOver, Drop
+    case GameInit, Move, GameOver, Drop, RawData
 }
 
 struct Message {
@@ -24,7 +24,7 @@ struct MessageMove {
     let posY: Float
     let rotate: Float
     let dt: Float
-    let number: Int
+    let number: UInt32
 }
 
 struct MessageGameOver {
@@ -36,4 +36,10 @@ struct MessageDrop {
     let bornPosX: Float
     let bornPosY: Float
     
+}
+
+struct MessageRawData {
+    let message: Message
+    let dx: Float
+    let dy: Float
 }
