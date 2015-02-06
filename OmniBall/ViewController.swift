@@ -57,9 +57,9 @@ class ViewController: UIViewController {
         connectionManager.controller = self
     }
     
-    @IBAction func showBrowser(sender: UIButton) {
-        self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
-    }
+//    @IBAction func showBrowser(sender: UIButton) {
+//        self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
+//    }
     
     @IBAction func showGameScene(sender: UIButton) {
 //        if connectionManager.session.connectedPeers.count > 0{

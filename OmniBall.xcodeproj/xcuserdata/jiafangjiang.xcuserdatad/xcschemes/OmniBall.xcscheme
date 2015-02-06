@@ -15,23 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF6C103B1A6572FB00A5C7D7"
-               BuildableName = "try.app"
-               BlueprintName = "try"
-               ReferencedContainer = "container:try.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF6C10501A6572FC00A5C7D7"
-               BuildableName = "tryTests.xctest"
-               BlueprintName = "tryTests"
-               ReferencedContainer = "container:try.xcodeproj">
+               BuildableName = "OmniBall.app"
+               BlueprintName = "OmniBall"
+               ReferencedContainer = "container:OmniBall.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,24 +28,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF6C10501A6572FC00A5C7D7"
-               BuildableName = "tryTests.xctest"
-               BlueprintName = "tryTests"
-               ReferencedContainer = "container:try.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF6C103B1A6572FB00A5C7D7"
-            BuildableName = "try.app"
-            BlueprintName = "try"
-            ReferencedContainer = "container:try.xcodeproj">
+            BuildableName = "OmniBall.app"
+            BlueprintName = "OmniBall"
+            ReferencedContainer = "container:OmniBall.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF6C103B1A6572FB00A5C7D7"
-            BuildableName = "try.app"
-            BlueprintName = "try"
-            ReferencedContainer = "container:try.xcodeproj">
+            BuildableName = "OmniBall.app"
+            BlueprintName = "OmniBall"
+            ReferencedContainer = "container:OmniBall.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF6C103B1A6572FB00A5C7D7"
-            BuildableName = "try.app"
-            BlueprintName = "try"
-            ReferencedContainer = "container:try.xcodeproj">
+            BuildableName = "OmniBall.app"
+            BlueprintName = "OmniBall"
+            ReferencedContainer = "container:OmniBall.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
