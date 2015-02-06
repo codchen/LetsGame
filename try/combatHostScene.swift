@@ -19,7 +19,7 @@ class combatHostScene: combatScene{
     var peersNumber: Dictionary<String, UInt32> = Dictionary<String, UInt32>()
     var number: UInt32 = 0
     
-    let maxSpeed = CGFloat(1000)
+    let maxSpeed = CGFloat(750)
 //    let staticFriction = CGFloat(0.8)
 //    let kineticFriction = CGFloat(0.4)
 //    
@@ -38,7 +38,7 @@ class combatHostScene: combatScene{
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
-        let playableRect: CGRect = CGRect(x: -me.size.width, y: playableMargin - me.size.height, width: size.width + me.size.width * 2, height: size.height - playableMargin * 2 + me.size.height * 2)
+        let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
 		println(playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
@@ -49,7 +49,8 @@ class combatHostScene: combatScene{
         
         nodesInfo[me.name!] = nodeInfo(node: me, bornPos: me.position, dropped: false)
         me.physicsBody = SKPhysicsBody(circleOfRadius: me.size.width/2)
-        
+        me.physicsBody?.restitution = 1.0
+        me.physicsBody?.allowsRotation = false
         nodes.append(me)
         
         peersNumber[me.name!] = number
@@ -79,7 +80,7 @@ class combatHostScene: combatScene{
             }
             var temp = data
             var rawData = temp.removeAtIndex(0)
-            var peerVel = CGVector(dx: CGFloat(rawData.dx) * maxSpeed, dy: CGFloat(-1 * rawData.dy) * maxSpeed)
+            var peerVel = CGVector(dx: CGFloat(rawData.dy) * maxSpeed, dy: CGFloat(-1 * rawData.dx) * maxSpeed)
             let node = childNodeWithName(name) as SKSpriteNode
             node.physicsBody?.velocity = peerVel
             peers[name] = temp
@@ -143,7 +144,7 @@ class combatHostScene: combatScene{
         var node = SKSpriteNode(imageNamed: "50x50_ball")
         node.name = peer
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
-
+		node.physicsBody?.restitution = 1.0
         peerList.append(peer)
         let pos = randomPos()
         node.position = pos

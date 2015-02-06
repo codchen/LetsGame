@@ -20,12 +20,11 @@ class combatClientScene: combatScene{
     override func didMoveToView(view: SKView) {
         identity = "Client"
         
-        
         let maxAspectRatio: CGFloat = 16.0/9.0
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
-        let playableRect: CGRect = CGRect(x: -50, y: playableMargin - 50, width: size.width + 50 * 2, height: size.height - playableMargin * 2 + 50 * 2)
+        let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         println(playableRect)
         physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -100,7 +99,7 @@ class combatClientScene: combatScene{
         nodes.append(node)
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)
         node.physicsBody!.velocity = CGVector(dx: CGFloat(message.dx), dy: CGFloat(message.dy))
-        
+        node.physicsBody?.restitution = 1.0
         // update peers-movement dictionary
         peers[node.name!] = Array<MessageMove>()
         peers[node.name!]?.append(message)
