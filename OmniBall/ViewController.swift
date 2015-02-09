@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 import MultipeerConnectivity
 import CoreMotion
+import GameKit
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString, ifHost: Bool) -> SKNode? {
@@ -34,7 +35,7 @@ extension SKNode {
     }
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GameKitHelperDelegate {
 
     let motionManager: CMMotionManager = CMMotionManager()
 
@@ -61,6 +62,11 @@ class ViewController: UIViewController {
 //        self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
 //    }
     
+    @IBAction func showMatchMakerViewController(sender: UIButton) {
+        GameKitHelper.sharedInstance.findMatch(2,
+            maxPlayers: 4, presentingViewController: self,
+            delegate: self)
+    }
     @IBAction func showGameScene(sender: UIButton) {
 //        if connectionManager.session.connectedPeers.count > 0{
 //            var error: NSError?
@@ -102,6 +108,16 @@ class ViewController: UIViewController {
         scene.motionManager = motionManager
         
         currentScene = scene
+    }
+    
+    func matchStarted() {
+        println("Match has started successfully")
+    }
+    func matchEnded() {
+        println("Match has ended")
+    }
+    func matchReceivedData(match: GKMatch, data: NSData,
+        fromPlayer player: String) {
     }
 	
     
