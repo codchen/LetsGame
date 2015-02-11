@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
+		3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */; };
+		3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E31A8BE2AB00FFD14C /* circle_selected.png */; };
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
 		66C206FA1A6EF6B700F4782C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C206F91A6EF6B700F4782C /* circle.png */; };
-		66C593511A72D4AA00B53817 /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66C593501A72D4AA00B53817 /* log.txt */; };
 		66D5BDF41A797FC100A34A42 /* soccer.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D5BDF31A797FC100A34A42 /* soccer.png */; };
 		66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D5BDF61A79BF2000A34A42 /* Message.swift */; };
 		66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */; };
@@ -24,15 +26,12 @@
 		66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866851A6F0B72007EE9FF /* SKTEffects.swift */; };
 		66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */; };
 		66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866871A6F0B72007EE9FF /* Vector3.swift */; };
-		FF53011A1A7C67F000F04937 /* combatHostScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5301191A7C67F000F04937 /* combatHostScene.swift */; };
-		FF53011D1A7C689500F04937 /* combatScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF53011C1A7C689500F04937 /* combatScene.sks */; };
-		FF5301201A7D43A300F04937 /* combatScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* combatScene.swift */; };
-		FF5301231A7D4B4900F04937 /* combatClientScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5301221A7D4B4900F04937 /* combatClientScene.swift */; };
+		FF5301201A7D43A300F04937 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* GameScene.swift */; };
 		FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */; };
 		FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10451A6572FB00A5C7D7 /* Main.storyboard */; };
 		FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10481A6572FB00A5C7D7 /* Images.xcassets */; };
 		FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */; };
-		FF6C10581A6572FC00A5C7D7 /* tryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10571A6572FC00A5C7D7 /* tryTests.swift */; };
+		FF6C10581A6572FC00A5C7D7 /* OmniBallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */; };
 		FF6C106A1A65807500A5C7D7 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */; };
 		FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10851A670BED00A5C7D7 /* ViewController.swift */; };
 		FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */; };
@@ -53,9 +52,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_selected.png; sourceTree = "<group>"; };
+		3C8530E31A8BE2AB00FFD14C /* circle_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_selected.png; sourceTree = "<group>"; };
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		66C206F91A6EF6B700F4782C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
-		66C593501A72D4AA00B53817 /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		66D5BDF31A797FC100A34A42 /* soccer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccer.png; sourceTree = "<group>"; };
 		66D5BDF61A79BF2000A34A42 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
@@ -70,19 +71,16 @@
 		66F866851A6F0B72007EE9FF /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		66F866871A6F0B72007EE9FF /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
-		FF5301191A7C67F000F04937 /* combatHostScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = combatHostScene.swift; sourceTree = "<group>"; };
-		FF53011C1A7C689500F04937 /* combatScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = combatScene.sks; sourceTree = "<group>"; };
-		FF53011F1A7D43A300F04937 /* combatScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = combatScene.swift; sourceTree = "<group>"; };
-		FF5301221A7D4B4900F04937 /* combatClientScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = combatClientScene.swift; sourceTree = "<group>"; };
-		FF6C103C1A6572FB00A5C7D7 /* try.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = try.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF53011F1A7D43A300F04937 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6C10401A6572FB00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF6C10461A6572FB00A5C7D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FF6C10481A6572FB00A5C7D7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FF6C104B1A6572FB00A5C7D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		FF6C10511A6572FC00A5C7D7 /* tryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6C10511A6572FC00A5C7D7 /* OmniBallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OmniBallTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6C10561A6572FC00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF6C10571A6572FC00A5C7D7 /* tryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tryTests.swift; sourceTree = "<group>"; };
+		FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBallTests.swift; sourceTree = "<group>"; };
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		FF6C10851A670BED00A5C7D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_with_shadow.png; sourceTree = "<group>"; };
@@ -114,6 +112,9 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				66C206F91A6EF6B700F4782C /* circle.png */,
+				3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */,
+				3C8530E31A8BE2AB00FFD14C /* circle_selected.png */,
 				66D5BDF31A797FC100A34A42 /* soccer.png */,
 				FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */,
 				FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */,
@@ -149,10 +150,9 @@
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				66D5BDF51A79BEC200A34A42 /* images */,
 				66F8667B1A6F0B72007EE9FF /* SKTUtils */,
-				66C206F91A6EF6B700F4782C /* circle.png */,
 				FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */,
-				FF6C103E1A6572FB00A5C7D7 /* try */,
-				FF6C10541A6572FC00A5C7D7 /* tryTests */,
+				FF6C103E1A6572FB00A5C7D7 /* OmniBall */,
+				FF6C10541A6572FC00A5C7D7 /* OmniBallTests */,
 				FF6C103D1A6572FB00A5C7D7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,21 +160,18 @@
 		FF6C103D1A6572FB00A5C7D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF6C103C1A6572FB00A5C7D7 /* try.app */,
-				FF6C10511A6572FC00A5C7D7 /* tryTests.xctest */,
+				FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */,
+				FF6C10511A6572FC00A5C7D7 /* OmniBallTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF6C103E1A6572FB00A5C7D7 /* try */ = {
+		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
-				FF53011C1A7C689500F04937 /* combatScene.sks */,
-				FF5301191A7C67F000F04937 /* combatHostScene.swift */,
-				FF5301221A7D4B4900F04937 /* combatClientScene.swift */,
-				66C593501A72D4AA00B53817 /* log.txt */,
+				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
 				FF6C10851A670BED00A5C7D7 /* ViewController.swift */,
-				FF53011F1A7D43A300F04937 /* combatScene.swift */,
+				FF53011F1A7D43A300F04937 /* GameScene.swift */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
 				FF6C10451A6572FB00A5C7D7 /* Main.storyboard */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,
@@ -182,6 +179,7 @@
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
 				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
 			);
+			name = OmniBall;
 			path = try;
 			sourceTree = "<group>";
 		};
@@ -193,12 +191,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FF6C10541A6572FC00A5C7D7 /* tryTests */ = {
+		FF6C10541A6572FC00A5C7D7 /* OmniBallTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF6C10571A6572FC00A5C7D7 /* tryTests.swift */,
+				FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */,
 				FF6C10551A6572FC00A5C7D7 /* Supporting Files */,
 			);
+			name = OmniBallTests;
 			path = tryTests;
 			sourceTree = "<group>";
 		};
@@ -213,9 +212,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FF6C103B1A6572FB00A5C7D7 /* try */ = {
+		FF6C103B1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF6C105B1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "try" */;
+			buildConfigurationList = FF6C105B1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "OmniBall" */;
 			buildPhases = (
 				FF6C10381A6572FB00A5C7D7 /* Sources */,
 				FF6C10391A6572FB00A5C7D7 /* Frameworks */,
@@ -225,14 +224,14 @@
 			);
 			dependencies = (
 			);
-			name = try;
+			name = OmniBall;
 			productName = try;
-			productReference = FF6C103C1A6572FB00A5C7D7 /* try.app */;
+			productReference = FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FF6C10501A6572FC00A5C7D7 /* tryTests */ = {
+		FF6C10501A6572FC00A5C7D7 /* OmniBallTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF6C105E1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "tryTests" */;
+			buildConfigurationList = FF6C105E1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "OmniBallTests" */;
 			buildPhases = (
 				FF6C104D1A6572FC00A5C7D7 /* Sources */,
 				FF6C104E1A6572FC00A5C7D7 /* Frameworks */,
@@ -243,9 +242,9 @@
 			dependencies = (
 				FF6C10531A6572FC00A5C7D7 /* PBXTargetDependency */,
 			);
-			name = tryTests;
+			name = OmniBallTests;
 			productName = tryTests;
-			productReference = FF6C10511A6572FC00A5C7D7 /* tryTests.xctest */;
+			productReference = FF6C10511A6572FC00A5C7D7 /* OmniBallTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -268,7 +267,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF6C10371A6572FB00A5C7D7 /* Build configuration list for PBXProject "try" */;
+			buildConfigurationList = FF6C10371A6572FB00A5C7D7 /* Build configuration list for PBXProject "OmniBall" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -281,8 +280,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF6C103B1A6572FB00A5C7D7 /* try */,
-				FF6C10501A6572FC00A5C7D7 /* tryTests */,
+				FF6C103B1A6572FB00A5C7D7 /* OmniBall */,
+				FF6C10501A6572FC00A5C7D7 /* OmniBallTests */,
 			);
 		};
 /* End PBXProject section */
@@ -293,14 +292,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
-				FF53011D1A7C689500F04937 /* combatScene.sks in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
+				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
+				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
-				66C593511A72D4AA00B53817 /* log.txt in Resources */,
 				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
 				FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */,
+				3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,
 				FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */,
@@ -321,20 +321,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF53011A1A7C67F000F04937 /* combatHostScene.swift in Sources */,
 				66F8668E1A6F0B72007EE9FF /* SKColor+Extensions.swift in Sources */,
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
 				66F8668C1A6F0B72007EE9FF /* SKAction+Extensions.swift in Sources */,
 				66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */,
 				FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */,
 				66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */,
-				FF5301201A7D43A300F04937 /* combatScene.swift in Sources */,
+				FF5301201A7D43A300F04937 /* GameScene.swift in Sources */,
 				66F866901A6F0B72007EE9FF /* SKTAudio.swift in Sources */,
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
 				66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */,
-				FF5301231A7D4B4900F04937 /* combatClientScene.swift in Sources */,
 				66F8668B1A6F0B72007EE9FF /* Int+Extensions.swift in Sources */,
 				66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
@@ -347,7 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF6C10581A6572FC00A5C7D7 /* tryTests.swift in Sources */,
+				FF6C10581A6572FC00A5C7D7 /* OmniBallTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +354,7 @@
 /* Begin PBXTargetDependency section */
 		FF6C10531A6572FC00A5C7D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FF6C103B1A6572FB00A5C7D7 /* try */;
+			target = FF6C103B1A6572FB00A5C7D7 /* OmniBall */;
 			targetProxy = FF6C10521A6572FC00A5C7D7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -468,7 +466,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = try/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -481,7 +479,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = try/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -500,7 +498,7 @@
 				);
 				INFOPLIST_FILE = tryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OmniBallTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/try.app/try";
 			};
 			name = Debug;
@@ -515,7 +513,7 @@
 				);
 				INFOPLIST_FILE = tryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OmniBallTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/try.app/try";
 			};
 			name = Release;
@@ -523,7 +521,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF6C10371A6572FB00A5C7D7 /* Build configuration list for PBXProject "try" */ = {
+		FF6C10371A6572FB00A5C7D7 /* Build configuration list for PBXProject "OmniBall" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF6C10591A6572FC00A5C7D7 /* Debug */,
@@ -532,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF6C105B1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "try" */ = {
+		FF6C105B1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "OmniBall" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF6C105C1A6572FC00A5C7D7 /* Debug */,
@@ -541,7 +539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF6C105E1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "tryTests" */ = {
+		FF6C105E1A6572FC00A5C7D7 /* Build configuration list for PBXNativeTarget "OmniBallTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF6C105F1A6572FC00A5C7D7 /* Debug */,

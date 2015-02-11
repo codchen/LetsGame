@@ -57,9 +57,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //        gameState = GameState.WaitingForMatch
 //    }
     
-    func sendMove(dx: Float, dy: Float, posX: Float, posY: Float, rotate: Float, dt: Float, number: UInt32){
-        var message = MessageMove(message: Message(messageType: MessageType.Move), dx: dx, dy: dy,
-            posX: posX, posY: posY, rotate: rotate, dt: dt, number: number)
+    func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval){
+        var message = MessageMove(message: Message(messageType: MessageType.Move), x: x, y: y,
+            dx: dx, dy: dy, count: count, index: index, dt: dt)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data)
     }
@@ -138,32 +138,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func session(session: MCSession!, didReceiveData data: NSData!,
         fromPeer peerID: MCPeerID!)  {
             
-            if state == 0 && !contains(peersIn, peerID){
-                if playerID == 1{
-                    hostID.append(peerID)
-                }
-                
-                peersIn.append(peerID)
-                playerID++
-            }
-            
-            else if contains(peersIn, peerID){
-//                println(peerID.displayName)
-//                println(hostID[0])
-                controller.updatePeerPos(data, peer: peerID)
-            }
-            
-            else {
-                peersIn.append(peerID)
-                println("lalala \(peersIn)")
-            }
-            // Called when a peer sends an NSData to us
-//        var message = UnsafePointer<Message>(data.bytes).memory
-//        
-//        if message.messageType == MessageType.Move {
-//            let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
-//            controller.updatePeerPos(messageMove, peer: peerID)
-//        } else if message.messageType == MessageType.Drop {
+        var message = UnsafePointer<Message>(data.bytes).memory
+        
+        if message.messageType == MessageType.Move {
+            let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
+            controller.updatePeerPos(messageMove, peer: peerID)
+        }
+//        else if message.messageType == MessageType.Drop {
 //            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
 //            controller.updatePeerDrop(messageDrop, peer: peerID)
 //        } else if message.messageType == MessageType.AddScore {

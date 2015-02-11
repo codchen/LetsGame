@@ -8,9 +8,9 @@
 
 import UIKit
 import XCTest
-import try
+import OmniBall
 
-class tryTests: XCTestCase {
+class OmniBallTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -18,13 +18,13 @@ struct Message {
 
 struct MessageMove {
     let message: Message
+    let x: Float
+    let y: Float
     let dx: Float
     let dy: Float
-    let posX: Float
-    let posY: Float
-    let rotate: Float
-    let dt: Float
-    let number: UInt32
+    let count: UInt32
+    let index: UInt16
+    let dt: NSTimeInterval
 }
 
 struct MessageGameOver {

@@ -12,22 +12,16 @@ import MultipeerConnectivity
 import CoreMotion
 
 extension SKNode {
-    class func unarchiveFromFile(file : NSString, ifHost: Bool) -> SKNode? {
+    class func unarchiveFromFile(file : NSString) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            if ifHost{
-                let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as combatHostScene
-                archiver.finishDecoding()
-                return scene
-            }
-            else{
-                let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as combatClientScene
-                archiver.finishDecoding()
-                return scene
-            }
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+            archiver.finishDecoding()
+            return scene
+            
         } else {
             return nil
         }
@@ -39,7 +33,7 @@ class ViewController: UIViewController {
     let motionManager: CMMotionManager = CMMotionManager()
 
     var connectionManager: ConnectionManager!
-    var currentScene: combatScene!
+    var currentScene: GameScene!
     var alias: String!
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var btnPlay: UIButton!
@@ -62,21 +56,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showGameScene(sender: UIButton) {
-//        if connectionManager.session.connectedPeers.count > 0{
-//            var error: NSError?
-//            connectionManager.session.sendData(NSKeyedArchiver.archivedDataWithRootObject(1), toPeers: connectionManager.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &error)
-//            if (error != nil){
-//                println(error?.description)
-//            }
-//        }
         
-        var scene: combatScene!
-        if connectionManager.playerID == 1{
-            scene = combatHostScene.unarchiveFromFile("combatScene", ifHost: true) as combatHostScene
-        }
-        else{
-            scene = combatClientScene.unarchiveFromFile("combatScene", ifHost: false) as combatClientScene
-        }
+        var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
         // Configure the view.
         let skView = SKView(frame: self.view.frame)
         self.view.addSubview(skView)
@@ -105,47 +86,14 @@ class ViewController: UIViewController {
     }
 	
     
-    func updatePeerPos(data: NSData, peer: MCPeerID) {
+    func updatePeerPos(message: MessageMove, peer: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
-            //var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
-            if self.currentScene != nil{
-                if self.currentScene.identity == "Host"{
-                    if contains(self.currentScene.peerList, "ball" + peer.displayName){
-                        self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
-//                        println("bibibi")
-                    } else {
-                        self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
-//                    	println("oh bi")
-                    }
-                }
-                else {
-                    var message = UnsafePointer<MessageMove>(data.bytes).memory
-                    println("\(message.number) + is what")
-                    println(self.currentScene.peerList)
-                    if contains(self.currentScene.peerList, String(message.number)){
-                        self.currentScene.updatePeers(data, peer: "ball" + peer.displayName)
-//                        println("bi")
-                    } else {
-                        self.currentScene.addPlayer(data, peer: "ball" + peer.displayName)
-                        println("bibi")
-                    }
-                }
+            if self.currentScene != nil {
+                
             }
         }
     }
     
-//    func updatePeerDrop(message: ConnectionManager.MessageDrop, peer: MCPeerID) {
-//        dispatch_async(dispatch_get_main_queue()){
-//            if self.currentScene != nil {
-//                self.currentScene.dropPlayer(message, peer: peer.displayName)
-//            }
-//        }
-//    }
-//    
-//    func addScore(message: ConnectionManager.MessageAddScore) {
-//        self.currentScene.addScore(message.name)
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
