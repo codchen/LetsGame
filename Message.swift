@@ -9,11 +9,19 @@
 import Foundation
 
 enum MessageType: Int {
-    case GameInit, Move, GameOver, Drop, RawData
+    case GameStart, Move, GameOver, Drop, RawData
+}
+
+enum GameState: Int {
+    case WaitingForStart, InGame, Playing, Done
 }
 
 struct Message {
     let messageType: MessageType
+}
+
+struct MessageGameStart {
+    let message: Message
 }
 
 struct MessageMove {

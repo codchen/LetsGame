@@ -57,39 +57,41 @@ class ViewController: UIViewController {
     
     @IBAction func showGameScene(sender: UIButton) {
         
-        var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
-        // Configure the view.
-        let skView = SKView(frame: self.view.frame)
-        self.view.addSubview(skView)
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        skView.showsPhysics = false
+        if connectionManager.session.connectedPeers.count > 0 {
+            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
+            // Configure the view.
+            let skView = SKView(frame: self.view.frame)
+            self.view.addSubview(skView)
+            skView.showsFPS = true
+            skView.showsNodeCount = true
+            skView.showsPhysics = false
         
         
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = false
+            /* Sprite Kit applies additional optimizations to improve rendering performance */
+            skView.ignoresSiblingOrder = false
         
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
+            /* Set the scale mode to scale to fit the window */
+            scene.scaleMode = .AspectFill
         
-        scene.connection = connectionManager
-        connectionManager.state = 1
+            scene.connection = connectionManager
+            connectionManager.gameState = GameState.InGame
 
-        skView.presentScene(scene)
+            skView.presentScene(scene)
         
-        motionManager.accelerometerUpdateInterval = 0.05
-        motionManager.startAccelerometerUpdates()
+            motionManager.accelerometerUpdateInterval = 0.05
+            motionManager.startAccelerometerUpdates()
         
-        scene.motionManager = motionManager
+            scene.motionManager = motionManager
         
-        currentScene = scene
+            currentScene = scene
+        }
     }
 	
     
     func updatePeerPos(message: MessageMove, peer: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.currentScene != nil {
-                
+                self.currentScene.updatePeerPos(message)
             }
         }
     }

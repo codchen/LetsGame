@@ -17,19 +17,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID: MCPeerID!
-    var hostID: [AnyObject] = []
-    var peersIn: [MCPeerID] = []
-    var state = 0
+    var peersInGame: [MCPeerID] = []
     var playerID = 1
     var controller: ViewController!
     var randomNumber: UInt32!
-    var gameState: GameState!
-    var isPlayer1: Bool = false
-    var receivedAllRandomNumbers: Bool = false
-    
-    enum GameState: Int {
-        case WaitingForMatch, WaitingForRandomNumber, WaitingForStart, Playing, Done
-    }
+    var gameState: GameState = GameState.WaitingForStart
+    var playerID: Int = 0   // the player ID of current player
     
     
     override init() {
@@ -70,7 +63,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data)
     }
     
-
+    func sendGameStart(){
+        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart))
+        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
+        sendData(data)
+    }
     
     func sendRawData(dx: Float, dy: Float){
         var message = MessageRawData(message: Message(messageType: MessageType.RawData), dx: dx, dy: dy)
@@ -143,6 +140,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
             controller.updatePeerPos(messageMove, peer: peerID)
+        } else if message.messageType == MessageType.GameStart {
+            if gameState != GameState.InGame {
+                playerID++
+            }
+            peersInGame.append(peerID)
+            
         }
 //        else if message.messageType == MessageType.Drop {
 //            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory

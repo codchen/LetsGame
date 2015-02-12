@@ -19,6 +19,10 @@ struct nodeInfo {
     var index: UInt16
 }
 
+enum PlayerColors: Int{
+    case Green, Red, Yellow, Blue
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
@@ -33,7 +37,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var opponentsInfo: [nodeInfo] = []
     var count: UInt16 = 0
     
-    var session: MCSession!
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
     var currentTime: NSDate!
@@ -51,20 +54,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //hard coded!!
     let latency = 0.17
     
-    func setUpLives() {
-        
+    var playerColor: PlayerColors!
+    
+    override init() {
+        connection.sendGameStart()
     }
     
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        enumerateChildNodesWithName("node1"){node, _ in
+    func setUpUI(playerColor: PlayerColors) {
+        switch playerColor {
+            case .Green
+                setUpPlayers("node1", playerOpp: "node2")
+            case .Red
+                setUpPlayers("node2", playerOpp: "node1")
+        }
+    }
+    
+    func setUpPlayers(playerSelf: String, playerOpp: String){
+        enumerateChildNodesWithName(playerSelf){node, _ in
             var node1 = node as SKSpriteNode
             node.physicsBody?.linearDamping = 0
             node.physicsBody?.restitution = 0.8
             self.myNodes.append(node1)
         }
         
-        enumerateChildNodesWithName("node2"){node, _ in
+        enumerateChildNodesWithName(playerOpp){node, _ in
             var node2 = node as SKSpriteNode
             node.physicsBody?.linearDamping = 0
             node.physicsBody?.restitution = 0.8
@@ -73,7 +86,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.opponentsInfo.append(nodeInfo(x: node.position.x, y: node.position.y, dx: 0, dy: 0, dt: 0, index: self.count))
             self.count++
         }
+    }
+    
+    func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
+        if !isSelected {
+            switch playerColor {
+            case .Green
+                return "80x80_green_ball"
+            case .Red
+                return "80x80_red_ball"
+            case .Yellow
+                return "80x80_yellow_ball"
+            case .Blue
+                return "80x80_blue_ball"
+            }
+        }
         
+    }
+    
+    override func didMoveToView(view: SKView) {
+        
+        playerColor = PlayerColors(connection.playerID)
+        setUpUI(playerColor)
+        /* Setup your scene here */
+
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         
@@ -117,6 +153,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        enumerateChildNodesWithName("hole"){hole, _ in
+            for index in 0...(self.myNodes.count - 1){
+                if self.myNodes[index].position.distanceTo(hole.position)<30{
+                    self.myDeadNodes.insert(index, atIndex: 0)
+                }
+            }
+            for index in self.myDeadNodes{
+                self.deleteMyNode(index)
+            }
+        }
     }
     
     override func didEvaluateActions() {
@@ -146,8 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             else {
                 selectedNode.physicsBody?.velocity = CGVector(dx: loc.x - selectedNode.position.x, dy: loc.y - selectedNode.position.y)
                 selected = false
-                selectedNode.texture = SKTexture(imageNamed: "50x50_ball")
-                //selectedNode.texture = SKTexture(imageNamed: "circle")
+                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
                 selectedNode = nil
                 //locked = true
                 sendMove()
