@@ -40,6 +40,9 @@
 		FF6C10581A6572FC00A5C7D7 /* OmniBallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */; };
 		FF6C106A1A65807500A5C7D7 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */; };
 		FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10851A670BED00A5C7D7 /* ViewController.swift */; };
+		FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */; };
+		FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA0D60D1A8D44F0000D1C37 /* 2048x1536_you_lose.png */; };
+		FFA0D6101A8D44F0000D1C37 /* 2048x1536_you_win.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA0D60E1A8D44F0000D1C37 /* 2048x1536_you_win.png */; };
 		FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */; };
 		FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */; };
 		FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */ = {isa = PBXBuildFile; fileRef = FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */; };
@@ -95,6 +98,9 @@
 		FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBallTests.swift; sourceTree = "<group>"; };
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		FF6C10851A670BED00A5C7D7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		FFA0D60D1A8D44F0000D1C37 /* 2048x1536_you_lose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2048x1536_you_lose.png; sourceTree = "<group>"; };
+		FFA0D60E1A8D44F0000D1C37 /* 2048x1536_you_win.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2048x1536_you_win.png; sourceTree = "<group>"; };
 		FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_with_shadow.png; sourceTree = "<group>"; };
 		FFB3F56A1A754DB100DEE6B3 /* 50x50_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball.png; sourceTree = "<group>"; };
 		FFB3F56B1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2048x1536_board_with_boarder.png; sourceTree = SOURCE_ROOT; };
@@ -124,6 +130,8 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FFA0D60D1A8D44F0000D1C37 /* 2048x1536_you_lose.png */,
+				FFA0D60E1A8D44F0000D1C37 /* 2048x1536_you_win.png */,
 				FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */,
 				FF4C71021A8D322800FB3622 /* 80x80_green_ball.png */,
 				FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */,
@@ -190,6 +198,7 @@
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
 				FF6C10851A670BED00A5C7D7 /* ViewController.swift */,
 				FF53011F1A7D43A300F04937 /* GameScene.swift */,
+				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
 				FF6C10451A6572FB00A5C7D7 /* Main.storyboard */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,
@@ -309,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
 				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
@@ -328,6 +338,7 @@
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,
 				FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */,
+				FFA0D6101A8D44F0000D1C37 /* 2048x1536_you_win.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +372,7 @@
 				66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,
+				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
 				FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

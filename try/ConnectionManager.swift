@@ -18,7 +18,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var session : MCSession!
     var peerID: MCPeerID!
     var peersInGame: [MCPeerID] = []
-    var playerID = 1
     var controller: ViewController!
     var randomNumber: UInt32!
     var gameState: GameState = GameState.WaitingForStart

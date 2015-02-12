@@ -20,7 +20,7 @@ struct nodeInfo {
 }
 
 enum PlayerColors: Int{
-    case Green, Red, Yellow, Blue
+    case Green = 0, Red, Yellow, Blue
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -36,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var opponentsUpdated: [Bool] = []
     var opponentsInfo: [nodeInfo] = []
     var count: UInt16 = 0
+    
+    var myDeadNodes: [Int] = []
     
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
@@ -55,16 +57,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let latency = 0.17
     
     var playerColor: PlayerColors!
+    var gameOver: Bool = false
     
-    override init() {
-        connection.sendGameStart()
-    }
     
     func setUpUI(playerColor: PlayerColors) {
         switch playerColor {
-            case .Green
+        case .Green:
                 setUpPlayers("node1", playerOpp: "node2")
-            case .Red
+        case .Red:
                 setUpPlayers("node2", playerOpp: "node1")
         }
     }
@@ -91,13 +91,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
         if !isSelected {
             switch playerColor {
-            case .Green
+            case .Green:
                 return "80x80_green_ball"
-            case .Red
+            case .Red:
                 return "80x80_red_ball"
-            case .Yellow
+            case .Yellow:
                 return "80x80_yellow_ball"
-            case .Blue
+            case .Blue:
                 return "80x80_blue_ball"
             }
         }
@@ -106,7 +106,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-        playerColor = PlayerColors(connection.playerID)
+        connection.sendGameStart()
+        
+        playerColor = PlayerColors(rawValue: connection.playerID)
         setUpUI(playerColor)
         /* Setup your scene here */
 
@@ -152,6 +154,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func deleteMyNode(index: Int){
+        myNodes[index].removeFromParent()
+        myNodes.removeAtIndex(index)
+        sendDead(index)
+    }
+    
+    func deleteOpponent(index: Int){
+        opponents[index].removeFromParent()
+        opponents.removeAtIndex(index)
+        opponentsInfo.removeAtIndex(index)
+        opponentsUpdated.removeAtIndex(index)
+    }
+    
     override func update(currentTime: CFTimeInterval) {
         enumerateChildNodesWithName("hole"){hole, _ in
             for index in 0...(self.myNodes.count - 1){
@@ -162,6 +177,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for index in self.myDeadNodes{
                 self.deleteMyNode(index)
             }
+        }
+        if !gameOver {
+            checkGameOver()
         }
     }
     
@@ -200,6 +218,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func checkGameOver() {
+        if myNodes.count == 0 {
+            gameOver = true
+            let gameOverScene = GameOverScene(size: size, won: false)
+            gameOverScene.scaleMode = scaleMode
+            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+            view?.presentScene(gameOverScene, transition: reveal)
+        }
+    }
+    
     func updatePeerPos(message: MessageMove) {
         self.currentTime = NSDate()
         if (message.count > lastCount){
@@ -211,12 +239,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func sendMove(){
-        if session.connectedPeers.count >= 1{
-            for index in 0...(myNodes.count-1){
-                
-                connection.sendMove(Float(myNodes[index].position.x), y: Float(myNodes[index].position.y), dx: Float(myNodes[index].physicsBody!.velocity.dx), dy: Float(myNodes[index].physicsBody!.velocity.dy), count: c, index: UInt16(index), dt: NSDate().timeIntervalSince1970)
+        for index in 0...(myNodes.count-1){
+        
+            connection.sendMove(Float(myNodes[index].position.x), y: Float(myNodes[index].position.y), dx: Float(myNodes[index].physicsBody!.velocity.dx), dy: Float(myNodes[index].physicsBody!.velocity.dy), count: c, index: UInt16(index), dt: NSDate().timeIntervalSince1970)
                 c++
-            }
         }
     }
 }
