@@ -96,6 +96,22 @@ class ViewController: UIViewController {
         }
     }
     
+    func updatePeerDeath(message: MessageDead){
+        dispatch_async(dispatch_get_main_queue()){
+            if self.currentScene != nil{
+                self.currentScene.opponentDeleteIndex = message.index
+            }
+        }
+    }
+    
+    func gameOver(){
+        dispatch_async(dispatch_get_main_queue()){
+            if self.currentScene != nil{
+                self.currentScene.gameOver(won: true)
+            }
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

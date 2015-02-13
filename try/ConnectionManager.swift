@@ -68,12 +68,24 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data)
     }
     
-    func sendRawData(dx: Float, dy: Float){
-        var message = MessageRawData(message: Message(messageType: MessageType.RawData), dx: dx, dy: dy)
-        let data = NSData(bytes: &message, length: sizeof(MessageRawData))
-        sendToHost(data)
+    func sendDeath(index: Int){
+        var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index)
+        let data = NSData(bytes: &message, length: sizeof(MessageDead))
+        sendData(data)
     }
-//    
+    
+    func sendGameOver(){
+        var message = MessageGameOver(message: Message(messageType: MessageType.GameOver))
+        let data = NSData(bytes: &message, length: sizeof(MessageGameOver))
+        sendData(data)
+    }
+    
+//    func sendRawData(dx: Float, dy: Float){
+//        var message = MessageRawData(message: Message(messageType: MessageType.RawData), dx: dx, dy: dy)
+//        let data = NSData(bytes: &message, length: sizeof(MessageRawData))
+//        sendToHost(data)
+//    }
+//
 //    func sendDataTo(data: NSData, peer: MCPeerID){
 //        var error : NSError?
 //        if session.connectedPeers.count != 0 {
@@ -87,19 +99,19 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //        }
 //    }
     
-    func sendToHost(data: NSData){
-        var error: NSError?
-        if hostID.count > 0{
-            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Unreliable, error: &error)
-            
-            if !success{
-                if let error = error{
-                    println("Error sending data:\(error.localizedDescription)")
-
-                }
-            }
-        }
-    }
+//    func sendToHost(data: NSData){
+//        var error: NSError?
+//        if hostID.count > 0{
+//            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Unreliable, error: &error)
+//            
+//            if !success{
+//                if let error = error{
+//                    println("Error sending data:\(error.localizedDescription)")
+//
+//                }
+//            }
+//        }
+//    }
     
     func sendData(data: NSData){
         
@@ -144,7 +156,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 playerID++
             }
             peersInGame.append(peerID)
-            
+        } else if message.messageType == MessageType.Dead{
+            let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
+            controller.updatePeerDeath(messageDead)
+        } else if message.messageType == MessageType.GameOver {
+            peersInGame.removeAll(keepCapacity: false)
+            controller.gameOver()
         }
 //        else if message.messageType == MessageType.Drop {
 //            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory

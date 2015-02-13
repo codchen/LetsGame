@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var opponentsUpdated: [Bool] = []
     var opponentsInfo: [nodeInfo] = []
     var count: UInt16 = 0
+    var opponentDeleteIndex = -1
     
     var myDeadNodes: [Int] = []
     
@@ -66,19 +67,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 setUpPlayers("node1", playerOpp: "node2")
         case .Red:
                 setUpPlayers("node2", playerOpp: "node1")
+        default:
+            println("error in setup UI")
         }
     }
     
     func setUpPlayers(playerSelf: String, playerOpp: String){
         enumerateChildNodesWithName(playerSelf){node, _ in
             var node1 = node as SKSpriteNode
-            node.physicsBody?.linearDamping = 0
-            node.physicsBody?.restitution = 0.8
+            node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
+            node1.physicsBody?.linearDamping = 0
+            node1.physicsBody?.restitution = 0.8
             self.myNodes.append(node1)
         }
         
         enumerateChildNodesWithName(playerOpp){node, _ in
             var node2 = node as SKSpriteNode
+            node2.physicsBody = SKPhysicsBody(circleOfRadius: node2.size.width / 2 - 10)
             node.physicsBody?.linearDamping = 0
             node.physicsBody?.restitution = 0.8
             self.opponents.append(node2)
@@ -101,7 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 return "80x80_blue_ball"
             }
         }
-        
+        return "error"
     }
     
     override func didMoveToView(view: SKView) {
@@ -139,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func update_peer_dead_reckoning(){
-        for index in 0...(opponents.count-1){
+        for var index = 0; index < self.opponents.count; ++index{
             if opponentsUpdated[index] == true{
                 currentInfo = opponentsInfo[index]
                 //opponents[index].physicsBody!.velocity = CGVector(dx: currentInfo.dx, dy: currentInfo.dy)
@@ -155,6 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deleteMyNode(index: Int){
+        println("\(index)")
         myNodes[index].removeFromParent()
         myNodes.removeAtIndex(index)
         sendDead(index)
@@ -168,8 +174,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        if !gameOver {
+            checkGameOver()
+        }
+        
         enumerateChildNodesWithName("hole"){hole, _ in
-            for index in 0...(self.myNodes.count - 1){
+            for var index = 0; index < self.myNodes.count; ++index{
                 if self.myNodes[index].position.distanceTo(hole.position)<30{
                     self.myDeadNodes.insert(index, atIndex: 0)
                 }
@@ -177,10 +188,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for index in self.myDeadNodes{
                 self.deleteMyNode(index)
             }
+            
+            self.myDeadNodes = []
         }
-        if !gameOver {
-            checkGameOver()
+        
+        if opponentDeleteIndex != -1{
+            deleteOpponent(opponentDeleteIndex)
+            opponentDeleteIndex = -1
         }
+        
+        
     }
     
     override func didEvaluateActions() {
@@ -221,11 +238,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkGameOver() {
         if myNodes.count == 0 {
             gameOver = true
-            let gameOverScene = GameOverScene(size: size, won: false)
-            gameOverScene.scaleMode = scaleMode
-            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            view?.presentScene(gameOverScene, transition: reveal)
+            connection.sendGameOver()
+            gameOver(won: false)
         }
+    }
+    
+    func gameOver(#won: Bool) {
+        connection.gameState = GameState.Done
+        connection.playerID = 0
+        connection.peersInGame.removeAll(keepCapacity: false)
+        let gameOverScene = GameOverScene(size: size, won: won)
+        gameOverScene.scaleMode = scaleMode
+        gameOverScene.controller = connection.controller
+        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        view?.presentScene(gameOverScene, transition: reveal)
     }
     
     func updatePeerPos(message: MessageMove) {
@@ -238,9 +264,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func sendDead(index: Int){
+        connection.sendDeath(index)
+    }
+    
     func sendMove(){
-        for index in 0...(myNodes.count-1){
-        
+        for var index = 0; index < self.myNodes.count; ++index{
             connection.sendMove(Float(myNodes[index].position.x), y: Float(myNodes[index].position.y), dx: Float(myNodes[index].physicsBody!.velocity.dx), dy: Float(myNodes[index].physicsBody!.velocity.dy), count: c, index: UInt16(index), dt: NSDate().timeIntervalSince1970)
                 c++
         }

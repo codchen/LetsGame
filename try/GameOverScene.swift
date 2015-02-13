@@ -12,6 +12,7 @@ import SpriteKit
 class GameOverScene: SKScene {
     let won: Bool
     var replayBtn: SKSpriteNode!
+    var controller: ViewController!
     
     init(size: CGSize, won: Bool) {
         self.won = won
@@ -48,12 +49,14 @@ class GameOverScene: SKScene {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         if replayBtn.containsPoint(loc) {
-            self.runAction(SKAction.runBlock {
-                let myScene = GameScene()
+
+                let myScene = GameScene.unarchiveFromFile("GameScene") as GameScene
+                myScene.connection = controller.connectionManager
+                myScene.connection.gameState = GameState.InGame
                 myScene.scaleMode = self.scaleMode
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 self.view?.presentScene(myScene, transition: reveal)
-            })
+            
         
         }
         
