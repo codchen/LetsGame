@@ -84,7 +84,6 @@ class ViewController: UIViewController {
             scene.scaleMode = .AspectFill
         
             scene.connection = connectionManager
-            connectionManager.gameState = .InGame
             motionManager.accelerometerUpdateInterval = 0.05
             motionManager.startAccelerometerUpdates()
         

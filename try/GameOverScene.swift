@@ -13,6 +13,7 @@ class GameOverScene: SKScene {
     let won: Bool
     var replayBtn: SKSpriteNode!
     var controller: ViewController!
+    var connection: ConnectionManager!
     
     init(size: CGSize, won: Bool) {
         self.won = won
@@ -42,17 +43,19 @@ class GameOverScene: SKScene {
         replayBtn.name = "replay"
         replayBtn.position = CGPoint(x: size.width - 300, y: 300)
         addChild(replayBtn)
+        
+        connection = controller.connectionManager
+        connection.generateRandomNumber()
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        if replayBtn.containsPoint(loc) {
+        if replayBtn.containsPoint(loc) && connection.gameState == .WaitingForStart{
 
                 let myScene = GameScene.unarchiveFromFile("GameScene") as GameScene
                 myScene.connection = controller.connectionManager
-                myScene.connection.gameState = GameState.InGame
                 myScene.scaleMode = self.scaleMode
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 self.view?.presentScene(myScene, transition: reveal)

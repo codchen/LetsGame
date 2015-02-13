@@ -121,7 +121,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-//        connection.sendGameStart()
+        connection.gameState = .InGame
         
         playerColor = PlayerColors(rawValue: connection.playerID)
         println("playerID is \(connection.playerID)")
@@ -257,9 +257,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
-        connection.gameState = GameState.Done
+        connection.gameState = .Done
         connection.playerID = 0
-        connection.peersInGame.removeAll(keepCapacity: false)
+//        connection.peersInGame.removeAll(keepCapacity: false)
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
