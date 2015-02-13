@@ -20,7 +20,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var peersInGame: [MCPeerID] = []
     var controller: ViewController!
     var randomNumber: UInt32!
-    var gameState: GameState = GameState.WaitingForStart
+    var gameState: GameState = .WaitingForMatch
     var playerID: Int = 0   // the player ID of current player
     
     
@@ -44,10 +44,18 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         self.assistant.start()
     }
     
-//    func generateRandomNumber(){
-//        self.randomNumber = arc4random()
-//        gameState = GameState.WaitingForMatch
-//    }
+    func generateRandomNumber(){
+        randomNumber = arc4random()
+        gameState = .WaitingForRandomNumber
+        println("My Random Number is \(randomNumber)")
+        sendRandomNumber(randomNumber)
+    }
+    
+    func sendRandomNumber(number: UInt32){
+        var message = MessageRandomNumber(message: Message(messageType: MessageType.RandomNumber), number: number)
+        let data = NSData(bytes: &message, length: sizeof(MessageRandomNumber))
+        sendData(data)
+    }
     
     func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval){
         var message = MessageMove(message: Message(messageType: MessageType.Move), x: x, y: y,
@@ -56,17 +64,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data)
     }
     
-    func sendDrop(bornPosX: Float, bornPosY: Float) {
-    	var message = MessageDrop(message: Message(messageType: MessageType.Drop), bornPosX: bornPosX, bornPosY: bornPosY)
-        let data = NSData(bytes: &message, length: sizeof(MessageDrop))
-        sendData(data)
-    }
-    
-    func sendGameStart(){
-        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart))
-        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
-        sendData(data)
-    }
+//    func sendGameStart(){
+//        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart))
+//        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
+//        sendData(data)
+//    }
     
     func sendDeath(index: Int){
         var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index)
@@ -79,39 +81,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         let data = NSData(bytes: &message, length: sizeof(MessageGameOver))
         sendData(data)
     }
-    
-//    func sendRawData(dx: Float, dy: Float){
-//        var message = MessageRawData(message: Message(messageType: MessageType.RawData), dx: dx, dy: dy)
-//        let data = NSData(bytes: &message, length: sizeof(MessageRawData))
-//        sendToHost(data)
-//    }
-//
-//    func sendDataTo(data: NSData, peer: MCPeerID){
-//        var error : NSError?
-//        if session.connectedPeers.count != 0 {
-//            let success = session.sendData(data, toPeers: [peer], withMode: MCSessionSendDataMode.Reliable, error: &error)
-//            
-//            if !success {
-//                if let error = error {
-//                    println("Error sending data:\(error.localizedDescription)")
-//                }
-//            }
-//        }
-//    }
-    
-//    func sendToHost(data: NSData){
-//        var error: NSError?
-//        if hostID.count > 0{
-//            let success = session.sendData(data, toPeers: hostID, withMode: MCSessionSendDataMode.Unreliable, error: &error)
-//            
-//            if !success{
-//                if let error = error{
-//                    println("Error sending data:\(error.localizedDescription)")
-//
-//                }
-//            }
-//        }
-//    }
     
     func sendData(data: NSData){
         
@@ -132,7 +101,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         browserViewController: MCBrowserViewController!)  {
             // Called when the browser view controller is dismissed (ie the Done
             // button was tapped)
-            
+            generateRandomNumber()
             controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -151,16 +120,26 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
             controller.updatePeerPos(messageMove, peer: peerID)
-        } else if message.messageType == MessageType.GameStart {
-            if gameState != GameState.InGame {
-                playerID++
+        } else if message.messageType == MessageType.RandomNumber {
+            let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
+            if gameState != .WaitingForRandomNumber {
+                generateRandomNumber()
             }
-            peersInGame.append(peerID)
+            if messageRandomNumber.number < self.randomNumber {
+                playerID = 0
+                gameState = .WaitingForStart
+            } else if messageRandomNumber.number > self.randomNumber{
+                playerID = 1
+                gameState = .WaitingForStart
+            } else {
+                generateRandomNumber()
+            }
+            
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
             controller.updatePeerDeath(messageDead)
         } else if message.messageType == MessageType.GameOver {
-            peersInGame.removeAll(keepCapacity: false)
+//            peersInGame.removeAll(keepCapacity: false)
             controller.gameOver()
         }
 //        else if message.messageType == MessageType.Drop {

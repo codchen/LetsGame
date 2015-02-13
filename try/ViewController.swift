@@ -66,10 +66,11 @@ class ViewController: UIViewController {
     
     @IBAction func showGameScene(sender: UIButton) {
         
-        if connectionManager.session.connectedPeers.count > 0 {
+        if connectionManager.session.connectedPeers.count > 0 &&
+            connectionManager.gameState == .WaitingForStart {
             var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
-            // Configure the view.
             let skView = SKView(frame: self.view.frame)
+            // Configure the view.
             self.view.addSubview(skView)
             skView.showsFPS = true
             skView.showsNodeCount = true
@@ -83,16 +84,14 @@ class ViewController: UIViewController {
             scene.scaleMode = .AspectFill
         
             scene.connection = connectionManager
-            connectionManager.gameState = GameState.InGame
-
-            skView.presentScene(scene)
-        
+            connectionManager.gameState = .InGame
             motionManager.accelerometerUpdateInterval = 0.05
             motionManager.startAccelerometerUpdates()
         
             scene.motionManager = motionManager
             
             currentView = skView
+            skView.presentScene(scene)
         }
     }
 	
