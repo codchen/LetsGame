@@ -62,5 +62,8 @@ class GameOverScene: SKScene {
         
     }
 
+    override func className() -> String{
+        return "GameOverScene"
+    }
     
 }

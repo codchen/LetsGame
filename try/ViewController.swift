@@ -28,13 +28,22 @@ extension SKNode {
     }
 }
 
+extension SKScene {
+    func className() -> String{
+        return "SKScene"
+    }
+}
+
 class ViewController: UIViewController {
 
     let motionManager: CMMotionManager = CMMotionManager()
 
     var connectionManager: ConnectionManager!
-    var currentScene: GameScene!
     var alias: String!
+    
+    var currentView: SKView!
+    var currentGameScene: GameScene!
+    
     @IBOutlet weak var btnConnect: UIButton!
     @IBOutlet weak var btnPlay: UIButton!
     
@@ -64,7 +73,7 @@ class ViewController: UIViewController {
             self.view.addSubview(skView)
             skView.showsFPS = true
             skView.showsNodeCount = true
-            skView.showsPhysics = false
+            skView.showsPhysics = true
         
         
             /* Sprite Kit applies additional optimizations to improve rendering performance */
@@ -82,32 +91,34 @@ class ViewController: UIViewController {
             motionManager.startAccelerometerUpdates()
         
             scene.motionManager = motionManager
-        
-            currentScene = scene
+            
+            currentView = skView
         }
     }
 	
     
     func updatePeerPos(message: MessageMove, peer: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
-            if self.currentScene != nil {
-                self.currentScene.updatePeerPos(message)
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene.updatePeerPos(message)
             }
         }
     }
     
     func updatePeerDeath(message: MessageDead){
         dispatch_async(dispatch_get_main_queue()){
-            if self.currentScene != nil{
-                self.currentScene.opponentDeleteIndex = message.index
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene.opponentDeleteIndex = message.index
             }
         }
     }
     
     func gameOver(){
         dispatch_async(dispatch_get_main_queue()){
-            if self.currentScene != nil{
-                self.currentScene.gameOver(won: true)
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene.gameOver(won: true)
             }
         }
     }

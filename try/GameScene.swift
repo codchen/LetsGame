@@ -170,7 +170,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deleteMyNode(index: Int){
-        println("\(index)")
         myNodes[index].removeFromParent()
         myNodes.removeAtIndex(index)
         sendDead(index)
@@ -282,5 +281,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             connection.sendMove(Float(myNodes[index].position.x), y: Float(myNodes[index].position.y), dx: Float(myNodes[index].physicsBody!.velocity.dx), dy: Float(myNodes[index].physicsBody!.velocity.dy), count: c, index: UInt16(index), dt: NSDate().timeIntervalSince1970)
                 c++
         }
+    }
+    
+    override func className() -> String{
+        return "GameScene"
     }
 }
