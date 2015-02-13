@@ -105,8 +105,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .Blue:
                 return "80x80_blue_ball"
             }
+        } else {
+            switch playerColor {
+            case .Green:
+                return "80x80_green"
+            case .Red:
+                return "80x80_red"
+            case .Yellow:
+                return "80x80_yellow_ball"
+            case .Blue:
+                return "80x80_blue_ball"
+            }
         }
-        return "error"
     }
     
     override func didMoveToView(view: SKView) {
@@ -217,8 +227,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 for node in myNodes{
                     if node.containsPoint(loc){
                         selectedNode = node
-                        selectedNode.texture = SKTexture(imageNamed: "50x50_ball_selected")
-                        //selectedNode.texture = SKTexture(imageNamed: "circle_selected")
+                        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(playerColor, isSelected: true))
                         selected = true
                         break
                     }

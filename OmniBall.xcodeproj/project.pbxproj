@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C7E842D1A8E53F100212817 /* 80x80_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842A1A8E53F100212817 /* 80x80_blue.png */; };
+		3C7E842E1A8E53F100212817 /* 80x80_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842B1A8E53F100212817 /* 80x80_green.png */; };
+		3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842C1A8E53F100212817 /* 80x80_red.png */; };
 		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
 		3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */; };
 		3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E31A8BE2AB00FFD14C /* circle_selected.png */; };
@@ -61,6 +64,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C7E842A1A8E53F100212817 /* 80x80_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue.png; sourceTree = "<group>"; };
+		3C7E842B1A8E53F100212817 /* 80x80_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_green.png; sourceTree = "<group>"; };
+		3C7E842C1A8E53F100212817 /* 80x80_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red.png; sourceTree = "<group>"; };
 		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_selected.png; sourceTree = "<group>"; };
 		3C8530E31A8BE2AB00FFD14C /* circle_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_selected.png; sourceTree = "<group>"; };
@@ -133,6 +139,9 @@
 				FFA0D60D1A8D44F0000D1C37 /* 2048x1536_you_lose.png */,
 				FFA0D60E1A8D44F0000D1C37 /* 2048x1536_you_win.png */,
 				FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */,
+				3C7E842A1A8E53F100212817 /* 80x80_blue.png */,
+				3C7E842B1A8E53F100212817 /* 80x80_green.png */,
+				3C7E842C1A8E53F100212817 /* 80x80_red.png */,
 				FF4C71021A8D322800FB3622 /* 80x80_green_ball.png */,
 				FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */,
 				FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */,
@@ -320,12 +329,15 @@
 			files = (
 				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
 				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
+				3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
+				3C7E842D1A8E53F100212817 /* 80x80_blue.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
+				3C7E842E1A8E53F100212817 /* 80x80_green.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
 				FF4C71081A8D322800FB3622 /* 80x80_green_ball.png in Resources */,
