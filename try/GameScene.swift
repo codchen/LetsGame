@@ -135,7 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
-        physicsBody = SKPhysicsBody(edgeLoopFromRect: playableRect)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -182,24 +181,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponentsUpdated.removeAtIndex(index)
     }
     
+    func withinBorder(pos: CGPoint) -> Bool{
+        if pos.x < 0 || pos.x > size.width || pos.y < margin || pos.y > size.height - margin{
+            return false
+        }
+        return true
+    }
+    
     override func update(currentTime: CFTimeInterval) {
         
         if !gameOver {
             checkGameOver()
         }
         
-        enumerateChildNodesWithName("hole"){hole, _ in
-            for var index = 0; index < self.myNodes.count; ++index{
-                if self.myNodes[index].position.distanceTo(hole.position)<30{
-                    self.myDeadNodes.insert(index, atIndex: 0)
-                }
+        for var index = 0; index < self.myNodes.count; ++index{
+            if withinBorder(myNodes[index].position) == false{
+                self.myDeadNodes.insert(index, atIndex: 0)
             }
-            for index in self.myDeadNodes{
-                self.deleteMyNode(index)
-            }
-            
-            self.myDeadNodes = []
         }
+        for index in self.myDeadNodes{
+            self.deleteMyNode(index)
+        }
+        
+        self.myDeadNodes = []
         
         if opponentDeleteIndex != -1{
             deleteOpponent(opponentDeleteIndex)
