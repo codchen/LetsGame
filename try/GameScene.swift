@@ -121,9 +121,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-        connection.sendGameStart()
+//        connection.sendGameStart()
         
         playerColor = PlayerColors(rawValue: connection.playerID)
+        println("playerID is \(connection.playerID)")
         setUpUI(playerColor)
         /* Setup your scene here */
 

@@ -9,15 +9,20 @@
 import Foundation
 
 enum MessageType: Int {
-    case GameStart, Move, GameOver, Drop, Dead
+    case RandomNumber, GameStart, Move, GameOver, Dead
 }
 
 enum GameState: Int {
-    case WaitingForStart, InGame, Done
+    case WaitingForMatch, WaitingForRandomNumber, WaitingForStart, InGame, Done
 }
 
 struct Message {
     let messageType: MessageType
+}
+
+struct MessageRandomNumber {
+    let message: Message
+    let number: UInt32
 }
 
 struct MessageGameStart {
@@ -44,15 +49,3 @@ struct MessageGameOver {
     let message: Message
 }
 
-struct MessageDrop {
-    let message: Message
-    let bornPosX: Float
-    let bornPosY: Float
-    
-}
-
-struct MessageRawData {
-    let message: Message
-    let dx: Float
-    let dy: Float
-}
