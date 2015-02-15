@@ -12,15 +12,20 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
+    let maxPlayer = 3
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID: MCPeerID!
-    var peersInGame: [MCPeerID] = []
+    
+    // peerID maps to its playerID
+    var peersInGame: Dictionary<MCPeerID, Int> = Dictionary<MCPeerID, Int>()
     var controller: ViewController!
     var randomNumber: UInt32!
     var gameState: GameState = .WaitingForMatch
+    var receivedAllRandomNumber: Bool = false
+    var randomNumbers = Array<UInt32>()
     var playerID: Int = 0   // the player ID of current player
     
     
@@ -47,6 +52,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func generateRandomNumber(){
         randomNumber = arc4random()
         gameState = .WaitingForRandomNumber
+        randomNumbers.append(randomNumber)
         println("My Random Number is \(randomNumber)")
         sendRandomNumber(randomNumber)
     }
@@ -64,11 +70,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data)
     }
     
-//    func sendGameStart(){
-//        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart))
-//        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
-//        sendData(data)
-//    }
+    func sendGameStart(){
+        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID)
+        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
+        sendData(data)
+    }
     
     func sendDeath(index: Int){
         var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index)
@@ -122,33 +128,41 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             controller.updatePeerPos(messageMove, peer: peerID)
         } else if message.messageType == MessageType.RandomNumber {
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
+            randomNumbers.append(messageRandomNumber.number)
+            
             if gameState != .WaitingForRandomNumber {
                 generateRandomNumber()
             }
-            if messageRandomNumber.number < self.randomNumber {
-                playerID = 0
-                gameState = .WaitingForStart
-            } else if messageRandomNumber.number > self.randomNumber{
-                playerID = 1
-                gameState = .WaitingForStart
-            } else {
-                generateRandomNumber()
+            
+            if randomNumbers.count == maxPlayer {
+                receivedAllRandomNumber = true
             }
+            
+            if receivedAllRandomNumber {
+                var allNumbers = Set<UInt32>()
+                for number in randomNumbers {
+                    allNumbers.insert(number)
+                }
+                if allNumbers.count == randomNumbers.count {
+                    randomNumbers.sort {$0 > $1}
+                    gameState = .WaitingForStart
+                    sendGameStart()
+                } else {
+                    receivedAllRandomNumber = false
+                    randomNumbers.removeAll(keepCapacity: true)
+                    generateRandomNumber()
+                }
+            }
+        } else if message.messageType == MessageType.GameStart {
+            let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
+            peersInGame[peerID] = messageGameStart.playerID
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
             controller.updatePeerDeath(messageDead)
         } else if message.messageType == MessageType.GameOver {
-//            peersInGame.removeAll(keepCapacity: false)
             controller.gameOver()
         }
-//        else if message.messageType == MessageType.Drop {
-//            let messageDrop = UnsafePointer<MessageDrop>(data.bytes).memory
-//            controller.updatePeerDrop(messageDrop, peer: peerID)
-//        } else if message.messageType == MessageType.AddScore {
-//            let messageAddScore = UnsafePointer<MessageAddScore>(data.bytes).memory
-//            controller.addScore(messageAddScore)
-//        }
 
     }
     

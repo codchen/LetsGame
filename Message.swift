@@ -27,6 +27,7 @@ struct MessageRandomNumber {
 
 struct MessageGameStart {
     let message: Message
+    let playerID: Int
 }
 
 struct MessageDead {
