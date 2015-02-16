@@ -25,13 +25,12 @@ class GameOverScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        //        var background = SKSpriteNode(imageNamed: "2048x1536_board_plain")
-        //        background.position = CGPoint(x: size.width/2, y: size.height/2)
-        //        addChild(background)
+        connection = controller.connectionManager
+        
         var layer: SKSpriteNode
         if (won){
             layer = SKSpriteNode(imageNamed: "2048x1536_you_win")
-            
+            connection.generateRandomNumber()
         } else {
             layer = SKSpriteNode(imageNamed: "2048x1536_you_lose")
             
@@ -44,8 +43,7 @@ class GameOverScene: SKScene {
         replayBtn.position = CGPoint(x: size.width - 300, y: 300)
         addChild(replayBtn)
         
-        connection = controller.connectionManager
-        connection.generateRandomNumber()
+        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

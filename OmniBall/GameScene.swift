@@ -24,6 +24,7 @@ struct Opponent {
     var updated: [Bool]
     var info: [nodeInfo]
     var color: PlayerColors
+    var lastCount: UInt32
     var deleteIndex: Int
 }
 
@@ -44,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    var opponentsUpdated: [Bool] = []
 //    var opponentsInfo: [nodeInfo] = []
 //    var count: UInt16 = 0
-    var opponentDeleteIndex = -1
+//    var opponentDeleteIndex = -1
     
     // Opponents Setting
     var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
@@ -56,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentTime: NSDate!
     
     var c: UInt32 = 0
-    var lastCount: UInt32 = 0
+//    var lastCount: UInt32 = 0
     
     //node info
 //    var currentInfo: nodeInfo!
@@ -124,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             case .Red:
                 return "80x80_red"
             case .Yellow:
-                return "80x80_yellow_ball"
+                return "80x80_blue"
             case .Blue:
                 return "80x80_blue_ball"
             }
@@ -142,7 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for var index = 0; index < connection.maxPlayer; ++index {
             if connection.playerID != index {
                 let color = PlayerColors(rawValue: index)
-                opponents[index] = Opponent(nodes: [SKSpriteNode](), updated: [Bool](), info: [nodeInfo](), color: color!, deleteIndex: -1)
+                opponents[index] = Opponent(nodes: [SKSpriteNode](), updated: [Bool](), info: [nodeInfo](), color: color!, lastCount: UInt32(0), deleteIndex: -1)
                 setUpPlayerColors(color!, playerID: index)
             }
         }
@@ -175,14 +176,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func update_peer_dead_reckoning(){
-        for var oppIndex = 0; oppIndex < self.opponents.count; ++oppIndex{
-            let currentOpp = opponents[oppIndex]!
-            let currentOppNodes = currentOpp.nodes
+        for (id, var player) in opponents{
             
-            for var index = 0; index < currentOpp.updated.count; ++index {
-                if currentOpp.updated[index] == true {
+            let currentOppNodes = player.nodes
+            
+            for var index = 0; index < player.updated.count; ++index {
+                if player.updated[index] == true {
                     
-                    let currentNodeInfo = currentOpp.info[index]
+                    let currentNodeInfo = player.info[index]
                     
                     if closeEnough(CGPoint(x: currentNodeInfo.x, y: currentNodeInfo.y), point2: currentOppNodes[index].position) == true {
                         currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx, dy: currentNodeInfo.dy)
@@ -191,10 +192,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx + (currentNodeInfo.x - currentOppNodes[index].position.x), dy: currentNodeInfo.dy + (currentNodeInfo.y - currentOppNodes[index].position.y))
                     }
                     
-                    opponents[oppIndex]!.updated[index] = false
+                    player.updated[index] = false
                 }
 
             }
+            opponents[id] = player
         }
     }
     
@@ -209,8 +211,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponents[playerID]?.nodes.removeAtIndex(index)
         opponents[playerID]?.info.removeAtIndex(index)
         opponents[playerID]?.updated.removeAtIndex(index)
-//        opponentsInfo.removeAtIndex(index)
-//        opponentsUpdated.removeAtIndex(index)
     }
     
     func withinBorder(pos: CGPoint) -> Bool{
@@ -237,12 +237,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.myDeadNodes = []
         
-        if opponentDeleteIndex != -1{
-            deleteOpponent(opponentDeleteIndex)
-            opponentDeleteIndex = -1
+        for (id, var opponent) in opponents {
+            if opponent.deleteIndex != -1 {
+                deleteOpponent(id, index: opponent.deleteIndex)
+                opponent.deleteIndex = -1
+            }
+            opponents[id] = opponent
         }
-        
-        
     }
     
     override func didEvaluateActions() {
@@ -279,6 +280,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
+        var player = opponents[peerPlayerID]
+        player?.deleteIndex = message.index
+    }
+    
     func checkGameOver() {
         if myNodes.count == 0 {
             gameOver = true
@@ -298,14 +304,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         view?.presentScene(gameOverScene, transition: reveal)
     }
     
-    func updatePeerPos(message: MessageMove) {
+    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         self.currentTime = NSDate()
-        if (message.count > lastCount){
-            lastCount = message.count
-            opponentsInfo[Int(message.index)] = nodeInfo(x: CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
-            opponentsUpdated[Int(message.index)] = true
-                
+        var player = opponents[peerPlayerID]
+        if (message.count > player?.lastCount){
+            player?.lastCount = message.count
+            player?.info[Int(message.index)] = nodeInfo(x: CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
+            player?.updated[Int(message.index)] = true
         }
+        opponents[peerPlayerID] = player
     }
     
     func sendDead(index: Int){

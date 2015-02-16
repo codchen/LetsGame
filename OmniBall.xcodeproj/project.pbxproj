@@ -233,8 +233,7 @@
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
 				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
 			);
-			name = OmniBall;
-			path = try;
+			path = OmniBall;
 			sourceTree = "<group>";
 		};
 		FF6C103F1A6572FB00A5C7D7 /* Supporting Files */ = {
@@ -251,8 +250,7 @@
 				FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */,
 				FF6C10551A6572FC00A5C7D7 /* Supporting Files */,
 			);
-			name = OmniBallTests;
-			path = tryTests;
+			path = OmniBallTests;
 			sourceTree = "<group>";
 		};
 		FF6C10551A6572FC00A5C7D7 /* Supporting Files */ = {
@@ -536,7 +534,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = try/Info.plist;
+				INFOPLIST_FILE = OmniBall/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";
@@ -549,7 +547,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = try/Info.plist;
+				INFOPLIST_FILE = OmniBall/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";

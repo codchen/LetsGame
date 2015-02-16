@@ -91,24 +91,27 @@ class ViewController: UIViewController {
             
             currentView = skView
             skView.presentScene(scene)
+        } else if connectionManager.session.connectedPeers.count > 0 &&
+            connectionManager.gameState == .WaitingForMatch {
+        	connectionManager.generateRandomNumber()
         }
     }
 	
     
-    func updatePeerPos(message: MessageMove, peer: MCPeerID) {
+    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
                 self.currentGameScene = self.currentView.scene! as GameScene
-                self.currentGameScene.updatePeerPos(message)
+                self.currentGameScene.updatePeerPos(message, peerPlayerID: peerPlayerID)
             }
         }
     }
     
-    func updatePeerDeath(message: MessageDead){
+    func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
         dispatch_async(dispatch_get_main_queue()){
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
                 self.currentGameScene = self.currentView.scene! as GameScene
-                self.currentGameScene.opponentDeleteIndex = message.index
+                self.currentGameScene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
             }
         }
     }

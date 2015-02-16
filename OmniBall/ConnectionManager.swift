@@ -107,7 +107,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         browserViewController: MCBrowserViewController!)  {
             // Called when the browser view controller is dismissed (ie the Done
             // button was tapped)
-            generateRandomNumber()
             controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -125,7 +124,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
-            controller.updatePeerPos(messageMove, peer: peerID)
+            println("Received Move Msg from \(peersInGame[peerID])")
+            controller.updatePeerPos(messageMove, peerPlayerID: peersInGame[peerID]!)
         } else if message.messageType == MessageType.RandomNumber {
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
             randomNumbers.append(messageRandomNumber.number)
@@ -140,11 +140,18 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
             if receivedAllRandomNumber {
                 var allNumbers = Set<UInt32>()
+                
                 for number in randomNumbers {
                     allNumbers.insert(number)
                 }
+                println(allNumbers)
                 if allNumbers.count == randomNumbers.count {
                     randomNumbers.sort {$0 > $1}
+                    for var index = 0; index < randomNumbers.count; ++index {
+                        if randomNumbers[index] == self.randomNumber {
+                            playerID = index
+                        }
+                    }
                     gameState = .WaitingForStart
                     sendGameStart()
                 } else {
@@ -159,9 +166,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
-            controller.updatePeerDeath(messageDead)
+            controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
+            
         } else if message.messageType == MessageType.GameOver {
-            controller.gameOver()
+            peersInGame.removeValueForKey(peerID)
+            if peersInGame.count == 0 {
+            	controller.gameOver()
+            }
         }
 
     }
