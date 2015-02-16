@@ -19,6 +19,14 @@ struct nodeInfo {
     var index: UInt16
 }
 
+struct Opponent {
+    var nodes: [SKSpriteNode]
+    var updated: [Bool]
+    var info: [nodeInfo]
+    var color: PlayerColors
+    var deleteIndex: Int
+}
+
 enum PlayerColors: Int{
     case Green = 0, Red, Yellow, Blue
 }
@@ -32,11 +40,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var locked: Bool = false
     var selectedNode: SKSpriteNode!
     
-    var opponents: [SKSpriteNode] = []
-    var opponentsUpdated: [Bool] = []
-    var opponentsInfo: [nodeInfo] = []
-    var count: UInt16 = 0
+//    var opponents: [SKSpriteNode] = []
+//    var opponentsUpdated: [Bool] = []
+//    var opponentsInfo: [nodeInfo] = []
+//    var count: UInt16 = 0
     var opponentDeleteIndex = -1
+    
+    // Opponents Setting
+    var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
     
     var myDeadNodes: [Int] = []
     
@@ -48,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastCount: UInt32 = 0
     
     //node info
-    var currentInfo: nodeInfo!
+//    var currentInfo: nodeInfo!
     var offset: CGFloat!
     
     //physics constants
@@ -61,35 +72,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOver: Bool = false
     
     
-    func setUpUI(playerColor: PlayerColors) {
+    func setUpPlayerColors(playerColor: PlayerColors, playerID: Int) {
         switch playerColor {
         case .Green:
-                setUpPlayers("node1", playerOpp: "node2")
+            setUpPlayers("node1", playerID: playerID)
         case .Red:
-                setUpPlayers("node2", playerOpp: "node1")
+                setUpPlayers("node2", playerID: playerID)
+        case .Yellow:
+                setUpPlayers("node3", playerID: playerID)
         default:
-            println("error in setup UI")
+            println("error in setup player color")
         }
     }
     
-    func setUpPlayers(playerSelf: String, playerOpp: String){
-        enumerateChildNodesWithName(playerSelf){node, _ in
-            var node1 = node as SKSpriteNode
+    func setUpPlayers(spriteName: String, playerID: Int){
+        var node1: SKSpriteNode!
+        var count: UInt16 = 0
+        enumerateChildNodesWithName(spriteName){node, _ in
+            node1 = node as SKSpriteNode
             node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
             node1.physicsBody?.linearDamping = 0
-            node1.physicsBody?.restitution = 0.8
-            self.myNodes.append(node1)
-        }
-        
-        enumerateChildNodesWithName(playerOpp){node, _ in
-            var node2 = node as SKSpriteNode
-            node2.physicsBody = SKPhysicsBody(circleOfRadius: node2.size.width / 2 - 10)
-            node.physicsBody?.linearDamping = 0
-            node.physicsBody?.restitution = 0.8
-            self.opponents.append(node2)
-            self.opponentsUpdated.append(false)
-            self.opponentsInfo.append(nodeInfo(x: node.position.x, y: node.position.y, dx: 0, dy: 0, dt: 0, index: self.count))
-            self.count++
+            node1.physicsBody?.restitution = 1
+            if playerID != self.connection.playerID {
+                self.opponents[playerID]?.nodes.append(node1)
+                self.opponents[playerID]?.updated.append(false)
+                self.opponents[playerID]?.info.append(nodeInfo(x: node1.position.x, y: node1.position.y, dx: 0, dy: 0, dt: 0, index: count))
+                count++
+                
+            } else {
+                self.myNodes.append(node1)
+            }
         }
     }
     
@@ -124,8 +136,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         connection.gameState = .InGame
         
         playerColor = PlayerColors(rawValue: connection.playerID)
+        setUpPlayerColors(playerColor, playerID: connection.playerID)
         println("playerID is \(connection.playerID)")
-        setUpUI(playerColor)
+        
+        for var index = 0; index < connection.maxPlayer; ++index {
+            if connection.playerID != index {
+                let color = PlayerColors(rawValue: index)
+                opponents[index] = Opponent(nodes: [SKSpriteNode](), updated: [Bool](), info: [nodeInfo](), color: color!, deleteIndex: -1)
+                setUpPlayerColors(color!, playerID: index)
+            }
+        }
+        
         /* Setup your scene here */
 
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -154,17 +175,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func update_peer_dead_reckoning(){
-        for var index = 0; index < self.opponents.count; ++index{
-            if opponentsUpdated[index] == true{
-                currentInfo = opponentsInfo[index]
-                //opponents[index].physicsBody!.velocity = CGVector(dx: currentInfo.dx, dy: currentInfo.dy)
-                if closeEnough(CGPoint(x: currentInfo.x, y: currentInfo.y), point2: opponents[index].position) == true{
-                    opponents[index].physicsBody!.velocity = CGVector(dx: currentInfo.dx, dy: currentInfo.dy)
+        for var oppIndex = 0; oppIndex < self.opponents.count; ++oppIndex{
+            let currentOpp = opponents[oppIndex]!
+            let currentOppNodes = currentOpp.nodes
+            
+            for var index = 0; index < currentOpp.updated.count; ++index {
+                if currentOpp.updated[index] == true {
+                    
+                    let currentNodeInfo = currentOpp.info[index]
+                    
+                    if closeEnough(CGPoint(x: currentNodeInfo.x, y: currentNodeInfo.y), point2: currentOppNodes[index].position) == true {
+                        currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx, dy: currentNodeInfo.dy)
+                    }
+                    else {
+                        currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx + (currentNodeInfo.x - currentOppNodes[index].position.x), dy: currentNodeInfo.dy + (currentNodeInfo.y - currentOppNodes[index].position.y))
+                    }
+                    
+                    opponents[oppIndex]!.updated[index] = false
                 }
-                else{
-                    opponents[index].physicsBody!.velocity = CGVector(dx: currentInfo.dx + (currentInfo.x - opponents[index].position.x), dy: currentInfo.dy + (currentInfo.y - opponents[index].position.y))
-                }
-                opponentsUpdated[index] = false
+
             }
         }
     }
@@ -175,11 +204,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sendDead(index)
     }
     
-    func deleteOpponent(index: Int){
-        opponents[index].removeFromParent()
-        opponents.removeAtIndex(index)
-        opponentsInfo.removeAtIndex(index)
-        opponentsUpdated.removeAtIndex(index)
+    func deleteOpponent(playerID: Int, index: Int){
+        opponents[playerID]?.nodes[index].removeFromParent()
+        opponents[playerID]?.nodes.removeAtIndex(index)
+        opponents[playerID]?.info.removeAtIndex(index)
+        opponents[playerID]?.updated.removeAtIndex(index)
+//        opponentsInfo.removeAtIndex(index)
+//        opponentsUpdated.removeAtIndex(index)
     }
     
     func withinBorder(pos: CGPoint) -> Bool{
@@ -238,7 +269,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             else {
-                selectedNode.physicsBody?.velocity = CGVector(dx: loc.x - selectedNode.position.x, dy: loc.y - selectedNode.position.y)
+                selectedNode.physicsBody?.velocity = CGVector(dx: 2*(loc.x - selectedNode.position.x), dy: 2*(loc.y - selectedNode.position.y))
                 selected = false
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
                 selectedNode = nil
