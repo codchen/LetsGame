@@ -92,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node1 = node as SKSpriteNode
             node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
             node1.physicsBody?.linearDamping = 0
-            node1.physicsBody?.restitution = 0.8
+            node1.physicsBody?.restitution = 1
             if playerID != self.connection.playerID {
                 self.opponents[playerID]?.nodes.append(node1)
                 self.opponents[playerID]?.updated.append(false)
@@ -269,7 +269,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             else {
-                selectedNode.physicsBody?.velocity = CGVector(dx: loc.x - selectedNode.position.x, dy: loc.y - selectedNode.position.y)
+                selectedNode.physicsBody?.velocity = CGVector(dx: 2*(loc.x - selectedNode.position.x), dy: 2*(loc.y - selectedNode.position.y))
                 selected = false
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
                 selectedNode = nil
