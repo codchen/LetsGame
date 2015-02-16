@@ -30,7 +30,6 @@ class GameOverScene: SKScene {
         var layer: SKSpriteNode
         if (won){
             layer = SKSpriteNode(imageNamed: "2048x1536_you_win")
-            connection.generateRandomNumber()
         } else {
             layer = SKSpriteNode(imageNamed: "2048x1536_you_lose")
             
@@ -58,7 +57,8 @@ class GameOverScene: SKScene {
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 self.view?.presentScene(myScene, transition: reveal)
             
-        
+        } else if replayBtn.containsPoint(loc) && connection.gameState == .Done{
+            connection.generateRandomNumber()
         }
         
     }

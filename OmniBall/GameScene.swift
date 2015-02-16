@@ -281,8 +281,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
-        var player = opponents[peerPlayerID]
-        player?.deleteIndex = message.index
+        opponents[peerPlayerID]?.deleteIndex = message.index
     }
     
     func checkGameOver() {
@@ -296,7 +295,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver(#won: Bool) {
         connection.gameState = .Done
         connection.playerID = 0
-//        connection.peersInGame.removeAll(keepCapacity: false)
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
