@@ -124,7 +124,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
-            println("Received Move Msg from \(peersInGame[peerID])")
             controller.updatePeerPos(messageMove, peerPlayerID: peersInGame[peerID]!)
         } else if message.messageType == MessageType.RandomNumber {
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
@@ -144,7 +143,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 for number in randomNumbers {
                     allNumbers.insert(number)
                 }
-                println(allNumbers)
                 if allNumbers.count == randomNumbers.count {
                     randomNumbers.sort {$0 > $1}
                     for var index = 0; index < randomNumbers.count; ++index {
@@ -155,9 +153,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     gameState = .WaitingForStart
                     sendGameStart()
                 } else {
-                    receivedAllRandomNumber = false
                     randomNumbers.removeAll(keepCapacity: true)
                     generateRandomNumber()
+                    receivedAllRandomNumber = false
                 }
             }
         } else if message.messageType == MessageType.GameStart {
@@ -166,6 +164,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
+            println("Received death from \(peersInGame[peerID]) at \(messageDead.index)")
             controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
             
         } else if message.messageType == MessageType.GameOver {

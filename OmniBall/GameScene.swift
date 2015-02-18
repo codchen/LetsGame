@@ -241,8 +241,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if opponent.deleteIndex != -1 {
                 deleteOpponent(id, index: opponent.deleteIndex)
                 opponent.deleteIndex = -1
+                opponents[id] = opponent
             }
-            opponents[id] = opponent
         }
     }
     
@@ -295,6 +295,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver(#won: Bool) {
         connection.gameState = .Done
         connection.playerID = 0
+        connection.randomNumbers.removeAll(keepCapacity: true)
+        connection.receivedAllRandomNumber = false
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
@@ -314,6 +316,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func sendDead(index: Int){
+        println("I'm dead")
         connection.sendDeath(index)
     }
     
