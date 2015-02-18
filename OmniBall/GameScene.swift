@@ -32,14 +32,28 @@ enum PlayerColors: Int{
     case Green = 0, Red, Yellow, Blue
 }
 
+enum ScrollDirection: Int{
+    case up = 0, down, left, right
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
+    var scrollDirection: ScrollDirection!
+    var scrolling = false
+    var anchorPointVel = CGVector(dx: 0, dy: 0)
+    var scrollingFrameDuration = CGFloat(30)
+    
+    var subscene_index = 1
+    let subscene_count_horizontal = 2
+    let subscene_count_vertical = 2
     
     var myNodes: [SKSpriteNode] = []
     var selected: Bool = false
     var locked: Bool = false
     var selectedNode: SKSpriteNode!
+    var launchTime: NSDate!
+    var launchPoint: CGPoint!
     
 //    var opponents: [SKSpriteNode] = []
 //    var opponentsUpdated: [Bool] = []
@@ -136,6 +150,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         connection.gameState = .InGame
         
+        size = CGSize(width: 1024, height: 768)
+        
         playerColor = PlayerColors(rawValue: connection.playerID)
         setUpPlayerColors(playerColor, playerID: connection.playerID)
         println("playerID is \(connection.playerID)")
@@ -214,7 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func withinBorder(pos: CGPoint) -> Bool{
-        if pos.x < 0 || pos.x > size.width || pos.y < margin || pos.y > size.height - margin{
+        if pos.x < 0 || pos.x > size.width * 2 || pos.y < margin || pos.y > 2 * size.height - margin{
             return false
         }
         return true
@@ -244,6 +260,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 opponents[id] = opponent
             }
         }
+        moveAnchor()
     }
     
     override func didEvaluateActions() {
@@ -268,15 +285,112 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         break
                     }
                 }
+                if selected == false && scrolling == false{
+                    if loc.y > (-anchorPoint.y * size.height + size.height - 150){
+                        scrollDirection = ScrollDirection(rawValue: 0)
+                    }
+                    else if loc.y < (-anchorPoint.y * size.height + 150){
+                        scrollDirection = ScrollDirection(rawValue: 1)
+                    }
+                    else if loc.x < (-anchorPoint.x * size.width + 150){
+                        scrollDirection = ScrollDirection(rawValue: 2)
+                    }
+                    else if loc.x > (-anchorPoint.x * size.width + size.width - 150){
+                        scrollDirection = ScrollDirection(rawValue: 3)
+                    }
+                    println("\(loc.x), \(loc.y), \(anchorPoint.x), \(anchorPoint.y)\n")
+                    
+                }
             }
             else {
-                selectedNode.physicsBody?.velocity = CGVector(dx: 2*(loc.x - selectedNode.position.x), dy: 2*(loc.y - selectedNode.position.y))
-                selected = false
-                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
-                selectedNode = nil
-                //locked = true
-                sendMove()
+                launchPoint = loc
+                launchTime = NSDate()
             }
+        }
+    }
+
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        if selected == true && launchTime != nil && launchPoint != nil{
+            let now = NSDate()
+            let offset: CGPoint = (loc - launchPoint) / CGFloat(now.timeIntervalSinceDate(launchTime!))
+            selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
+            selected = false
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
+            selectedNode = nil
+            launchTime = nil
+            launchPoint = nil
+            sendMove()
+        }
+        else if scrollDirection != nil{
+            switch scrollDirection!{
+            case .up:
+                if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4{
+                    scroll(scrollDirection)
+                }
+            case .down:
+                if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2{
+                    scroll(scrollDirection)
+                }
+            case .left:
+                if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3{
+                    scroll(scrollDirection)
+                }
+            case .right:
+                if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4{
+                    scroll(scrollDirection)
+                }
+            default:
+                println("error scrolling")
+            }
+        }
+    }
+    
+    func scroll(direction: ScrollDirection){
+        switch direction{
+        case .up:
+            anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
+        case .down:
+            anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
+        case .left:
+            anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
+        case .right:
+            anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
+        default:
+            println("error")
+        }
+        scrolling = true
+        changeAnchor()
+    }
+    
+    func moveAnchor(){
+        if (scrollingFrameDuration > 0) && scrolling == true{
+            anchorPoint.x += anchorPointVel.dx
+            anchorPoint.y += anchorPointVel.dy
+            scrollingFrameDuration--
+        }
+        else if scrolling == true{
+            anchorPointVel = CGVector(dx: 0, dy: 0)
+            anchorPoint = CGPoint(x: CGFloat(-(subscene_index - 1) % subscene_count_horizontal), y: CGFloat(-(subscene_index - 1) / subscene_count_vertical))
+            scrolling = false
+            scrollingFrameDuration = CGFloat(30)
+            scrollDirection = nil
+        }
+    }
+    
+    func changeAnchor(){
+        switch scrollDirection!{
+        case .up:
+            subscene_index += 2
+        case .down:
+            subscene_index -= 2
+        case .left:
+            subscene_index -= 1
+        case .right:
+            subscene_index += 1
+        default:
+            println("error")
         }
     }
     
