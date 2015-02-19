@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
+		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
+		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
 		3C7E842D1A8E53F100212817 /* 80x80_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842A1A8E53F100212817 /* 80x80_blue.png */; };
 		3C7E842E1A8E53F100212817 /* 80x80_green.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842B1A8E53F100212817 /* 80x80_green.png */; };
 		3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7E842C1A8E53F100212817 /* 80x80_red.png */; };
@@ -70,6 +73,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
+		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
 		3C7E842A1A8E53F100212817 /* 80x80_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue.png; sourceTree = "<group>"; };
 		3C7E842B1A8E53F100212817 /* 80x80_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_green.png; sourceTree = "<group>"; };
 		3C7E842C1A8E53F100212817 /* 80x80_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red.png; sourceTree = "<group>"; };
@@ -145,6 +151,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11A57C621A9681A000C695E7 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				11A57C631A9681C800C695E7 /* Player.swift */,
+				11A57C651A96820F00C695E7 /* MyNodes.swift */,
+				11A57C671A96824500C695E7 /* OpponentNodes.swift */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +236,7 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				11A57C621A9681A000C695E7 /* Entity */,
 				3C7E84301A91052700212817 /* Set.swift */,
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
@@ -393,10 +410,12 @@
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
 				66F8668C1A6F0B72007EE9FF /* SKAction+Extensions.swift in Sources */,
 				66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */,
+				11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */,
 				FF6C10871A670BED00A5C7D7 /* ViewController.swift in Sources */,
 				66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */,
 				FF5301201A7D43A300F04937 /* GameScene.swift in Sources */,
 				66F866901A6F0B72007EE9FF /* SKTAudio.swift in Sources */,
+				11A57C641A9681C800C695E7 /* Player.swift in Sources */,
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
@@ -404,6 +423,7 @@
 				66F8668B1A6F0B72007EE9FF /* Int+Extensions.swift in Sources */,
 				66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */,
 				3C7E84311A91052700212817 /* Set.swift in Sources */,
+				11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,
 				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
