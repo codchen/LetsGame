@@ -17,8 +17,8 @@ class OpponentsWrapper {
         opponents[opponent.id] = opponent
     }
     
-    func deleteOpponent() {
-        
+    func deleteOpponentBall(id: Int, ballIndex: Int) {
+        opponents[id]?.deleteIndex = ballIndex
     }
     
 	func update_peer_dead_reckoning(){
@@ -32,5 +32,9 @@ class OpponentsWrapper {
         for (id, opponent) in opponents {
             opponent.checkDead()
         }
+    }
+    
+    func updatePeerPos(id: Int, message: MessageMove) {
+        opponents[id]?.updatePeerPos(message)
     }
 }

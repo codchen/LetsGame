@@ -27,25 +27,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
     
-//    var myNodes: [SKSpriteNode] = []
-    var selected: Bool = false
-    var locked: Bool = false
-    var selectedNode: SKSpriteNode!
-    
     // Opponents Setting
     var myNodes: MyNodes!
     var opponentsWrapper: OpponentsWrapper!
     
-    var myDeadNodes: [Int] = []
-    
     var motionManager: CMMotionManager!
     var connection: ConnectionManager!
-    var currentTime: NSDate!
-    
-    var c: UInt32 = 0
-//    var lastCount: UInt32 = 0
-    
-    //node infof
     
     //physics constants
     let maxSpeed = 600
@@ -117,7 +104,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
-        opponents[peerPlayerID]?.deleteIndex = message.index
+        opponentsWrapper.deleteOpponentBall(peerPlayerID, ballIndex: message.index)
     }
     
     func checkGameOver() {
@@ -141,17 +128,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
-        self.currentTime = NSDate()
-        var player = opponents[peerPlayerID]
-        if (message.count > player?.lastCount){
-            player?.lastCount = message.count
-            player?.info[Int(message.index)] = nodeInfo(x: CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
-            player?.updated[Int(message.index)] = true
-        }
-        opponents[peerPlayerID] = player
+        opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
     }
-    
-
     
     override func className() -> String{
         return "GameScene"
