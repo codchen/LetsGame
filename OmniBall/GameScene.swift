@@ -36,13 +36,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
     
-    var myNodes: [SKSpriteNode] = []
+//    var myNodes: [SKSpriteNode] = []
     var selected: Bool = false
     var locked: Bool = false
     var selectedNode: SKSpriteNode!
     
     // Opponents Setting
-    var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
+//    var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
+    var myNodes: MyNodes!
+    var opponentsWrapper: OpponentsWrapper!
     
     var myDeadNodes: [Int] = []
     
@@ -63,32 +65,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //hard coded!!
     let latency = 0.17
     
-    var playerColor: PlayerColors!
     var gameOver: Bool = false
-    
-    
     
     override func didMoveToView(view: SKView) {
         
         connection.gameState = .InGame
-        
-        playerColor = PlayerColors(rawValue: connection.playerID)
-        setUpPlayerColors(playerColor, playerID: connection.playerID)
+        myNodes = MyNodes(connection: connection, scene: self)
         println("playerID is \(connection.playerID)")
         
+        opponentsWrapper = OpponentsWrapper()
         for var index = 0; index < connection.maxPlayer; ++index {
             if connection.playerID != index {
-                let color = PlayerColors(rawValue: index)
-                opponents[index] = Opponent(nodes: [SKSpriteNode](), updated: [Bool](), info: [nodeInfo](), color: color!, lastCount: UInt32(0), deleteIndex: -1)
-                setUpPlayerColors(color!, playerID: index)
+                let opponent = OpponentNodes(id: index, scene: self)
+                opponentsWrapper.addOpponent(opponent)
             }
         }
         
         /* Setup your scene here */
 
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        
-        
+
         let maxAspectRatio: CGFloat = 16.0/9.0
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2

@@ -17,6 +17,14 @@ class OpponentNodes: Player {
     var updated: [Bool] = []
     var count: UInt16 = 0
     
+    init(id: Int, scene: GameScene) {
+        super.init()
+        self.id = id
+        self.scene = scene
+        self.color = PlayerColors(rawValue: id)
+        setUpPlayers(color)
+    }
+    
     override func addPlayer(node: SKSpriteNode) {
         players.append(node)
         info.append(nodeInfo(x: node.position.x, y: node.position.y, dx: 0, dy: 0, dt: 0, index: count))
