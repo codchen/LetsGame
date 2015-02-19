@@ -41,12 +41,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var locked: Bool = false
     var selectedNode: SKSpriteNode!
     
-//    var opponents: [SKSpriteNode] = []
-//    var opponentsUpdated: [Bool] = []
-//    var opponentsInfo: [nodeInfo] = []
-//    var count: UInt16 = 0
-//    var opponentDeleteIndex = -1
-    
     // Opponents Setting
     var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
     
@@ -73,64 +67,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOver: Bool = false
     
     
-    func setUpPlayerColors(playerColor: PlayerColors, playerID: Int) {
-        switch playerColor {
-        case .Green:
-            setUpPlayers("node1", playerID: playerID)
-        case .Red:
-                setUpPlayers("node2", playerID: playerID)
-        case .Yellow:
-                setUpPlayers("node3", playerID: playerID)
-        default:
-            println("error in setup player color")
-        }
-    }
-    
-    func setUpPlayers(spriteName: String, playerID: Int){
-        var node1: SKSpriteNode!
-        var count: UInt16 = 0
-        enumerateChildNodesWithName(spriteName){node, _ in
-            node1 = node as SKSpriteNode
-            node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
-            node1.physicsBody?.linearDamping = 0
-            node1.physicsBody?.restitution = 1
-            if playerID != self.connection.playerID {
-                self.opponents[playerID]?.nodes.append(node1)
-                self.opponents[playerID]?.updated.append(false)
-                self.opponents[playerID]?.info.append(nodeInfo(x: node1.position.x, y: node1.position.y, dx: 0, dy: 0, dt: 0, index: count))
-                count++
-                
-            } else {
-                self.myNodes.append(node1)
-            }
-        }
-    }
-    
-    func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
-        if !isSelected {
-            switch playerColor {
-            case .Green:
-                return "80x80_green_ball"
-            case .Red:
-                return "80x80_red_ball"
-            case .Yellow:
-                return "80x80_yellow_ball"
-            case .Blue:
-                return "80x80_blue_ball"
-            }
-        } else {
-            switch playerColor {
-            case .Green:
-                return "80x80_green"
-            case .Red:
-                return "80x80_red"
-            case .Yellow:
-                return "80x80_blue"
-            case .Blue:
-                return "80x80_blue_ball"
-            }
-        }
-    }
     
     override func didMoveToView(view: SKView) {
         
