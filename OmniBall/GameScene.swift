@@ -88,35 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func update_peer_dead_reckoning(){
-        for (id, var player) in opponents{
-            
-            let currentOppNodes = player.nodes
-            
-            for var index = 0; index < player.updated.count; ++index {
-                if player.updated[index] == true {
-                    
-                    let currentNodeInfo = player.info[index]
-                    
-                    if closeEnough(CGPoint(x: currentNodeInfo.x, y: currentNodeInfo.y), point2: currentOppNodes[index].position) == true {
-                        currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx, dy: currentNodeInfo.dy)
-                    }
-                    else {
-                        currentOppNodes[index].physicsBody!.velocity = CGVector(dx: currentNodeInfo.dx + (currentNodeInfo.x - currentOppNodes[index].position.x), dy: currentNodeInfo.dy + (currentNodeInfo.y - currentOppNodes[index].position.y))
-                    }
-                    
-                    player.updated[index] = false
-                }
-
-            }
-            opponents[id] = player
-        }
-    }
-    
-    func deleteOpponent(playerID: Int, index: Int){
-        opponents[playerID]?.nodes[index].removeFromParent()
-        opponents[playerID]?.nodes.removeAtIndex(index)
-        opponents[playerID]?.info.removeAtIndex(index)
-        opponents[playerID]?.updated.removeAtIndex(index)
+		opponentsWrapper.update_peer_dead_reckoning()
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -126,14 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         myNodes.checkDead()
-        
-        for (id, var opponent) in opponents {
-            if opponent.deleteIndex != -1 {
-                deleteOpponent(id, index: opponent.deleteIndex)
-                opponent.deleteIndex = -1
-                opponents[id] = opponent
-            }
-        }
+        opponentsWrapper.checkDead()
     }
     
     override func didEvaluateActions() {

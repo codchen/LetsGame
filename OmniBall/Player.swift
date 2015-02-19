@@ -29,6 +29,10 @@ class Player: NSObject {
         
     }
     
+    func checkDead(){
+        
+    }
+    
     func setUpPlayers(playerColor: PlayerColors){
         
         var sprite: String!

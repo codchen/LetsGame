@@ -16,4 +16,21 @@ class OpponentsWrapper {
     func addOpponent(opponent: OpponentNodes) {
         opponents[opponent.id] = opponent
     }
+    
+    func deleteOpponent() {
+        
+    }
+    
+	func update_peer_dead_reckoning(){
+        for (id, opponent) in opponents {
+            opponent.update_peer_dead_reckoning()
+        }
+
+    }
+    
+	func checkDead(){
+        for (id, opponent) in opponents {
+            opponent.checkDead()
+        }
+    }
 }

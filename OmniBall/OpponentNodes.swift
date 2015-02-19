@@ -32,6 +32,19 @@ class OpponentNodes: Player {
         playerCount++
     }
     
+    override func deletePlayer(index: Int) {
+        players[index].removeFromParent()
+        players.removeAtIndex(index)
+        info.removeAtIndex(index)
+        updated.removeAtIndex(index)
+    }
+    
+    override func checkDead(){
+        if deleteIndex != -1 {
+            deletePlayer(deleteIndex)
+            deleteIndex = -1
+        }
+    }
     
     
     func update_peer_dead_reckoning(){
@@ -53,6 +66,8 @@ class OpponentNodes: Player {
             
         }
     }
+    
+
     
     func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
         let offset = point1.distanceTo(point2)

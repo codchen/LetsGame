@@ -37,6 +37,19 @@ class MyNodes: Player {
         sendDead(index)
     }
     
+    override func checkDead(){
+        for var index = 0; index < count; ++index{
+            if withinBorder(players[index].position) == false{
+                deadNodes.insert(index, atIndex: 0)
+            }
+        }
+        for index in self.deadNodes{
+            deletePlayer(index)
+        }
+        
+        deadNodes = []
+    }
+    
     func touchesHappened(location: CGPoint) {
         
         if isSelected == false {
@@ -56,19 +69,6 @@ class MyNodes: Player {
                 sendMove()
             }
         
-    }
-    
-    func checkDead(){
-        for var index = 0; index < count; ++index{
-            if withinBorder(players[index].position) == false{
-                deadNodes.insert(index, atIndex: 0)
-            }
-        }
-        for index in self.deadNodes{
-            deletePlayer(index)
-        }
-        
-        deadNodes = []
     }
     
     func withinBorder(pos: CGPoint) -> Bool{
