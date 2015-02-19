@@ -45,9 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var c: UInt32 = 0
 //    var lastCount: UInt32 = 0
     
-    //node info
-//    var currentInfo: nodeInfo!
-    var offset: CGFloat!
+    //node infof
     
     //physics constants
     let maxSpeed = 600
@@ -87,14 +85,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func randomPos() -> CGPoint{
         return CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 200, max: size.height - 2 * margin - 200))
-    }
-    
-    func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
-        offset = point1.distanceTo(point2)
-        if offset >= 10{
-            return false
-        }
-        return true
     }
     
     func update_peer_dead_reckoning(){
