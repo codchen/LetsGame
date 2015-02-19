@@ -15,12 +15,17 @@ class Player: NSObject {
     var players: [SKSpriteNode] = []
     var color: PlayerColors!
     var id: Int!
+    var count: Int {
+        get {
+            return players.count
+        }
+    }
     
     func addPlayer(node: SKSpriteNode) {
         
     }
     
-    func deletePlayer(node: SKSpriteNode) {
+    func deletePlayer(index: Int) {
         
     }
     

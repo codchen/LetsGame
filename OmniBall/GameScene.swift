@@ -19,15 +19,6 @@ struct nodeInfo {
     var index: UInt16
 }
 
-struct Opponent {
-    var nodes: [SKSpriteNode]
-    var updated: [Bool]
-    var info: [nodeInfo]
-    var color: PlayerColors
-    var lastCount: UInt32
-    var deleteIndex: Int
-}
-
 enum PlayerColors: Int{
     case Green = 0, Red, Yellow, Blue
 }
@@ -42,7 +33,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var selectedNode: SKSpriteNode!
     
     // Opponents Setting
-//    var opponents: Dictionary<Int, Opponent> = Dictionary<Int, Opponent>()
     var myNodes: MyNodes!
     var opponentsWrapper: OpponentsWrapper!
     
@@ -132,24 +122,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func deleteMyNode(index: Int){
-        myNodes[index].removeFromParent()
-        myNodes.removeAtIndex(index)
-        sendDead(index)
-    }
-    
     func deleteOpponent(playerID: Int, index: Int){
         opponents[playerID]?.nodes[index].removeFromParent()
         opponents[playerID]?.nodes.removeAtIndex(index)
         opponents[playerID]?.info.removeAtIndex(index)
         opponents[playerID]?.updated.removeAtIndex(index)
-    }
-    
-    func withinBorder(pos: CGPoint) -> Bool{
-        if pos.x < 0 || pos.x > size.width || pos.y < margin || pos.y > size.height - margin{
-            return false
-        }
-        return true
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -158,16 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             checkGameOver()
         }
         
-        for var index = 0; index < self.myNodes.count; ++index{
-            if withinBorder(myNodes[index].position) == false{
-                self.myDeadNodes.insert(index, atIndex: 0)
-            }
-        }
-        for index in self.myDeadNodes{
-            self.deleteMyNode(index)
-        }
-        
-        self.myDeadNodes = []
+        myNodes.checkDead()
         
         for (id, var opponent) in opponents {
             if opponent.deleteIndex != -1 {
@@ -183,33 +151,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didSimulatePhysics() {
-        sendMove()
+        myNodes.sendMove()
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //node1.physicsBody?.applyForce(CGVector(dx: -50, dy: 0))
-        if locked == false{
-            let touch = touches.anyObject() as UITouch
-            let loc = touch.locationInNode(self)
-            if selected == false{
-                for node in myNodes{
-                    if node.containsPoint(loc){
-                        selectedNode = node
-                        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(playerColor, isSelected: true))
-                        selected = true
-                        break
-                    }
-                }
-            }
-            else {
-                selectedNode.physicsBody?.velocity = CGVector(dx: 2*(loc.x - selectedNode.position.x), dy: 2*(loc.y - selectedNode.position.y))
-                selected = false
-                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.playerColor, isSelected: false))
-                selectedNode = nil
-                //locked = true
-                sendMove()
-            }
-        }
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        myNodes.touchesHappened(loc)
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
@@ -247,17 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponents[peerPlayerID] = player
     }
     
-    func sendDead(index: Int){
-        println("I'm dead")
-        connection.sendDeath(index)
-    }
-    
-    func sendMove(){
-        for var index = 0; index < self.myNodes.count; ++index{
-            connection.sendMove(Float(myNodes[index].position.x), y: Float(myNodes[index].position.y), dx: Float(myNodes[index].physicsBody!.velocity.dx), dy: Float(myNodes[index].physicsBody!.velocity.dy), count: c, index: UInt16(index), dt: NSDate().timeIntervalSince1970)
-                c++
-        }
-    }
+
     
     override func className() -> String{
         return "GameScene"
