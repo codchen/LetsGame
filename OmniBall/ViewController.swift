@@ -79,6 +79,7 @@ class ViewController: UIViewController {
         
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = false
+            skView.shouldCullNonVisibleNodes = false
         
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill

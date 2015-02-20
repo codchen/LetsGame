@@ -16,6 +16,8 @@ class MyNodes: Player {
     var msgCount: UInt32 = 0
     var isSelected: Bool = false
     var selectedNode: SKSpriteNode!
+    var launchTime: NSDate!
+    var launchPoint: CGPoint!
     
     init(connection: ConnectionManager, scene: GameScene) {
         super.init()
@@ -50,25 +52,28 @@ class MyNodes: Player {
         deadNodes = []
     }
     
-    func touchesHappened(location: CGPoint) {
-        
-        if isSelected == false {
-            for node in players {
-                if node.containsPoint(location){
-                    selectedNode = node
-                    selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
-                        isSelected = true
-                        break
-                }
+    func touchesBegan(location: CGPoint) {
+    	for node in players {
+            if node.containsPoint(location){
+                selectedNode = node
+                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
+                    isSelected = true
+                    break
             }
-        } else {
-            selectedNode.physicsBody?.velocity = CGVector(dx: 2 * (location.x - selectedNode.position.x), dy: 2 * (location.y - selectedNode.position.y))
-                isSelected = false
-                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
-                selectedNode = nil
-                sendMove()
-            }
-        
+        }
+            
+    }
+    
+    func touchesEnded(location: CGPoint){
+        let now = NSDate()
+        let offset: CGPoint = (location - launchPoint) / CGFloat(now.timeIntervalSinceDate(launchTime!))
+        selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
+        isSelected = false
+        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
+        selectedNode = nil
+        launchTime = nil
+        launchPoint = nil
+        sendMove()
     }
     
     func withinBorder(pos: CGPoint) -> Bool{

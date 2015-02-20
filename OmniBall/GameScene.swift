@@ -23,9 +23,21 @@ enum PlayerColors: Int{
     case Green = 0, Red, Yellow, Blue
 }
 
+enum ScrollDirection: Int{
+    case up = 0, down, left, right
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
+    var scrollDirection: ScrollDirection!
+    var scrolling = false
+    var anchorPointVel = CGVector(dx: 0, dy: 0)
+    var scrollingFrameDuration = CGFloat(30)
+    
+    var subscene_index = 1
+    let subscene_count_horizontal = 2
+    let subscene_count_vertical = 2
     
     // Opponents Setting
     var myNodes: MyNodes!
@@ -44,10 +56,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
+        size = CGSize(width: 1024, height: 768)
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
-        println("playerID is \(connection.playerID)")
         
+        println("playerID is \(connection.playerID)")
         opponentsWrapper = OpponentsWrapper()
         for var index = 0; index < connection.maxPlayer; ++index {
             if connection.playerID != index {
@@ -78,6 +91,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 		opponentsWrapper.update_peer_dead_reckoning()
     }
     
+    
+
     override func update(currentTime: CFTimeInterval) {
         
         if !gameOver {
@@ -86,6 +101,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         myNodes.checkDead()
         opponentsWrapper.checkDead()
+        moveAnchor()
     }
     
     override func didEvaluateActions() {
@@ -97,14 +113,122 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        //node1.physicsBody?.applyForce(CGVector(dx: -50, dy: 0))
+
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        myNodes.touchesHappened(loc)
+        
+        if myNodes.isSelected == false {
+            myNodes.touchesBegan(loc)
+            if myNodes.isSelected == false && scrolling == false {
+                setSrollDirection(loc)
+            }
+        } else {
+            myNodes.launchPoint = loc
+            myNodes.launchTime = NSDate()
+        }
+    }
+
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        
+        if myNodes.isSelected == true && myNodes.launchTime != nil && myNodes.launchPoint != nil{
+			myNodes.touchesEnded(loc)
+        }
+            
+        else if scrollDirection != nil{
+            switch scrollDirection!{
+            case .up:
+                if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4{
+                    scroll(scrollDirection)
+                }
+            case .down:
+                if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2{
+                    scroll(scrollDirection)
+                }
+            case .left:
+                if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3{
+                    scroll(scrollDirection)
+                }
+            case .right:
+                if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4{
+                    scroll(scrollDirection)
+                }
+            default:
+                println("error scrolling")
+            }
+        }
+    }
+    
+    func setSrollDirection(location: CGPoint) {
+        if location.y > (-anchorPoint.y * size.height + size.height - 150){
+            scrollDirection = ScrollDirection(rawValue: 0)
+        }
+        else if location.y < (-anchorPoint.y * size.height + 150){
+            scrollDirection = ScrollDirection(rawValue: 1)
+        }
+        else if location.x < (-anchorPoint.x * size.width + 150){
+            scrollDirection = ScrollDirection(rawValue: 2)
+        }
+        else if location.x > (-anchorPoint.x * size.width + size.width - 150){
+            scrollDirection = ScrollDirection(rawValue: 3)
+        }
+        println("\(location.x), \(location.y), \(anchorPoint.x), \(anchorPoint.y)\n")
+    }
+    
+    func scroll(direction: ScrollDirection){
+        switch direction{
+        case .up:
+            anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
+        case .down:
+            anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
+        case .left:
+            anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
+        case .right:
+            anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
+        default:
+            println("error")
+        }
+        scrolling = true
+        changeAnchor()
+    }
+    
+    func moveAnchor(){
+        if (scrollingFrameDuration > 0) && scrolling == true{
+            anchorPoint.x += anchorPointVel.dx
+            anchorPoint.y += anchorPointVel.dy
+            scrollingFrameDuration--
+        }
+        else if scrolling == true{
+            anchorPointVel = CGVector(dx: 0, dy: 0)
+            anchorPoint = CGPoint(x: CGFloat(-(subscene_index - 1) % subscene_count_horizontal), y: CGFloat(-(subscene_index - 1) / subscene_count_vertical))
+            scrolling = false
+            scrollingFrameDuration = CGFloat(30)
+            scrollDirection = nil
+        }
+    }
+    
+    func changeAnchor(){
+        switch scrollDirection!{
+        case .up:
+            subscene_index += 2
+        case .down:
+            subscene_index -= 2
+        case .left:
+            subscene_index -= 1
+        case .right:
+            subscene_index += 1
+        default:
+            println("error")
+        }
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
         opponentsWrapper.deleteOpponentBall(peerPlayerID, ballIndex: message.index)
+    }
+    
+    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
+        opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
     }
     
     func checkGameOver() {
@@ -126,11 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(gameOverScene, transition: reveal)
     }
-    
-    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
-        opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
-    }
-    
+
     override func className() -> String{
         return "GameScene"
     }
