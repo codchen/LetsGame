@@ -133,7 +133,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 generateRandomNumber()
             }
             
-            if randomNumbers.count == maxPlayer {
+            if randomNumbers.count <= maxPlayer && randomNumbers.count > 1 {
                 receivedAllRandomNumber = true
             }
             
@@ -152,6 +152,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     }
                     gameState = .WaitingForStart
                     sendGameStart()
+                    self.assistant.stop()
                 } else {
                     randomNumbers.removeAll(keepCapacity: true)
                     generateRandomNumber()
