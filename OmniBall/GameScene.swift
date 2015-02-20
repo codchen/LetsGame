@@ -138,20 +138,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var swipeValid: Bool = true
             switch scrollDirection!{
             case .up:
-                if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4{
+                if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4 {
                     anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
                 }
             case .down:
-                if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2{
+                if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2 {
                     anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
-                    swipeValid = true
                 }
             case .left:
-                if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3{
+                if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3 {
                     anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
                 }
             case .right:
-                if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4{
+                if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4 {
                     anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
                 }
             default:
