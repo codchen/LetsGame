@@ -90,8 +90,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func update_peer_dead_reckoning(){
 		opponentsWrapper.update_peer_dead_reckoning()
     }
-    
-    
 
     override func update(currentTime: CFTimeInterval) {
         
@@ -137,69 +135,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
             
         else if scrollDirection != nil{
+            var swipeValid: Bool = true
             switch scrollDirection!{
             case .up:
                 if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4{
-                    scroll(scrollDirection)
+                    anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
                 }
             case .down:
                 if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2{
-                    scroll(scrollDirection)
+                    anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
+                    swipeValid = true
                 }
             case .left:
                 if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3{
-                    scroll(scrollDirection)
+                    anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
                 }
             case .right:
                 if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4{
-                    scroll(scrollDirection)
+                    anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
                 }
             default:
+                swipeValid = false
                 println("error scrolling")
+            }
+            
+            if swipeValid {
+                scrolling = true
+                changeSubscene()
             }
         }
     }
     
     func setSrollDirection(location: CGPoint) {
         if location.y > (-anchorPoint.y * size.height + size.height - 150){
-            scrollDirection = ScrollDirection(rawValue: 0)
+            scrollDirection = ScrollDirection.up
         }
         else if location.y < (-anchorPoint.y * size.height + 150){
-            scrollDirection = ScrollDirection(rawValue: 1)
+            scrollDirection = ScrollDirection.down
         }
         else if location.x < (-anchorPoint.x * size.width + 150){
-            scrollDirection = ScrollDirection(rawValue: 2)
+            scrollDirection = ScrollDirection.left
         }
         else if location.x > (-anchorPoint.x * size.width + size.width - 150){
-            scrollDirection = ScrollDirection(rawValue: 3)
+            scrollDirection = ScrollDirection.right
         }
         println("\(location.x), \(location.y), \(anchorPoint.x), \(anchorPoint.y)\n")
     }
     
-    func scroll(direction: ScrollDirection){
-        switch direction{
-        case .up:
-            anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
-        case .down:
-            anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
-        case .left:
-            anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
-        case .right:
-            anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
-        default:
-            println("error")
-        }
-        scrolling = true
-        changeAnchor()
-    }
-    
     func moveAnchor(){
-        if (scrollingFrameDuration > 0) && scrolling == true{
+        if (scrollingFrameDuration > 0) && scrolling{
             anchorPoint.x += anchorPointVel.dx
             anchorPoint.y += anchorPointVel.dy
             scrollingFrameDuration--
         }
-        else if scrolling == true{
+        else if scrolling {
             anchorPointVel = CGVector(dx: 0, dy: 0)
             anchorPoint = CGPoint(x: CGFloat(-(subscene_index - 1) % subscene_count_horizontal), y: CGFloat(-(subscene_index - 1) / subscene_count_vertical))
             scrolling = false
@@ -208,7 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func changeAnchor(){
+    func changeSubscene(){
         switch scrollDirection!{
         case .up:
             subscene_index += 2
