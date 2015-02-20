@@ -60,40 +60,47 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func sendRandomNumber(number: UInt32){
         var message = MessageRandomNumber(message: Message(messageType: MessageType.RandomNumber), number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageRandomNumber))
-        sendData(data)
+        sendData(data, reliable: true)
     }
     
     func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval){
         var message = MessageMove(message: Message(messageType: MessageType.Move), x: x, y: y,
             dx: dx, dy: dy, count: count, index: index, dt: dt)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
-        sendData(data)
+        sendData(data, reliable: false)
     }
     
     func sendGameStart(){
         var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID)
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
-        sendData(data)
+        sendData(data, reliable: true)
     }
     
     func sendDeath(index: Int){
         var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index)
         let data = NSData(bytes: &message, length: sizeof(MessageDead))
-        sendData(data)
+        sendData(data, reliable: true)
     }
     
     func sendGameOver(){
         var message = MessageGameOver(message: Message(messageType: MessageType.GameOver))
         let data = NSData(bytes: &message, length: sizeof(MessageGameOver))
-        sendData(data)
+        sendData(data, reliable: true)
     }
     
-    func sendData(data: NSData){
+    func sendData(data: NSData, reliable: Bool){
         
         var error : NSError?
+        var success: Bool!
         if session.connectedPeers.count != 0 {
-            let success = session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error: &error)
-        
+            switch reliable {
+            case true:
+                success = session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &error)
+                println("Reliable Msg")
+            default:
+                success = session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error: &error)
+            }
+
             if !success {
                 if let error = error {
             		println("Error sending data:\(error.localizedDescription)")
@@ -129,7 +136,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
             randomNumbers.append(messageRandomNumber.number)
             
-            if gameState != .WaitingForRandomNumber {
+            if gameState == .WaitingForMatch {
                 generateRandomNumber()
             }
             

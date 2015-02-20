@@ -77,7 +77,7 @@ class MyNodes: Player {
     }
     
     func withinBorder(pos: CGPoint) -> Bool{
-        if pos.x < 0 || pos.x > scene.size.width || pos.y < scene.margin || pos.y > scene.size.height - scene.margin {
+        if pos.x < 0 || pos.x > scene.size.width * 2 || pos.y < scene.margin || pos.y > scene.size.height * 2 - scene.margin {
             return false
         }
         return true
