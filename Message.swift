@@ -27,12 +27,13 @@ struct MessageRandomNumber {
 
 struct MessageGameStart {
     let message: Message
-    let playerID: Int
+    let playerID: UInt16
 }
 
 struct MessageDead {
     let message: Message
-    let index: Int
+    let index: UInt16
+    let count: UInt32
 }
 
 struct MessageMove {

@@ -26,7 +26,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var gameState: GameState = .WaitingForMatch
     var receivedAllRandomNumber: Bool = false
     var randomNumbers = Array<UInt32>()
-    var playerID: Int = 0   // the player ID of current player
+    var playerID: UInt16 = 0   // the player ID of current player
     
     
     override init() {
@@ -72,12 +72,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func sendGameStart(){
         var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID)
+		println("sent playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
         sendData(data, reliable: true)
     }
     
-    func sendDeath(index: Int){
-        var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index)
+    func sendDeath(index: UInt16, count: UInt32){
+        var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index, count: count)
         let data = NSData(bytes: &message, length: sizeof(MessageDead))
         sendData(data, reliable: true)
     }
@@ -96,7 +97,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             switch reliable {
             case true:
                 success = session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Reliable, error: &error)
-                println("Reliable Msg")
             default:
                 success = session.sendData(data, toPeers: session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable, error: &error)
             }
@@ -140,7 +140,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 generateRandomNumber()
             }
             
-            if randomNumbers.count <= maxPlayer && randomNumbers.count > 1 {
+            if randomNumbers.count == maxPlayer{
                 receivedAllRandomNumber = true
             }
             
@@ -154,12 +154,15 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     randomNumbers.sort {$0 > $1}
                     for var index = 0; index < randomNumbers.count; ++index {
                         if randomNumbers[index] == self.randomNumber {
-                            playerID = index
+                            println("PlayerID? \(playerID)")
+                            playerID = UInt16(index)
+                            println("PlayerID! \(playerID)")
+                            gameState = .WaitingForStart
+                            sendGameStart()
+                            break
                         }
                     }
-                    gameState = .WaitingForStart
-                    sendGameStart()
-                    self.assistant.stop()
+                    
                 } else {
                     randomNumbers.removeAll(keepCapacity: true)
                     generateRandomNumber()
@@ -168,11 +171,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
-            peersInGame[peerID] = messageGameStart.playerID
+            println("GameStart: name: \(peerID.displayName) ID: \(messageGameStart.playerID)")
+            peersInGame[peerID] = Int(messageGameStart.playerID)
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
-            println("Received death from \(peersInGame[peerID]) at \(messageDead.index)")
+            println("Received death from \(peerID.displayName) at \(messageDead.index)")
             controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
             
         } else if message.messageType == MessageType.GameOver {

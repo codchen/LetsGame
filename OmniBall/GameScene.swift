@@ -63,8 +63,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         println("playerID is \(connection.playerID)")
         opponentsWrapper = OpponentsWrapper()
         for var index = 0; index < connection.maxPlayer; ++index {
-            if connection.playerID != index {
-                let opponent = OpponentNodes(id: index, scene: self)
+            println("int(connection.playerID) \(Int(connection.playerID)) \(connection.playerID)")
+            if Int(connection.playerID) != index {
+                println("uint16(index) \(UInt16(index)) \(index)")
+                let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
         }
@@ -224,7 +226,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
-        opponentsWrapper.deleteOpponentBall(peerPlayerID, ballIndex: message.index)
+        println("Received delete peer id\(peerPlayerID)")
+        opponentsWrapper.deleteOpponentBall(peerPlayerID, message: message)
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {

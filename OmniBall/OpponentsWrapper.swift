@@ -14,11 +14,12 @@ class OpponentsWrapper {
     var opponents: Dictionary<Int, OpponentNodes> = Dictionary<Int, OpponentNodes>()
     
     func addOpponent(opponent: OpponentNodes) {
-        opponents[opponent.id] = opponent
+        opponents[Int(opponent.id)] = opponent
     }
     
-    func deleteOpponentBall(id: Int, ballIndex: Int) {
-        opponents[id]?.deleteIndex = ballIndex
+    func deleteOpponentBall(id: Int, message: MessageDead) {
+        opponents[id]?.deleteIndex = Int(message.index)
+        opponents[id]?.lastCount = message.count
     }
     
 	func update_peer_dead_reckoning(){

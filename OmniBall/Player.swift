@@ -14,7 +14,7 @@ class Player: NSObject {
     var scene: GameScene!
     var players: [SKSpriteNode] = []
     var color: PlayerColors!
-    var id: Int!
+    var id: UInt16!
     var count: Int {
         get {
             return players.count

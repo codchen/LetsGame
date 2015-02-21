@@ -17,11 +17,11 @@ class OpponentNodes: Player {
     var updated: [Bool] = []
     var playerCount: UInt16 = 0
     
-    init(id: Int, scene: GameScene) {
+    init(id: UInt16, scene: GameScene) {
         super.init()
         self.id = id
         self.scene = scene
-        self.color = PlayerColors(rawValue: id)
+        self.color = PlayerColors(rawValue: Int(id))
         setUpPlayers(color)
     }
     

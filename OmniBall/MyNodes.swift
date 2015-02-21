@@ -25,7 +25,7 @@ class MyNodes: Player {
         self.connection = connection
         self.scene = scene
         self.id = connection.playerID
-        self.color = PlayerColors(rawValue: id)
+        self.color = PlayerColors(rawValue: Int(id))
         setUpPlayers(color)
     }
     
@@ -36,7 +36,8 @@ class MyNodes: Player {
     override func deletePlayer(index: Int) {
         players[index].removeFromParent()
         players.removeAtIndex(index)
-        sendDead(index)
+        println("sent dead at index \(index)")
+        sendDead(UInt16(index))
     }
     
     override func checkDead(){
@@ -61,7 +62,6 @@ class MyNodes: Player {
                     break
             }
         }
-            
     }
     
     func touchesEnded(location: CGPoint){
@@ -83,9 +83,9 @@ class MyNodes: Player {
         return true
     }
     
-    func sendDead(index: Int){
-        println("I'm dead")
-        connection.sendDeath(index)
+    func sendDead(index: UInt16){
+        connection.sendDeath(index, count: msgCount)
+        msgCount++
     }
     
     func sendMove(){
