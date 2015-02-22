@@ -16,6 +16,7 @@ class OpponentNodes: Player {
     var info:[nodeInfo] = []
     var updated: [Bool] = []
     var playerCount: UInt16 = 0
+
     
     init(id: Int, scene: GameScene) {
         super.init()

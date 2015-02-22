@@ -9,6 +9,12 @@
 import Foundation
 import SpriteKit
 
+struct physicsCategory{
+    static let None: UInt32 = 0
+    static let Player: UInt32 = 0b1
+    static let target: UInt32 = 0b10
+}
+
 class Player: NSObject {
     
     var scene: GameScene!
@@ -20,6 +26,8 @@ class Player: NSObject {
             return players.count
         }
     }
+    //hardcoded
+    var capturedIndex = [-1, -1, -1]
     
     func addPlayer(node: SKSpriteNode) {
         
@@ -56,6 +64,8 @@ class Player: NSObject {
             node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.restitution = 1
+            node1.physicsBody?.categoryBitMask = physicsCategory.Player
+            node1.physicsBody?.contactTestBitMask = physicsCategory.target
             self.addPlayer(node1)
             
         }

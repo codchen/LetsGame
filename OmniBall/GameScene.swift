@@ -51,6 +51,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //hard coded!!
     let latency = 0.17
+    let protectionInterval: Double = 1000
+    var lastCaptured: [Double] = [0, 0, 0]
     
     var gameOver: Bool = false
     
@@ -62,6 +64,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         println("playerID is \(connection.playerID)")
         opponentsWrapper = OpponentsWrapper()
+        
+        setupNeutral()
+        
         for var index = 0; index < connection.maxPlayer; ++index {
             if connection.playerID != index {
                 let opponent = OpponentNodes(id: index, scene: self)
@@ -80,7 +85,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
     }
     
+    func setupNeutral(){
+        var node1: SKSpriteNode!
+        enumerateChildNodesWithName("neutral*"){node, _ in
+            node1 = node as SKSpriteNode
+            node1.physicsBody?.restitution = 1
+            node1.physicsBody?.linearDamping = 0
+            node1.physicsBody?.categoryBitMask = physicsCategory.target
+            node1.physicsBody?.contactTestBitMask = physicsCategory.Player
+        }
+    }
+    
     func didBeginContact(contact: SKPhysicsContact) {
+        let collision: UInt32 = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
+        if collision == physicsCategory.Player | physicsCategory.target{
+            var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
+            if contact.bodyB.node!.name == "neutral*"{
+                node = contact.bodyB.node! as SKSpriteNode
+            }
+            let name: NSString = node.name! as NSString
+            let index: Int = name.substringFromIndex(7).toInt()!
+            let now = NSDate()
+            if (now.timeIntervalSince1970 >= lastCaptured[index] + protectionInterval){
+                if myNodes.capturedIndex[index] == -1{
+                    lastCaptured[index] = now.timeIntervalSince1970
+                    myNodes.capturedIndex[index] = myNodes.players.count
+                    myNodes.addPlayer(node)
+                    for (peer, nodes) in opponentsWrapper.opponents{
+                        if nodes.capturedIndex[index] != -1{
+                            nodes.deletePlayer(nodes.capturedIndex[index])
+                            nodes.capturedIndex[index] = -1
+                        }
+                    }
+                    sendCaptured(index)
+                }
+            }
+        }
     }
     
     func randomPos() -> CGPoint{
