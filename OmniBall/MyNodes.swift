@@ -53,6 +53,14 @@ class MyNodes: Player {
         deadNodes = []
     }
     
+    override func setMasks(){
+        scene.enumerateChildNodesWithName(sprite){node, _ in
+            node.physicsBody?.categoryBitMask = physicsCategory.Me
+            node.physicsBody?.contactTestBitMask = physicsCategory.target
+            
+        }
+    }
+    
     func touchesBegan(location: CGPoint) {
     	for node in players {
             if node.containsPoint(location){

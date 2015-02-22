@@ -46,6 +46,14 @@ class OpponentNodes: Player {
         }
     }
     
+    override func setMasks(){
+        scene.enumerateChildNodesWithName(sprite){node, _ in
+            node.physicsBody?.categoryBitMask = physicsCategory.Opponent
+            node.physicsBody?.contactTestBitMask = physicsCategory.target
+            
+        }
+    }
+    
     func update_peer_dead_reckoning(){
         for var index = 0; index < count; ++index {
             if updated[index] == true {

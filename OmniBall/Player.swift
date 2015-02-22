@@ -9,17 +9,32 @@
 import Foundation
 import SpriteKit
 
+struct physicsCategory{
+    
+    static let None: UInt32 = 0
+    
+    static let Me: UInt32 = 0b1
+    
+    static let Opponent: UInt32 = 0b10
+    
+    static let target: UInt32 = 0b100
+    
+}
+
 class Player: NSObject {
     
     var scene: GameScene!
     var players: [SKSpriteNode] = []
     var color: PlayerColors!
     var id: UInt16!
+    var sprite: String!
     var count: Int {
         get {
             return players.count
         }
     }
+    //hardcoded
+    var capturedIndex = [-1, -1, -1]
     
     func addPlayer(node: SKSpriteNode) {
         
@@ -34,8 +49,6 @@ class Player: NSObject {
     }
     
     func setUpPlayers(playerColor: PlayerColors){
-        
-        var sprite: String!
         
         switch playerColor {
         case .Green:
@@ -59,6 +72,12 @@ class Player: NSObject {
             self.addPlayer(node1)
             
         }
+        
+        setMasks()
+    }
+    
+    func setMasks(){
+        
     }
     
     func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
@@ -86,5 +105,17 @@ class Player: NSObject {
             }
         }
     }
+    
+    func capture(index: Int, target: SKSpriteNode){
+        scene.lastCaptured[index] = NSDate().timeIntervalSince1970
+        capturedIndex[index] = players.count
+        addPlayer(target)
+        target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
+    }
 
+    func decapture(index: Int){
+        players[index].texture = SKTexture(imageNamed: "circle")
+        deletePlayer(index)
+        capturedIndex[index] = -1
+    }
 }
