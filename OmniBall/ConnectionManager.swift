@@ -158,6 +158,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                             playerID = UInt16(index)
                             println("PlayerID! \(playerID)")
                             gameState = .WaitingForStart
+                            self.assistant.stop()
                             sendGameStart()
                             break
                         }

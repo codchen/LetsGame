@@ -44,6 +44,10 @@ class Player: NSObject {
         
     }
     
+    func deleteNeutral(index: Int) {
+        players.removeAtIndex(index)
+    }
+    
     func checkDead(){
         
     }
@@ -114,8 +118,8 @@ class Player: NSObject {
     }
 
     func decapture(index: Int){
-        players[index].texture = SKTexture(imageNamed: "circle")
-        deletePlayer(index)
+        //players[capturedIndex[index]].texture = SKTexture(imageNamed: "circle")
+        deleteNeutral(capturedIndex[index])
         capturedIndex[index] = -1
     }
 }

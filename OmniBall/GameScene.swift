@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //hard coded!!
     let latency = 0.17
-    let protectionInterval: Double = 1000
+    let protectionInterval: Double = 1
     var lastCaptured: [Double] = [0, 0, 0]
     
     var gameOver: Bool = false
@@ -93,14 +93,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node1.physicsBody?.restitution = 1
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.categoryBitMask = physicsCategory.target
-            node1.physicsBody?.contactTestBitMask = physicsCategory.Me
+            node1.physicsBody?.contactTestBitMask = physicsCategory.Me | physicsCategory.Opponent
         }
     }
 
     
 
     func didBeginContact(contact: SKPhysicsContact) {
-        let collision: UInt32 = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
+        let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == physicsCategory.Me | physicsCategory.target{
             var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
             if contact.bodyB.node!.name == "neutral*"{
@@ -118,6 +118,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         }
                     }
                     //sendCaptured(index)
+                }
+            }
+        }
+        else if collision == physicsCategory.Opponent | physicsCategory.target{
+            var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
+            var capturer: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
+            if contact.bodyB.node!.name == "neutral*"{
+                node = contact.bodyB.node! as SKSpriteNode
+                capturer = contact.bodyA.node! as SKSpriteNode
+            }
+            let name: NSString = node.name! as NSString
+            let index: Int = name.substringFromIndex(7).toInt()!
+            let cname = capturer.name!
+            var whichOpp: OpponentNodes!
+            for (peer, oppo) in opponentsWrapper.opponents{
+                if (oppo.sprite == cname){
+                    whichOpp = oppo
+                    break
+                }
+            }
+            let now = NSDate()
+            if (now.timeIntervalSince1970 >= lastCaptured[index] + protectionInterval){
+                if whichOpp.capturedIndex[index] == -1{
+                    for (peer, nodes) in opponentsWrapper.opponents{
+                        if nodes.capturedIndex[index] != -1{
+                            nodes.decapture(index)
+                        }
+                    }
+                    if myNodes.capturedIndex[index] != -1{
+                        myNodes.decapture(index)
+                    }
+                    whichOpp.capture(index, target: node)                    
                 }
             }
         }
@@ -175,7 +207,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            enumerateChildNodesWithName("*"){node, _ in
 //                println("\(node.name): \(node.physicsBody!.categoryBitMask), \(node.physicsBody!.contactTestBitMask)\n")
 //            }
-            
 			myNodes.touchesEnded(loc)
         }
             
