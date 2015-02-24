@@ -33,14 +33,20 @@ class OpponentNodes: Player {
     }
     
     override func deletePlayer(index: Int) {
-        players[index].removeFromParent()
+        playerCount--
         players.removeAtIndex(index)
         info.removeAtIndex(index)
         updated.removeAtIndex(index)
+        for var idx = 0; idx < capturedIndex.count; ++idx {
+            if capturedIndex[idx] > index {
+                capturedIndex[idx]--
+            }
+        }
     }
     
     override func checkDead(){
         if deleteIndex != -1 {
+            players[deleteIndex].removeFromParent()
             deletePlayer(deleteIndex)
             deleteIndex = -1
         }
@@ -55,7 +61,7 @@ class OpponentNodes: Player {
     }
     
     func update_peer_dead_reckoning(){
-        for var index = 0; index < count; ++index {
+        for var index = 0; index < Int(playerCount); ++index {
             if updated[index] == true {
                 let currentNodeInfo = info[index]
                 
@@ -72,11 +78,19 @@ class OpponentNodes: Player {
     
     func updatePeerPos(message: MessageMove) {
         if (message.count > lastCount){
-            lastCount = message.count
-            info[Int(message.index)] = nodeInfo(x: CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
-            updated[Int(message.index)] = true
+            if Int(message.index) < count {
+                lastCount = message.count
+                info[Int(message.index)] = nodeInfo(x: CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
+                updated[Int(message.index)] = true
+            }
         }
 
+    }
+    
+    override func updateCaptured(message: MessageCapture) {
+        let slave = scene.childNodeWithName("neutral" + String(message.index)) as SKSpriteNode
+        capture(Int(message.index), target: slave)
+        lastCount = message.count
     }
     
     func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{

@@ -9,7 +9,7 @@
 import Foundation
 
 enum MessageType: Int {
-    case RandomNumber, GameStart, Move, GameOver, Dead
+    case RandomNumber, GameStart, Move, Dead, Capture, GameOver
 }
 
 enum GameState: Int {
@@ -49,6 +49,13 @@ struct MessageMove {
 
 struct MessageGameOver {
     let message: Message
+}
+
+struct MessageCapture {
+    let message: Message
+    let index: UInt16
+    let time: NSTimeInterval
+    let count: UInt32
 }
 
 

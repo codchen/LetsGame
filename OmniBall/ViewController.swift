@@ -117,6 +117,13 @@ class ViewController: UIViewController {
         }
     }
     
+    func updateCaptured(message: MessageCapture, peerPlayerID: Int){
+        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene.updateCaptured(message, playerID: peerPlayerID)
+        }
+    }
+    
     func gameOver(){
         dispatch_async(dispatch_get_main_queue()){
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {

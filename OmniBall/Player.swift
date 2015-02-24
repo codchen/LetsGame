@@ -12,11 +12,8 @@ import SpriteKit
 struct physicsCategory{
     
     static let None: UInt32 = 0
-    
     static let Me: UInt32 = 0b1
-    
     static let Opponent: UInt32 = 0b10
-    
     static let target: UInt32 = 0b100
     
 }
@@ -35,6 +32,7 @@ class Player: NSObject {
     }
     //hardcoded
     var capturedIndex = [-1, -1, -1]
+//    var slaves: Dictionary<Int, SKSpriteNode> = Dictionary<Int, SKSpriteNode>()
     
     func addPlayer(node: SKSpriteNode) {
         
@@ -70,9 +68,7 @@ class Player: NSObject {
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.restitution = 1
             self.addPlayer(node1)
-            
         }
-        
         setMasks()
     }
     
@@ -106,16 +102,25 @@ class Player: NSObject {
         }
     }
     
+    func updateCaptured(message: MessageCapture) {
+        
+    }
+    
     func capture(index: Int, target: SKSpriteNode){
-        scene.lastCaptured[index] = NSDate().timeIntervalSince1970
-        capturedIndex[index] = players.count
+//        scene.lastCaptured[index] = NSDate().timeIntervalSince1970
+        capturedIndex[index] = count
         addPlayer(target)
+//        slaves[index] = target
         target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
     }
+    
 
     func decapture(index: Int){
-        players[index].texture = SKTexture(imageNamed: "circle")
-        deletePlayer(index)
-        capturedIndex[index] = -1
+//        slaves.removeValueForKey(index)
+        if capturedIndex[index] != -1 {
+            println("Delete Neutral at index \(capturedIndex[index])")
+            deletePlayer(capturedIndex[index])
+            capturedIndex[index] = -1
+        }
     }
 }

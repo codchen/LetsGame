@@ -38,4 +38,20 @@ class OpponentsWrapper {
     func updatePeerPos(id: Int, message: MessageMove) {
         opponents[id]?.updatePeerPos(message)
     }
+    
+    func updateCaptured(id: Int, message: MessageCapture) {
+        for (player_id, opponent) in opponents {
+            if id == player_id {
+                opponent.updateCaptured(message)
+            } else {
+                opponent.decapture(Int(message.index))
+            }
+        }
+    }
+    
+    func decapture(index: Int){
+        for (id, opponent) in opponents{
+            opponent.decapture(index)
+        }
+    }
 }

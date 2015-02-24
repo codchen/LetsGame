@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //hard coded!!
     let latency = 0.17
-    let protectionInterval: Double = 1000
+    let protectionInterval: Double = 1
     var lastCaptured: [Double] = [0, 0, 0]
     
     var gameOver: Bool = false
@@ -62,13 +62,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         
-        println("playerID is \(connection.playerID)")
         opponentsWrapper = OpponentsWrapper()
         setupNeutral()
         for var index = 0; index < connection.maxPlayer; ++index {
-            println("int(connection.playerID) \(Int(connection.playerID)) \(connection.playerID)")
             if Int(connection.playerID) != index {
-                println("uint16(index) \(UInt16(index)) \(index)")
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
@@ -96,30 +93,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node1.physicsBody?.contactTestBitMask = physicsCategory.Me
         }
     }
-
     
-
     func didBeginContact(contact: SKPhysicsContact) {
-        let collision: UInt32 = contact.bodyA.contactTestBitMask | contact.bodyB.contactTestBitMask
+        let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == physicsCategory.Me | physicsCategory.target{
             var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
-            if contact.bodyB.node!.name == "neutral*"{
+            if contact.bodyB.node!.name == "neutral*" {
                 node = contact.bodyB.node! as SKSpriteNode
             }
+            println("Collision body A: \(contact.bodyA.node?.name)")
+            println("Collision body B: \(contact.bodyB.node?.name)")
+            println("Collision is \(collision)")
             let name: NSString = node.name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
-            let now = NSDate()
-            if (now.timeIntervalSince1970 >= lastCaptured[index] + protectionInterval){
-                if myNodes.capturedIndex[index] == -1{
-                    myNodes.capture(index, target: node)
-                    for (peer, nodes) in opponentsWrapper.opponents{
-                        if nodes.capturedIndex[index] != -1{
-                            nodes.decapture(index)
-                        }
-                    }
-                    //sendCaptured(index)
-                }
+            let now = NSDate().timeIntervalSince1970
+            println("Last Capture is \(lastCaptured[index])")
+            println("Sent Capture is \(now)")
+            if (now >= lastCaptured[index] + protectionInterval &&
+                myNodes.capturedIndex[index] == -1){
+                opponentsWrapper.decapture(index)
+                myNodes.capture(index, target: node)
+                lastCaptured[index] = now
+                connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
             }
+            
+        }
+    }
+    
+    func updateCaptured(message: MessageCapture, playerID: Int){
+        println("Receive Captured \(message.index) at time \(message.time) from peer \(playerID)")
+        println("Last Capture is \(lastCaptured[Int(message.index)])")
+        if message.time >= lastCaptured[Int(message.index)] + protectionInterval ||
+        	message.time < lastCaptured[Int(message.index)] {
+            myNodes.updateCaptured(message)
+            opponentsWrapper.updateCaptured(playerID, message: message)
+            lastCaptured[Int(message.index)] = message.time
+        } else {
+            println("Protecting")
         }
     }
     
@@ -269,7 +279,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
-        println("Received delete peer id\(peerPlayerID)")
         opponentsWrapper.deleteOpponentBall(peerPlayerID, message: message)
     }
     

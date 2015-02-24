@@ -72,8 +72,14 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func sendGameStart(){
         var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID)
-		println("sent playerID is \(playerID)")
+        println("My playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
+        sendData(data, reliable: true)
+    }
+    
+    func sendCaptured(index: UInt16, time: NSTimeInterval, count: UInt32){
+        var message = MessageCapture(message: Message(messageType: MessageType.Capture), index: index, time: time, count: count)
+        let data = NSData(bytes: &message, length: sizeof(MessageCapture))
         sendData(data, reliable: true)
     }
     
@@ -154,15 +160,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     randomNumbers.sort {$0 > $1}
                     for var index = 0; index < randomNumbers.count; ++index {
                         if randomNumbers[index] == self.randomNumber {
-                            println("PlayerID? \(playerID)")
                             playerID = UInt16(index)
-                            println("PlayerID! \(playerID)")
                             gameState = .WaitingForStart
                             sendGameStart()
+                            self.assistant.stop()
                             break
                         }
                     }
-                    
                 } else {
                     randomNumbers.removeAll(keepCapacity: true)
                     generateRandomNumber()
@@ -171,14 +175,15 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
-            println("GameStart: name: \(peerID.displayName) ID: \(messageGameStart.playerID)")
             peersInGame[peerID] = Int(messageGameStart.playerID)
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
-            println("Received death from \(peerID.displayName) at \(messageDead.index)")
             controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
             
+        } else if message.messageType == MessageType.Capture {
+			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
+            controller.updateCaptured(messageCapture, peerPlayerID: peersInGame[peerID]!)
         } else if message.messageType == MessageType.GameOver {
             peersInGame.removeValueForKey(peerID)
             if peersInGame.count == 0 {
