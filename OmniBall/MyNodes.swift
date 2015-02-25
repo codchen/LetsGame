@@ -19,7 +19,7 @@ class MyNodes: Player {
     var selectedNode: SKSpriteNode!
     var launchTime: NSDate!
     var launchPoint: CGPoint!
-    let maxSpeed:CGFloat = 800
+    let maxSpeed:CGFloat = 1000
     
     init(connection: ConnectionManager, scene: GameScene) {
         super.init()
@@ -71,9 +71,18 @@ class MyNodes: Player {
     }
     
     func checkOutOfBound(){
-        for player in players{
-            if player.position.y > 2733{
-                
+        for var i = 0; i < count; ++i{
+            if players[i].position.y > 2733{
+                players[i].physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+                if players[i].name?.hasPrefix("neutral") == true{
+                    players[i].removeFromParent()
+                    deletePlayer(i)
+                    sendDead(UInt16(i))
+                    successNodes += 1
+                }
+                else{
+                    players[i].position = bornPos[i]
+                }
             }
         }
     }

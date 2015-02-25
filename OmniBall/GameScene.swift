@@ -259,6 +259,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         performScheduledCapture()
         //myNodes.checkDead()
         //opponentsWrapper.checkDead()
+        myNodes.checkOutOfBound()
         moveAnchor()
     }
     
@@ -406,6 +407,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkGameOver() {
         if myNodes.successNodes == 2 {
             gameOver = true
+            connection.sendGameOver()
             gameOver(won: true)
         }
     }

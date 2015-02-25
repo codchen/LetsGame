@@ -165,7 +165,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func gameOver(){
-        sendGameOver()
         gameState = .Done
         playerID = 0
         randomNumbers.removeAll(keepCapacity: true)
@@ -281,11 +280,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.Capture {
 			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
             controller.updateCaptured(messageCapture, peerPlayerID: peersInGame[peerID]!)
+        
         } else if message.messageType == MessageType.GameOver {
-            peersInGame.removeValueForKey(peerID)
-            if peersInGame.count == 0 {
-            	controller.gameOver()
-            }
+            controller.gameOver()
         } else if message.messageType == MessageType.NeutralInfo{
             let messageNeutral = UnsafePointer<MessageNeutralInfo>(data.bytes).memory
             if peersInGame[peerID] != nil{

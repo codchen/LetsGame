@@ -22,6 +22,7 @@ class Player: NSObject {
     
     var scene: GameScene!
     var players: [SKSpriteNode] = []
+    var bornPos: [CGPoint] = []
     var color: PlayerColors!
     var id: UInt16!
     var sprite: String!
@@ -68,6 +69,7 @@ class Player: NSObject {
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.restitution = 1
             self.addPlayer(node1)
+            self.bornPos.append(node1.position)
         }
         setMasks()
     }
