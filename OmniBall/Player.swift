@@ -112,12 +112,12 @@ class Player: NSObject {
         addPlayer(target)
 //        slaves[index] = target
         target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
+    }
+    
+
+    func decapture(index: Int){
 //        slaves.removeValueForKey(index)
         if capturedIndex[index] != -1 {
-            println("Delete Neutral at index \(capturedIndex[index])")
-            deletePlayer(capturedIndex[index])
-            capturedIndex[index] = -1
-        }
             println("Delete Neutral at index \(capturedIndex[index])")
             deletePlayer(capturedIndex[index])
             capturedIndex[index] = -1

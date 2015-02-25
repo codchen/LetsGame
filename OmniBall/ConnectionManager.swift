@@ -203,7 +203,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                         if randomNumbers[index] == self.randomNumber {
                             playerID = UInt16(index)
                             gameState = .WaitingForStart
-                            self.assistant.stop()
                             sendGameStart()
                             self.assistant.stop()
                             break
