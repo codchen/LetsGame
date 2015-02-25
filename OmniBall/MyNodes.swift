@@ -19,6 +19,8 @@ class MyNodes: Player {
     var launchTime: NSDate!
     var launchPoint: CGPoint!
     
+    let maxSpeed: CGFloat = 650
+    
     init(connection: ConnectionManager, scene: GameScene) {
         super.init()
         
@@ -83,10 +85,10 @@ class MyNodes: Player {
     func touchesEnded(location: CGPoint){
         let now = NSDate()
         var offset: CGPoint = (location - launchPoint) / CGFloat(now.timeIntervalSinceDate(launchTime!))
-        if offset.length() > 500{
+        if offset.length() > maxSpeed{
             offset.normalize()
-            offset.x = offset.x * 500
-            offset.y = offset.y * 500
+            offset.x = offset.x * maxSpeed
+            offset.y = offset.y * maxSpeed
         }
         selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
         isSelected = false
