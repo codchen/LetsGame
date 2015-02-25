@@ -165,9 +165,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func update(currentTime: CFTimeInterval) {
         
-//        if !gameOver {
-//            checkGameOver()
-//        }
+        if !gameOver {
+            checkGameOver()
+        }
         
         myNodes.checkDead()
         opponentsWrapper.checkDead()
