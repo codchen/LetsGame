@@ -119,6 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 myNodes.capture(index, target: node)
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
+                connection.sendNeutralInfo(UInt16(index), id: myNodes.id, lastCaptured: now)
             }
             
         }
@@ -145,6 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 opp.capture(index, target: node)
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
+                connection.sendNeutralInfo(UInt16(index), id: opp.id, lastCaptured: now)
             }
         }
     }
@@ -254,7 +256,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didSimulatePhysics() {
-        broadcastNeutral()
+        //broadcastNeutral()
         myNodes.sendMove()
     }
     
