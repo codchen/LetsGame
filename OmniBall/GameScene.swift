@@ -212,6 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func performScheduledCapture(){
         while scheduleToCapture.count > 0{
+            //check if already captured
             myNodes.decapture(scheduleToCapture[0])
             opponentsWrapper.decapture(scheduleToCapture[0])
             let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode

@@ -113,7 +113,7 @@ class OpponentNodes: Player {
     
     func farEnough(point1: CGPoint, point2: CGPoint) -> Bool{
         let offset = point1.distanceTo(point2)
-        if offset < 200{
+        if offset < 1000{
             return false
         }
         return true
