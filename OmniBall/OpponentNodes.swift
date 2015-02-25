@@ -64,16 +64,17 @@ class OpponentNodes: Player {
     }
     
     func update_peer_dead_reckoning(){
-        for b in updated{
-            println(b)
-        }
         for var index = 0; index < count; ++index {
             if updated[index] == true {
                 let currentNodeInfo = info[index]
-                
                 if closeEnough(CGPoint(x: info[index].x, y: info[index].y), point2: players[index].position) == true {
                     players[index].physicsBody!.velocity = CGVector(dx: info[index].dx, dy: info[index].dy)
                 }
+                else if farEnough(CGPoint(x: info[index].x, y: info[index].y), point2: players[index].position) == true {
+                    players[index].position = CGPoint(x: info[index].x, y: info[index].y)
+                    players[index].physicsBody!.velocity = CGVector(dx: info[index].dx, dy: info[index].dy)
+                }
+                
                 else {
                     players[index].physicsBody!.velocity = CGVector(dx: info[index].dx + (info[index].x - players[index].position.x), dy: info[index].dy + (info[index].y - players[index].position.y))
                 }
@@ -105,6 +106,14 @@ class OpponentNodes: Player {
     func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
         let offset = point1.distanceTo(point2)
         if offset >= 10{
+            return false
+        }
+        return true
+    }
+    
+    func farEnough(point1: CGPoint, point2: CGPoint) -> Bool{
+        let offset = point1.distanceTo(point2)
+        if offset < 200{
             return false
         }
         return true

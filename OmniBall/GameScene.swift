@@ -34,10 +34,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scrolling = false
     var anchorPointVel = CGVector(dx: 0, dy: 0)
     var scrollingFrameDuration = CGFloat(30)
+    var scrollLaunchPoint: CGPoint!
     
-    var subscene_index = 1
-    let subscene_count_horizontal = 2
-    let subscene_count_vertical = 2
+    let initial_subscene_index = 12
+    var subscene_index = 12
+    let subscene_count_horizontal = 5
+    let subscene_count_vertical = 5
     
     // Opponents Setting
     var myNodes: MyNodes!
@@ -52,7 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //hard coded!!
     let latency = 0.17
     let protectionInterval: Double = 1
-    var lastCaptured: [Double] = [0, 0, 0]
+    var lastCaptured: [Double] = [0, 0, 0, 0]
     
     var gameOver: Bool = false
     
@@ -63,7 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-        size = CGSize(width: 1024, height: 768)
+        size = CGSize(width: 2048, height: 1536)
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         
@@ -104,12 +106,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if collision == physicsCategory.Me | physicsCategory.target{
             let now = NSDate().timeIntervalSince1970
             var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
-            if contact.bodyB.node!.name == "neutral*" {
+            println(node.name)
+            if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
                 node = contact.bodyB.node! as SKSpriteNode
+                println(node.name)
             }
             println("Collision body A: \(contact.bodyA.node?.name)")
             println("Collision body B: \(contact.bodyB.node?.name)")
             println("Collision is \(collision)")
+            println(node.name)
             let name: NSString = node.name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
             println("Last Capture is \(lastCaptured[index])")
@@ -127,9 +132,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let now = NSDate().timeIntervalSince1970
             var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
             var toucher: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
-            if contact.bodyB.node!.name == "neutral*" {
+            println(node.name)
+            println(toucher.name)
+            if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
                 node = contact.bodyB.node! as SKSpriteNode
                 toucher = contact.bodyA.node! as SKSpriteNode
+                println(node.name)
+                println(toucher.name)
             }
             var opp: OpponentNodes!
             for (peer, opponent) in opponentsWrapper.opponents{
@@ -138,6 +147,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     break
                 }
             }
+            println(node.name)
+            println(toucher.name)
             let name: NSString = node.name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
             if (now >= lastCaptured[index] + protectionInterval || (now > lastCaptured[index] - protectionInterval && now < lastCaptured[index]))&&(opp.capturedIndex[index] == -1){
@@ -175,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if pointTo.capturedIndex[index] != -1{
             return
         }
-        let sentTime = message.lastCaptured// + connection.timeDifference[playerID]!
+        let sentTime = message.lastCaptured + connection.delta[playerID]!
         if sentTime > lastCaptured[index] + protectionInterval || (sentTime > lastCaptured[index] - protectionInterval && sentTime < lastCaptured[index]){
             scheduleToCapture.append(index)
             scheduleCaptureBy.append(pointTo)
@@ -246,8 +257,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         performScheduledCapture()
-        myNodes.checkDead()
-        opponentsWrapper.checkDead()
+        //myNodes.checkDead()
+        //opponentsWrapper.checkDead()
         moveAnchor()
     }
     
@@ -293,19 +304,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             var swipeValid: Bool = true
             switch scrollDirection!{
             case .up:
-                if (loc.y < -anchorPoint.y * size.height + size.height - 250) && subscene_index != 3 && subscene_index != 4 {
+                if (loc.y < -anchorPoint.y * size.height + size.height - 500) && subscene_index / subscene_count_horizontal != subscene_count_vertical - 1{
                     scroll(scrollDirection)
                 }
             case .down:
-                if (loc.y > -anchorPoint.y * size.height + 250) && subscene_index != 1 && subscene_index != 2 {
+                if (loc.y > -anchorPoint.y * size.height + 500) && subscene_index / subscene_count_horizontal != 0 {
                     scroll(scrollDirection)
                 }
             case .left:
-                if (loc.x > -anchorPoint.x * size.width + 250) && subscene_index != 1 && subscene_index != 3 {
+                if (loc.x > -anchorPoint.x * size.width + 500) && subscene_index % subscene_count_horizontal != 0 {
                     scroll(scrollDirection)
                 }
             case .right:
-                if (loc.x < -anchorPoint.x * size.width + size.width - 250) && subscene_index != 2 && subscene_index != 4 {
+                if (loc.x < -anchorPoint.x * size.width + size.width - 500) && subscene_index % subscene_count_horizontal != subscene_count_horizontal - 1 {
                     scroll(scrollDirection)
                 }
             default:
@@ -316,16 +327,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setSrollDirection(location: CGPoint) {
-        if location.y > (-anchorPoint.y * size.height + size.height - 150){
+        if location.y > (-anchorPoint.y * size.height + size.height - 300){
             scrollDirection = .up
         }
-        else if location.y < (-anchorPoint.y * size.height + 150){
+        else if location.y < (-anchorPoint.y * size.height + 300){
             scrollDirection = .down
         }
-        else if location.x < (-anchorPoint.x * size.width + 150){
+        else if location.x < (-anchorPoint.x * size.width + 300){
             scrollDirection = .left
         }
-        else if location.x > (-anchorPoint.x * size.width + size.width - 150){
+        else if location.x > (-anchorPoint.x * size.width + size.width - 300){
             scrollDirection = .right
         }
     }
@@ -333,13 +344,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func scroll(direction: ScrollDirection){
         switch direction{
         case .up:
-            anchorPointVel.dy = -CGFloat(1) / scrollingFrameDuration
+            anchorPointVel.dy = -CGFloat(0.5) / scrollingFrameDuration
         case .down:
-            anchorPointVel.dy = CGFloat(1) / scrollingFrameDuration
+            anchorPointVel.dy = CGFloat(0.5) / scrollingFrameDuration
         case .left:
-            anchorPointVel.dx = CGFloat(1) / scrollingFrameDuration
+            anchorPointVel.dx = CGFloat(0.5) / scrollingFrameDuration
         case .right:
-            anchorPointVel.dx = -CGFloat(1) / scrollingFrameDuration
+            anchorPointVel.dx = -CGFloat(0.5) / scrollingFrameDuration
         default:
             println("error")
         }
@@ -355,19 +366,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if scrolling {
             anchorPointVel = CGVector(dx: 0, dy: 0)
-            anchorPoint = CGPoint(x: CGFloat(-(subscene_index - 1) % subscene_count_horizontal), y: CGFloat(-(subscene_index - 1) / subscene_count_vertical))
+            anchorPoint = getAnchorPoint()
+            println(anchorPoint.x)
+            println(anchorPoint.y)
             scrolling = false
             scrollingFrameDuration = CGFloat(30)
             scrollDirection = nil
         }
     }
     
+    func getAnchorPoint() -> CGPoint{
+        let subscene_offset = CGPoint(x: initial_subscene_index % subscene_count_horizontal, y: initial_subscene_index / subscene_count_horizontal)
+        return CGPoint(x: 0.5 * CGFloat(Int(subscene_offset.x) - subscene_index % subscene_count_horizontal), y: 0.5 * CGFloat(Int(subscene_offset.y) - subscene_index / subscene_count_horizontal))
+    }
+    
     func changeSubscene(){
         switch scrollDirection!{
         case .up:
-            subscene_index += 2
+            subscene_index += subscene_count_horizontal
         case .down:
-            subscene_index -= 2
+            subscene_index -= subscene_count_horizontal
         case .left:
             subscene_index -= 1
         case .right:

@@ -31,7 +31,7 @@ class Player: NSObject {
         }
     }
     //hardcoded
-    var capturedIndex = [-1, -1, -1]
+    var capturedIndex = [-1, -1, -1, -1]
 //    var slaves: Dictionary<Int, SKSpriteNode> = Dictionary<Int, SKSpriteNode>()
     
     func addPlayer(node: SKSpriteNode) {
