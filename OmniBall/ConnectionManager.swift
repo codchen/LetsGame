@@ -28,6 +28,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var randomNumbers = Array<UInt32>()
     var playerID: UInt16 = 0   // the player ID of current player
     
+    var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
+    
     
     override init() {
         super.init()
@@ -80,6 +82,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func sendCaptured(index: UInt16, time: NSTimeInterval, count: UInt32){
         var message = MessageCapture(message: Message(messageType: MessageType.Capture), index: index, time: time, count: count)
         let data = NSData(bytes: &message, length: sizeof(MessageCapture))
+        sendData(data, reliable: true)
+    }
+    
+    func sendNeutralInfo(index: UInt16, id: UInt16, lastCaptured: Double){
+        var message = MessageNeutralInfo(message: Message(messageType: MessageType.NeutralInfo), index: index, id: id, lastCaptured: lastCaptured)
+        let data = NSData(bytes: &message, length: sizeof(MessageNeutralInfo))
         sendData(data, reliable: true)
     }
     
@@ -189,7 +197,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if peersInGame.count == 0 {
             	controller.gameOver()
             }
-        }
+        } else if message.messageType == MessageType.NeutralInfo{
+            let messageNeutral = UnsafePointer<MessageNeutralInfo>(data.bytes).memory
+            if peersInGame[peerID] != nil{
+                controller.updateNeutralInfo(messageNeutral, peerPlayerID: peersInGame[peerID]!)
+            }
+            }
 
     }
     

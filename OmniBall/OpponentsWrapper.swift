@@ -18,6 +18,9 @@ class OpponentsWrapper {
     }
     
     func deleteOpponentBall(id: Int, message: MessageDead) {
+        if Int(message.index) >= opponents[id]!.count{
+            return
+        }
         opponents[id]?.deleteIndex = Int(message.index)
         opponents[id]?.lastCount = message.count
     }

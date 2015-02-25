@@ -56,6 +56,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameOver: Bool = false
     
+    //receive capture stuff
+    var scheduleToCapture: [Int] = []
+    var scheduleCaptureBy: [Player] = []
+    var scheduleUpdateTime: [Double] = []
+    
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 1024, height: 768)
@@ -97,6 +102,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == physicsCategory.Me | physicsCategory.target{
+            let now = NSDate().timeIntervalSince1970
             var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
             if contact.bodyB.node!.name == "neutral*" {
                 node = contact.bodyB.node! as SKSpriteNode
@@ -106,22 +112,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("Collision is \(collision)")
             let name: NSString = node.name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
-            let now = NSDate().timeIntervalSince1970
             println("Last Capture is \(lastCaptured[index])")
             println("Sent Capture is \(now)")
-            if (now >= lastCaptured[index] + protectionInterval &&
-                myNodes.capturedIndex[index] == -1){
+            if (now >= lastCaptured[index] + protectionInterval || (now > lastCaptured[index] - protectionInterval && now < lastCaptured[index]))&&(myNodes.capturedIndex[index] == -1){
                 opponentsWrapper.decapture(index)
                 myNodes.capture(index, target: node)
                 lastCaptured[index] = now
-                connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
+                //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
             }
             
+        }
+        else if collision == physicsCategory.Opponent | physicsCategory.target{
+            let now = NSDate().timeIntervalSince1970
+            var node: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
+            var toucher: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
+            if contact.bodyB.node!.name == "neutral*" {
+                node = contact.bodyB.node! as SKSpriteNode
+                toucher = contact.bodyA.node! as SKSpriteNode
+            }
+            var opp: OpponentNodes!
+            for (peer, opponent) in opponentsWrapper.opponents{
+                if opponent.sprite == toucher.name{
+                    opp = opponent
+                    break
+                }
+            }
+            let name: NSString = node.name! as NSString
+            let index: Int = name.substringFromIndex(7).toInt()!
+            if (now >= lastCaptured[index] + protectionInterval || (now > lastCaptured[index] - protectionInterval && now < lastCaptured[index]))&&(opp.capturedIndex[index] == -1){
+                myNodes.decapture(index)
+                opponentsWrapper.decapture(index)
+                opp.capture(index, target: node)
+                lastCaptured[index] = now
+                //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
+            }
         }
     }
     
     func updateCaptured(message: MessageCapture, playerID: Int){
-        println("Receive Captured \(message.index) at time \(message.time) from peer \(playerID)")
+        println("updateCaptured")
+        println("LastCaptured:")
+        for i in lastCaptured{
+            println(i)
+        }
+        println("Receive Captured \(Int(message.index)) at time \(message.time) from peer \(playerID)")
         println("Last Capture is \(lastCaptured[Int(message.index)])")
         if message.time >= lastCaptured[Int(message.index)] + protectionInterval ||
         	message.time < lastCaptured[Int(message.index)] {
@@ -130,6 +164,68 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lastCaptured[Int(message.index)] = message.time
         } else {
             println("Protecting")
+        }
+    }
+    
+    func updateNeutralInfo(message: MessageNeutralInfo, playerID: Int){
+        let pointTo: Player = getByID(message.id)!
+        let index = (Int)(message.index)
+        if pointTo.capturedIndex[index] != -1{
+            return
+        }
+        let sentTime = message.lastCaptured// + connection.timeDifference[playerID]!
+        if sentTime > lastCaptured[index] + protectionInterval || (sentTime > lastCaptured[index] - protectionInterval && sentTime < lastCaptured[index]){
+            scheduleToCapture.append(index)
+            scheduleCaptureBy.append(pointTo)
+            scheduleUpdateTime.append(message.lastCaptured)
+        }
+        
+    }
+    
+    func getByID(id: UInt16) -> Player?{
+        if myNodes.id == id{
+            return myNodes
+        }
+        else{
+            for (peer, oppo) in opponentsWrapper.opponents{
+                if oppo.id == id{
+                    return oppo
+                }
+            }
+        }
+        println("invalid id")
+        return nil
+    }
+    
+    func performScheduledCapture(){
+        while scheduleToCapture.count > 0{
+            myNodes.decapture(scheduleToCapture[0])
+            opponentsWrapper.decapture(scheduleToCapture[0])
+            let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode
+            scheduleCaptureBy[0].capture(scheduleToCapture[0], target: target)
+            lastCaptured[scheduleToCapture[0]] = scheduleUpdateTime[0]
+            scheduleToCapture.removeAtIndex(0)
+            scheduleCaptureBy.removeAtIndex(0)
+            scheduleUpdateTime.removeAtIndex(0)
+        }
+    }
+    
+    func broadcastNeutral(){
+        for var i = 0; i < lastCaptured.count; ++i{
+            var id: UInt16!
+            if myNodes.capturedIndex[i] != -1{
+                id = myNodes.id
+                connection.sendNeutralInfo(UInt16(i), id: id, lastCaptured: lastCaptured[i])
+            }
+            else{
+                for (peer, oppo) in opponentsWrapper.opponents{
+                    if oppo.capturedIndex[i] != -1{
+                        id = oppo.id
+                        connection.sendNeutralInfo(UInt16(i), id: id, lastCaptured: lastCaptured[i])
+                        break
+                    }
+                }
+            }
         }
     }
     
@@ -147,6 +243,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             checkGameOver()
         }
         
+        performScheduledCapture()
         myNodes.checkDead()
         opponentsWrapper.checkDead()
         moveAnchor()
@@ -157,6 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didSimulatePhysics() {
+        broadcastNeutral()
         myNodes.sendMove()
     }
     
@@ -228,7 +326,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else if location.x > (-anchorPoint.x * size.width + size.width - 150){
             scrollDirection = .right
         }
-        println("\(location.x), \(location.y), \(anchorPoint.x), \(anchorPoint.y)\n")
     }
     
     func scroll(direction: ScrollDirection){
