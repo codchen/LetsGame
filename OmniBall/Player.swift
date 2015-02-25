@@ -54,7 +54,7 @@ class Player: NSObject {
             sprite = "node1"
         case .Red:
             sprite = "node2"
-        case .Yellow:
+        case .Blue:
             sprite = "node3"
         default:
             println("error in setup player color")
@@ -99,7 +99,7 @@ class Player: NSObject {
             case .Yellow:
                 return "80x80_yellow"
             case .Blue:
-                return "80x80_blue_ball"
+                return "80x80_blue"
             }
         }
     }

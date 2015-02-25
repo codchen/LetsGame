@@ -20,7 +20,7 @@ struct nodeInfo {
 }
 
 enum PlayerColors: Int{
-    case Green = 0, Red, Yellow, Blue
+    case Green = 0, Red, Blue, Yellow
 }
 
 enum ScrollDirection: Int{
