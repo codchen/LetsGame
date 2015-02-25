@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
 		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
 		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */,
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
 				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
+				119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */,
 			);
 			path = OmniBall;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */,
 				FF5301201A7D43A300F04937 /* GameScene.swift in Sources */,
 				66F866901A6F0B72007EE9FF /* SKTAudio.swift in Sources */,
+				119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */,
 				11A57C641A9681C800C695E7 /* Player.swift in Sources */,
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,

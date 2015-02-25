@@ -28,6 +28,10 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var randomNumbers = Array<UInt32>()
     var playerID: UInt16 = 0   // the player ID of current player
     
+    // reconcil data info
+    var latency: NSTimeInterval!
+    var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
+    
     
     override init() {
         super.init()
@@ -63,6 +67,24 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data, reliable: true)
     }
     
+    func sendFirstTrip(peer: MCPeerID){
+        var message = MessageFirstTrip(message: Message(messageType: MessageType.FirstTrip), time: NSDate().timeIntervalSince1970)
+        let data = NSData(bytes: &message, length: sizeof(MessageFirstTrip))
+        sendDataTo(data, peerID: peer, reliable: true)
+    }
+    
+    func sendSecondTrip(delta: NSTimeInterval, peer: MCPeerID){
+        var message = MessageSecondTrip(message: Message(messageType: MessageType.SecondTrip), time: NSDate().timeIntervalSince1970, delta: delta)
+        let data = NSData(bytes: &message, length: sizeof(MessageSecondTrip))
+        sendDataTo(data, peerID: peer, reliable: true)
+    }
+    
+    func sendThirdTrip(delta: NSTimeInterval, peer: MCPeerID){
+        var message = MessageThirdTrip(message: Message(messageType: MessageType.ThirdTrip), delta: delta)
+        let data = NSData(bytes: &message, length: sizeof(MessageThirdTrip))
+        sendDataTo(data, peerID: peer, reliable: true)
+    }
+    
     func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval){
         var message = MessageMove(message: Message(messageType: MessageType.Move), x: x, y: y,
             dx: dx, dy: dy, count: count, index: index, dt: dt)
@@ -93,6 +115,25 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         var message = MessageGameOver(message: Message(messageType: MessageType.GameOver))
         let data = NSData(bytes: &message, length: sizeof(MessageGameOver))
         sendData(data, reliable: true)
+    }
+    
+    func sendDataTo(data: NSData, peerID: MCPeerID, reliable: Bool) {
+        var error : NSError?
+        var success: Bool!
+        if session.connectedPeers.count != 0 {
+            switch reliable {
+            case true:
+                success = session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable, error: &error)
+            default:
+                success = session.sendData(data, toPeers: [peerID], withMode: MCSessionSendDataMode.Unreliable, error: &error)
+            }
+            
+            if !success {
+                if let error = error {
+                    println("Error sending data:\(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     func sendData(data: NSData, reliable: Bool){
@@ -176,6 +217,41 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
             peersInGame[peerID] = Int(messageGameStart.playerID)
+            if peersInGame.count == maxPlayer - 1 {
+                for (peer, id) in peersInGame {
+                    if id > Int(self.playerID) {
+                        sendFirstTrip(peer)
+                    }
+                }
+            }
+            
+        } else if message.messageType == MessageType.FirstTrip{
+            let messageFirstTrip = UnsafePointer<MessageFirstTrip>(data.bytes).memory
+            let delta = NSDate().timeIntervalSince1970 - messageFirstTrip.time
+            println("Received First Trip from \(peerID.displayName)")
+            println("1st Trip: time \(messageFirstTrip.time), delta \(delta)")
+            sendSecondTrip(delta, peer: peerID)
+            
+        } else if message.messageType == MessageType.SecondTrip {
+            let messageSecondTrip = UnsafePointer<MessageSecondTrip>(data.bytes).memory
+            latency = (messageSecondTrip.delta + NSDate().timeIntervalSince1970 - messageSecondTrip.time) / 2.0
+            delta[peersInGame[peerID]!] = messageSecondTrip.delta - latency
+            println("Received Second Trip from \(peerID.displayName)")
+            println("2nd Trip: time \(messageSecondTrip.time), delta \(messageSecondTrip.delta)")
+            println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
+            sendThirdTrip(delta[peersInGame[peerID]!]!, peer: peerID)
+            if (delta.count == maxPlayer - 1) {
+                controller.transitToGame()
+            }
+            
+        } else if message.messageType == MessageType.ThirdTrip {
+            let messageThirdTrip = UnsafePointer<MessageThirdTrip>(data.bytes).memory
+            delta[peersInGame[peerID]!] = messageThirdTrip.delta * -1.0
+            println("Received Third Trip from \(peerID.displayName)")
+            println("3rd Trip: delta \(messageThirdTrip.delta)")
+            if (delta.count == maxPlayer - 1) {
+                controller.transitToGame()
+            }
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory

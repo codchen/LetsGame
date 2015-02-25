@@ -9,15 +9,31 @@
 import Foundation
 
 enum MessageType: Int {
-    case RandomNumber, GameStart, Move, Dead, Capture, GameOver
+    case RandomNumber, GameStart, FirstTrip, SecondTrip, ThirdTrip, Move, Dead, Capture, GameOver
 }
 
 enum GameState: Int {
-    case WaitingForMatch, WaitingForRandomNumber, WaitingForStart, InGame, Done
+    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done
 }
 
 struct Message {
     let messageType: MessageType
+}
+
+struct MessageFirstTrip {
+    let message: Message
+    let time: NSTimeInterval
+}
+
+struct MessageSecondTrip {
+    let message: Message
+    let time: NSTimeInterval
+    let delta: NSTimeInterval
+}
+
+struct MessageThirdTrip {
+    let message: Message
+    let delta: NSTimeInterval
 }
 
 struct MessageRandomNumber {

@@ -65,39 +65,88 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showGameScene(sender: UIButton) {
-        
-        if connectionManager.session.connectedPeers.count > 0 &&
-            connectionManager.gameState == .WaitingForStart {
-            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
+        dispatch_async(dispatch_get_main_queue()) {
+            let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
             let skView = SKView(frame: self.view.frame)
             // Configure the view.
             self.view.addSubview(skView)
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.showsPhysics = true
-        
-        
+            
+            
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = false
             skView.shouldCullNonVisibleNodes = false
-        
+            
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
-        
-            scene.connection = connectionManager
-            motionManager.accelerometerUpdateInterval = 0.05
-            motionManager.startAccelerometerUpdates()
-        
-            scene.motionManager = motionManager
             
-            currentView = skView
+            self.currentView = skView
             skView.presentScene(scene)
-        } else if connectionManager.session.connectedPeers.count > 0 &&
-            connectionManager.gameState == .WaitingForMatch {
-        	connectionManager.generateRandomNumber()
+            
+            if self.connectionManager.gameState == .WaitingForMatch {
+                self.connectionManager.generateRandomNumber()
+            }
+
         }
+        
+//        if connectionManager.session.connectedPeers.count > 0 &&
+//            connectionManager.gameState == .WaitingForStart {
+//            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
+//            let skView = SKView(frame: self.view.frame)
+//            // Configure the view.
+//            self.view.addSubview(skView)
+//            skView.showsFPS = true
+//            skView.showsNodeCount = true
+//            skView.showsPhysics = true
+//        
+//        
+//            /* Sprite Kit applies additional optimizations to improve rendering performance */
+//            skView.ignoresSiblingOrder = false
+//            skView.shouldCullNonVisibleNodes = false
+//        
+//            /* Set the scale mode to scale to fit the window */
+//            scene.scaleMode = .AspectFill
+//        
+//            scene.connection = connectionManager
+//            motionManager.accelerometerUpdateInterval = 0.05
+//            motionManager.startAccelerometerUpdates()
+//        
+//            scene.motionManager = motionManager
+//            
+//            currentView = skView
+//            skView.presentScene(scene)
+//        } else if connectionManager.session.connectedPeers.count > 0 &&
+//            connectionManager.gameState == .WaitingForMatch {
+//        	connectionManager.generateRandomNumber()
+//        }
     }
 	
+    func transitToGame(){
+        dispatch_async(dispatch_get_main_queue()) {
+            self.currentGameScene = GameScene.unarchiveFromFile("GameScene") as GameScene
+            self.currentGameScene.scaleMode = .AspectFill
+            self.currentGameScene.connection = self.connectionManager
+            if self.currentView == nil {
+                let skView = SKView(frame: self.view.frame)
+                // Configure the view.
+                self.view.addSubview(skView)
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsPhysics = true
+                
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = false
+                skView.shouldCullNonVisibleNodes = false
+                
+                self.currentView = skView
+            }
+            self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        }
+        
+    }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         dispatch_async(dispatch_get_main_queue()) {

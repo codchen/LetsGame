@@ -51,19 +51,13 @@ class GameOverScene: SKScene {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         if replayBtn.containsPoint(loc){
-            if connection.gameState == .WaitingForStart {
-                
-                let myScene = GameScene.unarchiveFromFile("GameScene") as GameScene
-                myScene.connection = controller.connectionManager
-                myScene.scaleMode = self.scaleMode
-                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                self.view?.presentScene(myScene, transition: reveal)
-                
-            } else if connection.gameState == .WaitingForMatch{
-                
+            if connection.gameState == .WaitingForMatch {
                 connection.generateRandomNumber()
+                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+                scene.scaleMode = self.scaleMode
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view?.presentScene(scene, transition: reveal)
             }
-
         }
         
     }

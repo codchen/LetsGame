@@ -299,6 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         connection.playerID = 0
         connection.randomNumbers.removeAll(keepCapacity: true)
         connection.receivedAllRandomNumber = false
+        connection.peersInGame.removeAll(keepCapacity: true)
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
