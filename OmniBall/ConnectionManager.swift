@@ -31,6 +31,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     // reconcil data info
     var latency: NSTimeInterval!
     var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
+    var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
     
     
     override init() {

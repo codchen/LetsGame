@@ -9,7 +9,7 @@
 import Foundation
 
 enum MessageType: Int {
-    case RandomNumber, GameStart, FirstTrip, SecondTrip, ThirdTrip, Move, Dead, Capture, GameOver
+    case RandomNumber, GameStart, FirstTrip, SecondTrip, ThirdTrip, Move, Dead, Capture, GameOver, NeutralInfo
 }
 
 enum GameState: Int {
