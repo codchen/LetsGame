@@ -108,8 +108,16 @@ class Player: NSObject {
     
     func capture(index: Int, target: SKSpriteNode){
 //        scene.lastCaptured[index] = NSDate().timeIntervalSince1970
+        println("capture")
+        for i in capturedIndex{
+            println(i)
+        }
+        for player in players{
+            println(player.name)
+        }
+        if capturedIndex[index] == -1{
         capturedIndex[index] = count
-        addPlayer(target)
+            addPlayer(target)}
 //        slaves[index] = target
         target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
     }
@@ -117,6 +125,13 @@ class Player: NSObject {
 
     func decapture(index: Int){
 //        slaves.removeValueForKey(index)
+//        println("decapture")
+//        for i in capturedIndex{
+//            println(i)
+//        }
+//        for player in players{
+//            println(player.name)
+//        }
         if capturedIndex[index] != -1 {
             println("Delete Neutral at index \(capturedIndex[index])")
             deletePlayer(capturedIndex[index])

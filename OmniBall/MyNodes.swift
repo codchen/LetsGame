@@ -34,6 +34,9 @@ class MyNodes: Player {
     }
     
     override func deletePlayer(index: Int) {
+        if index >= players.count{
+            return
+        }
         players.removeAtIndex(index)
         for var idx = 0; idx < capturedIndex.count; ++idx {
             if capturedIndex[idx] > index {
@@ -51,7 +54,6 @@ class MyNodes: Player {
         for index in self.deadNodes{
             players[index].removeFromParent()
             deletePlayer(index)
-            println("sent dead at index \(index)")
             sendDead(UInt16(index))
         }
         
@@ -80,9 +82,13 @@ class MyNodes: Player {
     
     func touchesEnded(location: CGPoint){
         let now = NSDate()
-        let offset: CGPoint = (location - launchPoint) / CGFloat(now.timeIntervalSinceDate(launchTime!))
+        var offset: CGPoint = (location - launchPoint) / CGFloat(now.timeIntervalSinceDate(launchTime!))
+        if offset.length() > 500{
+            offset.normalize()
+            offset.x = offset.x * 500
+            offset.y = offset.y * 500
+        }
         selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
-        println("Velocity is \(selectedNode.physicsBody?.velocity.dx)")
         isSelected = false
         selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
         selectedNode = nil

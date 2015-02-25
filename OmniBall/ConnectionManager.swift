@@ -105,6 +105,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data, reliable: true)
     }
     
+    func sendNeutralInfo(index: UInt16, id: UInt16, lastCaptured: Double){
+        var message = MessageNeutralInfo(message: Message(messageType: MessageType.NeutralInfo), index: index, id: id, lastCaptured: lastCaptured)
+        let data = NSData(bytes: &message, length: sizeof(MessageNeutralInfo))
+        sendData(data, reliable: true)
+    }
+    
     func sendDeath(index: UInt16, count: UInt32){
         var message = MessageDead(message: Message(messageType: MessageType.Dead), index: index, count: count)
         let data = NSData(bytes: &message, length: sizeof(MessageDead))
@@ -265,7 +271,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if peersInGame.count == 0 {
             	controller.gameOver()
             }
-        }
+        } else if message.messageType == MessageType.NeutralInfo{
+            let messageNeutral = UnsafePointer<MessageNeutralInfo>(data.bytes).memory
+            if peersInGame[peerID] != nil{
+                controller.updateNeutralInfo(messageNeutral, peerPlayerID: peersInGame[peerID]!)
+            }
+            }
 
     }
     

@@ -74,5 +74,12 @@ struct MessageCapture {
     let count: UInt32
 }
 
+struct MessageNeutralInfo{
+    let message: Message
+    let index: UInt16
+    let id: UInt16
+    let lastCaptured: Double
+}
+
 
 

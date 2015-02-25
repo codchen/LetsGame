@@ -33,6 +33,9 @@ class OpponentNodes: Player {
     }
     
     override func deletePlayer(index: Int) {
+        if index >= players.count{
+            return
+        }
         playerCount--
         players.removeAtIndex(index)
         info.removeAtIndex(index)
@@ -61,7 +64,10 @@ class OpponentNodes: Player {
     }
     
     func update_peer_dead_reckoning(){
-        for var index = 0; index < Int(playerCount); ++index {
+        for b in updated{
+            println(b)
+        }
+        for var index = 0; index < count; ++index {
             if updated[index] == true {
                 let currentNodeInfo = info[index]
                 
@@ -77,6 +83,9 @@ class OpponentNodes: Player {
     }
     
     func updatePeerPos(message: MessageMove) {
+        if Int(message.index) >= count{
+            return
+        }
         if (message.count > lastCount){
             if Int(message.index) < count {
                 lastCount = message.count
