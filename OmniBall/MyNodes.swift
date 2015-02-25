@@ -19,7 +19,7 @@ class MyNodes: Player {
     var selectedNode: SKSpriteNode!
     var launchTime: NSDate!
     var launchPoint: CGPoint!
-    let maxSpeed:CGFloat = 1000
+    let maxSpeed:CGFloat = 1500
     
     init(connection: ConnectionManager, scene: GameScene) {
         super.init()
@@ -29,6 +29,7 @@ class MyNodes: Player {
         self.id = connection.playerID
         self.color = PlayerColors(rawValue: Int(id))
         setUpPlayers(color)
+        selectedNode = players[0]
     }
     
     override func addPlayer(node: SKSpriteNode) {
@@ -90,6 +91,7 @@ class MyNodes: Player {
     func touchesBegan(location: CGPoint) {
     	for node in players {
             if node.containsPoint(location){
+                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
                 selectedNode = node
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
                     isSelected = true
@@ -108,9 +110,9 @@ class MyNodes: Player {
             offset.y = offset.y * maxSpeed
         }
         selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
-        isSelected = false
-        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
-        selectedNode = nil
+//        isSelected = false
+//        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
+//        selectedNode = nil
         launchTime = nil
         launchPoint = nil
         sendMove()

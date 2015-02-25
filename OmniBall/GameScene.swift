@@ -273,20 +273,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.sendMove()
     }
     
+    func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
+        let offset = point1.distanceTo(point2)
+        if offset >= 250{
+            return false
+        }
+        return true
+    }
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         
-        if myNodes.isSelected == false {
-            myNodes.touchesBegan(loc)
-            if myNodes.isSelected == false && scrolling == false {
-                setSrollDirection(loc)
+//        if myNodes.isSelected == false {
+//            myNodes.touchesBegan(loc)
+//            if myNodes.isSelected == false && scrolling == false {
+//                setSrollDirection(loc)
+//            }
+//        } else {
+//            myNodes.launchPoint = loc
+//            myNodes.launchTime = NSDate()
+//        }
+        myNodes.touchesBegan(loc)
+        for node in myNodes.players{
+            if closeEnough(loc, point2: node.position) == true{
+                myNodes.launchPoint = loc
+                myNodes.launchTime = NSDate()
+                return
             }
-        } else {
-            myNodes.launchPoint = loc
-            myNodes.launchTime = NSDate()
         }
+        setSrollDirection(loc)
     }
 
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
