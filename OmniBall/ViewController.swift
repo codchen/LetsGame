@@ -83,7 +83,7 @@ class ViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             self.currentView = skView
-            skView.presentScene(scene)
+            skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
             
             if self.connectionManager.gameState == .WaitingForMatch {
                 self.connectionManager.generateRandomNumber()
