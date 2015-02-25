@@ -164,6 +164,16 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 
     }
     
+    func gameOver(){
+        sendGameOver()
+        gameState = .Done
+        playerID = 0
+        randomNumbers.removeAll(keepCapacity: true)
+        receivedAllRandomNumber = false
+        peersInGame.removeAll(keepCapacity: true)
+        delta.removeAll(keepCapacity: true)
+    }
+    
     func browserViewControllerDidFinish(
         browserViewController: MCBrowserViewController!)  {
             // Called when the browser view controller is dismissed (ie the Done

@@ -13,6 +13,7 @@ class MyNodes: Player {
     
     let connection: ConnectionManager!
     var deadNodes:[Int] = []
+    var successNodes: Int = 0
     var msgCount: UInt32 = 0
     var isSelected: Bool = false
     var selectedNode: SKSpriteNode!

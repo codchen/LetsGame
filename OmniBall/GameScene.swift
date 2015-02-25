@@ -404,19 +404,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkGameOver() {
-        if myNodes.count == 0 {
+        if myNodes.successNodes == 2 {
             gameOver = true
-            connection.sendGameOver()
-            gameOver(won: false)
+            gameOver(won: true)
         }
     }
     
     func gameOver(#won: Bool) {
-        connection.gameState = .Done
-        connection.playerID = 0
-        connection.randomNumbers.removeAll(keepCapacity: true)
-        connection.receivedAllRandomNumber = false
-        connection.peersInGame.removeAll(keepCapacity: true)
+        connection.gameOver()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller

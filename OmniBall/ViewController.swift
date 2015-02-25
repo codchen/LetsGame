@@ -183,7 +183,7 @@ class ViewController: UIViewController {
     func gameOver(){
         dispatch_async(dispatch_get_main_queue()){
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene.gameOver(won: true)
+                self.currentGameScene.gameOver(won: false)
             }
         }
     }
