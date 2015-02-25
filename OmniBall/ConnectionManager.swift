@@ -145,7 +145,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
         if message.messageType == MessageType.Move {
             let messageMove = UnsafePointer<MessageMove>(data.bytes).memory
+            if peersInGame[peerID] != nil{
             controller.updatePeerPos(messageMove, peerPlayerID: peersInGame[peerID]!)
+            }
         } else if message.messageType == MessageType.RandomNumber {
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
             randomNumbers.append(messageRandomNumber.number)
@@ -187,7 +189,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
+            if peersInGame[peerID] != nil{
             controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
+            }
             
         } else if message.messageType == MessageType.Capture {
 			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
