@@ -66,29 +66,32 @@ class ViewController: UIViewController {
     
     @IBAction func showGameScene(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-            let skView = SKView(frame: self.view.frame)
-            // Configure the view.
-            self.view.addSubview(skView)
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            skView.showsPhysics = true
+            if self.connectionManager.maxPlayer > 1 {
+           	 	let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+            	let skView = SKView(frame: self.view.frame)
+           	 	// Configure the view.
+            	self.view.addSubview(skView)
+            	skView.showsFPS = true
+            	skView.showsNodeCount = true
+            	skView.showsPhysics = true
             
             
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = false
-            skView.shouldCullNonVisibleNodes = false
+            	/* Sprite Kit applies additional optimizations to improve rendering performance */
+            	skView.ignoresSiblingOrder = false
+            	skView.shouldCullNonVisibleNodes = false
             
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            	/* Set the scale mode to scale to fit the window */
+            	scene.scaleMode = .AspectFill
             
-            self.currentView = skView
-            skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+            	self.currentView = skView
+            	skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
             
-            if self.connectionManager.gameState == .WaitingForMatch {
-                self.connectionManager.generateRandomNumber()
+            	if self.connectionManager.gameState == .WaitingForMatch {
+                	self.connectionManager.generateRandomNumber()
+            	}
+            } else {
+                self.transitToGame()
             }
-
         }
         
 //        if connectionManager.session.connectedPeers.count > 0 &&

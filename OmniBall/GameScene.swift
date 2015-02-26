@@ -63,12 +63,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scheduleCaptureBy: [Player] = []
     var scheduleUpdateTime: [Double] = []
     
+    // hud layer stuff
+    var hudMinions: [SKSpriteNode] = []
+    let hudLayer: SKNode = SKNode()
+    let slaveNum = 4
+    
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 2048, height: 1536)
+        
+        setupHUD()
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
-        
         opponentsWrapper = OpponentsWrapper()
         setupNeutral()
         for var index = 0; index < connection.maxPlayer; ++index {
@@ -88,6 +94,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
+    }
+    
+    func setupHUD(){
+		let tempAnchor = getAnchorPoint()
+        println(tempAnchor)
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        println("HudLayer Pos \(hudLayer.position)")
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        for var index = 0; index < slaveNum; ++index {
+            let minion = SKSpriteNode(imageNamed: "circle")
+            minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 25), y: size.height - 300)
+            minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
+            hudMinions.append(minion)
+            hudLayer.addChild(minion)
+        }
     }
     
     func setupNeutral(){
@@ -122,6 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (now >= lastCaptured[index] + protectionInterval || (now > lastCaptured[index] - protectionInterval && now < lastCaptured[index]))&&(myNodes.capturedIndex[index] == -1){
                 opponentsWrapper.decapture(index)
                 myNodes.capture(index, target: node)
+                hudMinions[index].texture = node.texture
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
                 connection.sendNeutralInfo(UInt16(index), id: myNodes.id, lastCaptured: now)
@@ -155,6 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 myNodes.decapture(index)
                 opponentsWrapper.decapture(index)
                 opp.capture(index, target: node)
+                hudMinions[index].texture = node.texture
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
                 connection.sendNeutralInfo(UInt16(index), id: opp.id, lastCaptured: now)
@@ -217,6 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             opponentsWrapper.decapture(scheduleToCapture[0])
             let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode
             scheduleCaptureBy[0].capture(scheduleToCapture[0], target: target)
+            hudMinions[scheduleToCapture[0]].texture = target.texture
             lastCaptured[scheduleToCapture[0]] = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
@@ -364,13 +390,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (scrollingFrameDuration > 0) && scrolling{
             anchorPoint.x += anchorPointVel.dx
             anchorPoint.y += anchorPointVel.dy
+            hudLayer.position.x += -anchorPointVel.dx * size.width
+            hudLayer.position.y += -anchorPointVel.dy * size.height
             scrollingFrameDuration--
         }
         else if scrolling {
             anchorPointVel = CGVector(dx: 0, dy: 0)
             anchorPoint = getAnchorPoint()
-            println(anchorPoint.x)
-            println(anchorPoint.y)
             scrolling = false
             scrollingFrameDuration = CGFloat(30)
             scrollDirection = nil

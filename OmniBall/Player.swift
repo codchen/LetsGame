@@ -65,6 +65,7 @@ class Player: NSObject {
         
         scene.enumerateChildNodesWithName(sprite){node, _ in
             node1 = node as SKSpriteNode
+            println("\(self.sprite) position \(node1.position)")
             node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.restitution = 1
@@ -117,23 +118,16 @@ class Player: NSObject {
         for player in players{
             println(player.name)
         }
-        if capturedIndex[index] == -1{
-        capturedIndex[index] = count
-            addPlayer(target)}
+        if capturedIndex[index] == -1 {
+        	capturedIndex[index] = count
+            addPlayer(target)
+        }
 //        slaves[index] = target
         target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
     }
     
 
     func decapture(index: Int){
-//        slaves.removeValueForKey(index)
-//        println("decapture")
-//        for i in capturedIndex{
-//            println(i)
-//        }
-//        for player in players{
-//            println(player.name)
-//        }
         if capturedIndex[index] != -1 {
             println("Delete Neutral at index \(capturedIndex[index])")
             deletePlayer(capturedIndex[index])
