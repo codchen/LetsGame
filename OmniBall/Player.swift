@@ -82,17 +82,6 @@ class Player: NSObject {
         if !isSelected {
             switch playerColor {
             case .Green:
-                return "green_circle"
-            case .Red:
-                return "red_circle"
-            case .Yellow:
-                return "yellow_circle"
-            case .Blue:
-                return "blue_circle"
-            }
-        } else {
-            switch playerColor {
-            case .Green:
                 return "80x80_green_ball"
             case .Red:
                 return "80x80_red_ball"
@@ -101,31 +90,16 @@ class Player: NSObject {
             case .Blue:
                 return "80x80_blue_ball"
             }
-        }
-    }
-    
-    func getSlaveImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
-        if !isSelected {
-            switch playerColor {
-            case .Green:
-                return "green_circle"
-            case .Red:
-                return "red_circle"
-            case .Yellow:
-                return "yellow_circle"
-            case .Blue:
-                return "blue_circle"
-            }
         } else {
             switch playerColor {
             case .Green:
-                return "green_star"
+                return "80x80_green"
             case .Red:
-                return "red_star"
+                return "80x80_red"
             case .Yellow:
-                return "yellow_star"
+                return "80x80_yellow"
             case .Blue:
-                return "blue_star"
+                return "80x80_blue"
             }
         }
     }
@@ -148,7 +122,7 @@ class Player: NSObject {
             addPlayer(target)
         }
 //        slaves[index] = target
-        target.texture = SKTexture(imageNamed: getSlaveImageName(color!, isSelected: false))
+        target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
     }
     
 

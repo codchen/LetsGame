@@ -93,12 +93,9 @@ class MyNodes: Player {
             if node.containsPoint(location){
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
                 selectedNode = node
-                if selectedNode.name!.hasPrefix("neutral") {
-                    selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: true))
-                } else {
-                    selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
-                }
-                break
+                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
+                    isSelected = true
+                    break
             }
         }
     }
