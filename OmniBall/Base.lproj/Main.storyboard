@@ -7,49 +7,50 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="try" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleAspectFit" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3f-hw-3gc">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                <state key="normal" title="Play">
+                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="999-G0-5SY">
+                                <rect key="frame" x="335" y="223" width="212" height="153"/>
+                                <state key="normal" title="Button" image="play.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showGameScene:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6uw-cg-Esq"/>
+                                    <action selector="play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mhw-xh-jI7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yTQ-1G-Z4F">
-                                <rect key="frame" x="221" y="285" width="59" height="30"/>
-                                <state key="normal" title="Connect">
+                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67T-i0-rzd">
+                                <rect key="frame" x="45" y="223" width="224.5" height="153"/>
+                                <state key="normal" image="connect.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showBrowser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oHy-CF-l9A"/>
+                                    <action selector="connect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G7K-oY-z9j"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="s3f-hw-3gc" secondAttribute="centerX" constant="-100" id="5Er-BP-Ckb"/>
-                            <constraint firstAttribute="centerX" secondItem="yTQ-1G-Z4F" secondAttribute="centerX" constant="50" id="9Y9-FY-oHU"/>
-                            <constraint firstAttribute="centerY" secondItem="s3f-hw-3gc" secondAttribute="centerY" id="eQH-XP-uUc"/>
-                            <constraint firstAttribute="centerY" secondItem="yTQ-1G-Z4F" secondAttribute="centerY" id="gjh-hT-si1"/>
+                            <constraint firstAttribute="centerY" secondItem="999-G0-5SY" secondAttribute="centerY" id="9f1-Xi-hqp"/>
+                            <constraint firstAttribute="centerY" secondItem="67T-i0-rzd" secondAttribute="centerY" id="cUU-Kc-XjU"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnConnect" destination="yTQ-1G-Z4F" id="oBa-KK-tmv"/>
-                        <outlet property="btnPlay" destination="s3f-hw-3gc" id="sDR-iO-XW7"/>
+                        <outlet property="play" destination="999-G0-5SY" id="eWR-cT-OA2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="connect.png" width="282" height="192"/>
+        <image name="play.png" width="273" height="204"/>
+    </resources>
 </document>

@@ -12,6 +12,17 @@
 		119DB0911A9FC0200044F397 /* You lose!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0901A9FC0200044F397 /* You lose!.png */; };
 		119DB0931A9FC0280044F397 /* You win!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0921A9FC0280044F397 /* You win!.png */; };
 		119DB0951A9FC06A0044F397 /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0941A9FC06A0044F397 /* restart.png */; };
+		119DB09F1AA0F5150044F397 /* blue_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0961AA0F5150044F397 /* blue_circle.png */; };
+		119DB0A01AA0F5150044F397 /* blue_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0971AA0F5150044F397 /* blue_star.png */; };
+		119DB0A11AA0F5150044F397 /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0981AA0F5150044F397 /* connect.png */; };
+		119DB0A21AA0F5150044F397 /* green_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0991AA0F5150044F397 /* green_circle.png */; };
+		119DB0A31AA0F5150044F397 /* green_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB09A1AA0F5150044F397 /* green_star.png */; };
+		119DB0A41AA0F5150044F397 /* orange_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB09B1AA0F5150044F397 /* orange_star.png */; };
+		119DB0A51AA0F5150044F397 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB09C1AA0F5150044F397 /* play.png */; };
+		119DB0A61AA0F5150044F397 /* red_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB09D1AA0F5150044F397 /* red_star.png */; };
+		119DB0A71AA0F5150044F397 /* yellow_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB09E1AA0F5150044F397 /* yellow_circle.png */; };
+		119DB0AA1AA0F5730044F397 /* red_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0A81AA0F5730044F397 /* red_circle.png */; };
+		119DB0AB1AA0F5730044F397 /* yellow_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0A91AA0F5730044F397 /* yellow_star.png */; };
 		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
@@ -86,6 +97,17 @@
 		119DB0901A9FC0200044F397 /* You lose!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You lose!.png"; sourceTree = "<group>"; };
 		119DB0921A9FC0280044F397 /* You win!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You win!.png"; sourceTree = "<group>"; };
 		119DB0941A9FC06A0044F397 /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
+		119DB0961AA0F5150044F397 /* blue_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_circle.png; sourceTree = "<group>"; };
+		119DB0971AA0F5150044F397 /* blue_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_star.png; sourceTree = "<group>"; };
+		119DB0981AA0F5150044F397 /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
+		119DB0991AA0F5150044F397 /* green_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_circle.png; sourceTree = "<group>"; };
+		119DB09A1AA0F5150044F397 /* green_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_star.png; sourceTree = "<group>"; };
+		119DB09B1AA0F5150044F397 /* orange_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_star.png; sourceTree = "<group>"; };
+		119DB09C1AA0F5150044F397 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		119DB09D1AA0F5150044F397 /* red_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_star.png; sourceTree = "<group>"; };
+		119DB09E1AA0F5150044F397 /* yellow_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_circle.png; sourceTree = "<group>"; };
+		119DB0A81AA0F5730044F397 /* red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_circle.png; sourceTree = "<group>"; };
+		119DB0A91AA0F5730044F397 /* yellow_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_star.png; sourceTree = "<group>"; };
 		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
@@ -181,6 +203,17 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				119DB0A81AA0F5730044F397 /* red_circle.png */,
+				119DB0A91AA0F5730044F397 /* yellow_star.png */,
+				119DB0961AA0F5150044F397 /* blue_circle.png */,
+				119DB0971AA0F5150044F397 /* blue_star.png */,
+				119DB0981AA0F5150044F397 /* connect.png */,
+				119DB0991AA0F5150044F397 /* green_circle.png */,
+				119DB09A1AA0F5150044F397 /* green_star.png */,
+				119DB09B1AA0F5150044F397 /* orange_star.png */,
+				119DB09C1AA0F5150044F397 /* play.png */,
+				119DB09D1AA0F5150044F397 /* red_star.png */,
+				119DB09E1AA0F5150044F397 /* yellow_circle.png */,
 				119DB0941A9FC06A0044F397 /* restart.png */,
 				119DB0921A9FC0280044F397 /* You win!.png */,
 				119DB0901A9FC0200044F397 /* You lose!.png */,
@@ -386,15 +419,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
+				119DB0AA1AA0F5730044F397 /* red_circle.png in Resources */,
+				119DB09F1AA0F5150044F397 /* blue_circle.png in Resources */,
+				119DB0AB1AA0F5730044F397 /* yellow_star.png in Resources */,
 				FFA0D6121A8E83B2000D1C37 /* border_quarter.png in Resources */,
+				119DB0A21AA0F5150044F397 /* green_circle.png in Resources */,
 				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
 				FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */,
+				119DB0A31AA0F5150044F397 /* green_star.png in Resources */,
+				119DB0A41AA0F5150044F397 /* orange_star.png in Resources */,
 				119DB0931A9FC0280044F397 /* You win!.png in Resources */,
 				3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
 				FFBB6F0F1A924CE300F1D546 /* 40x80_border_line.png in Resources */,
+				119DB0A11AA0F5150044F397 /* connect.png in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
+				119DB0A71AA0F5150044F397 /* yellow_circle.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
 				3C7E842D1A8E53F100212817 /* 80x80_blue.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
@@ -407,6 +448,7 @@
 				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
 				FFA0D6141A8E850F000D1C37 /* border_quarter_2.png in Resources */,
 				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
+				119DB0A61AA0F5150044F397 /* red_star.png in Resources */,
 				FF4C710C1A8D322800FB3622 /* 1340x1340_border.png in Resources */,
 				FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */,
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
@@ -417,6 +459,8 @@
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				11F160431A9AD951006FBBA3 /* 80x80_yellow.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,
+				119DB0A51AA0F5150044F397 /* play.png in Resources */,
+				119DB0A01AA0F5150044F397 /* blue_star.png in Resources */,
 				FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */,
 				FFA0D6101A8D44F0000D1C37 /* 2048x1536_you_win.png in Resources */,
 			);
