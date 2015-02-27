@@ -63,12 +63,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scheduleCaptureBy: [Player] = []
     var scheduleUpdateTime: [Double] = []
     
+    // hud layer stuff
+    var hudMinions: [SKSpriteNode] = []
+    let hudLayer: SKNode = SKNode()
+    let slaveNum = 4
+    
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 2048, height: 1536)
+        
+        setupHUD()
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
-        
         opponentsWrapper = OpponentsWrapper()
         setupNeutral()
         for var index = 0; index < connection.maxPlayer; ++index {
@@ -88,6 +94,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
+    }
+    
+    func setupHUD(){
+		let tempAnchor = getAnchorPoint()
+        println(tempAnchor)
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        println("HudLayer Pos \(hudLayer.position)")
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        for var index = 0; index < slaveNum; ++index {
+            let minion = SKSpriteNode(imageNamed: "circle")
+            minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 25), y: size.height - 300)
+            minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
+            hudMinions.append(minion)
+            hudLayer.addChild(minion)
+        }
     }
     
     func setupNeutral(){
@@ -122,6 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (now >= lastCaptured[index] + protectionInterval || (now > lastCaptured[index] - protectionInterval && now < lastCaptured[index]))&&(myNodes.capturedIndex[index] == -1){
                 opponentsWrapper.decapture(index)
                 myNodes.capture(index, target: node)
+                hudMinions[index].texture = node.texture
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
                 connection.sendNeutralInfo(UInt16(index), id: myNodes.id, lastCaptured: now)
@@ -155,6 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 myNodes.decapture(index)
                 opponentsWrapper.decapture(index)
                 opp.capture(index, target: node)
+                hudMinions[index].texture = node.texture
                 lastCaptured[index] = now
                 //connection.sendCaptured(UInt16(index), time: now, count: myNodes.msgCount)
                 connection.sendNeutralInfo(UInt16(index), id: opp.id, lastCaptured: now)
@@ -217,6 +242,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             opponentsWrapper.decapture(scheduleToCapture[0])
             let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode
             scheduleCaptureBy[0].capture(scheduleToCapture[0], target: target)
+            hudMinions[scheduleToCapture[0]].texture = target.texture
             lastCaptured[scheduleToCapture[0]] = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
@@ -258,8 +284,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         performScheduledCapture()
-        //myNodes.checkDead()
-        //opponentsWrapper.checkDead()
         myNodes.checkOutOfBound()
         moveAnchor()
     }
@@ -273,37 +297,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.sendMove()
     }
     
-    func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
-        let offset = point1.distanceTo(point2)
-        if offset >= 250{
-            return false
-        }
-        return true
-    }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         
-//        if myNodes.isSelected == false {
-//            myNodes.touchesBegan(loc)
-//            if myNodes.isSelected == false && scrolling == false {
-//                setSrollDirection(loc)
-//            }
-//        } else {
-//            myNodes.launchPoint = loc
-//            myNodes.launchTime = NSDate()
-//        }
         myNodes.touchesBegan(loc)
         for node in myNodes.players{
-            if closeEnough(loc, point2: node.position) == true{
+            if closeEnough(loc, node.position, CGFloat(250)) == true{
                 myNodes.launchPoint = loc
                 myNodes.launchTime = NSDate()
                 return
             }
         }
         setSrollDirection(loc)
+    }
+    
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let currentLocation = touch.locationInNode(self)
+        let previousLocation = touch.previousLocationInNode(self)
+        if myNodes.launchPoint == nil {
+            let translation = currentLocation - previousLocation
+            // move anchorPoint
+            anchorPoint += translation/CGPointMake(size.width, size.height)
+            // move hudLayer
+            hudLayer.position -= translation
+            checkBackgroundBond()
+        }
+        
+    }
+    
+    func checkBackgroundBond() {
+        
+        let oldAnchorPoint = anchorPoint
+        if anchorPoint.x > 1 {
+            anchorPoint.x = 1
+        } else if anchorPoint.x < -1 {
+            anchorPoint.x = -1
+        }
+        
+        if anchorPoint.y > 1 {
+            anchorPoint.y = 1
+        } else if anchorPoint.y < -1 {
+            anchorPoint.y = -1
+        }
+        let offset = oldAnchorPoint - anchorPoint
+        hudLayer.position += offset * CGPointMake(size.width, size.height)
+        
     }
 
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
@@ -319,31 +361,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			myNodes.touchesEnded(loc)
         }
             
-        else if scrollDirection != nil{
-            var swipeValid: Bool = true
-            switch scrollDirection!{
-            case .up:
-                if (loc.y < -anchorPoint.y * size.height + size.height - 500) && subscene_index / subscene_count_horizontal != subscene_count_vertical - 1{
-                    scroll(scrollDirection)
-                }
-            case .down:
-                if (loc.y > -anchorPoint.y * size.height + 500) && subscene_index / subscene_count_horizontal != 0 {
-                    scroll(scrollDirection)
-                }
-            case .left:
-                if (loc.x > -anchorPoint.x * size.width + 500) && subscene_index % subscene_count_horizontal != 0 {
-                    scroll(scrollDirection)
-                }
-            case .right:
-                if (loc.x < -anchorPoint.x * size.width + size.width - 500) && subscene_index % subscene_count_horizontal != subscene_count_horizontal - 1 {
-                    scroll(scrollDirection)
-                }
-            default:
-                println("error scrolling")
-            }
-            
-        }
+//        else if scrollDirection != nil{
+//            var swipeValid: Bool = true
+//            switch scrollDirection!{
+//            case .up:
+//                if (loc.y < -anchorPoint.y * size.height + size.height - 500) && subscene_index / subscene_count_horizontal != subscene_count_vertical - 1{
+//                    scroll(scrollDirection)
+//                }
+//            case .down:
+//                if (loc.y > -anchorPoint.y * size.height + 500) && subscene_index / subscene_count_horizontal != 0 {
+//                    scroll(scrollDirection)
+//                }
+//            case .left:
+//                if (loc.x > -anchorPoint.x * size.width + 500) && subscene_index % subscene_count_horizontal != 0 {
+//                    scroll(scrollDirection)
+//                }
+//            case .right:
+//                if (loc.x < -anchorPoint.x * size.width + size.width - 500) && subscene_index % subscene_count_horizontal != subscene_count_horizontal - 1 {
+//                    scroll(scrollDirection)
+//                }
+//            default:
+//                println("error scrolling")
+//            }
+//            
+//        }
     }
+    
     
     func setSrollDirection(location: CGPoint) {
         if location.y > (-anchorPoint.y * size.height + size.height - 300){
@@ -381,13 +424,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (scrollingFrameDuration > 0) && scrolling{
             anchorPoint.x += anchorPointVel.dx
             anchorPoint.y += anchorPointVel.dy
+            hudLayer.position.x += -anchorPointVel.dx * size.width
+            hudLayer.position.y += -anchorPointVel.dy * size.height
             scrollingFrameDuration--
         }
         else if scrolling {
             anchorPointVel = CGVector(dx: 0, dy: 0)
             anchorPoint = getAnchorPoint()
-            println(anchorPoint.x)
-            println(anchorPoint.y)
             scrolling = false
             scrollingFrameDuration = CGFloat(30)
             scrollDirection = nil
