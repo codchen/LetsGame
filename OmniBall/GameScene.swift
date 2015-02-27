@@ -284,8 +284,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         performScheduledCapture()
-        //myNodes.checkDead()
-        //opponentsWrapper.checkDead()
         myNodes.checkOutOfBound()
         moveAnchor()
     }
@@ -299,37 +297,55 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.sendMove()
     }
     
-    func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
-        let offset = point1.distanceTo(point2)
-        if offset >= 250{
-            return false
-        }
-        return true
-    }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         
-//        if myNodes.isSelected == false {
-//            myNodes.touchesBegan(loc)
-//            if myNodes.isSelected == false && scrolling == false {
-//                setSrollDirection(loc)
-//            }
-//        } else {
-//            myNodes.launchPoint = loc
-//            myNodes.launchTime = NSDate()
-//        }
         myNodes.touchesBegan(loc)
         for node in myNodes.players{
-            if closeEnough(loc, point2: node.position) == true{
+            if closeEnough(loc, node.position, CGFloat(250)) == true{
                 myNodes.launchPoint = loc
                 myNodes.launchTime = NSDate()
                 return
             }
         }
         setSrollDirection(loc)
+    }
+    
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let currentLocation = touch.locationInNode(self)
+        let previousLocation = touch.previousLocationInNode(self)
+        if myNodes.launchPoint == nil {
+            let translation = currentLocation - previousLocation
+            // move anchorPoint
+            anchorPoint += translation/CGPointMake(size.width, size.height)
+            // move hudLayer
+            hudLayer.position -= translation
+            checkBackgroundBond()
+        }
+        
+    }
+    
+    func checkBackgroundBond() {
+        
+        let oldAnchorPoint = anchorPoint
+        if anchorPoint.x > 1 {
+            anchorPoint.x = 1
+        } else if anchorPoint.x < -1 {
+            anchorPoint.x = -1
+        }
+        
+        if anchorPoint.y > 1 {
+            anchorPoint.y = 1
+        } else if anchorPoint.y < -1 {
+            anchorPoint.y = -1
+        }
+        let offset = oldAnchorPoint - anchorPoint
+        hudLayer.position += offset * CGPointMake(size.width, size.height)
+        
     }
 
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
@@ -345,31 +361,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 			myNodes.touchesEnded(loc)
         }
             
-        else if scrollDirection != nil{
-            var swipeValid: Bool = true
-            switch scrollDirection!{
-            case .up:
-                if (loc.y < -anchorPoint.y * size.height + size.height - 500) && subscene_index / subscene_count_horizontal != subscene_count_vertical - 1{
-                    scroll(scrollDirection)
-                }
-            case .down:
-                if (loc.y > -anchorPoint.y * size.height + 500) && subscene_index / subscene_count_horizontal != 0 {
-                    scroll(scrollDirection)
-                }
-            case .left:
-                if (loc.x > -anchorPoint.x * size.width + 500) && subscene_index % subscene_count_horizontal != 0 {
-                    scroll(scrollDirection)
-                }
-            case .right:
-                if (loc.x < -anchorPoint.x * size.width + size.width - 500) && subscene_index % subscene_count_horizontal != subscene_count_horizontal - 1 {
-                    scroll(scrollDirection)
-                }
-            default:
-                println("error scrolling")
-            }
-            
-        }
+//        else if scrollDirection != nil{
+//            var swipeValid: Bool = true
+//            switch scrollDirection!{
+//            case .up:
+//                if (loc.y < -anchorPoint.y * size.height + size.height - 500) && subscene_index / subscene_count_horizontal != subscene_count_vertical - 1{
+//                    scroll(scrollDirection)
+//                }
+//            case .down:
+//                if (loc.y > -anchorPoint.y * size.height + 500) && subscene_index / subscene_count_horizontal != 0 {
+//                    scroll(scrollDirection)
+//                }
+//            case .left:
+//                if (loc.x > -anchorPoint.x * size.width + 500) && subscene_index % subscene_count_horizontal != 0 {
+//                    scroll(scrollDirection)
+//                }
+//            case .right:
+//                if (loc.x < -anchorPoint.x * size.width + size.width - 500) && subscene_index % subscene_count_horizontal != subscene_count_horizontal - 1 {
+//                    scroll(scrollDirection)
+//                }
+//            default:
+//                println("error scrolling")
+//            }
+//            
+//        }
     }
+    
     
     func setSrollDirection(location: CGPoint) {
         if location.y > (-anchorPoint.y * size.height + size.height - 300){
