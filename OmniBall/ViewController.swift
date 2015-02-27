@@ -44,87 +44,121 @@ class ViewController: UIViewController {
     var currentView: SKView!
     var currentGameScene: GameScene!
     
-    @IBOutlet weak var btnConnect: UIButton!
-    @IBOutlet weak var btnPlay: UIButton!
+//    @IBOutlet weak var btnConnect: UIButton!
+//    @IBOutlet weak var btnPlay: UIButton!
     
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "2048x1536_board_with_boarder")!)
-		btnConnect.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
-        btnConnect.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
-        btnPlay.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
-        btnPlay.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+        view.backgroundColor = UIColor.blackColor()
+//		btnConnect.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+//        btnConnect.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+//        btnPlay.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+//        btnPlay.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
         connectionManager = ConnectionManager()
         connectionManager.controller = self
     }
     
-    @IBAction func showBrowser(sender: UIButton) {
+
+    @IBAction func connect(sender: UIButton) {
         self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
     }
+
     
-    @IBAction func showGameScene(sender: UIButton) {
+    @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.connectionManager.maxPlayer > 1 {
-           	 	let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-            	let skView = SKView(frame: self.view.frame)
-           	 	// Configure the view.
-            	self.view.addSubview(skView)
-            	skView.showsFPS = true
-            	skView.showsNodeCount = true
-            	skView.showsPhysics = true
-            
-            
-            	/* Sprite Kit applies additional optimizations to improve rendering performance */
-            	skView.ignoresSiblingOrder = false
-            	skView.shouldCullNonVisibleNodes = false
-            
-            	/* Set the scale mode to scale to fit the window */
-            	scene.scaleMode = .AspectFill
-            
-            	self.currentView = skView
-            	skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-            
-            	if self.connectionManager.gameState == .WaitingForMatch {
-                	self.connectionManager.generateRandomNumber()
-            	}
+                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+                let skView = SKView(frame: self.view.frame)
+                // Configure the view.
+                self.view.addSubview(skView)
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsPhysics = true
+                
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = false
+                skView.shouldCullNonVisibleNodes = false
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                self.currentView = skView
+                skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+                
+                if self.connectionManager.gameState == .WaitingForMatch {
+                    self.connectionManager.generateRandomNumber()
+                }
             } else {
                 self.transitToGame()
             }
         }
-        
-//        if connectionManager.session.connectedPeers.count > 0 &&
-//            connectionManager.gameState == .WaitingForStart {
-//            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
-//            let skView = SKView(frame: self.view.frame)
-//            // Configure the view.
-//            self.view.addSubview(skView)
-//            skView.showsFPS = true
-//            skView.showsNodeCount = true
-//            skView.showsPhysics = true
-//        
-//        
-//            /* Sprite Kit applies additional optimizations to improve rendering performance */
-//            skView.ignoresSiblingOrder = false
-//            skView.shouldCullNonVisibleNodes = false
-//        
-//            /* Set the scale mode to scale to fit the window */
-//            scene.scaleMode = .AspectFill
-//        
-//            scene.connection = connectionManager
-//            motionManager.accelerometerUpdateInterval = 0.05
-//            motionManager.startAccelerometerUpdates()
-//        
-//            scene.motionManager = motionManager
-//            
-//            currentView = skView
-//            skView.presentScene(scene)
-//        } else if connectionManager.session.connectedPeers.count > 0 &&
-//            connectionManager.gameState == .WaitingForMatch {
-//        	connectionManager.generateRandomNumber()
-//        }
+
     }
+
+//    @IBAction func showGameScene(sender: UIButton) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            if self.connectionManager.maxPlayer > 1 {
+//           	 	let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+//            	let skView = SKView(frame: self.view.frame)
+//           	 	// Configure the view.
+//            	self.view.addSubview(skView)
+//            	skView.showsFPS = true
+//            	skView.showsNodeCount = true
+//            	skView.showsPhysics = true
+//            
+//            
+//            	/* Sprite Kit applies additional optimizations to improve rendering performance */
+//            	skView.ignoresSiblingOrder = false
+//            	skView.shouldCullNonVisibleNodes = false
+//            
+//            	/* Set the scale mode to scale to fit the window */
+//            	scene.scaleMode = .AspectFill
+//            
+//            	self.currentView = skView
+//            	skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+//            
+//            	if self.connectionManager.gameState == .WaitingForMatch {
+//                	self.connectionManager.generateRandomNumber()
+//            	}
+//            } else {
+//                self.transitToGame()
+//            }
+//        }
+//        
+////        if connectionManager.session.connectedPeers.count > 0 &&
+////            connectionManager.gameState == .WaitingForStart {
+////            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
+////            let skView = SKView(frame: self.view.frame)
+////            // Configure the view.
+////            self.view.addSubview(skView)
+////            skView.showsFPS = true
+////            skView.showsNodeCount = true
+////            skView.showsPhysics = true
+////        
+////        
+////            /* Sprite Kit applies additional optimizations to improve rendering performance */
+////            skView.ignoresSiblingOrder = false
+////            skView.shouldCullNonVisibleNodes = false
+////        
+////            /* Set the scale mode to scale to fit the window */
+////            scene.scaleMode = .AspectFill
+////        
+////            scene.connection = connectionManager
+////            motionManager.accelerometerUpdateInterval = 0.05
+////            motionManager.startAccelerometerUpdates()
+////        
+////            scene.motionManager = motionManager
+////            
+////            currentView = skView
+////            skView.presentScene(scene)
+////        } else if connectionManager.session.connectedPeers.count > 0 &&
+////            connectionManager.gameState == .WaitingForMatch {
+////        	connectionManager.generateRandomNumber()
+////        }
+//    }
 	
     func transitToGame(){
         dispatch_async(dispatch_get_main_queue()) {
