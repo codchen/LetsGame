@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     let won: Bool
-    var restartBtn: SKSpriteNode!
+    var replayBtn: SKSpriteNode!
     var controller: ViewController!
     var connection: ConnectionManager!
     
@@ -28,25 +28,21 @@ class GameOverScene: SKScene {
         connection = controller.connectionManager
         connection.gameState = .WaitingForMatch
         
-        let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
-        background.anchorPoint = CGPointZero
-        background.position = CGPointZero
-        addChild(background)
-        
-        var label: SKSpriteNode!
-        if won {
-            label = SKSpriteNode(imageNamed: "You win!")
+        var layer: SKSpriteNode
+        if (won){
+            layer = SKSpriteNode(imageNamed: "2048x1536_you_win")
         } else {
-            label = SKSpriteNode(imageNamed: "You lose!")
+            layer = SKSpriteNode(imageNamed: "2048x1536_you_lose")
+            
         }
-        label.setScale(2.0)
-        label.position = CGPointMake(size.width/2, size.height/2)
-        addChild(label)
+        layer.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(layer)
         
-        restartBtn = SKSpriteNode(imageNamed: "restart")
-        restartBtn.name = "restart"
-        restartBtn.position = CGPoint(x: size.width - 500, y: 500)
-        addChild(restartBtn)
+        replayBtn = SKSpriteNode(imageNamed: "50x50_ball")
+        replayBtn.name = "replay"
+        replayBtn.position = CGPoint(x: size.width - 300, y: 300)
+        addChild(replayBtn)
+        
         
     }
     
@@ -54,22 +50,13 @@ class GameOverScene: SKScene {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        if restartBtn.containsPoint(loc){
+        if replayBtn.containsPoint(loc){
             if connection.gameState == .WaitingForMatch {
                 connection.generateRandomNumber()
+                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+                scene.scaleMode = self.scaleMode
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                if connection.maxPlayer == 1 {
-                    let scene = GameScene.unarchiveFromFile("GameScene") as GameScene
-                    scene.scaleMode = .AspectFill
-                    scene.connection = self.connection
-                    self.view?.presentScene(scene, transition: reveal)
-                } else {
-                    let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-                    scene.scaleMode = self.scaleMode
-                    self.view?.presentScene(scene, transition: reveal)
-                }
-
-                
+                self.view?.presentScene(scene, transition: reveal)
             }
         }
         

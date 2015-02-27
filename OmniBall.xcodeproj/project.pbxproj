@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
-		119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */; };
-		119DB0911A9FC0200044F397 /* You lose!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0901A9FC0200044F397 /* You lose!.png */; };
-		119DB0931A9FC0280044F397 /* You win!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0921A9FC0280044F397 /* You win!.png */; };
-		119DB0951A9FC06A0044F397 /* restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0941A9FC06A0044F397 /* restart.png */; };
 		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
@@ -82,10 +78,6 @@
 
 /* Begin PBXFileReference section */
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
-		119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBallUtil.swift; sourceTree = "<group>"; };
-		119DB0901A9FC0200044F397 /* You lose!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You lose!.png"; sourceTree = "<group>"; };
-		119DB0921A9FC0280044F397 /* You win!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You win!.png"; sourceTree = "<group>"; };
-		119DB0941A9FC06A0044F397 /* restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = restart.png; sourceTree = "<group>"; };
 		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
@@ -181,9 +173,6 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				119DB0941A9FC06A0044F397 /* restart.png */,
-				119DB0921A9FC0280044F397 /* You win!.png */,
-				119DB0901A9FC0200044F397 /* You lose!.png */,
 				11B79C4F1A9D8F8E0035D4E1 /* wall.png */,
 				11F160421A9AD951006FBBA3 /* 80x80_yellow.png */,
 				FFBB6F0A1A924CE300F1D546 /* 40x80_border_corner_left.png */,
@@ -273,7 +262,6 @@
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
 				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
 				119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */,
-				119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */,
 			);
 			path = OmniBall;
 			sourceTree = "<group>";
@@ -389,7 +377,6 @@
 				FFA0D6121A8E83B2000D1C37 /* border_quarter.png in Resources */,
 				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
 				FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */,
-				119DB0931A9FC0280044F397 /* You win!.png in Resources */,
 				3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
@@ -403,7 +390,6 @@
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
 				FF4C71081A8D322800FB3622 /* 80x80_green_ball.png in Resources */,
-				119DB0911A9FC0200044F397 /* You lose!.png in Resources */,
 				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
 				FFA0D6141A8E850F000D1C37 /* border_quarter_2.png in Resources */,
 				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
@@ -412,7 +398,6 @@
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
 				3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */,
 				FFBB6F0E1A924CE300F1D546 /* 40x80_border_corner_right.png in Resources */,
-				119DB0951A9FC06A0044F397 /* restart.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				11F160431A9AD951006FBBA3 /* 80x80_yellow.png in Resources */,
@@ -450,7 +435,6 @@
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
-				119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */,
 				11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */,
 				66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */,
 				66F8668B1A6F0B72007EE9FF /* Int+Extensions.swift in Sources */,
