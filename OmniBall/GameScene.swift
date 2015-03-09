@@ -385,7 +385,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkGameOver() {
-        if myNodes.successNodes == slaveNum / 3 + 1 {
+        if myNodes.successNodes == (slaveNum - 1) / 3 + 1 {
             gameOver = true
             connection.sendGameOver()
             gameOver(won: true)
