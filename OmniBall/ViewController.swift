@@ -45,6 +45,11 @@ class ViewController: UIViewController {
     var currentGameScene: GameScene!
 
     
+    var currentLevel = 0
+    
+    @IBOutlet weak var btnConnect: UIButton!
+    @IBOutlet weak var btnPlay: UIButton!
+    
 
     
     override func viewDidLoad() {
