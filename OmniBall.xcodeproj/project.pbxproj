@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
+		119CEB2E1AAE1790007CD0AA /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2C1AAE1790007CD0AA /* connect.png */; };
+		119CEB2F1AAE1790007CD0AA /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2D1AAE1790007CD0AA /* play.png */; };
 		119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */; };
 		119DB0911A9FC0200044F397 /* You lose!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0901A9FC0200044F397 /* You lose!.png */; };
 		119DB0931A9FC0280044F397 /* You win!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0921A9FC0280044F397 /* You win!.png */; };
@@ -82,6 +84,8 @@
 
 /* Begin PBXFileReference section */
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
+		119CEB2C1AAE1790007CD0AA /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
+		119CEB2D1AAE1790007CD0AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBallUtil.swift; sourceTree = "<group>"; };
 		119DB0901A9FC0200044F397 /* You lose!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You lose!.png"; sourceTree = "<group>"; };
 		119DB0921A9FC0280044F397 /* You win!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You win!.png"; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				119CEB2C1AAE1790007CD0AA /* connect.png */,
+				119CEB2D1AAE1790007CD0AA /* play.png */,
 				119DB0941A9FC06A0044F397 /* restart.png */,
 				119DB0921A9FC0280044F397 /* You win!.png */,
 				119DB0901A9FC0200044F397 /* You lose!.png */,
@@ -414,8 +420,10 @@
 				FFBB6F0E1A924CE300F1D546 /* 40x80_border_corner_right.png in Resources */,
 				119DB0951A9FC06A0044F397 /* restart.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
+				119CEB2F1AAE1790007CD0AA /* play.png in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				11F160431A9AD951006FBBA3 /* 80x80_yellow.png in Resources */,
+				119CEB2E1AAE1790007CD0AA /* connect.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,
 				FFB3F5741A7553DD00DEE6B3 /* 2048x1536_board_plain.png in Resources */,
 				FFA0D6101A8D44F0000D1C37 /* 2048x1536_you_win.png in Resources */,
