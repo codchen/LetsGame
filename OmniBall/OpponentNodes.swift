@@ -140,7 +140,7 @@ class OpponentNodes: Player {
             let name = target.name! as NSString
             let index = name.substringFromIndex(7).toInt()!
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
-            target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
+            target.texture = SKTexture(imageNamed: getSlaveImageName(color!, isSelected: false))
             slaveSpecs.update(target.position.x, y: target.position.y, dx: target.physicsBody!.velocity.dx, dy: target.physicsBody!.velocity.dy, dt: 0, index: UInt16(index), hasUpdated: false)
         }
     }

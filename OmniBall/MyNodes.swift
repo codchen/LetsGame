@@ -105,7 +105,7 @@ class MyNodes: Player {
     func touchesBegan(location: CGPoint) {
     	for node in players {
             if node.containsPoint(location){
-                touchesBeganHelper(node, location: location)
+                touchesBeganHelper(node, location: location, isSlave: false)
                 break
             }
         }
@@ -113,7 +113,7 @@ class MyNodes: Player {
         for (name, slave) in slaves {
             let node = scene.childNodeWithName(name) as SKSpriteNode
             if node.containsPoint(location){
-                touchesBeganHelper(node, location: location)
+                touchesBeganHelper(node, location: location, isSlave: true)
                 break
             }
         }
@@ -127,10 +127,16 @@ class MyNodes: Player {
 
     }
     
-    func touchesBeganHelper(node: SKSpriteNode, location: CGPoint) {
-        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
-        selectedNode = node
-        selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
+    func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
+        if isSlave {
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: false))
+            selectedNode = node
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: true))
+        } else {
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
+            selectedNode = node
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
+        }
         isSelected = true
         
     }

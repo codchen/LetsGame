@@ -110,24 +110,24 @@ class Player: NSObject {
         if !isSelected {
             switch playerColor {
             case .Green:
-                return "80x80_green_ball"
+                return "green_star"
             case .Red:
-                return "80x80_red_ball"
+                return "red_star"
             case .Yellow:
-                return "80x80_yellow_ball"
+                return "yellow_star"
             case .Blue:
-                return "80x80_blue_ball"
+                return "blue_star"
             }
         } else {
             switch playerColor {
             case .Green:
-                return "80x80_green"
+                return "green_star_filled"
             case .Red:
-                return "80x80_red"
+                return "red_star_filled"
             case .Yellow:
-                return "80x80_yellow"
+                return "yellow_star_filled"
             case .Blue:
-                return "80x80_blue"
+                return "blue_star_filled"
             }
         }
     }
@@ -135,7 +135,7 @@ class Player: NSObject {
     func capture(target: SKSpriteNode, capturedTime: NSTimeInterval){
         if slaves[target.name!] == nil {
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
-            target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
+            target.texture = SKTexture(imageNamed: getSlaveImageName(color!, isSelected: false))
         }
     }
     
