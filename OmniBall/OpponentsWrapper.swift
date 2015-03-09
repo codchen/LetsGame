@@ -17,12 +17,19 @@ class OpponentsWrapper {
         opponents[Int(opponent.id)] = opponent
     }
     
-    func deleteOpponentBall(id: Int, message: MessageDead) {
-        if Int(message.index) >= opponents[id]!.count{
-            return
-        }
+    func deleteOpponentSlave(id: Int, message: MessageDead) {
+
         opponents[id]?.deleteIndex = Int(message.index)
         opponents[id]?.lastCount = message.count
+    }
+    
+    func getOpponentByName(name: String) -> OpponentNodes? {
+        for (id, opponent) in opponents {
+            if opponent.sprite == name {
+                return opponent
+            }
+        }
+        return nil
     }
     
 	func update_peer_dead_reckoning(){
@@ -42,19 +49,20 @@ class OpponentsWrapper {
         opponents[id]?.updatePeerPos(message)
     }
     
-    func updateCaptured(id: Int, message: MessageCapture) {
+    func updateCaptured(id: Int, target: SKSpriteNode, capturedTime: NSTimeInterval, lastCount: UInt32) {
         for (player_id, opponent) in opponents {
             if id == player_id {
-                opponent.updateCaptured(message)
+                opponent.capture(target, capturedTime: capturedTime)
+                opponent.lastCount = lastCount
             } else {
-                opponent.decapture(Int(message.index))
+                opponent.decapture(target)
             }
         }
     }
     
-    func decapture(index: Int){
+    func decapture(target: SKSpriteNode){
         for (id, opponent) in opponents{
-            opponent.decapture(index)
+            opponent.decapture(target)
         }
     }
 }

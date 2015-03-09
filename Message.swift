@@ -61,6 +61,7 @@ struct MessageMove {
     let count: UInt32
     let index: UInt16
     let dt: NSTimeInterval
+    let isSlave: Bool
 }
 
 struct MessageGameOver {
