@@ -93,37 +93,6 @@ class ViewController: UIViewController {
                 self.transitToGame()
             }
         }
-        
-//        if connectionManager.session.connectedPeers.count > 0 &&
-//            connectionManager.gameState == .WaitingForStart {
-//            var scene = GameScene.unarchiveFromFile("GameScene") as GameScene
-//            let skView = SKView(frame: self.view.frame)
-//            // Configure the view.
-//            self.view.addSubview(skView)
-//            skView.showsFPS = true
-//            skView.showsNodeCount = true
-//            skView.showsPhysics = true
-//        
-//        
-//            /* Sprite Kit applies additional optimizations to improve rendering performance */
-//            skView.ignoresSiblingOrder = false
-//            skView.shouldCullNonVisibleNodes = false
-//        
-//            /* Set the scale mode to scale to fit the window */
-//            scene.scaleMode = .AspectFill
-//        
-//            scene.connection = connectionManager
-//            motionManager.accelerometerUpdateInterval = 0.05
-//            motionManager.startAccelerometerUpdates()
-//        
-//            scene.motionManager = motionManager
-//            
-//            currentView = skView
-//            skView.presentScene(scene)
-//        } else if connectionManager.session.connectedPeers.count > 0 &&
-//            connectionManager.gameState == .WaitingForMatch {
-//        	connectionManager.generateRandomNumber()
-//        }
     }
 	
     func transitToGame(){
@@ -169,12 +138,12 @@ class ViewController: UIViewController {
         }
     }
     
-    func updateCaptured(message: MessageCapture, peerPlayerID: Int){
-        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-            self.currentGameScene = self.currentView.scene! as GameScene
-            self.currentGameScene.updateCaptured(message, playerID: peerPlayerID)
-        }
-    }
+//    func updateCaptured(message: MessageCapture, peerPlayerID: Int){
+//        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+//            self.currentGameScene = self.currentView.scene! as GameScene
+//            self.currentGameScene.updateCaptured(message, playerID: peerPlayerID)
+//        }
+//    }
     
     func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {

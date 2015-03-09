@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 1
+    let maxPlayer = 2
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
@@ -86,9 +86,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendDataTo(data, peerID: peer, reliable: true)
     }
     
-    func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval){
+    func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval, isSlave: Bool){
         var message = MessageMove(message: Message(messageType: MessageType.Move), x: x, y: y,
-            dx: dx, dy: dy, count: count, index: index, dt: dt)
+            dx: dx, dy: dy, count: count, index: index, dt: dt, isSlave: isSlave)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data, reliable: false)
     }
@@ -277,11 +277,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
             }
             
-        } else if message.messageType == MessageType.Capture {
-			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
-            controller.updateCaptured(messageCapture, peerPlayerID: peersInGame[peerID]!)
-        
-        } else if message.messageType == MessageType.GameOver {
+        }
+//        else if message.messageType == MessageType.Capture {
+//			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
+//            controller.updateCaptured(messageCapture, peerPlayerID: peersInGame[peerID]!)
+//        
+//        }
+        else if message.messageType == MessageType.GameOver {
             controller.gameOver()
         } else if message.messageType == MessageType.NeutralInfo{
             let messageNeutral = UnsafePointer<MessageNeutralInfo>(data.bytes).memory

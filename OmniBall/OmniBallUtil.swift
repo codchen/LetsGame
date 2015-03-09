@@ -16,3 +16,11 @@ func closeEnough(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> Bool{
     }
     return true
 }
+
+func isOutOfBound(node: SKSpriteNode, bound: CGFloat) -> Bool {
+    if node.position.y > bound {
+        return true
+    } else {
+        return false
+    }
+}

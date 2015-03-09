@@ -18,10 +18,16 @@ struct physicsCategory{
     
 }
 
+struct NeutralBall {
+    let node: SKSpriteNode
+    var lastCapture: NSTimeInterval
+}
+
 class Player: NSObject {
     
     var scene: GameScene!
     var players: [SKSpriteNode] = []
+    var slaves: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
     var bornPos: [CGPoint] = []
     var color: PlayerColors!
     var id: UInt16!
@@ -32,7 +38,7 @@ class Player: NSObject {
         }
     }
     //hardcoded
-    var capturedIndex = [-1, -1, -1, -1]
+//    var capturedIndex = [-1, -1, -1, -1]
 //    var slaves: Dictionary<Int, SKSpriteNode> = Dictionary<Int, SKSpriteNode>()
     
     func addPlayer(node: SKSpriteNode) {
@@ -40,10 +46,6 @@ class Player: NSObject {
     }
     
     func deletePlayer(index: Int) {
-        
-    }
-    
-    func checkDead(){
         
     }
     
@@ -104,33 +106,15 @@ class Player: NSObject {
         }
     }
     
-    func updateCaptured(message: MessageCapture) {
-        
-    }
-    
-    func capture(index: Int, target: SKSpriteNode){
-//        scene.lastCaptured[index] = NSDate().timeIntervalSince1970
-        println("capture")
-        for i in capturedIndex{
-            println(i)
+    func capture(target: SKSpriteNode, capturedTime: NSTimeInterval){
+        if slaves[target.name!] == nil {
+            slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
+            target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
         }
-        for player in players{
-            println(player.name)
-        }
-        if capturedIndex[index] == -1 {
-        	capturedIndex[index] = count
-            addPlayer(target)
-        }
-//        slaves[index] = target
-        target.texture = SKTexture(imageNamed: getPlayerImageName(color!, isSelected: false))
     }
     
 
-    func decapture(index: Int){
-        if capturedIndex[index] != -1 {
-            println("Delete Neutral at index \(capturedIndex[index])")
-            deletePlayer(capturedIndex[index])
-            capturedIndex[index] = -1
-        }
+    func decapture(target: SKSpriteNode){
+
     }
 }
