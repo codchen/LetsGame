@@ -69,6 +69,12 @@
 		FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */ = {isa = PBXBuildFile; fileRef = FFBB6F0A1A924CE300F1D546 /* 40x80_border_corner_left.png */; };
 		FFBB6F0E1A924CE300F1D546 /* 40x80_border_corner_right.png in Resources */ = {isa = PBXBuildFile; fileRef = FFBB6F0B1A924CE300F1D546 /* 40x80_border_corner_right.png */; };
 		FFBB6F0F1A924CE300F1D546 /* 40x80_border_line.png in Resources */ = {isa = PBXBuildFile; fileRef = FFBB6F0C1A924CE300F1D546 /* 40x80_border_line.png */; };
+		FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF41AAE165C006FAE44 /* Level0.sks */; };
+		FFCFFFF71AAE1683006FAE44 /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF61AAE1683006FAE44 /* Level1.sks */; };
+		FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF81AAE16A3006FAE44 /* Level2.sks */; };
+		FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */; };
+		FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */; };
+		FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +154,12 @@
 		FFBB6F0A1A924CE300F1D546 /* 40x80_border_corner_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_corner_left.png; sourceTree = "<group>"; };
 		FFBB6F0B1A924CE300F1D546 /* 40x80_border_corner_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_corner_right.png; sourceTree = "<group>"; };
 		FFBB6F0C1A924CE300F1D546 /* 40x80_border_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_line.png; sourceTree = "<group>"; };
+		FFCFFFF41AAE165C006FAE44 /* Level0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level0.sks; path = "maze maps/level 0/Level0.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFF61AAE1683006FAE44 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level1.sks; path = "maze maps/level 1/Level1.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = "maze maps/level 2/Level2.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level3.sks; path = "maze maps/level 3/Level3.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level4.sks; path = "maze maps/level 4/Level4.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level5.sks; path = "maze maps/level 5/Level5.sks"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +274,12 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */,
+				FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */,
+				FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */,
+				FFCFFFF81AAE16A3006FAE44 /* Level2.sks */,
+				FFCFFFF61AAE1683006FAE44 /* Level1.sks */,
+				FFCFFFF41AAE165C006FAE44 /* Level0.sks */,
 				11A57C621A9681A000C695E7 /* Entity */,
 				3C7E84301A91052700212817 /* Set.swift */,
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
@@ -391,16 +409,20 @@
 				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
 				FFA0D6121A8E83B2000D1C37 /* border_quarter.png in Resources */,
 				FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */,
+				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
 				119DB0931A9FC0280044F397 /* You win!.png in Resources */,
+				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
 				3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */,
 				FFB3F5731A7553DD00DEE6B3 /* 110x110_hole.png in Resources */,
 				3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */,
 				FFBB6F0F1A924CE300F1D546 /* 40x80_border_line.png in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				FFB3F56D1A754DB100DEE6B3 /* 50x50_ball_with_shadow.png in Resources */,
+				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
 				3C7E842D1A8E53F100212817 /* 80x80_blue.png in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
+				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				3C7E842E1A8E53F100212817 /* 80x80_green.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
@@ -408,6 +430,7 @@
 				119DB0911A9FC0200044F397 /* You lose!.png in Resources */,
 				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
 				FFA0D6141A8E850F000D1C37 /* border_quarter_2.png in Resources */,
+				FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */,
 				FFB3F56E1A754DB100DEE6B3 /* 50x50_ball.png in Resources */,
 				FF4C710C1A8D322800FB3622 /* 1340x1340_border.png in Resources */,
 				FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */,

@@ -30,7 +30,8 @@ enum ScrollDirection: Int{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
-    let bound: CGFloat = 2733
+    //let bound: CGFloat = 2733
+    var destination: SKShapeNode!
     var scrollDirection: ScrollDirection!
     var scrolling = false
     var anchorPointVel = CGVector(dx: 0, dy: 0)
@@ -58,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let protectionInterval: Double = 1
 //    var lastCaptured: [Double] = [0, 0, 0, 0]
     
+    var currentLevel = 0
     var gameOver: Bool = false
     
     //receive capture stuff
@@ -68,7 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
-    let slaveNum = 4
+    let slaveNum = 1
     
     override func didMoveToView(view: SKView) {
         
@@ -90,7 +92,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
-
+        
+        destination = SKShapeNode(circleOfRadius: 422)
+        destination.position = childNodeWithName("destPointer")!.position
+        destination.fillColor = UIColor.lightGrayColor()
+        destination.zPosition = -10
+        addChild(destination)
         let maxAspectRatio: CGFloat = 16.0/9.0
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
@@ -378,7 +385,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkGameOver() {
-        if myNodes.successNodes == 2 {
+        if myNodes.successNodes == slaveNum / 3 + 1 {
             gameOver = true
             connection.sendGameOver()
             gameOver(won: true)
@@ -388,6 +395,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver(#won: Bool) {
         connection.gameOver()
         let gameOverScene = GameOverScene(size: size, won: won)
+        gameOverScene.currentLevel = currentLevel        
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)

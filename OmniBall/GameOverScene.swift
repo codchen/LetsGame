@@ -14,6 +14,7 @@ class GameOverScene: SKScene {
     var restartBtn: SKSpriteNode!
     var controller: ViewController!
     var connection: ConnectionManager!
+    var currentLevel = 0
     
     init(size: CGSize, won: Bool) {
         self.won = won
@@ -59,10 +60,11 @@ class GameOverScene: SKScene {
                 connection.generateRandomNumber()
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 if connection.maxPlayer == 1 {
-                    let scene = GameScene.unarchiveFromFile("GameScene") as GameScene
+                    let scene = GameScene.unarchiveFromFile("Level" + String(currentLevel)) as GameScene
                     scene.scaleMode = .AspectFill
                     scene.connection = self.connection
                     self.view?.presentScene(scene, transition: reveal)
+                    currentLevel = 0
                 } else {
                     let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
                     scene.scaleMode = self.scaleMode

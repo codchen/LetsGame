@@ -83,15 +83,15 @@ class MyNodes: Player {
     }
     
     func checkOutOfBound(){
-        for var i = 0; i < count; ++i{
-            if isOutOfBound(players[i], scene.bound){
-                players[i].physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-                players[i].position = bornPos[i]
-            }
-        }
+//        for var i = 0; i < count; ++i{
+//            if isOutOfBound(players[i], scene.bound){
+//                players[i].physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+//                players[i].position = bornPos[i]
+//            }
+//        }
         
         for (name, slave) in slaves {
-            if isOutOfBound(slave.node, scene.bound) {
+            if slave.node.intersectsNode(scene.destination) {
                 successNodes += 1
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
