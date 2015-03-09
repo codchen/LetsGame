@@ -10,6 +10,7 @@
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
 		119CEB2E1AAE1790007CD0AA /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2C1AAE1790007CD0AA /* connect.png */; };
 		119CEB2F1AAE1790007CD0AA /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2D1AAE1790007CD0AA /* play.png */; };
+		119CEB311AAE1A87007CD0AA /* orange_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB301AAE1A87007CD0AA /* orange_star.png */; };
 		119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */; };
 		119DB0911A9FC0200044F397 /* You lose!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0901A9FC0200044F397 /* You lose!.png */; };
 		119DB0931A9FC0280044F397 /* You win!.png in Resources */ = {isa = PBXBuildFile; fileRef = 119DB0921A9FC0280044F397 /* You win!.png */; };
@@ -26,10 +27,8 @@
 		3C7E84311A91052700212817 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E84301A91052700212817 /* Set.swift */; };
 		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
 		3C8530E41A8BE2AB00FFD14C /* 50x50_ball_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */; };
-		3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E31A8BE2AB00FFD14C /* circle_selected.png */; };
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
 		66C206FA1A6EF6B700F4782C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C206F91A6EF6B700F4782C /* circle.png */; };
-		66D5BDF41A797FC100A34A42 /* soccer.png in Resources */ = {isa = PBXBuildFile; fileRef = 66D5BDF31A797FC100A34A42 /* soccer.png */; };
 		66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D5BDF61A79BF2000A34A42 /* Message.swift */; };
 		66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */; };
 		66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */; };
@@ -86,6 +85,7 @@
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
 		119CEB2C1AAE1790007CD0AA /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
 		119CEB2D1AAE1790007CD0AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		119CEB301AAE1A87007CD0AA /* orange_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orange_star.png; sourceTree = "<group>"; };
 		119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBallUtil.swift; sourceTree = "<group>"; };
 		119DB0901A9FC0200044F397 /* You lose!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You lose!.png"; sourceTree = "<group>"; };
 		119DB0921A9FC0280044F397 /* You win!.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "You win!.png"; sourceTree = "<group>"; };
@@ -102,10 +102,8 @@
 		3C7E84301A91052700212817 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50x50_ball_selected.png; sourceTree = "<group>"; };
-		3C8530E31A8BE2AB00FFD14C /* circle_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle_selected.png; sourceTree = "<group>"; };
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		66C206F91A6EF6B700F4782C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
-		66D5BDF31A797FC100A34A42 /* soccer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccer.png; sourceTree = "<group>"; };
 		66D5BDF61A79BF2000A34A42 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Message.swift; path = ../Message.swift; sourceTree = "<group>"; };
 		66F8667C1A6F0B72007EE9FF /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		66F8667D1A6F0B72007EE9FF /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
@@ -185,6 +183,7 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				119CEB301AAE1A87007CD0AA /* orange_star.png */,
 				119CEB2C1AAE1790007CD0AA /* connect.png */,
 				119CEB2D1AAE1790007CD0AA /* play.png */,
 				119DB0941A9FC06A0044F397 /* restart.png */,
@@ -210,8 +209,6 @@
 				FF4C71061A8D322800FB3622 /* 1340x1340_border.png */,
 				66C206F91A6EF6B700F4782C /* circle.png */,
 				3C8530E21A8BE2AB00FFD14C /* 50x50_ball_selected.png */,
-				3C8530E31A8BE2AB00FFD14C /* circle_selected.png */,
-				66D5BDF31A797FC100A34A42 /* soccer.png */,
 				FFB3F5711A7553DD00DEE6B3 /* 110x110_hole.png */,
 				FFB3F5721A7553DD00DEE6B3 /* 2048x1536_board_plain.png */,
 				FFB3F5691A754DB100DEE6B3 /* 50x50_ball_with_shadow.png */,
@@ -393,7 +390,6 @@
 			files = (
 				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
 				FFA0D6121A8E83B2000D1C37 /* border_quarter.png in Resources */,
-				66D5BDF41A797FC100A34A42 /* soccer.png in Resources */,
 				FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */,
 				119DB0931A9FC0280044F397 /* You win!.png in Resources */,
 				3C7E842F1A8E53F100212817 /* 80x80_red.png in Resources */,
@@ -416,12 +412,12 @@
 				FF4C710C1A8D322800FB3622 /* 1340x1340_border.png in Resources */,
 				FFB3F56F1A754DB100DEE6B3 /* 2048x1536_board_with_boarder.png in Resources */,
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
-				3C8530E51A8BE2AB00FFD14C /* circle_selected.png in Resources */,
 				FFBB6F0E1A924CE300F1D546 /* 40x80_border_corner_right.png in Resources */,
 				119DB0951A9FC06A0044F397 /* restart.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
 				119CEB2F1AAE1790007CD0AA /* play.png in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
+				119CEB311AAE1A87007CD0AA /* orange_star.png in Resources */,
 				11F160431A9AD951006FBBA3 /* 80x80_yellow.png in Resources */,
 				119CEB2E1AAE1790007CD0AA /* connect.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,

@@ -106,6 +106,32 @@ class Player: NSObject {
         }
     }
     
+    func getSlaveImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
+        if !isSelected {
+            switch playerColor {
+            case .Green:
+                return "80x80_green_ball"
+            case .Red:
+                return "80x80_red_ball"
+            case .Yellow:
+                return "80x80_yellow_ball"
+            case .Blue:
+                return "80x80_blue_ball"
+            }
+        } else {
+            switch playerColor {
+            case .Green:
+                return "80x80_green"
+            case .Red:
+                return "80x80_red"
+            case .Yellow:
+                return "80x80_yellow"
+            case .Blue:
+                return "80x80_blue"
+            }
+        }
+    }
+    
     func capture(target: SKSpriteNode, capturedTime: NSTimeInterval){
         if slaves[target.name!] == nil {
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
