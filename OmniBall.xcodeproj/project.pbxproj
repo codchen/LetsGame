@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */ = {isa = PBXBuildFile; fileRef = 118BB02B1AAF821B005B1718 /* LevelTraining.sks */; };
+		118BB02E1AAF890F005B1718 /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF61AAE1683006FAE44 /* Level1.sks */; };
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
 		119CEB2E1AAE1790007CD0AA /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2C1AAE1790007CD0AA /* connect.png */; };
 		119CEB2F1AAE1790007CD0AA /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 119CEB2D1AAE1790007CD0AA /* play.png */; };
@@ -95,6 +97,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		118BB02B1AAF821B005B1718 /* LevelTraining.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTraining.sks; sourceTree = "<group>"; };
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
 		119CEB2C1AAE1790007CD0AA /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
 		119CEB2D1AAE1790007CD0AA /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -169,12 +172,12 @@
 		FFBB6F0A1A924CE300F1D546 /* 40x80_border_corner_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_corner_left.png; sourceTree = "<group>"; };
 		FFBB6F0B1A924CE300F1D546 /* 40x80_border_corner_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_corner_right.png; sourceTree = "<group>"; };
 		FFBB6F0C1A924CE300F1D546 /* 40x80_border_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40x80_border_line.png; sourceTree = "<group>"; };
-		FFCFFFF41AAE165C006FAE44 /* Level0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level0.sks; path = "maze maps/level 0/Level0.sks"; sourceTree = SOURCE_ROOT; };
-		FFCFFFF61AAE1683006FAE44 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level1.sks; path = "maze maps/level 1/Level1.sks"; sourceTree = SOURCE_ROOT; };
-		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = "maze maps/level 2/Level2.sks"; sourceTree = SOURCE_ROOT; };
-		FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level3.sks; path = "maze maps/level 3/Level3.sks"; sourceTree = SOURCE_ROOT; };
-		FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level4.sks; path = "maze maps/level 4/Level4.sks"; sourceTree = SOURCE_ROOT; };
-		FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level5.sks; path = "maze maps/level 5/Level5.sks"; sourceTree = SOURCE_ROOT; };
+		FFCFFFF41AAE165C006FAE44 /* Level0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level0.sks; path = ../Maps/Level0.sks; sourceTree = "<group>"; };
+		FFCFFFF61AAE1683006FAE44 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level1.sks; path = ../Maps/Level1.sks; sourceTree = "<group>"; };
+		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = ../Maps/Level2.sks; sourceTree = "<group>"; };
+		FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level3.sks; path = ../Maps/Level3.sks; sourceTree = "<group>"; };
+		FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level4.sks; path = ../Maps/Level4.sks; sourceTree = "<group>"; };
+		FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level5.sks; path = ../Maps/Level5.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +199,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		118BB02D1AAF8625005B1718 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				118BB02B1AAF821B005B1718 /* LevelTraining.sks */,
+				FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */,
+				FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */,
+				FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */,
+				FFCFFFF81AAE16A3006FAE44 /* Level2.sks */,
+				FFCFFFF61AAE1683006FAE44 /* Level1.sks */,
+				FFCFFFF41AAE165C006FAE44 /* Level0.sks */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
 		11A57C621A9681A000C695E7 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,12 +314,7 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
-				FFCFFFFE1AAE16E7006FAE44 /* Level5.sks */,
-				FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */,
-				FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */,
-				FFCFFFF81AAE16A3006FAE44 /* Level2.sks */,
-				FFCFFFF61AAE1683006FAE44 /* Level1.sks */,
-				FFCFFFF41AAE165C006FAE44 /* Level0.sks */,
+				118BB02D1AAF8625005B1718 /* Maps */,
 				11A57C621A9681A000C695E7 /* Entity */,
 				3C7E84301A91052700212817 /* Set.swift */,
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
@@ -432,6 +444,7 @@
 				FFA0D60F1A8D44F0000D1C37 /* 2048x1536_you_lose.png in Resources */,
 				119ED2A91AAE2B5F00051AD2 /* orange_star_filled.png in Resources */,
 				119ED2A81AAE2B5F00051AD2 /* green_star_filled.png in Resources */,
+				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
 				FFA0D6121A8E83B2000D1C37 /* border_quarter.png in Resources */,
 				FFBB6F0D1A924CE300F1D546 /* 40x80_border_corner_left.png in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
@@ -472,6 +485,7 @@
 				119CEB2F1AAE1790007CD0AA /* play.png in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				119CEB311AAE1A87007CD0AA /* orange_star.png in Resources */,
+				118BB02E1AAF890F005B1718 /* Level1.sks in Resources */,
 				11F160431A9AD951006FBBA3 /* 80x80_yellow.png in Resources */,
 				119CEB2E1AAE1790007CD0AA /* connect.png in Resources */,
 				FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */,

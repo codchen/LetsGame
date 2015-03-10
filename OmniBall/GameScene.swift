@@ -70,7 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
-    let slaveNum = 1
+    var slaveNum = 1
     
     override func didMoveToView(view: SKView) {
         
@@ -393,7 +393,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
-        connection.gameOver()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.currentLevel = currentLevel        
         gameOverScene.scaleMode = scaleMode

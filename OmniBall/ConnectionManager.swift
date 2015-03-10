@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 3
+    let maxPlayer = 2
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
@@ -165,12 +165,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func gameOver(){
-        gameState = .Done
         playerID = 0
-        randomNumbers.removeAll(keepCapacity: true)
+        randomNumbers.removeAll(keepCapacity: false)
         receivedAllRandomNumber = false
-        peersInGame.removeAll(keepCapacity: true)
-        delta.removeAll(keepCapacity: true)
+        peersInGame.removeAll(keepCapacity: false)
+        delta.removeAll(keepCapacity: false)
     }
     
     func browserViewControllerDidFinish(

@@ -41,11 +41,6 @@ class MyNodes: Player {
             return
         }
         players.removeAtIndex(index)
-//        for var idx = 0; idx < capturedIndex.count; ++idx {
-//            if capturedIndex[idx] > index {
-//                capturedIndex[idx]--
-//            }
-//        }
     }
     
     override func decapture(target: SKSpriteNode) {
@@ -128,15 +123,19 @@ class MyNodes: Player {
     }
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
-        if isSlave {
+        if selectedNode.name!.hasPrefix("neutral"){
             selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: false))
-            selectedNode = node
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: true))
         } else {
             selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: false))
-            selectedNode = node
+        }
+        selectedNode = node
+        
+        if isSlave {
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: true))
+        } else {
             selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, isSelected: true))
         }
+        
         isSelected = true
         
     }

@@ -13,6 +13,7 @@ import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
+        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -23,6 +24,7 @@ extension SKNode {
             return scene
             
         } else {
+            println("is nil")
             return nil
         }
     }
@@ -46,9 +48,6 @@ class ViewController: UIViewController {
 
     
     var currentLevel = 0
-    
-    @IBOutlet weak var btnConnect: UIButton!
-    @IBOutlet weak var btnPlay: UIButton!
     
 
     
@@ -101,11 +100,11 @@ class ViewController: UIViewController {
 	
     func transitToGame(){
         dispatch_async(dispatch_get_main_queue()) {
-            self.currentGameScene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
-            self.currentGameScene.currentLevel = self.currentLevel
-            self.currentGameScene.slaveNum = self.currentLevel + 1
-            self.currentGameScene.scaleMode = .AspectFill
-            self.currentGameScene.connection = self.connectionManager
+            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
+            scene.currentLevel = self.currentLevel
+            scene.slaveNum = self.currentLevel + 1
+            scene.scaleMode = .AspectFill
+            scene.connection = self.connectionManager
             if self.currentView == nil {
                 let skView = SKView(frame: self.view.frame)
                 // Configure the view.
@@ -121,6 +120,7 @@ class ViewController: UIViewController {
                 
                 self.currentView = skView
             }
+            self.currentGameScene = scene
             self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
         }
         
