@@ -20,6 +20,7 @@ class MyNodes: Player {
     var launchTime: NSDate!
     var launchPoint: CGPoint!
     let maxSpeed:CGFloat = 1500
+    var score = 0
     
     init(connection: ConnectionManager, scene: GameScene) {
         super.init()
@@ -28,6 +29,7 @@ class MyNodes: Player {
         self.scene = scene
         self.id = connection.playerID
         self.color = PlayerColors(rawValue: Int(id))
+        score = connection.scoreBoard[Int(self.id)]!
         setUpPlayers(color)
         selectedNode = players[0]
     }
@@ -88,6 +90,9 @@ class MyNodes: Player {
         for (name, slave) in slaves {
             if slave.node.intersectsNode(scene.destination) {
                 successNodes += 1
+                score++
+                connection.scoreBoard[Int(id)]!++
+                scene.updateScore()
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 decapture(slave.node)

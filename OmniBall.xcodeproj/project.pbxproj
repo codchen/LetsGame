@@ -199,6 +199,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		115403151AAFC9ED000B2BA2 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FF53011F1A7D43A300F04937 /* GameScene.swift */,
+				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
 		118BB02D1AAF8625005B1718 /* Maps */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,7 +222,7 @@
 			name = Maps;
 			sourceTree = "<group>";
 		};
-		11A57C621A9681A000C695E7 /* Entity */ = {
+		11A57C621A9681A000C695E7 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				11A57C631A9681C800C695E7 /* Player.swift */,
@@ -221,7 +230,7 @@
 				11A57C671A96824500C695E7 /* OpponentNodes.swift */,
 				11A57C691A96871800C695E7 /* OpponentsWrapper.swift */,
 			);
-			name = Entity;
+			name = Entities;
 			sourceTree = "<group>";
 		};
 		66D5BDF51A79BEC200A34A42 /* images */ = {
@@ -314,14 +323,13 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				115403151AAFC9ED000B2BA2 /* Scenes */,
 				118BB02D1AAF8625005B1718 /* Maps */,
-				11A57C621A9681A000C695E7 /* Entity */,
+				11A57C621A9681A000C695E7 /* Entities */,
 				3C7E84301A91052700212817 /* Set.swift */,
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
 				FF6C10851A670BED00A5C7D7 /* ViewController.swift */,
-				FF53011F1A7D43A300F04937 /* GameScene.swift */,
-				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
 				FF6C10451A6572FB00A5C7D7 /* Main.storyboard */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,

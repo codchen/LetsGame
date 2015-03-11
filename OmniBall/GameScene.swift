@@ -71,12 +71,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     var slaveNum = 1
+    let scoreLabel: SKLabelNode = SKLabelNode()
     
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 2048, height: 1536)
         
-        setupHUD()
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
@@ -88,10 +88,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        setupHUD()
         /* Setup your scene here */
 
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
+        
+        let destPointer = childNodeWithName("destPointer")
+        destPointer?.zPosition = -5
         
         destination = SKShapeNode(circleOfRadius: 422)
         destination.position = childNodeWithName("destPointer")!.position
@@ -118,6 +122,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hudMinions.append(minion)
             hudLayer.addChild(minion)
         }
+        
+        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
+        scoreLabel.fontSize = 60
+        scoreLabel.fontColor = SKColor.whiteColor()
+        scoreLabel.fontName = "Copperplate"
+        scoreLabel.text = "score: " + String(myNodes.score)
+        hudLayer.addChild(scoreLabel)
     }
     
     func setupNeutral(){
@@ -263,23 +274,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let loc = touch.locationInNode(self)
         
         myNodes.touchesBegan(loc)
-        setSrollDirection(loc)
+//        setSrollDirection(loc)
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let currentLocation = touch.locationInNode(self)
-        let previousLocation = touch.previousLocationInNode(self)
-        if myNodes.launchPoint == nil {
-            let translation = currentLocation - previousLocation
-            // move anchorPoint
-            anchorPoint += translation/CGPointMake(size.width, size.height)
-            // move hudLayer
-            hudLayer.position -= translation
-            checkBackgroundBond()
-        }
-        
-    }
+//    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+//        let touch = touches.anyObject() as UITouch
+//        let currentLocation = touch.locationInNode(self)
+//        let previousLocation = touch.previousLocationInNode(self)
+//        if myNodes.launchPoint == nil {
+//            let translation = currentLocation - previousLocation
+//            // move anchorPoint
+//            anchorPoint += translation/CGPointMake(size.width, size.height)
+//            // move hudLayer
+//            hudLayer.position -= translation
+//            checkBackgroundBond()
+//        }
+//        
+//    }
     
     func checkBackgroundBond() {
         
@@ -382,6 +393,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
+    }
+    
+    func updateScore(){
+        scoreLabel.text = "score: " + String(myNodes.score)
     }
     
     func checkGameOver() {

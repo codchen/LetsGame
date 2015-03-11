@@ -100,7 +100,8 @@ class ViewController: UIViewController {
 	
     func transitToGame(){
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
+//            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
+            let scene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
             scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel + 1
             scene.scaleMode = .AspectFill

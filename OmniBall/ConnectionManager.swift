@@ -32,6 +32,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var latency: NSTimeInterval!
     var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
     var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
+    var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
     
     
     override init() {
@@ -219,6 +220,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     for var index = 0; index < randomNumbers.count; ++index {
                         if randomNumbers[index] == self.randomNumber {
                             playerID = UInt16(index)
+                            scoreBoard[Int(playerID)] = 0
                             gameState = .WaitingForStart
                             sendGameStart()
                             self.assistant.stop()
@@ -234,6 +236,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
             peersInGame[peerID] = Int(messageGameStart.playerID)
+            scoreBoard[peersInGame[peerID]!] = 0
             if peersInGame.count == maxPlayer - 1 {
                 for (peer, id) in peersInGame {
                     if id > Int(self.playerID) {
@@ -241,7 +244,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     }
                 }
             }
-            
         } else if message.messageType == MessageType.FirstTrip{
             let messageFirstTrip = UnsafePointer<MessageFirstTrip>(data.bytes).memory
             let delta = NSDate().timeIntervalSince1970 - messageFirstTrip.time
@@ -273,7 +275,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.Dead{
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
             if peersInGame[peerID] != nil{
-            controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
+            	controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
+                scoreBoard[peersInGame[peerID]!]!++
             }
             
         }
