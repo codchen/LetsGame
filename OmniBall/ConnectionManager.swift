@@ -21,7 +21,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     // peerID maps to its playerID
     var peersInGame: Dictionary<MCPeerID, Int> = Dictionary<MCPeerID, Int>()
-    var controller: ViewController!
+    var controller: GameViewController!
     var randomNumber: UInt32!
     var gameState: GameState = .WaitingForMatch
     var receivedAllRandomNumber: Bool = false

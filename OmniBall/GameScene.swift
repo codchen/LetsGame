@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let ballSize: CGFloat = 110
     var destPos: CGPoint!
     var destRotation: CGFloat!
+    var destPointer: SKSpriteNode!
     
     //let bound: CGFloat = 2733
     var destination: SKShapeNode!
@@ -116,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func setupDestination(){
         
-        let destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
         let destHeart = childNodeWithName("destHeart") as SKSpriteNode
         destHeart.zPosition = -10
@@ -130,9 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bottomWall.position.y + ballSize + 0.5 * destPointer.size.height,
                 rightWall.position.x - 2 * ballSize - destPointer.size.width - 5,
                 topWall.position.y - 2 * ballSize - destPointer.size.height - 5 - bottomWall.position.y)
-            destPos = CGPointMake(
-                CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
-                CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+            destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
             connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation))
             println(destRect)
@@ -141,19 +140,58 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         destPointer.position = destPos
         destPointer.zRotation = destRotation
         destHeart.position = destPos
-        debugDrawPlayableArea()
+//        debugDrawPlayableArea()
         
     }
     
-    func debugDrawPlayableArea() {
-        let shape = SKShapeNode()
-        let path = CGPathCreateMutable()
-        CGPathAddRect(path, nil, destRect)
-        shape.path = path
-        shape.strokeColor = SKColor.redColor()
-        shape.lineWidth = 4.0
-        addChild(shape)
+    func randomDesPos() -> CGPoint {
+        
+        var pos = CGPointMake(
+            CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
+            CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+        destPointer.position = pos
+        
+        while !checkPosValid(destPointer) {
+            pos = CGPointMake(
+                CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
+                CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+            destPointer.position = pos
+        }
+        
+        return pos
     }
+    
+    func checkPosValid(nodeToCheck: SKSpriteNode) -> Bool {
+        
+        var isValid = true
+        
+        enumerateChildNodesWithName("node*"){ node, _ in
+            if nodeToCheck.intersectsNode(node) {
+                isValid = false
+            }
+        }
+        
+        if !isValid {
+            return isValid
+        }
+        
+        enumerateChildNodesWithName("neutral*"){ node, _ in
+            if nodeToCheck.intersectsNode(node) {
+                isValid = false
+            }
+        }
+        return isValid
+    }
+    
+//    func debugDrawPlayableArea() {
+//        let shape = SKShapeNode()
+//        let path = CGPathCreateMutable()
+//        CGPathAddRect(path, nil, destRect)
+//        shape.path = path
+//        shape.strokeColor = SKColor.redColor()
+//        shape.lineWidth = 4.0
+//        addChild(shape)
+//    }
     
     func setupHUD(){
 		let tempAnchor = getAnchorPoint()

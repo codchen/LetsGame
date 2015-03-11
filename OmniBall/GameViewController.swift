@@ -1,8 +1,8 @@
 //
-//  GameViewController.swift
-//  RawGame
+//  ViewController.swift
+//  try
 //
-//  Created by Xiaoyu Chen on 1/6/15.
+//  Created by Xiaoyu Chen on 1/13/15.
 //  Copyright (c) 2015 Xiaoyu Chen. All rights reserved.
 //
 
@@ -13,6 +13,7 @@ import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
+        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -21,58 +22,164 @@ extension SKNode {
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
             archiver.finishDecoding()
             return scene
+            
         } else {
+            println("is nil")
             return nil
         }
     }
 }
 
+extension SKScene {
+    func className() -> String{
+        return "SKScene"
+    }
+}
+
 class GameViewController: UIViewController {
+
     let motionManager: CMMotionManager = CMMotionManager()
+
+    var connectionManager: ConnectionManager!
+    var alias: String!
+    
+    var currentView: SKView!
+    var currentGameScene: GameScene!
+
+    
+    var currentLevel = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
-//        self.session = MCSession(peer: peerID)
-//        self.session.delegate = self
-//        
-//        // create the browser viewcontroller with a unique service name
-//        self.browser = MCBrowserViewController(serviceType:serviceType,
-//            session:self.session)
-//        
-//        self.browser.delegate = self;
-//        
-//        self.assistant = MCAdvertiserAssistant(serviceType:serviceType,
-//            discoveryInfo:nil, session:self.session)
-//        
-//        // tell the assistant to start advertising our fabulous chat
-//        self.assistant.start()
-//        self.presentViewController(self.browser, animated: true, completion: nil)
-        
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
-            let skView = self.view as SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
-            
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            
-            skView.presentScene(scene)
-            
-            motionManager.accelerometerUpdateInterval = 0.05
-            motionManager.startAccelerometerUpdates()
-            
-            scene.motionManager = motionManager
-        }
+//        view.backgroundColor = UIColor(patternImage: UIImage(named: "2048x1536_board_with_boarder")!)
+//		btnConnect.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+//        btnConnect.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+//        btnPlay.titleLabel?.font = UIFont(name: "Marker Felt", size: 50)
+//        btnPlay.setTitleColor(UIColor.darkGrayColor(), forState: UIControlState.Normal)
+        connectionManager = ConnectionManager()
+        connectionManager.controller = self
+    }
+    
+    @IBAction func connect(sender: UIButton) {
+    	self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
     }
 
     
-
+    @IBAction func play(sender: UIButton) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.connectionManager.maxPlayer > 1 {
+                self.transitToWaitForStart()
+                if self.connectionManager.gameState == .WaitingForMatch {
+                    self.connectionManager.generateRandomNumber()
+                }
+            } else {
+                self.transitToGame(CGPointZero, rotate: 1)
+            }
+        }
+    }
+	
+    func transitToWaitForStart(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+            
+            if self.currentView == nil {
+                let skView = SKView(frame: self.view.frame)
+                // Configure the view.
+                self.view.addSubview(skView)
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsPhysics = true
+                
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = false
+                skView.shouldCullNonVisibleNodes = false
+                
+                /* Set the scale mode to scale to fit the window */
+                scene.scaleMode = .AspectFill
+                
+                self.currentView = skView
+            }
+            self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        }
+    }
     
+    func transitToGame(destination: CGPoint, rotate: CGFloat){
+        dispatch_async(dispatch_get_main_queue()) {
+//            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
+            let scene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
+            scene.currentLevel = self.currentLevel
+            scene.slaveNum = self.currentLevel + 1
+            scene.scaleMode = .AspectFill
+            scene.connection = self.connectionManager
+            if self.currentView == nil {
+                let skView = SKView(frame: self.view.frame)
+                // Configure the view.
+                self.view.addSubview(skView)
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsPhysics = true
+                
+                
+                /* Sprite Kit applies additional optimizations to improve rendering performance */
+                skView.ignoresSiblingOrder = false
+                skView.shouldCullNonVisibleNodes = false
+                
+                self.currentView = skView
+            }
+            if destination != CGPointZero {
+                scene.destPos = destination
+                scene.destRotation = rotate
+            }
+            self.currentGameScene = scene
+            self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        }
+        
+    }
+    
+    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene.updatePeerPos(message, peerPlayerID: peerPlayerID)
+            }
+        }
+    }
+    
+    func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
+        dispatch_async(dispatch_get_main_queue()){
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
+            }
+        }
+    }
+    
+    func updateDestination(message: MessageDestination){
+        transitToGame(CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate))
+    }
+    
+    func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
+        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene.updateNeutralInfo(message, playerID: peerPlayerID)
+        }
+    }
+    
+    func gameOver(){
+        dispatch_async(dispatch_get_main_queue()){
+            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+                self.currentGameScene.gameOver(won: false)
+            }
+        }
+    }
+    
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
     
     override func shouldAutorotate() -> Bool {
         return true
@@ -81,7 +188,7 @@ class GameViewController: UIViewController {
     deinit{
         motionManager.stopAccelerometerUpdates()
     }
-
+    
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
@@ -89,15 +196,8 @@ class GameViewController: UIViewController {
             return Int(UIInterfaceOrientationMask.All.rawValue)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    
 }
+
