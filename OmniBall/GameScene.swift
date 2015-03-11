@@ -116,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(hudLayer)
         
         for var index = 0; index < slaveNum; ++index {
-            let minion = SKSpriteNode(imageNamed: "orange_star")
+            let minion = SKSpriteNode(imageNamed: "80x80_orange_star")
             minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 25), y: size.height - 300)
             minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
             hudMinions.append(minion)

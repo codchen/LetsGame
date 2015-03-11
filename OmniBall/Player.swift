@@ -95,13 +95,13 @@ class Player: NSObject {
         } else {
             switch playerColor {
             case .Green:
-                return "80x80_green"
+                return "80x80_green_ball_filled"
             case .Red:
-                return "80x80_red"
+                return "80x80_red_ball_filled"
             case .Yellow:
-                return "80x80_yellow"
+                return "80x80_yellow_ball_filled"
             case .Blue:
-                return "80x80_blue"
+                return "80x80_blue_ball_filled"
             }
         }
     }
@@ -110,9 +110,9 @@ class Player: NSObject {
         if !isSelected {
             switch playerColor {
             case .Green:
-                return "green_star"
+                return "80x80_green_star"
             case .Red:
-                return "red_star"
+                return "80x80_red_star"
             case .Yellow:
                 return "yellow_star"
             case .Blue:
@@ -121,13 +121,13 @@ class Player: NSObject {
         } else {
             switch playerColor {
             case .Green:
-                return "green_star_filled"
+                return "80x80_green_star_filled"
             case .Red:
-                return "red_star_filled"
+                return "80x80_red_star_filled"
             case .Yellow:
-                return "yellow_star_filled"
+                return "80x80_yellow_star_filled"
             case .Blue:
-                return "blue_star_filled"
+                return "80x80_blue_star_filled"
             }
         }
     }
