@@ -49,8 +49,6 @@ class ViewController: UIViewController {
     
     var currentLevel = 0
     
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        view.backgroundColor = UIColor(patternImage: UIImage(named: "2048x1536_board_with_boarder")!)
@@ -70,7 +68,21 @@ class ViewController: UIViewController {
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.connectionManager.maxPlayer > 1 {
-                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+                self.transitToWaitForStart()
+                if self.connectionManager.gameState == .WaitingForMatch {
+                    self.connectionManager.generateRandomNumber()
+                }
+            } else {
+                self.transitToGame(CGPointZero, rotate: 1)
+            }
+        }
+    }
+	
+    func transitToWaitForStart(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+            
+            if self.currentView == nil {
                 let skView = SKView(frame: self.view.frame)
                 // Configure the view.
                 self.view.addSubview(skView)
@@ -87,18 +99,12 @@ class ViewController: UIViewController {
                 scene.scaleMode = .AspectFill
                 
                 self.currentView = skView
-                skView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-                
-                if self.connectionManager.gameState == .WaitingForMatch {
-                    self.connectionManager.generateRandomNumber()
-                }
-            } else {
-                self.transitToGame()
             }
+            self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
         }
     }
-	
-    func transitToGame(){
+    
+    func transitToGame(destination: CGPoint, rotate: CGFloat){
         dispatch_async(dispatch_get_main_queue()) {
 //            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
             let scene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
@@ -120,6 +126,10 @@ class ViewController: UIViewController {
                 skView.shouldCullNonVisibleNodes = false
                 
                 self.currentView = skView
+            }
+            if destination != CGPointZero {
+                scene.destPos = destination
+                scene.destRotation = rotate
             }
             self.currentGameScene = scene
             self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
@@ -145,12 +155,9 @@ class ViewController: UIViewController {
         }
     }
     
-//    func updateCaptured(message: MessageCapture, peerPlayerID: Int){
-//        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-//            self.currentGameScene = self.currentView.scene! as GameScene
-//            self.currentGameScene.updateCaptured(message, playerID: peerPlayerID)
-//        }
-//    }
+    func updateDestination(message: MessageDestination){
+        transitToGame(CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate))
+    }
     
     func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {

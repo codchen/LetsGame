@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 1
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
@@ -53,6 +53,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         
         // tell the assistant to start advertising our fabulous chat
         self.assistant.start()
+        scoreBoard[0] = 0
     }
     
     func generateRandomNumber(){
@@ -92,6 +93,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             dx: dx, dy: dy, count: count, index: index, dt: dt, isSlave: isSlave)
         let data = NSData(bytes: &message, length: sizeof(MessageMove))
         sendData(data, reliable: false)
+    }
+    
+    func sendDestinationPos(x: Float, y: Float, rotate: Float){
+    	var message = MessageDestination(message: Message(messageType: MessageType.Destination), x: x, y: y, rotate: rotate)
+        let data = NSData(bytes: &message, length: sizeof(MessageDestination))
+        sendData(data, reliable: true)
     }
     
     func sendGameStart(){
@@ -163,6 +170,14 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         	}
         }
 
+    }
+    
+    func transitToGameScene(){
+        if self.playerID == 0 {
+            controller.transitToGame(CGPointZero, rotate: 1)
+        } else {
+            controller.transitToWaitForStart()
+        }
     }
     
     func gameOver(){
@@ -260,7 +275,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
             sendThirdTrip(delta[peersInGame[peerID]!]!, peer: peerID)
             if (delta.count == maxPlayer - 1) {
-                controller.transitToGame()
+                transitToGameScene()
             }
             
         } else if message.messageType == MessageType.ThirdTrip {
@@ -269,7 +284,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (delta.count == maxPlayer - 1) {
-                controller.transitToGame()
+                transitToGameScene()
             }
             
         } else if message.messageType == MessageType.Dead{
@@ -278,14 +293,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             	controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
                 scoreBoard[peersInGame[peerID]!]!++
             }
-            
-        }
-//        else if message.messageType == MessageType.Capture {
-//			let messageCapture = UnsafePointer<MessageCapture>(data.bytes).memory
-//            controller.updateCaptured(messageCapture, peerPlayerID: peersInGame[peerID]!)
-//        
-//        }
-        else if message.messageType == MessageType.GameOver {
+        } else if message.messageType == MessageType.Destination {
+			let messageDestination = UnsafePointer<MessageDestination>(data.bytes).memory
+            controller.updateDestination(messageDestination)
+        
+        } else if message.messageType == MessageType.GameOver {
             controller.gameOver()
         } else if message.messageType == MessageType.NeutralInfo{
             let messageNeutral = UnsafePointer<MessageNeutralInfo>(data.bytes).memory

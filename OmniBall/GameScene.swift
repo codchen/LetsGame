@@ -30,6 +30,11 @@ enum ScrollDirection: Int{
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
+    var destRect: CGRect!
+    let ballSize: CGFloat = 110
+    var destPos: CGPoint!
+    var destRotation: CGFloat!
+    
     //let bound: CGFloat = 2733
     var destination: SKShapeNode!
     var scrollDirection: ScrollDirection!
@@ -72,6 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hudLayer: SKNode = SKNode()
     var slaveNum = 1
     let scoreLabel: SKLabelNode = SKLabelNode()
+
     
     override func didMoveToView(view: SKView) {
         
@@ -80,7 +86,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
-        setupNeutral()
         for var index = 0; index < connection.maxPlayer; ++index {
             if Int(connection.playerID) != index {
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
@@ -88,15 +93,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
+        setupDestination()
+        setupNeutral()
+        
         setupHUD()
         /* Setup your scene here */
 
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
-        
-        let destPointer = childNodeWithName("destPointer")
-        destPointer?.zPosition = -5
-        
+                
         destination = SKShapeNode(circleOfRadius: 422)
         destination.position = childNodeWithName("destPointer")!.position
         destination.fillColor = UIColor.lightGrayColor()
@@ -107,6 +112,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
+    }
+    
+    func setupDestination(){
+        
+        let destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer.zPosition = -5
+        let destHeart = childNodeWithName("destHeart") as SKSpriteNode
+        destHeart.zPosition = -10
+        
+        if connection.playerID == 0 {
+            let topWall = childNodeWithName("barTop") as SKSpriteNode
+            let bottomWall = childNodeWithName("barBottom") as SKSpriteNode
+            let leftWall = childNodeWithName("barLeft") as SKSpriteNode
+            let rightWall = childNodeWithName("barRight") as SKSpriteNode
+            destRect = CGRectMake(leftWall.position.x + ballSize + 0.5 * destPointer.size.width,
+                bottomWall.position.y + ballSize + 0.5 * destPointer.size.height,
+                rightWall.position.x - 2 * ballSize - destPointer.size.width - 5,
+                topWall.position.y - 2 * ballSize - destPointer.size.height - 5 - bottomWall.position.y)
+            destPos = CGPointMake(
+                CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
+                CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+            destRotation = CGFloat.random() * π * CGFloat.randomSign()
+            connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation))
+            println(destRect)
+            println(destPointer.size)
+        }
+        destPointer.position = destPos
+        destPointer.zRotation = destRotation
+        destHeart.position = destPos
+        debugDrawPlayableArea()
+        
+    }
+    
+    func debugDrawPlayableArea() {
+        let shape = SKShapeNode()
+        let path = CGPathCreateMutable()
+        CGPathAddRect(path, nil, destRect)
+        shape.path = path
+        shape.strokeColor = SKColor.redColor()
+        shape.lineWidth = 4.0
+        addChild(shape)
     }
     
     func setupHUD(){

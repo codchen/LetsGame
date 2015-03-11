@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */; };
 		118584821AB09568002622F8 /* ArenaScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 118584811AB09568002622F8 /* ArenaScene.sks */; };
 		118584871AB098C0002622F8 /* 80x80_blue_ball_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 118584831AB098C0002622F8 /* 80x80_blue_ball_filled.png */; };
 		118584881AB098C0002622F8 /* 80x80_blue_star_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 118584841AB098C0002622F8 /* 80x80_blue_star_filled.png */; };
@@ -88,6 +89,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
 		118584811AB09568002622F8 /* ArenaScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ArenaScene.sks; sourceTree = "<group>"; };
 		118584831AB098C0002622F8 /* 80x80_blue_ball_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball_filled.png; sourceTree = "<group>"; };
 		118584841AB098C0002622F8 /* 80x80_blue_star_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_star_filled.png; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				FF53011F1A7D43A300F04937 /* GameScene.swift */,
 				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
+				113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
+				113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */,
 				119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */,
 				11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */,
 				66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */,
