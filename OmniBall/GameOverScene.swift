@@ -37,9 +37,9 @@ class GameOverScene: SKScene {
         
         var label: SKSpriteNode!
         if won {
-            label = SKSpriteNode(imageNamed: "You win!")
+            label = SKSpriteNode(imageNamed: "700x200_you_win")
         } else {
-            label = SKSpriteNode(imageNamed: "You lose!")
+            label = SKSpriteNode(imageNamed: "700x200_you_lose")
         }
         label.setScale(2.0)
         label.position = CGPointMake(size.width/2, size.height/2)

@@ -88,7 +88,7 @@ class MyNodes: Player {
 //        }
         
         for (name, slave) in slaves {
-            if slave.node.intersectsNode(scene.destination) {
+            if slave.node.intersectsNode(scene.destHeart) {
                 successNodes += 1
                 score++
                 connection.scoreBoard[Int(id)]!++

@@ -35,6 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var destPos: CGPoint!
     var destRotation: CGFloat!
     var destPointer: SKSpriteNode!
+    var destHeart: SKShapeNode!
     
     //let bound: CGFloat = 2733
     var destination: SKShapeNode!
@@ -103,11 +104,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
                 
-        destination = SKShapeNode(circleOfRadius: 422)
-        destination.position = childNodeWithName("destPointer")!.position
-        destination.fillColor = UIColor.lightGrayColor()
-        destination.zPosition = -10
-        addChild(destination)
+//        destination = SKShapeNode(circleOfRadius: 422)
+//        destination.position = childNodeWithName("destPointer")!.position
+//        destination.fillColor = UIColor.lightGrayColor()
+//        destination.zPosition = -10
+//        addChild(destination)
         let maxAspectRatio: CGFloat = 16.0/9.0
         let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
@@ -119,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
-        let destHeart = childNodeWithName("destHeart") as SKSpriteNode
+        destHeart = SKShapeNode(circleOfRadius: 180)
         destHeart.zPosition = -10
         
         if connection.playerID == 0 {

@@ -34,6 +34,6 @@ class ViewController: UIViewController {
             
             self.currentView = skView
         }
-        self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(1))
     }
 }
