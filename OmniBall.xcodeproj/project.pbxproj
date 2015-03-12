@@ -196,6 +196,7 @@
 		115403151AAFC9ED000B2BA2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */,
 				FF53011F1A7D43A300F04937 /* GameScene.swift */,
 				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
 				113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */,
@@ -218,6 +219,25 @@
 				FFCFFFF41AAE165C006FAE44 /* Level0.sks */,
 			);
 			name = Maps;
+			sourceTree = "<group>";
+		};
+		119AF3CE1AB1463700CD5C3C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FF6C10851A670BED00A5C7D7 /* GameViewController.swift */,
+				113329A61AB0CDA2008B46A2 /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		119AF3CF1AB1466700CD5C3C /* OmniBallUtil */ = {
+			isa = PBXGroup;
+			children = (
+				66D5BDF61A79BF2000A34A42 /* Message.swift */,
+				119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */,
+				3C7E84301A91052700212817 /* Set.swift */,
+			);
+			name = OmniBallUtil;
 			sourceTree = "<group>";
 		};
 		11A57C621A9681A000C695E7 /* Entities */ = {
@@ -313,22 +333,18 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				119AF3CF1AB1466700CD5C3C /* OmniBallUtil */,
+				119AF3CE1AB1463700CD5C3C /* Controller */,
 				115403151AAFC9ED000B2BA2 /* Scenes */,
 				118BB02D1AAF8625005B1718 /* Maps */,
 				11A57C621A9681A000C695E7 /* Entities */,
-				3C7E84301A91052700212817 /* Set.swift */,
-				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
-				FF6C10851A670BED00A5C7D7 /* GameViewController.swift */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
+				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
 				FF6C10451A6572FB00A5C7D7 /* Main.storyboard */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,
 				FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */,
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
-				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
-				119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */,
-				119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */,
-				113329A61AB0CDA2008B46A2 /* ViewController.swift */,
 			);
 			path = OmniBall;
 			sourceTree = "<group>";

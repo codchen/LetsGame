@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -15,7 +15,33 @@
                     <view key="view" contentMode="scaleToFill" id="Xd1-zx-XLf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMC-cI-gXQ">
+                                <rect key="frame" x="117" y="217" width="166" height="166"/>
+                                <state key="normal" image="singleButton.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showTutorial:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="nWc-Vs-C4d"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BZ-hn-5Cx">
+                                <rect key="frame" x="317" y="217" width="166" height="166"/>
+                                <state key="normal" image="multiButton.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="UOs-bX-Sl7"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="fMC-cI-gXQ" secondAttribute="centerX" constant="100" id="5Xe-DK-H4C"/>
+                            <constraint firstAttribute="centerY" secondItem="9BZ-hn-5Cx" secondAttribute="centerY" id="RxV-5q-Zlp"/>
+                            <constraint firstAttribute="centerY" secondItem="fMC-cI-gXQ" secondAttribute="centerY" id="bTp-1I-3DZ"/>
+                            <constraint firstAttribute="centerX" secondItem="9BZ-hn-5Cx" secondAttribute="centerX" constant="-100" id="sCR-mG-JJh"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxg-kz-ACf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -62,10 +88,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="380" y="198"/>
         </scene>
     </scenes>
     <resources>
         <image name="300x300_button_battle.png" width="300" height="300"/>
         <image name="300x300_button_connect.png" width="300" height="300"/>
+        <image name="multiButton.png" width="166" height="166"/>
+        <image name="singleButton.png" width="166" height="166"/>
     </resources>
 </document>
