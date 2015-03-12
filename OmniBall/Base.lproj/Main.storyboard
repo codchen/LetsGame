@@ -60,8 +60,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-Yy-Hd7">
-                                <rect key="frame" x="16" y="150" width="300" height="300"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-Yy-Hd7">
+                                <rect key="frame" x="20" y="160" width="280" height="280"/>
                                 <state key="normal" image="300x300_button_connect.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -69,8 +69,8 @@
                                     <action selector="connect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lgp-ob-xdh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
-                                <rect key="frame" x="309" y="150" width="300" height="300"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
+                                <rect key="frame" x="300" y="160" width="280" height="280"/>
                                 <state key="normal" image="300x300_button_battle.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -81,6 +81,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
+                            <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
                             <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" id="spz-Zf-jzg"/>
                         </constraints>
