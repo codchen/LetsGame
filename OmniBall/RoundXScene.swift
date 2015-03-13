@@ -25,7 +25,19 @@ class RoundXScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        let label = SKLabelNode(text: "Round: " + String(roundNum))
+        
+        let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
+        background.anchorPoint = CGPointZero
+        background.position = CGPointZero
+        addChild(background)
+        
+        var label: SKLabelNode!
+        if roundNum < connection.maxRoundNum {
+            label = SKLabelNode(text: "Round: " + String(roundNum))
+        } else if roundNum == connection.maxRoundNum {
+            label = SKLabelNode(text: "Final Round")
+        }
+
         label.fontName = "Chalkduster"
         label.fontSize = 200
         label.fontColor = UIColor.whiteColor()

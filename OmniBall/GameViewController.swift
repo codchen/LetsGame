@@ -81,6 +81,7 @@ class GameViewController: UIViewController {
     func transitToRoundX(roundNum: Int){
         dispatch_async(dispatch_get_main_queue()) {
             let scene = RoundXScene(size: CGSize(width: 2048, height: 1536), roundNum: roundNum)
+            scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager
             scene.controller = self
             if self.currentView == nil {

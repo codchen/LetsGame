@@ -129,14 +129,14 @@ class MyNodes: Player {
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
         if selectedNode.name!.hasPrefix("neutral"){
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: false))
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
         } else {
             selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
         }
         selectedNode = node
         
         if isSlave {
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, isSelected: true))
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, true))
         } else {
             selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
         }
