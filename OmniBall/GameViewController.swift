@@ -68,7 +68,7 @@ class GameViewController: UIViewController {
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.connectionManager.maxPlayer > 1 {
-                self.transitToWaitForStart()
+                self.transitToRoundX(1)
                 if self.connectionManager.gameState == .WaitingForMatch {
                     self.connectionManager.generateRandomNumber()
                 }
@@ -78,10 +78,11 @@ class GameViewController: UIViewController {
         }
     }
 	
-    func transitToWaitForStart(){
+    func transitToRoundX(roundNum: Int){
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-            
+            let scene = RoundXScene(size: CGSize(width: 2048, height: 1536), roundNum: roundNum)
+            scene.connection = self.connectionManager
+            scene.controller = self
             if self.currentView == nil {
                 let skView = SKView(frame: self.view.frame)
                 // Configure the view.
@@ -108,8 +109,8 @@ class GameViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
 //            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
             let scene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
-            scene.currentLevel = self.currentLevel
-            scene.slaveNum = self.currentLevel + 1
+//            scene.currentLevel = self.currentLevel
+//            scene.slaveNum = self.currentLevel + 1
             scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager
             if self.currentView == nil {

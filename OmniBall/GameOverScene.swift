@@ -45,33 +45,27 @@ class GameOverScene: SKScene {
         label.position = CGPointMake(size.width/2, size.height/2)
         addChild(label)
         
-//        restartBtn = SKSpriteNode(imageNamed: "restart")
-//        restartBtn.name = "restart"
-//        restartBtn.position = CGPoint(x: size.width - 500, y: 500)
-//        
-//        nextLevelBtn = SKSpriteNode(imageNamed: "circle")
-//        nextLevelBtn.setScale(2.0)
-//        nextLevelBtn.name = "nextLevel"
-//        nextLevelBtn.position = CGPoint(x: size.width - 800, y: 500)
-//        
-//        addChild(restartBtn)
-//        addChild(nextLevelBtn)
-        
-        let wait = SKAction.waitForDuration(1.5)
+        let wait = SKAction.waitForDuration(1)
         let block = SKAction.runBlock {
-//            let myScene = GameScene.unarchiveFromFile("Level" + String(self.currentLevel)) as GameScene
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            if self.connection.playerID == 0 {
-//                let myScene = LeaderBoardScene(size: self.size)
-                let myScene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
-                myScene.scaleMode = self.scaleMode
-                myScene.connection = self.connection
-                self.view?.presentScene(myScene, transition: reveal)
-            } else {
-                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-            	scene.scaleMode = self.scaleMode
-                self.view?.presentScene(scene, transition: reveal)
-            }
+            let myScene = LeaderBoardScene(size: self.size)
+            myScene.scaleMode = self.scaleMode
+            myScene.connection = self.connection
+            myScene.controller = self.controller
+            self.view?.presentScene(myScene, transition: reveal)
+
+//            let myScene = GameScene.unarchiveFromFile("Level" + String(self.currentLevel)) as GameScene
+//            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+//            if self.connection.playerID == 0 {
+//                let myScene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
+//                myScene.scaleMode = self.scaleMode
+//                myScene.connection = self.connection
+//                self.view?.presentScene(myScene, transition: reveal)
+//            } else {
+//                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
+//            	scene.scaleMode = self.scaleMode
+//                self.view?.presentScene(scene, transition: reveal)
+//            }
         }
         self.runAction(SKAction.sequence([wait, block]))
         

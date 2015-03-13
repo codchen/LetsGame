@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */; };
+		11174ECF1AB299FB006013D7 /* RoundXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11174ECE1AB299FB006013D7 /* RoundXScene.swift */; };
 		1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124FB601AB216470060A1B2 /* TutorialOverScene.swift */; };
 		113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */; };
 		113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A61AB0CDA2008B46A2 /* ViewController.swift */; };
@@ -94,6 +96,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 600x200_leaderboard.png; sourceTree = "<group>"; };
+		11174ECE1AB299FB006013D7 /* RoundXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundXScene.swift; sourceTree = "<group>"; };
 		1124FB601AB216470060A1B2 /* TutorialOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOverScene.swift; sourceTree = "<group>"; };
 		113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
 		113329A61AB0CDA2008B46A2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */,
 				113329AC1AB0D109008B46A2 /* TutorialScene.swift */,
 				1124FB601AB216470060A1B2 /* TutorialOverScene.swift */,
+				11174ECE1AB299FB006013D7 /* RoundXScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				113329AE1AB0D5A2008B46A2 /* multiButton@2x.png */,
+				11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */,
 				113329AF1AB0D5A2008B46A2 /* singleButton@2x.png */,
 				118584A51AB0998C002622F8 /* 200x200_button_next.png */,
 				118584A61AB0998C002622F8 /* 200x200_button_replay.png */,
@@ -474,6 +480,7 @@
 				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,
 				118584891AB098C0002622F8 /* 80x80_blue_star.png in Resources */,
+				11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				1185849C1AB0996F002622F8 /* 80x80_red_ball_filled.png in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
@@ -518,6 +525,7 @@
 			files = (
 				66F8668E1A6F0B72007EE9FF /* SKColor+Extensions.swift in Sources */,
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
+				11174ECF1AB299FB006013D7 /* RoundXScene.swift in Sources */,
 				66F8668C1A6F0B72007EE9FF /* SKAction+Extensions.swift in Sources */,
 				66D5BDF71A79BF2000A34A42 /* Message.swift in Sources */,
 				11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */,

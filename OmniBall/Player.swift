@@ -80,31 +80,6 @@ class Player: NSObject {
         
     }
     
-    func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
-        if !isSelected {
-            switch playerColor {
-            case .Green:
-                return "80x80_green_ball"
-            case .Red:
-                return "80x80_red_ball"
-            case .Yellow:
-                return "80x80_yellow_ball"
-            case .Blue:
-                return "80x80_blue_ball"
-            }
-        } else {
-            switch playerColor {
-            case .Green:
-                return "80x80_green_ball_filled"
-            case .Red:
-                return "80x80_red_ball_filled"
-            case .Yellow:
-                return "80x80_yellow_ball_filled"
-            case .Blue:
-                return "80x80_blue_ball_filled"
-            }
-        }
-    }
     
     func getSlaveImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
         if !isSelected {

@@ -33,6 +33,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
     var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
     var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
+    var roundNum = 1
+    var maxRoundNum = 5
     
     
     override init() {
@@ -172,14 +174,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 
     }
     
-    func transitToGameScene(){
-        if self.playerID == 0 {
-            controller.transitToGame(CGPointZero, rotate: 1)
-        } else {
-            controller.transitToWaitForStart()
-        }
-    }
-    
     func gameOver(){
         playerID = 0
         randomNumbers.removeAll(keepCapacity: false)
@@ -275,7 +269,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
             sendThirdTrip(delta[peersInGame[peerID]!]!, peer: peerID)
             if (delta.count == maxPlayer - 1) {
-                transitToGameScene()
+                controller.transitToRoundX(roundNum)
             }
             
         } else if message.messageType == MessageType.ThirdTrip {
@@ -284,7 +278,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (delta.count == maxPlayer - 1) {
-                transitToGameScene()
+                controller.transitToRoundX(roundNum)
             }
             
         } else if message.messageType == MessageType.Dead{
