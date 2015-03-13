@@ -24,6 +24,7 @@ class ViewController: UIViewController {
             skView.showsNodeCount = true
             skView.showsPhysics = true
             
+            scene.controller = self
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = false

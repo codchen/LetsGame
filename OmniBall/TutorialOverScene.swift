@@ -13,6 +13,7 @@ class TutorialOverScene: SKScene {
     
     var btnAgain: SKSpriteNode!
     var btnNext: SKSpriteNode!
+    var controller: ViewController!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -51,9 +52,11 @@ class TutorialOverScene: SKScene {
                 options: UIViewAnimationOptions.TransitionFlipFromBottom,
                 animations: {
             		self.view!.removeFromSuperview()
+                    self.controller.currentView = nil
             	}, completion: nil)
         } else if btnAgain.containsPoint(loc) {
             let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
+            scene.controller = controller
             scene.scaleMode = scaleMode
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             view?.presentScene(scene, transition: reveal)

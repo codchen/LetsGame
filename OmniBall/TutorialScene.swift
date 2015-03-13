@@ -79,6 +79,7 @@ class TutorialScene: GameScene {
     override func gameOver(#won: Bool) {
         tapLabel.removeAllActions()
         let tutorialOverScene = TutorialOverScene(size: self.size)
+        tutorialOverScene.controller = controller
         tutorialOverScene.scaleMode = scaleMode
 //        tutorialOverScene.controller = self.controller
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
