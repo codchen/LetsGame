@@ -76,6 +76,7 @@ class LeaderBoardScene: SKScene {
         let myId = Int(connection.playerID)
         let myScore = connection.scoreBoard[myId]
         if myName.hasSuffix("'s iPhone") {
+            println("Have we done this?")
             for var index = 0; index < countElements(myName); ++index {
                 let i = advance(myName.startIndex, index)
                 if myName[i] == "'" {
@@ -156,6 +157,26 @@ class LeaderBoardScene: SKScene {
             btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
             btnAgain.position = CGPoint(x: size.width - 500, y: 400)
             addChild(btnAgain)
+        }
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        if btnNext != nil && btnAgain != nil {
+            if btnNext.containsPoint(loc) {
+                connection.gameOver()
+                UIView.transitionWithView(view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.controller.currentView = nil
+                    }, completion: nil)
+            } else if btnAgain.containsPoint(loc) {
+                connection.gameOver()
+                connection.generateRandomNumber()
+                controller.transitToRoundX(1)
+            }
         }
     }
     
