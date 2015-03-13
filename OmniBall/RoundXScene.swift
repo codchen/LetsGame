@@ -48,10 +48,7 @@ class RoundXScene: SKScene {
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             if self.connection.playerID == 0 {
-                let myScene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
-                myScene.scaleMode = self.scaleMode
-                myScene.connection = self.connection
-                self.view?.presentScene(myScene, transition: reveal)
+                self.controller.transitToGame(CGPointZero, rotate: 1)
             }
         }
         self.runAction(SKAction.sequence([wait, block]))

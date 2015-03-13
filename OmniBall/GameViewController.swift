@@ -45,6 +45,7 @@ class GameViewController: UIViewController {
     
     var currentView: SKView!
     var currentGameScene: GameScene!
+    var inRoundXScene: Bool = false
 
     
     var currentLevel = 0
@@ -68,7 +69,7 @@ class GameViewController: UIViewController {
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.connectionManager.maxPlayer > 1 {
-                self.transitToRoundX(1)
+                self.transitToRoundX(self.connectionManager.roundNum)
                 if self.connectionManager.gameState == .WaitingForMatch {
                     self.connectionManager.generateRandomNumber()
                 }
@@ -80,29 +81,32 @@ class GameViewController: UIViewController {
 	
     func transitToRoundX(roundNum: Int){
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = RoundXScene(size: CGSize(width: 2048, height: 1536), roundNum: roundNum)
-            scene.scaleMode = .AspectFill
-            scene.connection = self.connectionManager
-            scene.controller = self
-            if self.currentView == nil {
-                let skView = SKView(frame: self.view.frame)
-                // Configure the view.
-                self.view.addSubview(skView)
-                skView.showsFPS = true
-                skView.showsNodeCount = true
-                skView.showsPhysics = true
-                
-                
-                /* Sprite Kit applies additional optimizations to improve rendering performance */
-                skView.ignoresSiblingOrder = false
-                skView.shouldCullNonVisibleNodes = false
-                
-                /* Set the scale mode to scale to fit the window */
+            if !self.inRoundXScene {
+                let scene = RoundXScene(size: CGSize(width: 2048, height: 1536), roundNum: roundNum)
                 scene.scaleMode = .AspectFill
-                
-                self.currentView = skView
+                scene.connection = self.connectionManager
+                scene.controller = self
+                if self.currentView == nil {
+                    let skView = SKView(frame: self.view.frame)
+                    // Configure the view.
+                    self.view.addSubview(skView)
+                    skView.showsFPS = true
+                    skView.showsNodeCount = true
+                    skView.showsPhysics = true
+                    
+                    
+                    /* Sprite Kit applies additional optimizations to improve rendering performance */
+                    skView.ignoresSiblingOrder = false
+                    skView.shouldCullNonVisibleNodes = false
+                    
+                    /* Set the scale mode to scale to fit the window */
+                    scene.scaleMode = .AspectFill
+                    
+                    self.currentView = skView
+                }
+                self.inRoundXScene = true
+                self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
             }
-            self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
         }
     }
     
@@ -134,6 +138,7 @@ class GameViewController: UIViewController {
                 scene.destRotation = rotate
             }
             self.currentGameScene = scene
+            self.inRoundXScene = false
             self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
         }
         
