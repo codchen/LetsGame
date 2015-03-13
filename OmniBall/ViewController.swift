@@ -37,5 +37,11 @@ class ViewController: UIViewController {
         self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(1))
     }
     
+    @IBAction func showGVC(sender: UIButton) {
+    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        self.presentViewController(gameViewController, animated: true, completion: nil)
+        
+    }
+    
     
 }
