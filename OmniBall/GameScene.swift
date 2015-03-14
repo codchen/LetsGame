@@ -85,6 +85,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         size = CGSize(width: 2048, height: 1536)
         
+        let maxAspectRatio: CGFloat = 16.0/9.0
+        let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
+        let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
+        margin = playableMargin
+        let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
+        
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
@@ -95,8 +101,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-        setupDestination()
-        setupNeutral()
+        if (connection.playerID == 0){
+            setupDestination(true)
+            setupNeutral(true)
+        }
+        else{
+            setupDestination(false)
+            setupNeutral(false)
+        }
         
         setupHUD()
         /* Setup your scene here */
@@ -109,21 +121,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        destination.fillColor = UIColor.lightGrayColor()
 //        destination.zPosition = -10
 //        addChild(destination)
-        let maxAspectRatio: CGFloat = 16.0/9.0
-        let maxAspectRatioHeight: CGFloat = size.width / maxAspectRatio
-        let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
-        margin = playableMargin
-        let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
     }
     
-    func setupDestination(){
+    func setupDestination(origin: Bool){
         
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
+        destPointer.physicsBody!.allowsRotation = false
+        destPointer.physicsBody!.dynamic = false
+        destPointer.physicsBody!.pinned = false
         destHeart = SKShapeNode(circleOfRadius: 180)
         destHeart.zPosition = -10
         
-        if connection.playerID == 0 {
+        if origin {
             let topWall = childNodeWithName("barTop") as SKSpriteNode
             let bottomWall = childNodeWithName("barBottom") as SKSpriteNode
             let leftWall = childNodeWithName("barLeft") as SKSpriteNode
@@ -216,15 +226,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hudLayer.addChild(scoreLabel)
     }
     
-    func setupNeutral(){
-        var node1: SKSpriteNode!
-        enumerateChildNodesWithName("neutral*"){node, _ in
-            node1 = node as SKSpriteNode
-            node1.physicsBody?.restitution = 1
-            node1.physicsBody?.linearDamping = 0
-            node1.physicsBody?.categoryBitMask = physicsCategory.target
-            node1.physicsBody?.contactTestBitMask = physicsCategory.Me
-            self.neutralBalls[node1.name!] = NeutralBall(node: node1, lastCapture: 0)
+    func setupNeutral(origin: Bool){
+        for var i = 0; i < slaveNum; ++i{
+            var node = SKSpriteNode(imageNamed: "80x80_orange_star")
+            node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
+            node.name = "neutral" + String(i)
+            node.physicsBody!.restitution = 1
+            node.physicsBody!.linearDamping = 0
+            node.physicsBody!.categoryBitMask = physicsCategory.target
+            node.physicsBody!.contactTestBitMask = physicsCategory.Me
+            if origin{
+                node.position = randomPos()
+                connection.sendNeutralInit(index: i, position: node.position)
+            }
+            addChild(node)
+            neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
+            println("\(node.position.x), \(node.position.y)\n")
         }
     }
     
@@ -324,11 +341,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func randomPos() -> CGPoint{
-        return CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 200, max: size.height - 2 * margin - 200))
+        var result: CGPoint = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
+        while (destHeart.containsPoint(result)){
+            result = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
+        }
+        return result
     }
     
     func update_peer_dead_reckoning(){
 		opponentsWrapper.update_peer_dead_reckoning()
+    }
+    
+    func scored(){
+        connection.sendPaused()
+        physicsWorld.speed = 0
+        setupDestination(true)
+        setupNeutral(true)
     }
 
     override func update(currentTime: CFTimeInterval) {

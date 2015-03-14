@@ -98,6 +98,7 @@ class MyNodes: Player {
                 decapture(slave.node)
                 slave.node.removeFromParent()
                 sendDead(UInt16(index))
+                scene.scored()
             }
         }
     }
@@ -119,7 +120,7 @@ class MyNodes: Player {
         }
         
         if isSelected {
-            if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
+            if closeEnough(location, selectedNode.position, CGFloat(500)) == true{
                 launchPoint = location
                 launchTime = NSDate()
             }
@@ -128,18 +129,18 @@ class MyNodes: Player {
     }
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
-        if selectedNode.name!.hasPrefix("neutral"){
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
-        } else {
-            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
-        }
+//        if selectedNode.name!.hasPrefix("neutral"){
+//            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
+//        } else {
+//            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
+//        }
         selectedNode = node
         
-        if isSlave {
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, true))
-        } else {
-            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
-        }
+//        if isSlave {
+//            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, true))
+//        } else {
+//            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
+//        }
         
         isSelected = true
         
@@ -156,7 +157,7 @@ class MyNodes: Player {
         		offset.x = offset.x * maxSpeed
        		 	offset.y = offset.y * maxSpeed
        	 	}
-        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 1.5, dy: offset.y / 1.5)
+        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2.5, dy: offset.y / 2.5)
         	launchTime = nil
             launchPoint = nil
         	sendMove()
