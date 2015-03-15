@@ -40,6 +40,7 @@ class LeaderBoardScene: SKScene {
     override func didMoveToView(view: SKView) {
         connection = controller.connectionManager
         connection.gameState = .WaitingForMatch
+        self.connection.gameMode = .None
         
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero

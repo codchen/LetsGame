@@ -69,13 +69,15 @@ class GameViewController: UIViewController {
     }
     
     func transitToGame(name: String) {
-        if connectionManager.gameState == .WaitingForMatch {
-            self.connectionManager.generateRandomNumber()
-        }
         if name == "BattleArena"  {
             connectionManager.gameMode = .BattleArena
+            println("\(connectionManager.gameMode == .BattleArena)")
         } else if name == "HiveMaze" {
             connectionManager.gameMode = .HiveMaze
+            println("\(connectionManager.gameMode == .HiveMaze)")
+        }
+        if connectionManager.gameState == .WaitingForMatch {
+            self.connectionManager.generateRandomNumber()
         }
     }
     

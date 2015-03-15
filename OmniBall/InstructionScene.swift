@@ -31,8 +31,10 @@ class InstructionScene: SKScene {
         var label: SKLabelNode!
         switch connection.gameMode {
         case .BattleArena:
+            println("BattleArena")
             label = SKLabelNode(text: "Collect FIVE Stars to Win!")
         case .HiveMaze:
+            println("HiveMaze")
             label = SKLabelNode(text: "Collect Stars to Win!")
         default:
             return
