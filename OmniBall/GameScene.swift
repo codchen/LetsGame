@@ -40,8 +40,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
     
+    // Game Play
+    let maxSucessNodes = 5
+    var slaveNum: Int = 1
+    var remainingSlave: Int = 1
+    
     //let bound: CGFloat = 2733
-    var destination: SKShapeNode!
     var scrollDirection: ScrollDirection!
     var scrolling = false
     var anchorPointVel = CGVector(dx: 0, dy: 0)
@@ -80,7 +84,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
-    var slaveNum = 1
     let scoreLabel: SKLabelNode = SKLabelNode()
 
     
@@ -94,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         
+        remainingSlave = slaveNum
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
@@ -106,15 +110,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupNeutral()
         if connection.gameMode == GameMode.BattleArena {
             enableBackgroundMove = false
-            if (connection.playerID == 0){
-                setupDestination(true)
-            }
-            else {
-                setupDestination(false)
-            }
         } else {
             enableBackgroundMove = true
         }
+        
+        
+        if (connection.playerID == 0){
+            setupDestination(true)
+        }
+        else {
+            setupDestination(false)
+        }
+        
         setupHUD()
         
         /* Setup your scene here */
@@ -186,7 +193,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkPosValid(nodeToCheck: SKNode, isNeutral: Bool) -> Bool {
         
         var isValid = true
-        
         enumerateChildNodesWithName("node*"){ node, _ in
             if nodeToCheck.intersectsNode(node) {
                 isValid = false
@@ -262,12 +268,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.physicsBody!.linearDamping = 0
             node.physicsBody!.categoryBitMask = physicsCategory.target
             node.physicsBody!.contactTestBitMask = physicsCategory.Me
-            println("we should have done this one more time")
-            println(node.name)
             addChild(node)
             neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
-            println("\(node.position.x), \(node.position.y)")
-            println("\(node.zPosition), \(zPosition)")
         }
     }
     
@@ -381,15 +383,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func scored(){
         connection.sendPause()
         paused()
+        remainingSlave--
         setupNeutral()
         setupDestination(true)
     }
 
     override func update(currentTime: CFTimeInterval) {
         
-//        if !gameOver {
-//            checkGameOver()
-//        }
+        if !gameOver {
+            checkGameOver()
+        }
         
         performScheduledCapture()
         myNodes.checkOutOfBound()
@@ -532,6 +535,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
         opponentsWrapper.deleteOpponentSlave(peerPlayerID, message: message)
+        remainingSlave--
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
@@ -543,7 +547,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func checkGameOver() {
-        if myNodes.successNodes == (slaveNum - 1) / 3 + 1 {
+        if myNodes.successNodes == self.maxSucessNodes {
             gameOver = true
             connection.sendGameOver()
             gameOver(won: true)

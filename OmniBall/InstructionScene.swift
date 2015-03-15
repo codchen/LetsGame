@@ -1,25 +1,22 @@
 //
-//  RoundXScene.swift
+//  InstructionScene.swift
 //  OmniBall
 //
-//  Created by Fang on 3/12/15.
+//  Created by Fang on 3/14/15.
 //  Copyright (c) 2015 Xiaoyu Chen. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class RoundXScene: SKScene {
-    
+class InstructionScene: SKScene {
     var controller: GameViewController!
     var connection: ConnectionManager!
-    var roundNum: Int!
     
-    init(size: CGSize, roundNum: Int) {
+    override init(size: CGSize) {
         super.init(size: size)
-        self.roundNum = roundNum
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -32,26 +29,38 @@ class RoundXScene: SKScene {
         addChild(background)
         
         var label: SKLabelNode!
-        if roundNum < connection.maxRoundNum {
-            label = SKLabelNode(text: "Round: " + String(roundNum))
-        } else if roundNum == connection.maxRoundNum {
-            label = SKLabelNode(text: "Final Round")
+        switch connection.gameMode {
+        case .BattleArena:
+            label = SKLabelNode(text: "Collect FIVE Stars to Win!")
+        case .HiveMaze:
+            label = SKLabelNode(text: "Collect Stars to Win!")
+        default:
+            return
         }
-
+        
+        
         label.fontName = "Chalkduster"
-        label.fontSize = 200
+        label.fontSize = 120
         label.fontColor = UIColor.whiteColor()
         label.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(label)
         
-        let wait = SKAction.waitForDuration(1)
+        let wait = SKAction.waitForDuration(3)
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            if self.connection.playerID == 0 {
-//                self.controller.transitToGame(CGPointZero, rotate: 1)
+            switch self.connection.gameMode {
+            case .BattleArena:
+                if self.connection.playerID == 0{
+                    self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
+                }
+            case .HiveMaze:
+                self.controller.transitToHiveMaze()
+            default:
+                return
             }
+                
         }
         self.runAction(SKAction.sequence([wait, block]))
     }
-    
+
 }

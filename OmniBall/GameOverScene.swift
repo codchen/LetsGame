@@ -53,19 +53,6 @@ class GameOverScene: SKScene {
             myScene.connection = self.connection
             myScene.controller = self.controller
             self.view?.presentScene(myScene, transition: reveal)
-
-//            let myScene = GameScene.unarchiveFromFile("Level" + String(self.currentLevel)) as GameScene
-//            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-//            if self.connection.playerID == 0 {
-//                let myScene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
-//                myScene.scaleMode = self.scaleMode
-//                myScene.connection = self.connection
-//                self.view?.presentScene(myScene, transition: reveal)
-//            } else {
-//                let scene = WaitingForGameStartScene(size: CGSize(width: 2048, height: 1536))
-//            	scene.scaleMode = self.scaleMode
-//                self.view?.presentScene(scene, transition: reveal)
-//            }
         }
         self.runAction(SKAction.sequence([wait, block]))
         

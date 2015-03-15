@@ -34,8 +34,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
     var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
     var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
-    var roundNum = 1
-    var maxRoundNum = 5
+    var maxLevel = 5
     
     
     override init() {
@@ -195,7 +194,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         peersInGame.removeAll(keepCapacity: false)
         delta.removeAll(keepCapacity: false)
         scoreBoard.removeAll(keepCapacity: false)
-        roundNum = 1
     }
     
     func browserViewControllerDidFinish(

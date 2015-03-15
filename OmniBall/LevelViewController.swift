@@ -19,9 +19,9 @@ class LevelViewController: UIViewController {
         
     }
     
-    
-    
     @IBAction func showHiveMaze(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        gameViewController.transitToGame("HiveMaze")
     }
     
 }

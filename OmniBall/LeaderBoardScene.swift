@@ -75,33 +75,11 @@ class LeaderBoardScene: SKScene {
         var myName = connection.peerID.displayName
         let myId = Int(connection.playerID)
         let myScore = connection.scoreBoard[myId]
-//        println(myName)
-//        if myName.hasSuffix("'s iPhone") {
-//            println("Have we done this?")
-//            for var index = 0; index < countElements(myName); ++index {
-//                let i = advance(myName.startIndex, index)
-//                if myName[i] == "'" {
-//                    println("done it!")
-//                    myName = myName.substringToIndex(i)
-//                    println(myName)
-//                    break
-//                }
-//            }
-//        }
 
         score.append(PlayerScore(name: myName, score: myScore!, id: myId))
         
         for (mcId, playerId) in connection.peersInGame {
             var playerName = mcId.displayName
-//            if playerName.hasSuffix("'s iPhone") {
-//                for var index = 0; index < countElements(playerName); ++index {
-//                    let i = advance(playerName.startIndex, index)
-//                    if playerName[i] == "'" {
-//                        playerName = playerName.substringToIndex(i)
-//                        break
-//                    }
-//                }
-//            }
             let playerScore = connection.scoreBoard[playerId]
             score.append(PlayerScore(name: playerName, score: playerScore!, id: playerId))
         }
@@ -126,7 +104,6 @@ class LeaderBoardScene: SKScene {
             name.position = CGPoint(x: lblPlayer.position.x,
                 y: lblPlayer.position.y - CGFloat(index + 1) * 100)
             name.horizontalAlignmentMode = .Center
-//            name.verticalAlignmentMode = .Bottom
             addChild(name)
             for var star = 0; star < player.score; ++star {
                 let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: player.id)!, false))
@@ -135,26 +112,28 @@ class LeaderBoardScene: SKScene {
             }
         }
         
-        connection.roundNum++
+        connection.gameOver()
         
-        if connection.roundNum <= connection.maxRoundNum {
-            let wait = SKAction.waitForDuration(4.0)
-            let block = SKAction.runBlock {
-//                self.controller.transitToRoundX(self.connection.roundNum)
-            }
-            self.runAction(SKAction.sequence([wait, block]))
-        } else {
-            
-            connection.gameOver()
-
-            btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
-            btnNext.position = CGPoint(x: size.width - 300, y: 400)
-            addChild(btnNext)
-            
-            btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
-            btnAgain.position = CGPoint(x: size.width - 500, y: 400)
-            addChild(btnAgain)
-        }
+        btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
+        btnNext.position = CGPoint(x: size.width - 300, y: 400)
+        addChild(btnNext)
+        
+        btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
+        btnAgain.position = CGPoint(x: size.width - 500, y: 400)
+        addChild(btnAgain)
+        
+//        connection.roundNum++
+//        
+//        if connection.roundNum <= connection.maxRoundNum {
+//            let wait = SKAction.waitForDuration(4.0)
+//            let block = SKAction.runBlock {
+////                self.controller.transitToRoundX(self.connection.roundNum)
+//            }
+//            self.runAction(SKAction.sequence([wait, block]))
+//        } else {
+//            
+//
+//        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

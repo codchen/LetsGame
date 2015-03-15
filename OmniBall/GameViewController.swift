@@ -143,7 +143,7 @@ class GameViewController: UIViewController {
     
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = GameScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameScene
+            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
         	scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel + 1
             scene.scaleMode = .AspectFill
