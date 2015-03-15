@@ -52,7 +52,6 @@ class MyNodes: Player {
                 selectedNode = players[0]
             }
             slaves[target.name!] = nil
-            println("\(self.id) successfully decaptured \(target.name!)")
         }
     }
     
@@ -80,12 +79,6 @@ class MyNodes: Player {
     }
     
     func checkOutOfBound(){
-//        for var i = 0; i < count; ++i{
-//            if isOutOfBound(players[i], scene.bound){
-//                players[i].physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-//                players[i].position = bornPos[i]
-//            }
-//        }
         
         for (name, slave) in slaves {
             if slave.node.intersectsNode(scene.destHeart) {

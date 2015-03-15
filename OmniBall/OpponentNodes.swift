@@ -149,7 +149,6 @@ class OpponentNodes: Player {
         if slaves[target.name!] != nil {
             slaves[target.name!] = nil
             slaveSpecs.delete(target.name!)
-            println("\(self.id) successfully decaptured \(target.name!)")
         }
     }
     

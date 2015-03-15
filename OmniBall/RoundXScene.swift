@@ -48,7 +48,7 @@ class RoundXScene: SKScene {
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             if self.connection.playerID == 0 {
-                self.controller.transitToGame(CGPointZero, rotate: 1)
+//                self.controller.transitToGame(CGPointZero, rotate: 1)
             }
         }
         self.runAction(SKAction.sequence([wait, block]))

@@ -10,6 +10,7 @@
 		11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */; };
 		11174ECF1AB299FB006013D7 /* RoundXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11174ECE1AB299FB006013D7 /* RoundXScene.swift */; };
 		1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124FB601AB216470060A1B2 /* TutorialOverScene.swift */; };
+		112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D92101AB4887200FCF399 /* LevelViewController.swift */; };
 		113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */; };
 		113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A61AB0CDA2008B46A2 /* ViewController.swift */; };
 		113329AB1AB0D0C9008B46A2 /* Tutorial.sks in Resources */ = {isa = PBXBuildFile; fileRef = 113329AA1AB0D0C9008B46A2 /* Tutorial.sks */; };
@@ -48,6 +49,7 @@
 		11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C691A96871800C695E7 /* OpponentsWrapper.swift */; };
 		11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 11B79C4F1A9D8F8E0035D4E1 /* wall.png */; };
 		11BF7FC11AB1E190002C7371 /* 200x200_hole.png in Resources */ = {isa = PBXBuildFile; fileRef = 11BF7FC01AB1E190002C7371 /* 200x200_hole.png */; };
+		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		3C7E84311A91052700212817 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E84301A91052700212817 /* Set.swift */; };
 		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
@@ -99,6 +101,7 @@
 		11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 600x200_leaderboard.png; sourceTree = "<group>"; };
 		11174ECE1AB299FB006013D7 /* RoundXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundXScene.swift; sourceTree = "<group>"; };
 		1124FB601AB216470060A1B2 /* TutorialOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOverScene.swift; sourceTree = "<group>"; };
+		112D92101AB4887200FCF399 /* LevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
 		113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
 		113329A61AB0CDA2008B46A2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		113329AA1AB0D0C9008B46A2 /* Tutorial.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tutorial.sks; sourceTree = "<group>"; };
@@ -136,6 +139,7 @@
 		11A57C691A96871800C695E7 /* OpponentsWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentsWrapper.swift; sourceTree = "<group>"; };
 		11B79C4F1A9D8F8E0035D4E1 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
 		11BF7FC01AB1E190002C7371 /* 200x200_hole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 200x200_hole.png; sourceTree = "<group>"; };
+		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		3C7E84301A91052700212817 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 				113329AC1AB0D109008B46A2 /* TutorialScene.swift */,
 				1124FB601AB216470060A1B2 /* TutorialOverScene.swift */,
 				11174ECE1AB299FB006013D7 /* RoundXScene.swift */,
+				11F828A51AB527E800E25D3F /* InstructionScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			children = (
 				FF6C10851A670BED00A5C7D7 /* GameViewController.swift */,
 				113329A61AB0CDA2008B46A2 /* ViewController.swift */,
+				112D92101AB4887200FCF399 /* LevelViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -524,6 +530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66F8668E1A6F0B72007EE9FF /* SKColor+Extensions.swift in Sources */,
+				11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */,
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
 				11174ECF1AB299FB006013D7 /* RoundXScene.swift in Sources */,
 				66F8668C1A6F0B72007EE9FF /* SKAction+Extensions.swift in Sources */,
@@ -548,6 +555,7 @@
 				3C7E84311A91052700212817 /* Set.swift in Sources */,
 				113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */,
 				11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */,
+				112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				113329AD1AB0D109008B46A2 /* TutorialScene.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,

@@ -22,7 +22,7 @@ class TutorialScene: GameScene {
         connection = ConnectionManager()
         connection.assistant.stop()
         myNodes = MyNodes(connection: connection, scene: self)
-        setupDestination()
+        setupDestination(true)
         setupNeutral()
         setupHUD()
         setUpAction()
@@ -37,7 +37,7 @@ class TutorialScene: GameScene {
         
     }
     
-    override func setupDestination() {
+    override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
         destHeart = SKShapeNode(circleOfRadius: 180)

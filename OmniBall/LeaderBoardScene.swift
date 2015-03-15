@@ -140,7 +140,7 @@ class LeaderBoardScene: SKScene {
         if connection.roundNum <= connection.maxRoundNum {
             let wait = SKAction.waitForDuration(4.0)
             let block = SKAction.runBlock {
-                self.controller.transitToRoundX(self.connection.roundNum)
+//                self.controller.transitToRoundX(self.connection.roundNum)
             }
             self.runAction(SKAction.sequence([wait, block]))
         } else {
@@ -170,7 +170,7 @@ class LeaderBoardScene: SKScene {
                     }, completion: nil)
             } else if btnAgain.containsPoint(loc) {
                 connection.generateRandomNumber()
-                controller.transitToRoundX(connection.roundNum)
+//                controller.transitToRoundX(connection.roundNum)
             }
         }
     }
