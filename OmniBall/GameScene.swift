@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var updateDest: Bool = false
     
     // Game Play
-    let maxSucessNodes = 5
+    var maxSucessNodes = 5
     var slaveNum: Int = 1
     var remainingSlave: Int = 1
     

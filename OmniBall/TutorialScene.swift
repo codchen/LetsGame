@@ -22,6 +22,8 @@ class TutorialScene: GameScene {
         connection = ConnectionManager()
         connection.assistant.stop()
         myNodes = MyNodes(connection: connection, scene: self)
+        enableBackgroundMove = false
+        maxSucessNodes = 1
         setupDestination(true)
         setupNeutral()
         setupHUD()
@@ -44,6 +46,7 @@ class TutorialScene: GameScene {
         destHeart.fillColor = UIColor.blackColor()
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
+        addChild(destHeart)
     }
     
     func setUpAction(){
@@ -77,7 +80,7 @@ class TutorialScene: GameScene {
             tapLabel.name = "tap"
             tapLabel.position = CGPoint(x: 900, y: 400)
         
-            let text = "Swipe to Hit the Star"
+            let text = "Swipe Your Ball to Hit the Star"
             tapLabel.text = text
             tapLabel.setScale(0)
             addChild(tapLabel)
@@ -144,6 +147,23 @@ class TutorialScene: GameScene {
                     neutralBalls[target.name!]?.lastCapture = now
                     connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
+    }
+    
+    override func setupNeutral() {
+        
+        var node = childNodeWithName("neutral0") as SKSpriteNode
+        node.size = CGSize(width: 110, height: 110)
+        node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
+        node.physicsBody!.restitution = 1
+        node.physicsBody!.linearDamping = 0
+        node.physicsBody!.categoryBitMask = physicsCategory.target
+        node.physicsBody!.contactTestBitMask = physicsCategory.Me
+        neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
+        
+    }
+    
+    override func scored() {
+        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
