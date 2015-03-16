@@ -24,6 +24,7 @@ class LeaderBoardScene: SKScene {
     
     var btnAgain: SKSpriteNode!
     var btnNext: SKSpriteNode!
+    var btnShow: SKLabelNode!
     var controller: GameViewController!
     var connection: ConnectionManager!
     var currentLevel = 0
@@ -125,6 +126,10 @@ class LeaderBoardScene: SKScene {
         btnAgain.position = CGPoint(x: size.width - 500, y: 400)
         addChild(btnAgain)
         
+        btnShow = SKLabelNode(text: "Next")
+        btnShow.position = CGPoint(x: 500, y: 400)
+        addChild(btnShow)
+        
 //        connection.roundNum++
 //        
 //        if connection.roundNum <= connection.maxRoundNum {
@@ -160,6 +165,11 @@ class LeaderBoardScene: SKScene {
                 }
                 connection.generateRandomNumber()
 //                controller.transitToRoundX(connection.roundNum)
+            } else if btnShow.containsPoint(loc) {
+                let scene = PresentScene.unarchiveFromFilePresent("Level2") as PresentScene
+                scene.controller = controller
+                scene.scaleMode = scaleMode
+                view!.presentScene(scene)
             }
         }
     }

@@ -32,6 +32,9 @@ class MyNodes: Player {
         score = connection.scoreBoard[Int(self.id)]!
         setUpPlayers(color)
         selectedNode = players[0]
+        for player in players{
+            player.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
+        }
     }
     
     override func addPlayer(node: SKSpriteNode) {
@@ -53,6 +56,11 @@ class MyNodes: Player {
             }
             slaves[target.name!] = nil
         }
+    }
+    
+    override func capture(target: SKSpriteNode, capturedTime: NSTimeInterval) {
+        super.capture(target, capturedTime: capturedTime)
+        target.texture = SKTexture(imageNamed: getSlaveImageName(color!, true))
     }
     
 //    override func checkDead(){

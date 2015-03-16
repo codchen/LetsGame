@@ -20,7 +20,7 @@ class GameLevelScene: GameScene {
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
         destHeart = childNodeWithName("destHeart") as SKShapeNode
-        destHeart = SKShapeNode(circleOfRadius: 180)
+        destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
         addChild(destHeart)
@@ -52,7 +52,8 @@ class GameLevelScene: GameScene {
         self.remainingSlave--
         if remainingSlave == 0 {
             checkGameOver()
-            if (gameOver == false){
+            println("\(connection.controller.currentLevel)")
+            if (gameOver == false && connection.controller.currentLevel < maxLevel - 1){
                 connection.sendPause()
                 paused()
             }

@@ -138,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
         destHeart = childNodeWithName("destHeart") as SKShapeNode
-        destHeart = SKShapeNode(circleOfRadius: 180)
+        destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.zPosition = -10
         let neutral = childNodeWithName("neutral0") as SKSpriteNode
         
@@ -381,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func readyGo(){
         var label = SKSpriteNode(imageNamed: "400x200_ready")
-        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 300)
+        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
         addChild(label)
         let action1 = SKAction.scaleTo(4, duration: 0.7)
         let block1 = SKAction.runBlock{
