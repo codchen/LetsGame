@@ -125,6 +125,7 @@ class OpponentNodes: Player {
             decapture(node)
             node.removeFromParent()
             deleteIndex = -1
+            scene.addHudStars(self.id)
         }
     }
     

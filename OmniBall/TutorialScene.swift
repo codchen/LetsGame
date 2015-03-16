@@ -13,7 +13,7 @@ class TutorialScene: GameScene {
     
     let tapLabel = SKLabelNode()
     var flashAction: SKAction!
-    var hadFirstSelect: Bool = false
+//    var hadFirstSelect: Bool = false
     var hadFirstStarSelect: Bool = false
     var hadFirstCapture: Bool = false
     var controller: ViewController!
@@ -22,6 +22,8 @@ class TutorialScene: GameScene {
         connection = ConnectionManager()
         connection.assistant.stop()
         myNodes = MyNodes(connection: connection, scene: self)
+        enableBackgroundMove = false
+        maxSucessNodes = 1
         setupDestination(true)
         setupNeutral()
         setupHUD()
@@ -33,7 +35,7 @@ class TutorialScene: GameScene {
         let playableMargin: CGFloat = (size.height - maxAspectRatioHeight) / 2
         margin = playableMargin
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
-        tapToSelect()
+        swipeToHitStar()
         
     }
     
@@ -44,29 +46,49 @@ class TutorialScene: GameScene {
         destHeart.fillColor = UIColor.blackColor()
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
+        addChild(destHeart)
     }
     
     func setUpAction(){
         flashAction = SKAction.sequence([SKAction.scaleTo(1.2, duration: 0.5), SKAction.scaleTo(1.0, duration: 0.6)])
     }
     
-    func tapToSelect(){
-        tapLabel.fontColor = UIColor.whiteColor()
-        tapLabel.fontName = "Chalkduster"
-        tapLabel.fontSize = 60
-        tapLabel.horizontalAlignmentMode = .Center
-        tapLabel.name = "tap"
-        tapLabel.position = CGPoint(x: 878, y: 618)
+//    func tapToSelect(){
+//        tapLabel.fontColor = UIColor.whiteColor()
+//        tapLabel.fontName = "Chalkduster"
+//        tapLabel.fontSize = 60
+//        tapLabel.horizontalAlignmentMode = .Center
+//        tapLabel.name = "tap"
+//        tapLabel.position = CGPoint(x: 878, y: 618)
+//    
+//        let text = "Tap to select the ball"
+//        tapLabel.text = text
+//        tapLabel.setScale(0)
+//        addChild(tapLabel)
+//        let wait = SKAction.waitForDuration(0.2)
+//        let block = SKAction.runBlock {
+//            self.tapLabel.setScale(1)
+//        }
+//		tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
+//    }
     
-        let text = "Tap to select the ball"
-        tapLabel.text = text
-        tapLabel.setScale(0)
-        addChild(tapLabel)
-        let wait = SKAction.waitForDuration(0.2)
-        let block = SKAction.runBlock {
-            self.tapLabel.setScale(1)
-        }
-		tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
+    func swipeToHitStar(){
+            tapLabel.fontColor = UIColor.whiteColor()
+            tapLabel.fontName = "Chalkduster"
+            tapLabel.fontSize = 60
+            tapLabel.horizontalAlignmentMode = .Center
+            tapLabel.name = "tap"
+            tapLabel.position = CGPoint(x: 900, y: 400)
+        
+            let text = "Swipe Your Ball to Hit the Star"
+            tapLabel.text = text
+            tapLabel.setScale(0)
+            addChild(tapLabel)
+            let wait = SKAction.waitForDuration(0.2)
+            let block = SKAction.runBlock {
+                self.tapLabel.setScale(1)
+            }
+            tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -109,7 +131,7 @@ class TutorialScene: GameScene {
                     hunter.capture(target, capturedTime: now)
                     assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")
                     if !hadFirstCapture {
-                        let text = "Tap to select the star"
+                        let text = "Swipe on the star"
                         tapLabel.removeAllActions()
                         tapLabel.setScale(0)
                         tapLabel.text = text
@@ -127,24 +149,28 @@ class TutorialScene: GameScene {
         }
     }
     
+    override func setupNeutral() {
+        
+        var node = childNodeWithName("neutral0") as SKSpriteNode
+        node.size = CGSize(width: 110, height: 110)
+        node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
+        node.physicsBody!.restitution = 1
+        node.physicsBody!.linearDamping = 0
+        node.physicsBody!.categoryBitMask = physicsCategory.target
+        node.physicsBody!.contactTestBitMask = physicsCategory.Me
+        neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
+        
+    }
+    
+    override func scored() {
+        
+    }
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         myNodes.touchesBegan(loc)
-        if !hadFirstSelect && myNodes.isSelected{
-            let text = "Swipe to hit the star"
-			tapLabel.removeAllActions()
-            tapLabel.setScale(0)
-            tapLabel.text = text
-            tapLabel.position = CGPoint(x: 900, y: 400)
-            let wait = SKAction.waitForDuration(0.2)
-            let block = SKAction.runBlock {
-                self.tapLabel.setScale(1)
-            }
-            tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
-            hadFirstSelect = true
-        } else if hadFirstSelect &&
-            !hadFirstStarSelect && myNodes.selectedNode.name!.hasPrefix("neutral") {
+		if !hadFirstStarSelect && myNodes.selectedNode.name!.hasPrefix("neutral") {
             let text = "Bring it into the ring"
             tapLabel.removeAllActions()
             tapLabel.setScale(0)
