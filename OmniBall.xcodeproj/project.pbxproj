@@ -81,6 +81,11 @@
 		FF6C106A1A65807500A5C7D7 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */; };
 		FF6C10871A670BED00A5C7D7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10851A670BED00A5C7D7 /* GameViewController.swift */; };
 		FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */; };
+		FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00001AB677BA006FAE44 /* 400x200_go.png */; };
+		FFCF00051AB677BA006FAE44 /* 400x200_ready.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00011AB677BA006FAE44 /* 400x200_ready.png */; };
+		FFCF00061AB677BA006FAE44 /* blue_star_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00021AB677BA006FAE44 /* blue_star_filled.png */; };
+		FFCF00071AB677BA006FAE44 /* blue_star.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00031AB677BA006FAE44 /* blue_star.png */; };
+		FFCF00091AB72699006FAE44 /* PresentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF00081AB72699006FAE44 /* PresentScene.swift */; };
 		FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF41AAE165C006FAE44 /* Level0.sks */; };
 		FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF81AAE16A3006FAE44 /* Level2.sks */; };
 		FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */; };
@@ -176,6 +181,11 @@
 		FF6C10691A65807500A5C7D7 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		FF6C10851A670BED00A5C7D7 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		FFCF00001AB677BA006FAE44 /* 400x200_go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 400x200_go.png; sourceTree = "<group>"; };
+		FFCF00011AB677BA006FAE44 /* 400x200_ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 400x200_ready.png; sourceTree = "<group>"; };
+		FFCF00021AB677BA006FAE44 /* blue_star_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_star_filled.png; sourceTree = "<group>"; };
+		FFCF00031AB677BA006FAE44 /* blue_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_star.png; sourceTree = "<group>"; };
+		FFCF00081AB72699006FAE44 /* PresentScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentScene.swift; sourceTree = "<group>"; };
 		FFCFFFF41AAE165C006FAE44 /* Level0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level0.sks; path = ../Maps/Level0.sks; sourceTree = "<group>"; };
 		FFCFFFF61AAE1683006FAE44 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level1.sks; path = ../Maps/Level1.sks; sourceTree = "<group>"; };
 		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = ../Maps/Level2.sks; sourceTree = "<group>"; };
@@ -215,6 +225,7 @@
 				1124FB601AB216470060A1B2 /* TutorialOverScene.swift */,
 				11174ECE1AB299FB006013D7 /* LevelXScene.swift */,
 				11F828A51AB527E800E25D3F /* InstructionScene.swift */,
+				FFCF00081AB72699006FAE44 /* PresentScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -268,6 +279,10 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FFCF00001AB677BA006FAE44 /* 400x200_go.png */,
+				FFCF00011AB677BA006FAE44 /* 400x200_ready.png */,
+				FFCF00021AB677BA006FAE44 /* blue_star_filled.png */,
+				FFCF00031AB677BA006FAE44 /* blue_star.png */,
 				113329AE1AB0D5A2008B46A2 /* multiButton@2x.png */,
 				11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */,
 				113329AF1AB0D5A2008B46A2 /* singleButton@2x.png */,
@@ -472,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
+				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
@@ -489,6 +505,7 @@
 				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,
 				118584891AB098C0002622F8 /* 80x80_blue_star.png in Resources */,
+				FFCF00061AB677BA006FAE44 /* blue_star_filled.png in Resources */,
 				11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				1185849C1AB0996F002622F8 /* 80x80_red_ball_filled.png in Resources */,
@@ -502,10 +519,12 @@
 				113329AB1AB0D0C9008B46A2 /* Tutorial.sks in Resources */,
 				118584A21AB0997D002622F8 /* 80x80_yellow_ball_filled.png in Resources */,
 				11BF7FC11AB1E190002C7371 /* 200x200_hole.png in Resources */,
+				FFCF00071AB677BA006FAE44 /* blue_star.png in Resources */,
 				118584911AB09923002622F8 /* 80x80_green_star_filled.png in Resources */,
 				118584A41AB0997D002622F8 /* 80x80_yellow_star.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
+				FFCF00051AB677BA006FAE44 /* 400x200_ready.png in Resources */,
 				118584881AB098C0002622F8 /* 80x80_blue_star_filled.png in Resources */,
 				118584B11AB0998C002622F8 /* 700x200_you_lose.png in Resources */,
 				118584B21AB0998C002622F8 /* 700x200_you_win.png in Resources */,
@@ -550,6 +569,7 @@
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
+				FFCF00091AB72699006FAE44 /* PresentScene.swift in Sources */,
 				113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */,
 				119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */,
 				11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */,

@@ -49,6 +49,14 @@ class GameOverScene: SKScene {
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             let myScene = LeaderBoardScene(size: self.size)
+            switch self.connection.gameMode {
+            case .BattleArena:
+                myScene.gameType = "BattleArena"
+            case .HiveMaze:
+                myScene.gameType = "HiveMaze"
+            default:
+                return
+            }
             myScene.scaleMode = self.scaleMode
             myScene.connection = self.connection
             myScene.controller = self.controller

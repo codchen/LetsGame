@@ -46,7 +46,7 @@ class GameViewController: UIViewController {
     var currentView: SKView!
     var currentGameScene: GameScene!
     
-    var currentLevel = 0
+    var currentLevel = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()

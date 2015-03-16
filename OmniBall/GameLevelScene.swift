@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameLevelScene: GameScene {
     
-    let maxLevel: Int = 5
+    let maxLevel: Int = 2
     
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
@@ -23,6 +23,7 @@ class GameLevelScene: GameScene {
         destHeart = SKShapeNode(circleOfRadius: 180)
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
+        addChild(destHeart)
     }
     
     override func setupNeutral() {
@@ -39,7 +40,7 @@ class GameLevelScene: GameScene {
     }
     
     override func checkGameOver() {
-        var scoreToWin = Float((1 + slaveNum) * maxLevel) * 0.5/3
+        var scoreToWin = (Float((1 + slaveNum) * maxLevel) * 0.5 + 1) / 2
         if remainingSlave == 0 && Float(myNodes.score) >= scoreToWin {
             gameOver = true
             connection.sendGameOver()
@@ -50,13 +51,22 @@ class GameLevelScene: GameScene {
     override func scored() {
         self.remainingSlave--
         if remainingSlave == 0 {
-            paused()
-            let levelScene = LevelXScene(size: self.size, level: currentLevel++)
-            levelScene.scaleMode = self.scaleMode
-            levelScene.controller = connection.controller
-            levelScene.connection = connection
-            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            view?.presentScene(levelScene, transition: reveal)
+            checkGameOver()
+            if (gameOver == false){
+                connection.sendPause()
+                paused()
+            }
         }
+    }
+    
+    override func paused(){
+        physicsWorld.speed = 0
+        currentLevel++
+        let levelScene = LevelXScene(size: self.size, level: currentLevel)
+        levelScene.scaleMode = self.scaleMode
+        levelScene.controller = connection.controller
+        levelScene.connection = connection
+        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        view?.presentScene(levelScene, transition: reveal)
     }
 }

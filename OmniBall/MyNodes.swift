@@ -98,7 +98,7 @@ class MyNodes: Player {
     
     func touchesBegan(location: CGPoint) {
     	for node in players {
-            if node.containsPoint(location){
+            if closeEnough(location, node.position, CGFloat(250)) == true{
                 touchesBeganHelper(node, location: location, isSlave: false)
                 break
             }
@@ -113,7 +113,7 @@ class MyNodes: Player {
         }
         
         if isSelected {
-            if closeEnough(location, selectedNode.position, CGFloat(500)) == true{
+            if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
                 launchPoint = location
                 launchTime = NSDate()
             }
@@ -150,7 +150,7 @@ class MyNodes: Player {
         		offset.x = offset.x * maxSpeed
        		 	offset.y = offset.y * maxSpeed
        	 	}
-        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2.5, dy: offset.y / 2.5)
+        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2, dy: offset.y / 2)
         	launchTime = nil
             launchPoint = nil
         	sendMove()

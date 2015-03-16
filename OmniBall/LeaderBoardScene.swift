@@ -27,6 +27,7 @@ class LeaderBoardScene: SKScene {
     var controller: GameViewController!
     var connection: ConnectionManager!
     var currentLevel = 0
+    var gameType: String!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -38,6 +39,7 @@ class LeaderBoardScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
+        controller.currentLevel = -1
         connection = controller.connectionManager
         connection.gameState = .WaitingForMatch
         self.connection.gameMode = .None
@@ -149,6 +151,13 @@ class LeaderBoardScene: SKScene {
                         self.controller.currentView = nil
                     }, completion: nil)
             } else if btnAgain.containsPoint(loc) {
+                if gameType == "BattleArena"{
+                    self.connection.gameMode = .BattleArena
+                }
+                else if gameType == "HiveMaze"{
+                    self.connection.gameMode = .HiveMaze
+                    
+                }
                 connection.generateRandomNumber()
 //                controller.transitToRoundX(connection.roundNum)
             }

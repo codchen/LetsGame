@@ -155,7 +155,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
             connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
-            self.physicsWorld.speed = 1
             println(destRect)
             println(destPointer.size)
             debugDrawPlayableArea()
@@ -380,12 +379,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.speed = 0
     }
     
+    func readyGo(){
+        var label = SKSpriteNode(imageNamed: "400x200_ready")
+        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 300)
+        addChild(label)
+        let action1 = SKAction.scaleTo(4, duration: 0.7)
+        let block1 = SKAction.runBlock{
+            label.texture = SKTexture(imageNamed: "400x200_go")
+            self.physicsWorld.speed = 1
+        }
+        let action2 = SKAction.waitForDuration(0.5)
+        let block2 = SKAction.runBlock{
+            label.removeFromParent()
+        }
+        label.runAction(SKAction.sequence([action1, block1, action2, block2]))
+        
+//        let ready = SKSpriteNode(imageNamed: "400x200_ready")
+//        ready.position = CGPoint(x: size.width / 2, y: size.height / 2)
+//        ready.name = "ready"
+//        let go = SKSpriteNode(imageNamed: "400x200_go")
+//        go.position = CGPoint(x: size.width / 2, y: size.height / 2)
+//        go.setScale(4)
+//        let block1 = SKAction.runBlock{
+//            self.addChild(ready)
+//        }
+//        let action1 = SKAction.runBlock{
+//            ready.runAction(SKAction.scaleTo(4, duration: 1))
+//        }
+//        let block2 = SKAction.runBlock{
+//            ready.removeFromParent()
+//            self.addChild(go)
+//            self.physicsWorld.speed = 1
+//        }
+//        let action2 = SKAction.waitForDuration(0.5)
+//        let block3 = SKAction.runBlock{
+//            go.removeFromParent()
+//        }
+//        runAction(SKAction.sequence([block1, action1]))
+    }
+    
     func scored(){
         connection.sendPause()
         paused()
         remainingSlave--
         setupNeutral()
         setupDestination(true)
+        readyGo()
     }
 
     override func update(currentTime: CFTimeInterval) {
@@ -398,10 +437,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.checkOutOfBound()
         opponentsWrapper.checkDead()
         if updateDest {
-            self.physicsWorld.speed = 1
             setupNeutral()
             setupDestination(false)
             updateDest = false
+            readyGo()
         }
         moveAnchor()
     }

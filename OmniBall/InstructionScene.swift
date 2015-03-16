@@ -56,7 +56,12 @@ class InstructionScene: SKScene {
                     self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
                 }
             case .HiveMaze:
-                self.controller.transitToHiveMaze()
+                let levelScene = LevelXScene(size: self.size, level: 0)
+                levelScene.scaleMode = self.scaleMode
+                levelScene.controller = self.controller
+                levelScene.connection = self.connection
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view!.presentScene(levelScene, transition: reveal)
             default:
                 return
             }
