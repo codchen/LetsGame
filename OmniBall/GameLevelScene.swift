@@ -50,6 +50,7 @@ class GameLevelScene: GameScene {
     
     override func scored() {
         self.remainingSlave--
+        addHudStars(myNodes.id)
         if remainingSlave == 0 {
             checkGameOver()
             if (gameOver == false){

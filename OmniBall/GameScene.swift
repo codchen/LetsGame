@@ -85,8 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     let scoreLabel: SKLabelNode = SKLabelNode()
+    var collectedMinions: [Bool] = []
 
-    
+
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 2048, height: 1536)
@@ -241,20 +242,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
-        for var index = 0; index < slaveNum; ++index {
-            let minion = SKSpriteNode(imageNamed: "80x80_orange_star")
-            minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 25), y: size.height - 300)
-            minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
-            hudMinions.append(minion)
-            hudLayer.addChild(minion)
+        
+        for var i = 0; i < connection.maxPlayer; ++i {
+            var startPos: CGPoint!
+            if i == 0 {
+            	startPos = CGPoint(x: 100, y: size.height - 300)
+            } else if i == 1 {
+                startPos = CGPoint(x: size.width/2 - 250, y: size.height - 300)
+            } else if i == 2 {
+                startPos = CGPoint(x: size.width - 500, y: size.height - 300)
+            }
+            for var index = 0; index < 5; ++index {
+                let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
+                minion.position = startPos + CGPoint(x: CGFloat(index) * (minion.size.width), y: 0)
+//                minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 10), y: size.height - 300)
+                minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
+                hudMinions.append(minion)
+                hudLayer.addChild(minion)
+                collectedMinions.append(false)
+            }
         }
         
-        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
-        scoreLabel.fontSize = 60
-        scoreLabel.fontColor = SKColor.whiteColor()
-        scoreLabel.fontName = "Copperplate"
-        scoreLabel.text = "score: " + String(myNodes.score)
-        hudLayer.addChild(scoreLabel)
+        for (id, var score) in connection.scoreBoard {
+            while score > 0 {
+                addHudStars(UInt16(id))
+                score--
+            }
+        }
+       
+//        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
+//        scoreLabel.fontSize = 60
+//        scoreLabel.fontColor = SKColor.whiteColor()
+//        scoreLabel.fontName = "Copperplate"
+//        scoreLabel.text = "score: " + String(myNodes.score)
+//        hudLayer.addChild(scoreLabel)
     }
     
     func setupNeutral(){
@@ -316,7 +337,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hunter.capture(target, capturedTime: now)
             assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")
             
-            hudMinions[index].texture = target.texture
+//            hudMinions[index].texture = target.texture
             neutralBalls[target.name!]?.lastCapture = now
             connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
@@ -363,7 +384,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             opponentsWrapper.decapture(scheduleToCapture[0])
 //            let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
-            hudMinions[index].texture = scheduleToCapture[0].texture
+//            hudMinions[index].texture = scheduleToCapture[0].texture
             neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
@@ -419,12 +440,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scored(){
+        
+        addHudStars(myNodes.id)
         connection.sendPause()
         paused()
         remainingSlave--
         setupNeutral()
         setupDestination(true)
         readyGo()
+    }
+    
+    func addHudStars(id: UInt16) {
+        let player = getPlayerByID(id)!
+        var startIndex = 0
+        
+        if player.color == PlayerColors.Green {
+            startIndex = 0
+        } else if player.color == PlayerColors.Red {
+            startIndex = 5
+        } else {
+            startIndex = 10
+        }
+        
+        while collectedMinions[startIndex] {
+            startIndex++
+        }
+        
+        collectedMinions[startIndex] = true
+        hudMinions[startIndex].texture = SKTexture(imageNamed: getSlaveImageName(player.color, false))
     }
 
     override func update(currentTime: CFTimeInterval) {
