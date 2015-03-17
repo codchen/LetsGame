@@ -44,6 +44,7 @@
 		118BB02E1AAF890F005B1718 /* Level1.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF61AAE1683006FAE44 /* Level1.sks */; };
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
 		119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */; };
+		119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F18701AB7B751002A7EAA /* GameBattleScene.swift */; };
 		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
@@ -141,6 +142,7 @@
 		118BB02B1AAF821B005B1718 /* LevelTraining.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LevelTraining.sks; sourceTree = "<group>"; };
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
 		119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBallUtil.swift; sourceTree = "<group>"; };
+		119F18701AB7B751002A7EAA /* GameBattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBattleScene.swift; sourceTree = "<group>"; };
 		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */,
 				FF53011F1A7D43A300F04937 /* GameScene.swift */,
+				119F18701AB7B751002A7EAA /* GameBattleScene.swift */,
 				11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */,
 				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
 				113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */,
@@ -588,6 +591,7 @@
 				113329AD1AB0D109008B46A2 /* TutorialScene.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,
 				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
+				119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */,
 				FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

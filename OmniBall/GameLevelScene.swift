@@ -11,8 +11,6 @@ import SpriteKit
 
 class GameLevelScene: GameScene {
     
-    let maxLevel: Int = 2
-    
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
@@ -24,6 +22,39 @@ class GameLevelScene: GameScene {
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
         addChild(destHeart)
+    }
+    
+    override func setupHUD() {
+        let tempAnchor = anchorPoint
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        for var i = 0; i < connection.maxPlayer; ++i {
+            var startPos: CGPoint!
+            if i == 0 {
+                startPos = CGPoint(x: 100, y: size.height - 300)
+            } else if i == 1 {
+                startPos = CGPoint(x: size.width/2 - 250, y: size.height - 300)
+            } else if i == 2 {
+                startPos = CGPoint(x: size.width - 500, y: size.height - 300)
+            }
+            for var index = 0; index < 5; ++index {
+                let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
+                minion.position = startPos + CGPoint(x: CGFloat(index) * (minion.size.width), y: 0)
+                minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
+                hudMinions.append(minion)
+                hudLayer.addChild(minion)
+                collectedMinions.append(false)
+            }
+        }
+        
+        for (id, var score) in connection.scoreBoard {
+            while score > 0 {
+                addHudStars(UInt16(id))
+                score--
+            }
+        }
     }
     
     override func setupNeutral() {
@@ -39,9 +70,30 @@ class GameLevelScene: GameScene {
         }
     }
     
+    override func addHudStars(id: UInt16) {
+        let player = getPlayerByID(id)!
+        var startIndex = 0
+        
+        if player.color == PlayerColors.Green {
+            startIndex = 0
+        } else if player.color == PlayerColors.Red {
+            startIndex = 5
+        } else {
+            startIndex = 10
+        }
+        
+        while collectedMinions[startIndex] {
+            startIndex++
+        }
+        collectedMinions[startIndex] = true
+        hudMinions[startIndex].texture = SKTexture(imageNamed: getSlaveImageName(player.color, false))
+
+    }
+    
     override func checkGameOver() {
-        var scoreToWin = (Float((1 + slaveNum) * maxLevel) * 0.5 + 1) / 2
-        if remainingSlave == 0 && Float(myNodes.score) >= scoreToWin {
+        var scoreToWin = (Float((1 + slaveNum) * connection.maxLevel) * 0.5 + 1) / 2
+        if remainingSlave == 0 && Float(myNodes.score) >= scoreToWin
+            && currentLevel == connection.maxLevel {
             gameOver = true
             connection.sendGameOver()
             gameOver(won: true)
@@ -53,8 +105,7 @@ class GameLevelScene: GameScene {
         addHudStars(myNodes.id)
         if remainingSlave == 0 {
             checkGameOver()
-            println("\(connection.controller.currentLevel)")
-            if (gameOver == false && connection.controller.currentLevel < maxLevel - 1){
+            if (gameOver == false && connection.controller.currentLevel < connection.maxLevel){
                 connection.sendPause()
                 paused()
             }

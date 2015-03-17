@@ -34,7 +34,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
     var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
     var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
-    var maxLevel = 5
+    var maxLevel: Int = 5
     
     
     override init() {

@@ -143,7 +143,7 @@ class GameViewController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                let scene = GameScene.unarchiveFromFile("LevelTraining") as GameScene
+                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as GameBattleScene
                 scene.scaleMode = .AspectFill
                 scene.connection = self.connectionManager
                 if self.currentView == nil {
