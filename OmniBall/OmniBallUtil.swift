@@ -9,6 +9,23 @@
 import Foundation
 import SpriteKit
 
+struct nodeInfo {
+    var x: CGFloat
+    var y: CGFloat
+    var dx: CGFloat
+    var dy: CGFloat
+    var dt: CGFloat
+    var index: UInt16
+}
+
+enum PlayerColors: Int{
+    case Green = 0, Red, Blue, Yellow
+}
+
+enum ScrollDirection: Int{
+    case up = 0, down, left, right
+}
+
 func closeEnough(point1: CGPoint, point2: CGPoint, distance: CGFloat) -> Bool{
     let offset = point1.distanceTo(point2)
     if offset >= distance{

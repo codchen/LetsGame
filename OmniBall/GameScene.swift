@@ -10,23 +10,6 @@ import SpriteKit
 import MultipeerConnectivity
 import CoreMotion
 
-struct nodeInfo {
-    var x: CGFloat
-    var y: CGFloat
-    var dx: CGFloat
-    var dy: CGFloat
-    var dt: CGFloat
-    var index: UInt16
-}
-
-enum PlayerColors: Int{
-    case Green = 0, Red, Blue, Yellow
-}
-
-enum ScrollDirection: Int{
-    case up = 0, down, left, right
-}
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var margin: CGFloat!
@@ -46,16 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var remainingSlave: Int = 1
     
     //let bound: CGFloat = 2733
-    var scrollDirection: ScrollDirection!
     var scrolling = false
-    var anchorPointVel = CGVector(dx: 0, dy: 0)
-    var scrollingFrameDuration = CGFloat(30)
-    var scrollLaunchPoint: CGPoint!
-    
-    let initial_subscene_index = 12
-    var subscene_index = 12
-    let subscene_count_horizontal = 5
-    let subscene_count_vertical = 5
     
     // Opponents Setting
     var myNodes: MyNodes!
@@ -84,10 +58,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
-    let scoreLabel: SKLabelNode = SKLabelNode()
     var collectedMinions: [Bool] = []
 
-
+	
+    // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
         
         size = CGSize(width: 2048, height: 1536)
@@ -115,7 +89,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enableBackgroundMove = true
         }
         
-        
         if (connection.playerID == 0){
             setupDestination(true)
         }
@@ -126,7 +99,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setupHUD()
         
         /* Setup your scene here */
-
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
     }
@@ -158,86 +130,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
             println(destRect)
             println(destPointer.size)
-            debugDrawPlayableArea()
+//            debugDrawPlayableArea()
 
         }
         neutral.position = neutralPos
         destPointer.position = destPos
         destPointer.zRotation = destRotation
         destHeart.position = destPos
-        enumerateChildNodesWithName("neutral*"){ node, _ in
-        	println("\(node.name) is at \(node.position)")
-        }
-        
-        println("neutralBall at \(neutral.position)")
-        
-    }
-    
-    func randomDesPos() -> CGPoint {
-        
-        var pos = CGPointMake(
-            CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
-            CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
-        destHeart.position = pos
-        
-        while !checkPosValid(destHeart, isNeutral: false) {
-            pos = CGPointMake(
-                CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
-                CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
-            destHeart.position = pos
-        }
-        
-        return pos
-    }
-    
-    func checkPosValid(nodeToCheck: SKNode, isNeutral: Bool) -> Bool {
-        
-        var isValid = true
-        enumerateChildNodesWithName("node*"){ node, _ in
-            if nodeToCheck.intersectsNode(node) {
-                isValid = false
-            }
-        }
-        
-        if !isValid || (isValid && isNeutral){
-            return isValid
-        }
-        
-        enumerateChildNodesWithName("neutral*"){ node, _ in
-            println("CHECK CHECK \(node.name)")
-            if nodeToCheck.intersectsNode(node) {
-                println("Should be invalid")
-                isValid = false
-            }
-        }
-        return isValid
-    }
-    
-    func randomPos() -> CGPoint{
-        var result: CGPoint = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
-        
-        let neutral = childNodeWithName("neutral0")!
-        neutral.position = result
-        
-        while !checkPosValid(neutral, isNeutral: true) {
-            result = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
-            neutral.position = result
-        }
-        return result
-    }
-    
-    func debugDrawPlayableArea() {
-        let shape = SKShapeNode()
-        let path = CGPathCreateMutable()
-        CGPathAddRect(path, nil, destRect)
-        shape.path = path
-        shape.strokeColor = SKColor.redColor()
-        shape.lineWidth = 4.0
-        addChild(shape)
     }
     
     func setupHUD(){
-		let tempAnchor = getAnchorPoint()
+        let tempAnchor = anchorPoint
         hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
         hudLayer.zPosition = 5
         addChild(hudLayer)
@@ -246,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for var i = 0; i < connection.maxPlayer; ++i {
             var startPos: CGPoint!
             if i == 0 {
-            	startPos = CGPoint(x: 100, y: size.height - 300)
+                startPos = CGPoint(x: 100, y: size.height - 300)
             } else if i == 1 {
                 startPos = CGPoint(x: size.width/2 - 250, y: size.height - 300)
             } else if i == 2 {
@@ -255,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for var index = 0; index < 5; ++index {
                 let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
                 minion.position = startPos + CGPoint(x: CGFloat(index) * (minion.size.width), y: 0)
-//                minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 10), y: size.height - 300)
+                //                minion.position = CGPoint(x: 100 + CGFloat(index) * (minion.size.width + 10), y: size.height - 300)
                 minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
                 hudMinions.append(minion)
                 hudLayer.addChild(minion)
@@ -269,13 +172,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 score--
             }
         }
-       
-//        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
-//        scoreLabel.fontSize = 60
-//        scoreLabel.fontColor = SKColor.whiteColor()
-//        scoreLabel.fontName = "Copperplate"
-//        scoreLabel.text = "score: " + String(myNodes.score)
-//        hudLayer.addChild(scoreLabel)
+        
+        //        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
+        //        scoreLabel.fontSize = 60
+        //        scoreLabel.fontColor = SKColor.whiteColor()
+        //        scoreLabel.fontName = "Copperplate"
+        //        scoreLabel.text = "score: " + String(myNodes.score)
+        //        hudLayer.addChild(scoreLabel)
     }
     
     func setupNeutral(){
@@ -291,6 +194,64 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(node)
             neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
         }
+    }
+    
+    // Generate random position for neutral stars
+    func randomPos() -> CGPoint{
+        var result: CGPoint = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
+        let neutral = childNodeWithName("neutral0")!
+        neutral.position = result
+        while !checkPosValid(neutral, isNeutral: true) {
+            result = CGPoint(x: CGFloat.random(min: 200, max: size.width - 200), y: CGFloat.random(min: 0 + 400, max: size.height - 2 * margin - 500))
+            neutral.position = result
+        }
+        return result
+    }
+    
+    // Generate random position for destination node
+    func randomDesPos() -> CGPoint {
+        var pos = CGPointMake(
+            CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
+            CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+        destHeart.position = pos
+        
+        while !checkPosValid(destHeart, isNeutral: false) {
+            pos = CGPointMake(
+                CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
+                CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
+            destHeart.position = pos
+        }
+        return pos
+    }
+    
+    // Check whether the generated position is valid: AKA. no stars/balls in it
+    func checkPosValid(nodeToCheck: SKNode, isNeutral: Bool) -> Bool {
+        var isValid = true
+        enumerateChildNodesWithName("node*"){ node, _ in
+            if nodeToCheck.intersectsNode(node) {
+                isValid = false
+            }
+        }
+        if !isValid || (isValid && isNeutral){
+            return isValid
+        }
+        enumerateChildNodesWithName("neutral*"){ node, _ in
+            if nodeToCheck.intersectsNode(node) {
+                isValid = false
+            }
+        }
+        return isValid
+    }
+    
+	// MARK: Debugging code
+    func debugDrawPlayableArea() {
+        let shape = SKShapeNode()
+        let path = CGPathCreateMutable()
+        CGPathAddRect(path, nil, destRect)
+        shape.path = path
+        shape.strokeColor = SKColor.redColor()
+        shape.lineWidth = 4.0
+        addChild(shape)
     }
     
     func updateDestination(desPos: CGPoint, desRotation: CGFloat, starPos: CGPoint) {
@@ -382,7 +343,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
             opponentsWrapper.decapture(scheduleToCapture[0])
-//            let target = childNodeWithName("neutral\(scheduleToCapture[0])") as SKSpriteNode
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
             neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]
@@ -414,33 +374,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             label.removeFromParent()
         }
         label.runAction(SKAction.sequence([action1, block1, action2, block2]))
-        
-//        let ready = SKSpriteNode(imageNamed: "400x200_ready")
-//        ready.position = CGPoint(x: size.width / 2, y: size.height / 2)
-//        ready.name = "ready"
-//        let go = SKSpriteNode(imageNamed: "400x200_go")
-//        go.position = CGPoint(x: size.width / 2, y: size.height / 2)
-//        go.setScale(4)
-//        let block1 = SKAction.runBlock{
-//            self.addChild(ready)
-//        }
-//        let action1 = SKAction.runBlock{
-//            ready.runAction(SKAction.scaleTo(4, duration: 1))
-//        }
-//        let block2 = SKAction.runBlock{
-//            ready.removeFromParent()
-//            self.addChild(go)
-//            self.physicsWorld.speed = 1
-//        }
-//        let action2 = SKAction.waitForDuration(0.5)
-//        let block3 = SKAction.runBlock{
-//            go.removeFromParent()
-//        }
-//        runAction(SKAction.sequence([block1, action1]))
     }
     
     func scored(){
-        
         addHudStars(myNodes.id)
         connection.sendPause()
         paused()
@@ -465,17 +401,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         while collectedMinions[startIndex] {
             startIndex++
         }
-        
         collectedMinions[startIndex] = true
         hudMinions[startIndex].texture = SKTexture(imageNamed: getSlaveImageName(player.color, false))
     }
 
+	// MARK: Scene rendering cycle
     override func update(currentTime: CFTimeInterval) {
         
         if !gameOver {
             checkGameOver()
         }
-        
         performScheduledCapture()
         myNodes.checkOutOfBound()
         opponentsWrapper.checkDead()
@@ -485,7 +420,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             updateDest = false
             readyGo()
         }
-        moveAnchor()
     }
     
     override func didEvaluateActions() {
@@ -496,6 +430,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.sendMove()
     }
     
+    // MARK: Gestures
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
 
         let touch = touches.anyObject() as UITouch
@@ -520,6 +455,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        myNodes.touchesEnded(loc)
+    }
+    
     func checkBackgroundBond() {
         
         let oldAnchorPoint = anchorPoint
@@ -539,81 +480,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
 
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesEnded(loc)
-    }
-    
-    
-    func setSrollDirection(location: CGPoint) {
-        if location.y > (-anchorPoint.y * size.height + size.height - 300){
-            scrollDirection = .up
-        }
-        else if location.y < (-anchorPoint.y * size.height + 300){
-            scrollDirection = .down
-        }
-        else if location.x < (-anchorPoint.x * size.width + 300){
-            scrollDirection = .left
-        }
-        else if location.x > (-anchorPoint.x * size.width + size.width - 300){
-            scrollDirection = .right
-        }
-    }
-    
-    func scroll(direction: ScrollDirection){
-        switch direction{
-        case .up:
-            anchorPointVel.dy = -CGFloat(0.5) / scrollingFrameDuration
-        case .down:
-            anchorPointVel.dy = CGFloat(0.5) / scrollingFrameDuration
-        case .left:
-            anchorPointVel.dx = CGFloat(0.5) / scrollingFrameDuration
-        case .right:
-            anchorPointVel.dx = -CGFloat(0.5) / scrollingFrameDuration
-        default:
-            println("error")
-        }
-        scrolling = true
-        changeSubscene()
-    }
-    
-    func moveAnchor(){
-        if (scrollingFrameDuration > 0) && scrolling{
-            anchorPoint.x += anchorPointVel.dx
-            anchorPoint.y += anchorPointVel.dy
-            hudLayer.position.x += -anchorPointVel.dx * size.width
-            hudLayer.position.y += -anchorPointVel.dy * size.height
-            scrollingFrameDuration--
-        }
-        else if scrolling {
-            anchorPointVel = CGVector(dx: 0, dy: 0)
-            anchorPoint = getAnchorPoint()
-            scrolling = false
-            scrollingFrameDuration = CGFloat(30)
-            scrollDirection = nil
-        }
-    }
-    
-    func getAnchorPoint() -> CGPoint{
-        let subscene_offset = CGPoint(x: initial_subscene_index % subscene_count_horizontal, y: initial_subscene_index / subscene_count_horizontal)
-        return CGPoint(x: 0.5 * CGFloat(Int(subscene_offset.x) - subscene_index % subscene_count_horizontal), y: 0.5 * CGFloat(Int(subscene_offset.y) - subscene_index / subscene_count_horizontal))
-    }
-    
-    func changeSubscene(){
-        switch scrollDirection!{
-        case .up:
-            subscene_index += subscene_count_horizontal
-        case .down:
-            subscene_index -= subscene_count_horizontal
-        case .left:
-            subscene_index -= 1
-        case .right:
-            subscene_index += 1
-        default:
-            println("error")
-        }
-    }
+
     
     func deletePeerBalls(message: MessageDead, peerPlayerID: Int) {
         opponentsWrapper.deleteOpponentSlave(peerPlayerID, message: message)
@@ -622,10 +489,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
-    }
-    
-    func updateScore(){
-        scoreLabel.text = "score: " + String(myNodes.score)
     }
     
     func checkGameOver() {

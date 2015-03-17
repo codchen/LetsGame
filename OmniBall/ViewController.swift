@@ -20,9 +20,9 @@ class ViewController: UIViewController {
             let skView = SKView(frame: self.view.frame)
             // Configure the view.
             self.view.addSubview(skView)
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            skView.showsPhysics = true
+            skView.showsFPS = false
+            skView.showsNodeCount = false
+            skView.showsPhysics = false
             
             scene.controller = self
             

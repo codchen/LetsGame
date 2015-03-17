@@ -93,7 +93,6 @@ class MyNodes: Player {
                 successNodes += 1
                 score++
                 connection.scoreBoard[Int(id)]!++
-                scene.updateScore()
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 decapture(slave.node)
@@ -158,7 +157,7 @@ class MyNodes: Player {
         		offset.x = offset.x * maxSpeed
        		 	offset.y = offset.y * maxSpeed
        	 	}
-        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2, dy: offset.y / 2)
+        	selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2.3, dy: offset.y / 2.3)
         	launchTime = nil
             launchPoint = nil
         	sendMove()
