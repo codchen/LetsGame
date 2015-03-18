@@ -288,6 +288,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             sendThirdTrip(delta[peersInGame[peerID]!]!, peer: peerID)
             if (delta.count == maxPlayer - 1) {
 //                transitToGame(self.gameMode)
+                if controller.presentedViewController != nil{
+                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+                }
                 controller.transitToInstruction()
             }
             
@@ -298,6 +301,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (delta.count == maxPlayer - 1) {
 //                transitToGame(self.gameMode)
+                if controller.presentedViewController != nil{
+                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+                }
                 controller.transitToInstruction()
             }
             
