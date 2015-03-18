@@ -16,6 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var destPos: CGPoint!
     var neutralPos: CGPoint!
     var destRotation: CGFloat!
+    var destHeart: SKShapeNode!
     var destPointer: SKSpriteNode!
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
@@ -149,8 +150,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             assert(hunter.slaves[target.name!] == nil, "hunter is not nil before capture")
             hunter.capture(target, capturedTime: now)
             assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")
-            
-//            hudMinions[index].texture = target.texture
             neutralBalls[target.name!]?.lastCapture = now
             connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
@@ -159,10 +158,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func performScheduledCapture(){
         while scheduleToCapture.count > 0{
             //check if already captured
+            println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
             opponentsWrapper.decapture(scheduleToCapture[0])
+            assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
             neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]

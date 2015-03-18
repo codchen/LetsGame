@@ -12,8 +12,6 @@ import SpriteKit
 class GameBattleScene: GameScene {
     
     var destRect: CGRect!
-    var destHeart: SKShapeNode!
-
     
     override func setupDestination(origin: Bool){
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
@@ -56,16 +54,25 @@ class GameBattleScene: GameScene {
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
-        let totalSlaveNum = ((1 + slaveNum) * connection.maxLevel)/2
-        let startPos = CGPoint(x: 100, y: size.height - 300)
-        for var i = 0; i < totalSlaveNum; ++i {
-            let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
-            minion.position = startPos + CGPoint(x: CGFloat(i) * (minion.size.width), y: 0)
-            minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
-            hudMinions.append(minion)
-            hudLayer.addChild(minion)
-            collectedMinions.append(false)
+        for var i = 0; i < connection.maxPlayer; ++i {
+            var startPos: CGPoint!
+            if i == 0 {
+                startPos = CGPoint(x: 100, y: size.height - 300)
+            } else if i == 1 {
+                startPos = CGPoint(x: size.width/2 - 250, y: size.height - 300)
+            } else if i == 2 {
+                startPos = CGPoint(x: size.width - 500, y: size.height - 300)
+            }
+            for var index = 0; index < 5; ++index {
+                let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
+                minion.position = startPos + CGPoint(x: CGFloat(index) * (minion.size.width), y: 0)
+                minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
+                hudMinions.append(minion)
+                hudLayer.addChild(minion)
+                collectedMinions.append(false)
+            }
         }
+
     }
     
     override func setupNeutral() {
@@ -131,8 +138,17 @@ class GameBattleScene: GameScene {
     }
     
     override func addHudStars(id: UInt16) {
-        var startIndex = 0
         let player = getPlayerByID(id)!
+        var startIndex = 0
+        
+        if player.color == PlayerColors.Green {
+            startIndex = 0
+        } else if player.color == PlayerColors.Red {
+            startIndex = 5
+        } else {
+            startIndex = 10
+        }
+        
         while collectedMinions[startIndex] {
             startIndex++
         }
