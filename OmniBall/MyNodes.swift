@@ -52,6 +52,7 @@ class MyNodes: Player {
             if target == selectedNode {
 //                isSelected = false
                 selectedNode = players[0]
+                selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
             }
             slaves[target.name!] = nil
         }
