@@ -54,6 +54,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hudLayer: SKNode = SKNode()
     var collectedMinions: [Bool] = []
 
+    // special effect
+//    var emitterHalo: SKEmitterNode!
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
@@ -90,6 +92,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         setupHUD()
+        
+//        emitterHalo = SKEmitterNode(fileNamed: "ProtectionHalo.sks")
         
         /* Setup your scene here */
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)

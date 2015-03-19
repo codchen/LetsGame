@@ -37,8 +37,7 @@ class GameBattleScene: GameScene {
             destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
             connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
-            println(destRect)
-            println(destPointer.size)
+			println("Sent destination is \(destPos), neutralPos \(neutralPos)")
             //            debugDrawPlayableArea()
             
         }
@@ -46,6 +45,7 @@ class GameBattleScene: GameScene {
         destPointer.position = destPos
         destPointer.zRotation = destRotation
         destHeart.position = destPos
+        println("Actual destination is \(destPos), neutralPos \(neutralPos)")
     }
     
     override func setupHUD() {
@@ -110,6 +110,7 @@ class GameBattleScene: GameScene {
         destHeart.position = pos
         
         while !checkPosValid(destHeart, isNeutral: false) {
+            println("Invalid \(destHeart.position)")
             pos = CGPointMake(
                 CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
                 CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
@@ -130,7 +131,7 @@ class GameBattleScene: GameScene {
             return isValid
         }
         enumerateChildNodesWithName("neutral*"){ node, _ in
-            if nodeToCheck.intersectsNode(node) {
+            if nodeToCheck.position.distanceTo(node.position) <= self.destPointer.size.width {
                 isValid = false
             }
         }
@@ -165,9 +166,17 @@ class GameBattleScene: GameScene {
         connection.sendPause()
         paused()
         remainingSlave--
+        myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
+        cleanCapturedArrays()
         setupNeutral()
         setupDestination(true)
         readyGo()
+    }
+    
+    func cleanCapturedArrays(){
+        scheduleCaptureBy.removeAll(keepCapacity: false)
+        scheduleToCapture.removeAll(keepCapacity: false)
+        scheduleUpdateTime.removeAll(keepCapacity: false)
     }
     
     override func update(currentTime: CFTimeInterval) {

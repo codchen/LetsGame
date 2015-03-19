@@ -11,6 +11,8 @@
 		11174ECF1AB299FB006013D7 /* LevelXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11174ECE1AB299FB006013D7 /* LevelXScene.swift */; };
 		1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124FB601AB216470060A1B2 /* TutorialOverScene.swift */; };
 		112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D92101AB4887200FCF399 /* LevelViewController.swift */; };
+		113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 113063BF1ABB2B67006340AE /* ProtectionHalo.sks */; };
+		113063C21ABB2B67006340AE /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 113063C01ABB2B67006340AE /* spark.png */; };
 		113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */; };
 		113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A61AB0CDA2008B46A2 /* ViewController.swift */; };
 		113329AB1AB0D0C9008B46A2 /* Tutorial.sks in Resources */ = {isa = PBXBuildFile; fileRef = 113329AA1AB0D0C9008B46A2 /* Tutorial.sks */; };
@@ -110,6 +112,8 @@
 		11174ECE1AB299FB006013D7 /* LevelXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelXScene.swift; sourceTree = "<group>"; };
 		1124FB601AB216470060A1B2 /* TutorialOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOverScene.swift; sourceTree = "<group>"; };
 		112D92101AB4887200FCF399 /* LevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
+		113063BF1ABB2B67006340AE /* ProtectionHalo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ProtectionHalo.sks; sourceTree = "<group>"; };
+		113063C01ABB2B67006340AE /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
 		113329A61AB0CDA2008B46A2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		113329AA1AB0D0C9008B46A2 /* Tutorial.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tutorial.sks; sourceTree = "<group>"; };
@@ -266,6 +270,8 @@
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */,
 				3C7E84301A91052700212817 /* Set.swift */,
+				113063BF1ABB2B67006340AE /* ProtectionHalo.sks */,
+				113063C01ABB2B67006340AE /* spark.png */,
 			);
 			name = OmniBallUtil;
 			sourceTree = "<group>";
@@ -492,6 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
@@ -507,6 +514,7 @@
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
+				113063C21ABB2B67006340AE /* spark.png in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
 				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,

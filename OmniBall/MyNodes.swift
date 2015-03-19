@@ -15,7 +15,7 @@ class MyNodes: Player {
     var deadNodes:[Int] = []
     var successNodes: Int = 0
     var msgCount: UInt32 = 0
-    var isSelected: Bool = false
+//    var isSelected: Bool = false
     var selectedNode: SKSpriteNode!
     var launchTime: NSDate!
     var launchPoint: CGPoint!
@@ -32,9 +32,8 @@ class MyNodes: Player {
         score = connection.scoreBoard[Int(self.id)]!
         setUpPlayers(color)
         selectedNode = players[0]
-        for player in players{
-            player.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
-        }
+    	selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
+        
     }
     
     override func addPlayer(node: SKSpriteNode) {
@@ -51,7 +50,7 @@ class MyNodes: Player {
     override func decapture(target: SKSpriteNode) {
         if slaves[target.name!] != nil {
             if target == selectedNode {
-                isSelected = false
+//                isSelected = false
                 selectedNode = players[0]
             }
             slaves[target.name!] = nil
@@ -61,22 +60,13 @@ class MyNodes: Player {
     override func capture(target: SKSpriteNode, capturedTime: NSTimeInterval) {
         super.capture(target, capturedTime: capturedTime)
         target.texture = SKTexture(imageNamed: getSlaveImageName(color!, true))
+        if selectedNode.name!.hasPrefix("neutral"){
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
+        } else {
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
+        }
+        selectedNode = target
     }
-    
-//    override func checkDead(){
-//        for var index = 0; index < count; ++index{
-//            if withinBorder(players[index].position) == false{
-//                deadNodes.insert(index, atIndex: 0)
-//            }
-//        }
-//        for index in self.deadNodes{
-//            players[index].removeFromParent()
-//            deletePlayer(index)
-//            sendDead(UInt16(index))
-//        }
-//        
-//        deadNodes = []
-//    }
     
     override func setMasks(){
         scene.enumerateChildNodesWithName(sprite){node, _ in
@@ -120,37 +110,36 @@ class MyNodes: Player {
             }
         }
         
-        if isSelected {
+//        if isSelected {
             if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
                 launchPoint = location
                 launchTime = NSDate()
             }
-        }
+//        }
 
     }
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
-//        if selectedNode.name!.hasPrefix("neutral"){
-//            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
-//        } else {
-//            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
-//        }
+        if selectedNode.name!.hasPrefix("neutral"){
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
+        } else {
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
+        }
         selectedNode = node
         
-//        if isSlave {
-//            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, true))
-//        } else {
-//            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
-//        }
-        
-        isSelected = true
+        if isSlave {
+            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, true))
+        } else {
+            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
+        }
+//        isSelected = true
         
     }
 
     
     func touchesEnded(location: CGPoint){
         
-        if (isSelected && launchTime != nil && launchPoint != nil) {
+        if (launchTime != nil && launchPoint != nil) {
         	let now = NSDate()
         	var offset: CGPoint = (location - launchPoint)/CGFloat(now.timeIntervalSinceDate(launchTime!))
         	if offset.length() > maxSpeed{
