@@ -9,7 +9,7 @@
 import SpriteKit
 import MultipeerConnectivity
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, UIGestureRecognizerDelegate {
     
     var margin: CGFloat!
     let ballSize: CGFloat = 110
@@ -20,6 +20,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var destPointer: SKSpriteNode!
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
+    var priorPoint: CGPoint!
+    var backgroundWillMove: Bool = false
+    var mapNode: SKSpriteNode!
+
     
     // Game Play
     var maxSucessNodes = 5
@@ -55,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var collectedMinions: [Bool] = []
 
     // special effect
-//    var emitterHalo: SKEmitterNode!
+
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
@@ -93,7 +97,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         setupHUD()
         
-//        emitterHalo = SKEmitterNode(fileNamed: "ProtectionHalo.sks")
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: "longPressed:")
+        longPressGesture.minimumPressDuration = 0.15
+//        longPressGesture.numberOfTouchesRequired = 2
+        longPressGesture.delegate = self
+        view.addGestureRecognizer(longPressGesture)
+        
+		let backgroundPanGesture = UIPanGestureRecognizer(target: self, action: "moveBackground:")
+//        longPressGesture.minimumPressDuration = 0.2
+//        longPressGesture.delegate = self
+        backgroundPanGesture.minimumNumberOfTouches = 2
+        backgroundPanGesture.delegate = self
+        view.addGestureRecognizer(backgroundPanGesture)
         
         /* Setup your scene here */
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -219,35 +234,95 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: Gestures
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        
-        myNodes.touchesBegan(loc)
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+            return true
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        if enableBackgroundMove {
-            let touch = touches.anyObject() as UITouch
-            let currentLocation = touch.locationInNode(self)
-            let previousLocation = touch.previousLocationInNode(self)
-            if myNodes.launchPoint == nil {
-                let translation = currentLocation - previousLocation
-                // move anchorPoint
-                anchorPoint += translation/CGPointMake(size.width, size.height)
-                // move hudLayer
-                hudLayer.position -= translation
-                checkBackgroundBond()
+    func longPressed(gesture: UILongPressGestureRecognizer) {
+        if gesture.state == UIGestureRecognizerState.Began {
+            backgroundWillMove = true
+        } else if gesture.state == UIGestureRecognizerState.Ended {
+            backgroundWillMove = false
+        }
+    }
+    
+    func moveBackground(gesture: UIPanGestureRecognizer) {
+        if backgroundWillMove {
+            println("longPress recognized")
+            if gesture.state == UIGestureRecognizerState.Began {
+                println("Number of touches are \(gesture.numberOfTouches())")
+                if gesture.numberOfTouches() == 2 {
+                    if mapNode.containsPoint(gesture.locationOfTouch(0, inView: view)) {
+                        priorPoint = gesture.locationOfTouch(1, inView: view)
+                    } else {
+                        priorPoint = gesture.locationOfTouch(0, inView: view)
+                    }
+                }
+//                priorPoint = gesture.locationInView(view)
+            } else if gesture.state == UIGestureRecognizerState.Changed {
+
+                var translation = gesture.translationInView(view!)
+                translation = CGPointMake(translation.x, -translation.y)
+                var currentLoc: CGPoint!
+                if gesture.numberOfTouches() == 2 {
+                    if mapNode.containsPoint(gesture.locationOfTouch(0, inView: view)) {
+                        currentLoc = gesture.locationOfTouch(1, inView: view)
+                    } else {
+                        currentLoc = gesture.locationOfTouch(0, inView: view)
+                    }
+                }
+                
+                if currentLoc != nil && priorPoint != nil{
+                    anchorPoint += translation/CGPointMake(size.width, size.height)
+                    hudLayer.position -= translation
+                    checkBackgroundBond()
+                    priorPoint = currentLoc
+                    println("Move Screen?")
+
+                }
+                //  if myNodes.launchPoint == nil {
+//                    let translation = currentLoc - priorPoint
+                    // move anchorPoint
+                    // move hudLayer
+
+//                }
+            } else if gesture.state == UIGestureRecognizerState.Ended {
+                priorPoint = nil
             }
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesEnded(loc)
-    }
+//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//
+//        let touch = touches.anyObject() as UITouch
+//        let loc = touch.locationInNode(self)
+//        
+//        myNodes.touchesBegan(loc)
+//    }
+    
+//    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+//        if enableBackgroundMove {
+//            let touch = touches.anyObject() as UITouch
+//            let currentLocation = touch.locationInNode(self)
+//            let previousLocation = touch.previousLocationInNode(self)
+//            if myNodes.launchPoint == nil {
+//                let translation = currentLocation - previousLocation
+//                // move anchorPoint
+//                anchorPoint += translation/CGPointMake(size.width, size.height)
+//                // move hudLayer
+//                hudLayer.position -= translation
+//                checkBackgroundBond()
+//            }
+//        }
+//    }
+    
+//    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+//        let touch = touches.anyObject() as UITouch
+//        let loc = touch.locationInNode(self)
+//        myNodes.touchesEnded(loc)
+//    }
     
     func checkBackgroundBond() {
         

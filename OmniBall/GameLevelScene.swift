@@ -11,6 +11,7 @@ import SpriteKit
 
 class GameLevelScene: GameScene {
     
+    
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
@@ -48,6 +49,12 @@ class GameLevelScene: GameScene {
                 score--
             }
         }
+        
+        mapNode = SKSpriteNode(imageNamed: "circle")
+        mapNode.position = CGPoint(x: 200, y: 200)
+        mapNode.position = hudLayer.convertPoint(mapNode.position, fromNode: self)
+        println("position of mapNode is \(mapNode.position)")
+        hudLayer.addChild(mapNode)
     }
     
     override func setupNeutral() {
