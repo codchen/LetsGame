@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //hard coded!!
     let latency = 0.17
-    let protectionInterval: Double = 1
+    let protectionInterval: Double = 2
     var currentLevel = 0
     var gameOver: Bool = false
     

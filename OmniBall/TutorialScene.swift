@@ -98,6 +98,14 @@ class TutorialScene: GameScene {
         myNodes.checkOutOfBound()
     }
     
+    override func checkGameOver() {
+        if myNodes.successNodes == 1 {
+            gameOver = true
+            connection.sendGameOver()
+            gameOver(won: true)
+        }
+    }
+    
     override func gameOver(#won: Bool) {
         tapLabel.removeAllActions()
         let tutorialOverScene = TutorialOverScene(size: self.size)
@@ -143,7 +151,7 @@ class TutorialScene: GameScene {
                         tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
                         hadFirstCapture = true
                     }
-                    hudMinions[index].texture = target.texture
+//                    hudMinions[index].texture = target.texture
                     neutralBalls[target.name!]?.lastCapture = now
                     connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
