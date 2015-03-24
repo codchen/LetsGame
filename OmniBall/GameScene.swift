@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //hard coded!!
     let latency = 0.17
-    let protectionInterval: Double = 2
+    let protectionInterval: Double = 1
     var currentLevel = 0
     var gameOver: Bool = false
     
@@ -223,12 +223,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        
         myNodes.touchesBegan(loc)
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        if enableBackgroundMove {
+        if enableBackgroundMove && myNodes.launchPoint == nil {
             let touch = touches.anyObject() as UITouch
             let currentLocation = touch.locationInNode(self)
             let previousLocation = touch.previousLocationInNode(self)

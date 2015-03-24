@@ -99,6 +99,8 @@ class MyNodes: Player {
     	for node in players {
             if closeEnough(location, node.position, CGFloat(250)) == true{
                 touchesBeganHelper(node, location: location, isSlave: false)
+                launchPoint = location
+                launchTime = NSDate()
                 break
             }
         }
@@ -107,15 +109,17 @@ class MyNodes: Player {
             let node = scene.childNodeWithName(name) as SKSpriteNode
             if closeEnough(location, node.position, CGFloat(280)) == true {
                 touchesBeganHelper(node, location: location, isSlave: true)
+                launchPoint = location
+                launchTime = NSDate()
                 break
             }
         }
         
 //        if isSelected {
-            if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
-                launchPoint = location
-                launchTime = NSDate()
-            }
+//            if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
+//                launchPoint = location
+//                launchTime = NSDate()
+//            }
 //        }
 
     }
