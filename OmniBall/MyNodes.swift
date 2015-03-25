@@ -55,10 +55,6 @@ class MyNodes: Player {
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
             }
             slaves[target.name!] = nil
-            if slaves.count == 0 {
-                scene.anchorPoint = CGPoint(x: -(players[0].position.x - scene.size.width / 2) / scene.size.width,
-                    y: -(players[0].position.y - scene.size.height / 2) / scene.size.height)
-            }
         }
     }
     
@@ -109,6 +105,7 @@ class MyNodes: Player {
                 players[i].position = bornPos[i]
                 sendMove()
                 scene.anchorPoint = CGPointZero
+                scene.hudLayer.position = CGPointZero
             }
         }
     }
