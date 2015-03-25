@@ -91,4 +91,24 @@ class Player: NSObject {
     func decapture(target: SKSpriteNode){
 
     }
+    
+    func captureAnimation(target: SKSpriteNode, isOppo: Bool){
+        let originalTexture = SKTexture(imageNamed: getSlaveImageName(color!, false))
+        let changedTexture = SKTexture(imageNamed: getSlaveImageName(color!, true))
+        let block1 = SKAction.runBlock {
+            target.texture = originalTexture
+        }
+        let block2 = SKAction.runBlock {
+            target.texture = changedTexture
+        }
+        let wait = SKAction.waitForDuration(0.23)
+        var flashAction: SKAction!
+        if isOppo {
+            flashAction = SKAction.sequence([block2, wait, block1, wait])
+        } else {
+            flashAction = SKAction.sequence([block1, wait, block2, wait])
+        }
+        target.removeAllActions()
+        target.runAction(SKAction.repeatAction(flashAction, count: 4))
+    }
 }

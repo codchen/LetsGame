@@ -63,6 +63,12 @@ class GameLevelScene: GameScene {
         }
     }
     
+    override func update(currentTime: CFTimeInterval) {
+        performScheduledCapture()
+        myNodes.checkOutOfBound()
+        opponentsWrapper.checkDead()
+    }
+    
     override func addHudStars(id: UInt16) {
         var startIndex = 0
         let player = getPlayerByID(id)!
@@ -105,5 +111,6 @@ class GameLevelScene: GameScene {
         levelScene.connection = connection
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
+        
     }
 }

@@ -60,13 +60,15 @@ class MyNodes: Player {
     
     override func capture(target: SKSpriteNode, capturedTime: NSTimeInterval) {
         super.capture(target, capturedTime: capturedTime)
-        target.texture = SKTexture(imageNamed: getSlaveImageName(color!, true))
+        
+//        target.texture = SKTexture(imageNamed: getSlaveImageName(color!, true))
         if selectedNode.name!.hasPrefix("neutral"){
             selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
         } else {
             selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
         }
         selectedNode = target
+        captureAnimation(target, isOppo: false)
     }
     
     override func setMasks(){
@@ -114,13 +116,6 @@ class MyNodes: Player {
                 break
             }
         }
-        
-//        if isSelected {
-//            if closeEnough(location, selectedNode.position, CGFloat(250)) == true{
-//                launchPoint = location
-//                launchTime = NSDate()
-//            }
-//        }
 
     }
     
