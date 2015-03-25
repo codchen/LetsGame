@@ -31,7 +31,7 @@ class GameLevelScene: GameScene {
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
-        let totalSlaveNum = ((1 + slaveNum) * connection.maxLevel)/2
+        let totalSlaveNum = ((1 + slaveNum) * (connection.maxLevel + 1))/2
         let startPos = CGPoint(x: 100, y: size.height - 300)
         for var i = 0; i < totalSlaveNum; ++i {
             let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
