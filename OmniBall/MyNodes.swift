@@ -80,7 +80,7 @@ class MyNodes: Player {
     }
     
     func checkOutOfBound(){
-        
+        var deCapList = [SKSpriteNode]()
         for (name, slave) in slaves {
             if slave.node.intersectsNode(scene.destHeart) {
                 println(slaves)
@@ -89,10 +89,22 @@ class MyNodes: Player {
                 connection.scoreBoard[Int(id)]!++
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
-                decapture(slave.node)
+                deCapList.append(slave.node)
                 slave.node.removeFromParent()
                 sendDead(UInt16(index))
                 scene.scored()
+            }
+        }
+        for deleteNode in deCapList {
+            decapture(deleteNode)
+        }
+        
+        for var i = 0; i < count; ++i {
+            if players[i].intersectsNode(scene.destHeart) {
+                players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                players[i].position = bornPos[i]
+                sendMove()
+                scene.anchorPoint = CGPointZero
             }
         }
     }

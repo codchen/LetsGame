@@ -67,7 +67,7 @@ class Player: NSObject {
         
         scene.enumerateChildNodesWithName(sprite){node, _ in
             node1 = node as SKSpriteNode
-            node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 10)
+            node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 25)
             node1.physicsBody?.linearDamping = 0
             node1.physicsBody?.restitution = 1
             self.addPlayer(node1)
