@@ -20,6 +20,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var destPointer: SKSpriteNode!
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
+//    let collisionSound = SKAction.playSoundFileNamed("BodyHit01.wav", waitForCompletion: false)
+    let collisionSound = SKAction.playSoundFileNamed("Switch3.mp3", waitForCompletion: false)
+    let lostSlaveSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
+    var enableSound: Bool = true
     
     // Game Play
     var maxSucessNodes = 5
@@ -128,6 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 slaveNode = contact.bodyB.node! as SKSpriteNode
             }
             capture(target: slaveNode, hunter: myNodes)
+            runAction(collisionSound)
         } else if collision == physicsCategory.Opponent | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
                 slaveNode = contact.bodyB.node! as SKSpriteNode
@@ -135,6 +140,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             var opp = opponentsWrapper.getOpponentByName(hunterNode.name!)
             capture(target: slaveNode, hunter: opp!)
+            runAction(collisionSound)
+        } else if collision == physicsCategory.Opponent | physicsCategory.Me {
+            runAction(collisionSound)
         }
     }
     

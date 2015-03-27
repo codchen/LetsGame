@@ -11,6 +11,9 @@
 		11174ECF1AB299FB006013D7 /* LevelXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11174ECE1AB299FB006013D7 /* LevelXScene.swift */; };
 		1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124FB601AB216470060A1B2 /* TutorialOverScene.swift */; };
 		112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D92101AB4887200FCF399 /* LevelViewController.swift */; };
+		112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 112F126E1AC5D8DB008E65BF /* BodyHit01.wav */; };
+		112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12701AC5DC13008E65BF /* Switch3.mp3 */; };
+		112F12731AC5DDF6008E65BF /* What.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12721AC5DDF6008E65BF /* What.mp3 */; };
 		113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 113063BF1ABB2B67006340AE /* ProtectionHalo.sks */; };
 		113063C21ABB2B67006340AE /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 113063C01ABB2B67006340AE /* spark.png */; };
 		113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */; };
@@ -112,6 +115,9 @@
 		11174ECE1AB299FB006013D7 /* LevelXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelXScene.swift; sourceTree = "<group>"; };
 		1124FB601AB216470060A1B2 /* TutorialOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOverScene.swift; sourceTree = "<group>"; };
 		112D92101AB4887200FCF399 /* LevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
+		112F126E1AC5D8DB008E65BF /* BodyHit01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BodyHit01.wav; sourceTree = "<group>"; };
+		112F12701AC5DC13008E65BF /* Switch3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Switch3.mp3; sourceTree = "<group>"; };
+		112F12721AC5DDF6008E65BF /* What.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = What.mp3; sourceTree = "<group>"; };
 		113063BF1ABB2B67006340AE /* ProtectionHalo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ProtectionHalo.sks; sourceTree = "<group>"; };
 		113063C01ABB2B67006340AE /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
@@ -221,6 +227,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		112F126D1AC5D761008E65BF /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				112F12721AC5DDF6008E65BF /* What.mp3 */,
+				112F12701AC5DC13008E65BF /* Switch3.mp3 */,
+				112F126E1AC5D8DB008E65BF /* BodyHit01.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		115403151AAFC9ED000B2BA2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +391,7 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				112F126D1AC5D761008E65BF /* Sounds */,
 				119AF3CF1AB1466700CD5C3C /* OmniBallUtil */,
 				119AF3CE1AB1463700CD5C3C /* Controller */,
 				115403151AAFC9ED000B2BA2 /* Scenes */,
@@ -511,10 +528,13 @@
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				113329B11AB0D5A2008B46A2 /* singleButton@2x.png in Resources */,
+				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
+				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
+				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
 				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,

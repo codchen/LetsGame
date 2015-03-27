@@ -55,6 +55,9 @@ class MyNodes: Player {
                 selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
             }
             slaves[target.name!] = nil
+            if scene.enableSound {
+                scene.runAction(scene.lostSlaveSound)
+            }
         }
     }
     
@@ -96,6 +99,7 @@ class MyNodes: Player {
             }
         }
         for deleteNode in deCapList {
+            scene.enableSound = false
             decapture(deleteNode)
         }
         
@@ -108,6 +112,7 @@ class MyNodes: Player {
                 scene.hudLayer.position = CGPointZero
             }
         }
+        scene.enableSound = true
     }
     
     func touchesBegan(location: CGPoint) {
