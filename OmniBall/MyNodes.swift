@@ -86,7 +86,6 @@ class MyNodes: Player {
         var deCapList = [SKSpriteNode]()
         for (name, slave) in slaves {
             if slave.node.intersectsNode(scene.destHeart) {
-                println(slaves)
                 successNodes += 1
                 score++
                 connection.scoreBoard[Int(id)]!++
@@ -107,7 +106,7 @@ class MyNodes: Player {
             if players[i].intersectsNode(scene.destHeart) {
                 players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 players[i].position = bornPos[i]
-                sendMove()
+                connection.sendReborn(UInt16(i))
                 scene.anchorPoint = CGPointZero
                 scene.hudLayer.position = CGPointZero
             }

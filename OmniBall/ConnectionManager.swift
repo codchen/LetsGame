@@ -119,7 +119,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func sendGameStart(){
         var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID, gameMode: UInt16(self.gameMode.rawValue))
-        println("My playerID is \(playerID)")
+        //println("My playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
         sendData(data, reliable: true)
     }
@@ -127,6 +127,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func sendNeutralInfo(index: UInt16, id: UInt16, lastCaptured: Double){
         var message = MessageNeutralInfo(message: Message(messageType: MessageType.NeutralInfo), index: index, id: id, lastCaptured: lastCaptured)
         let data = NSData(bytes: &message, length: sizeof(MessageNeutralInfo))
+        sendData(data, reliable: true)
+    }
+    
+    func sendReborn(index: UInt16){
+        var message = MessageReborn(message: Message(messageType: MessageType.Reborn), index: index)
+        let data = NSData(bytes: &message, length: sizeof(MessageReborn))
         sendData(data, reliable: true)
     }
     
@@ -327,7 +333,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.Pause {
             let messagePause = UnsafePointer<MessagePause>(data.bytes).memory
             controller.pause()
-        }
+        } else if message.messageType == MessageType.Reborn {
+            let messageReborn = UnsafePointer<MessageReborn>(data.bytes).memory
+            if peersInGame[peerID] != nil{
+                controller.updateReborn(messageReborn, peerPlayerID: peersInGame[peerID]!)
+            }
+            }
     }
     
     // The following methods do nothing, but the MCSessionDelegate protocol
