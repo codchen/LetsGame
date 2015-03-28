@@ -37,15 +37,15 @@ class GameBattleScene: GameScene {
             destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
             connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
-			println("Sent destination is \(destPos), neutralPos \(neutralPos)")
-            //            debugDrawPlayableArea()
+			//println("Sent destination is \(destPos), neutralPos \(neutralPos)")
             
         }
         neutral.position = neutralPos
+
         destPointer.position = destPos
         destPointer.zRotation = destRotation
         destHeart.position = destPos
-        println("Actual destination is \(destPos), neutralPos \(neutralPos)")
+        //println("Actual destination is \(destPos), neutralPos \(neutralPos)")
     }
     
     override func setupHUD() {
@@ -110,7 +110,7 @@ class GameBattleScene: GameScene {
         destHeart.position = pos
         
         while !checkPosValid(destHeart, isNeutral: false) {
-            println("Invalid \(destHeart.position)")
+            //println("Invalid \(destHeart.position)")
             pos = CGPointMake(
                 CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
                 CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))

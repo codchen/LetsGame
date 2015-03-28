@@ -49,6 +49,10 @@ class OpponentsWrapper {
         opponents[id]?.updatePeerPos(message)
     }
     
+    func updateReborn(id: Int, message: MessageReborn) {
+        opponents[id]?.updateReborn(message)
+    }
+    
     func updateCaptured(id: Int, target: SKSpriteNode, capturedTime: NSTimeInterval, lastCount: UInt32) {
         for (player_id, opponent) in opponents {
             if id == player_id {

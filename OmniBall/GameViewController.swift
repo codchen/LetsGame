@@ -13,7 +13,6 @@ import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -30,7 +29,6 @@ extension SKNode {
     }
     
     class func unarchiveFromFilePresent(file : NSString) -> SKNode? {
-        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -210,6 +208,13 @@ class GameViewController: UIViewController {
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
             self.currentGameScene = self.currentView.scene! as GameScene
             self.currentGameScene.updateNeutralInfo(message, playerID: peerPlayerID)
+        }
+    }
+    
+    func updateReborn(message: MessageReborn, peerPlayerID: Int){
+        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene.updateReborn(message, peerPlayerID: peerPlayerID)
         }
     }
     
