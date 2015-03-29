@@ -13,6 +13,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     let serviceType = "LetsGame"
     let maxPlayer = 2
+    var connectedPeer = 0
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
@@ -365,6 +366,19 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     func session(session: MCSession!, peer peerID: MCPeerID!,
         didChangeState state: MCSessionState)  {
             // Called when a connected peer changes state (for example, goes offline)
+            if state == MCSessionState.Connected {
+                connectedPeer++
+                if connectedPeer == maxPlayer - 1 {
+                    controller.playBtn.enabled = true
+                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
+                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
+                }
+            }
+            else if state == MCSessionState.NotConnected {
+                if peersInGame[peerID] != nil{
+                    connectedPeer--
+                }
+            }
 
     }
     

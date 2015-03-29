@@ -63,10 +63,15 @@ class GameViewController: UIViewController {
     
     var currentLevel = -1
     
+    @IBOutlet weak var playBtn: UIButton!
+    var canStart = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
+        playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
+        playBtn.enabled = false
     }
     
     @IBAction func connect(sender: UIButton) {
@@ -75,7 +80,6 @@ class GameViewController: UIViewController {
 
     
     @IBAction func play(sender: UIButton) {
-        
         dispatch_async(dispatch_get_main_queue()) {
             let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
             levelViewController.gameViewController = self

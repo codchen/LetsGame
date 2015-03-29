@@ -75,6 +75,7 @@
 		66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866851A6F0B72007EE9FF /* SKTEffects.swift */; };
 		66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */; };
 		66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866871A6F0B72007EE9FF /* Vector3.swift */; };
+		FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */; };
 		FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */; };
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
@@ -178,6 +179,7 @@
 		66F866851A6F0B72007EE9FF /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		66F866871A6F0B72007EE9FF /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300_button_battle_0.png; sourceTree = "<group>"; };
 		FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball.png; sourceTree = "<group>"; };
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				116A211B1AB727870025F4C9 /* 80x80_star_slot.png */,
 				FFCF00001AB677BA006FAE44 /* 400x200_go.png */,
 				FFCF00011AB677BA006FAE44 /* 400x200_ready.png */,
@@ -521,6 +524,7 @@
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
+				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
