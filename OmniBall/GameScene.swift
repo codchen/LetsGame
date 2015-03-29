@@ -82,6 +82,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 opponentsWrapper.addOpponent(opponent)
             }
         }
+//        for var index = 0; index < slaveNum; ++index {
+//            neutralPos.append(CGPointZero)
+//        }
         setupNeutral()
         if connection.gameMode == GameMode.BattleArena {
             enableBackgroundMove = false
@@ -169,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func performScheduledCapture(){
         while scheduleToCapture.count > 0{
             //check if already captured
-            println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
+            //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
@@ -284,6 +287,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
     }
     
+    func updateReborn(message: MessageReborn, peerPlayerID: Int){
+        opponentsWrapper.updateReborn(peerPlayerID, message: message)
+    }
+    
     func paused(){
     }
     
@@ -296,7 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        let sentTime = message.lastCaptured + connection.delta[playerID]!
+        let sentTime = message.lastCaptured - connection.delta[playerID]!
         if sentTime > target.lastCapture + protectionInterval || (sentTime > target.lastCapture - protectionInterval && sentTime < target.lastCapture){
             scheduleToCapture.append(target.node)
             scheduleCaptureBy.append(pointTo)

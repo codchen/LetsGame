@@ -13,7 +13,6 @@ import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -30,7 +29,6 @@ extension SKNode {
     }
     
     class func unarchiveFromFilePresent(file : NSString) -> SKNode? {
-        println(file)
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
@@ -65,10 +63,15 @@ class GameViewController: UIViewController {
     
     var currentLevel = -1
     
+    @IBOutlet weak var playBtn: UIButton!
+    var canStart = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
+        playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
+        playBtn.enabled = false
     }
     
     @IBAction func connect(sender: UIButton) {
@@ -77,7 +80,6 @@ class GameViewController: UIViewController {
 
     
     @IBAction func play(sender: UIButton) {
-        
         dispatch_async(dispatch_get_main_queue()) {
             let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
             levelViewController.gameViewController = self
@@ -210,6 +212,13 @@ class GameViewController: UIViewController {
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
             self.currentGameScene = self.currentView.scene! as GameScene
             self.currentGameScene.updateNeutralInfo(message, playerID: peerPlayerID)
+        }
+    }
+    
+    func updateReborn(message: MessageReborn, peerPlayerID: Int){
+        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
+            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene.updateReborn(message, peerPlayerID: peerPlayerID)
         }
     }
     

@@ -17,12 +17,12 @@ class OpponentNodes: Player {
         
         mutating func add(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16) {
-            info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
+                info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
         	updated.append(false)
         }
         mutating func update (x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16){
-            info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
             updated[Int(index)] = true
         }
         
@@ -211,6 +211,12 @@ class OpponentNodes: Player {
             
         }
 
+    }
+    
+    func updateReborn(message: MessageReborn) {
+        let index: Int = Int(message.index)
+        players[index].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        players[index].position = bornPos[index]
     }
     
     func closeEnough(point1: CGPoint, point2: CGPoint) -> Bool{
