@@ -316,6 +316,7 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				112F12781AC5EA44008E65BF /* wall-mid.png */,
 				116A211B1AB727870025F4C9 /* 80x80_star_slot.png */,
 				FFCF00001AB677BA006FAE44 /* 400x200_go.png */,
