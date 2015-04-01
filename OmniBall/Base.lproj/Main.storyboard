@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -56,7 +56,7 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleAspectFit" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -78,16 +78,25 @@
                                     <action selector="play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iXX-Wa-0Hv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" restorationIdentifier="lblHost" text="Host: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-WJ-4qM" userLabel="lblHost">
+                                <rect key="frame" x="364" y="175" width="152" height="21"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
                             <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
+                            <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="114" id="cYv-9E-9Qm"/>
+                            <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="-140" id="jP9-A9-ujY"/>
                             <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" id="spz-Zf-jzg"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lblHost" destination="0xh-WJ-4qM" id="aC2-LJ-Mai"/>
                         <outlet property="playBtn" destination="ADK-DC-inN" id="rnE-Qs-SzQ"/>
                     </connections>
                 </viewController>

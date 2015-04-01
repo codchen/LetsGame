@@ -21,6 +21,7 @@ class GameLevelScene: GameScene {
         destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
+        destPointer.physicsBody?.categoryBitMask = physicsCategory.wall
         addChild(destHeart)
     }
     

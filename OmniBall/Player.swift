@@ -15,6 +15,7 @@ struct physicsCategory{
     static let Me: UInt32 = 0b1
     static let Opponent: UInt32 = 0b10
     static let target: UInt32 = 0b100
+    static let wall: UInt32 = 0b1000
     
 }
 

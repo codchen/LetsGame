@@ -9,7 +9,7 @@
 import Foundation
 
 enum MessageType: Int {
-    case RandomNumber, GameStart, FirstTrip, SecondTrip, ThirdTrip, Destination, Move, Pause, Dead, GameOver, NeutralInfo, Reborn
+    case RandomNumber, GameReady, GameStart, FirstTrip, SecondTrip, ThirdTrip, Destination, Move, Pause, Dead, GameOver, NeutralInfo, Reborn
 }
 
 enum GameState: Int {
@@ -43,6 +43,11 @@ struct MessageThirdTrip {
 struct MessageRandomNumber {
     let message: Message
     let number: UInt32
+}
+
+struct MessageReadyToGame {
+    let message: Message
+    let playerID: UInt16
 }
 
 struct MessageGameStart {

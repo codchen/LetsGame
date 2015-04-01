@@ -125,6 +125,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data, reliable: true)
     }
     
+    func sendGameReady(){
+        var message = MessageReadyToGame(message: Message(messageType: MessageType.GameReady), playerID: playerID)
+        //println("My playerID is \(playerID)")
+        let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
+        sendData(data, reliable: true)
+    }
+    
     func sendNeutralInfo(index: UInt16, id: UInt16, lastCaptured: Double){
         var message = MessageNeutralInfo(message: Message(messageType: MessageType.NeutralInfo), index: index, id: id, lastCaptured: lastCaptured)
         let data = NSData(bytes: &message, length: sizeof(MessageNeutralInfo))
@@ -252,7 +259,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                             playerID = UInt16(index)
                             scoreBoard[Int(playerID)] = 0
                             gameState = .WaitingForStart
-                            sendGameStart()
+                            sendGameReady()
                             self.assistant.stop()
                             break
                         }
@@ -263,9 +270,26 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     receivedAllRandomNumber = false
                 }
             }
+        } else if message.messageType == MessageType.GameReady {
+            let messageGameReady = UnsafePointer<MessageReadyToGame>(data.bytes).memory
+            peersInGame[peerID] = Int(messageGameReady.playerID)
+            if peersInGame.count == maxPlayer - 1 {
+                if playerID == 0 {
+                    controller.addHostLabel(self.peerID.displayName)
+                    controller.playBtn.enabled = true
+                } else {
+                    for (peerid, playerid) in peersInGame {
+                        if playerid == 0 {
+                            controller.addHostLabel(peerid.displayName)
+                            break
+                        }
+                    }
+                }
+                
+            }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
-            peersInGame[peerID] = Int(messageGameStart.playerID)
+//            peersInGame[peerID] = Int(messageGameStart.playerID)
             let mode = GameMode(rawValue: Int(messageGameStart.gameMode))
             if mode != GameMode.None {
                 self.gameMode = mode!
@@ -369,7 +393,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if state == MCSessionState.Connected {
                 connectedPeer++
                 if connectedPeer == maxPlayer - 1 {
-                    controller.playBtn.enabled = true
+                    generateRandomNumber()
+//                    controller.playBtn.enabled = true
                     controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
                     controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
                 }

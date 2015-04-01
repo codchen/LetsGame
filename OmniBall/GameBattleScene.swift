@@ -43,6 +43,7 @@ class GameBattleScene: GameScene {
         neutral.position = neutralPos
 
         destPointer.position = destPos
+        destPointer.physicsBody?.categoryBitMask = physicsCategory.wall
         destPointer.zRotation = destRotation
         destHeart.position = destPos
         //println("Actual destination is \(destPos), neutralPos \(neutralPos)")

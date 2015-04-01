@@ -78,7 +78,7 @@ class MyNodes: Player {
     override func setMasks(){
         scene.enumerateChildNodesWithName(sprite){node, _ in
             node.physicsBody?.categoryBitMask = physicsCategory.Me
-            node.physicsBody?.contactTestBitMask = physicsCategory.target
+            node.physicsBody?.contactTestBitMask = physicsCategory.target | physicsCategory.Opponent | physicsCategory.wall
             
         }
     }

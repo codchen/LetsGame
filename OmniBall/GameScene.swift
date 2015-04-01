@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
     
-    let collisionSound = SKAction.playSoundFileNamed("Switch3.mp3", waitForCompletion: false)
+    let collisionSound = SKAction.playSoundFileNamed("Electric Hit.mp3", waitForCompletion: false)
     let whatSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
     let yeahSound = SKAction.playSoundFileNamed("Yeah.mp3", waitForCompletion: false)
     var enableSound: Bool = true
@@ -100,12 +100,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         setupHUD()
-        
-//        emitterHalo = SKEmitterNode(fileNamed: "ProtectionHalo.sks")
-        
+
         /* Setup your scene here */
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
+        
+        enumerateChildNodesWithName("bar*") { node, _ in
+            node.physicsBody!.categoryBitMask = physicsCategory.wall
+        }
+        
+        enumerateChildNodesWithName("wall") { node, _ in
+            node.physicsBody!.categoryBitMask = physicsCategory.wall
+        }
+        
     }
     
     func setupDestination(origin: Bool){
@@ -135,15 +142,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
                 slaveNode = contact.bodyB.node! as SKSpriteNode
             }
-            capture(target: slaveNode, hunter: myNodes)
             runAction(collisionSound)
+            capture(target: slaveNode, hunter: myNodes)
         } else if collision == physicsCategory.Opponent | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
                 slaveNode = contact.bodyB.node! as SKSpriteNode
                 hunterNode = contact.bodyA.node! as SKSpriteNode
             }
             var opp = opponentsWrapper.getOpponentByName(hunterNode.name!)
+            runAction(collisionSound)
             capture(target: slaveNode, hunter: opp!)
+        } else if collision == physicsCategory.Me | physicsCategory.Opponent
+        	|| collision == physicsCategory.Me | physicsCategory.wall || collision == physicsCategory.target | physicsCategory.wall{
             runAction(collisionSound)
         }
     }
@@ -158,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (now >= targetInfo.lastCapture + protectionInterval ||
             (now > targetInfo.lastCapture - protectionInterval &&
                 now < targetInfo.lastCapture))&&(hunter.slaves[target.name!] == nil){
-
+			
             opponentsWrapper.decapture(target)
             myNodes.decapture(target)
             assert(hunter.slaves[target.name!] == nil, "hunter is not nil before capture")

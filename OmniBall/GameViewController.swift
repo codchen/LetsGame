@@ -63,7 +63,9 @@ class GameViewController: UIViewController {
     
     var currentLevel = -1
     
+    @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var playBtn: UIButton!
+//    var hostLabel: UILabel!
     var canStart = false
     
     override func viewDidLoad() {
@@ -72,6 +74,10 @@ class GameViewController: UIViewController {
         connectionManager.controller = self
         playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
         playBtn.enabled = false
+//        hostLabel = UILabel(frame: CGRect(x: 315, y: 375, width: 300, height: 100))
+//        hostLabel.text = "Host: "
+//        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
+//        self.view.addSubview(hostLabel)
     }
     
     @IBAction func connect(sender: UIButton) {
@@ -175,6 +181,17 @@ class GameViewController: UIViewController {
 
         }
 
+    }
+    
+    func addHostLabel(peerName: String) {
+
+        lblHost.text = "Host: " + peerName
+//        hostLabel.backgroundColor = UIColor.whiteColor()
+//        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
+//        println("Have we done this \(hostLabel.frame)")
+//        self.view.addSubview(hostLabel)
+        view.setNeedsDisplay()
+//        self.view.drawRect(lblHost.frame)
     }
     
     func pause(){
