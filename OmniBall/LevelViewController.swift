@@ -12,16 +12,17 @@ import SpriteKit
 class LevelViewController: UIViewController {
     
     var gameViewController: GameViewController!
-    
-    @IBAction func showBattleArena(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("BattleArena")
-        
+    var scrollController: MinimapController!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
+        scrollController.view.frame = CGRectMake(0, 70, 650, 650)
+        scrollController.gameViewController = gameViewController
+        addChildViewController(scrollController)
+        view.addSubview(scrollController.view)
     }
     
-    @IBAction func showHiveMaze(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+    @IBAction func back(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }

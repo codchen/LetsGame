@@ -71,7 +71,7 @@ class GameViewController: UIViewController {
         connectionManager = ConnectionManager()
         connectionManager.controller = self
         playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
-        playBtn.enabled = false
+        //playBtn.enabled = false
     }
     
     @IBAction func connect(sender: UIButton) {
@@ -94,7 +94,12 @@ class GameViewController: UIViewController {
             } else if name == "HiveMaze" {
                 connectionManager.gameMode = .HiveMaze
             }
+            if self.connectionManager.maxPlayer == 1 {
+                self.transitToInstruction()
+            }
+            else{
             self.connectionManager.generateRandomNumber()
+            }
         }
     }
     

@@ -75,6 +75,14 @@
 		66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866851A6F0B72007EE9FF /* SKTEffects.swift */; };
 		66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */; };
 		66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F866871A6F0B72007EE9FF /* Vector3.swift */; };
+		FF20863D1AC9A00B00F09DB7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086371AC9A00B00F09DB7 /* back-button.png */; };
+		FF20863E1AC9A00B00F09DB7 /* mini-map-0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086381AC9A00B00F09DB7 /* mini-map-0.png */; };
+		FF20863F1AC9A00B00F09DB7 /* mini-map-1.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086391AC9A00B00F09DB7 /* mini-map-1.png */; };
+		FF2086401AC9A00B00F09DB7 /* mini-map-2.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20863A1AC9A00B00F09DB7 /* mini-map-2.png */; };
+		FF2086411AC9A00B00F09DB7 /* mini-map-3.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20863B1AC9A00B00F09DB7 /* mini-map-3.png */; };
+		FF2086421AC9A00B00F09DB7 /* mini-map-4.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20863C1AC9A00B00F09DB7 /* mini-map-4.png */; };
+		FF2086441AC9C65B00F09DB7 /* MinimapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2086431AC9C65B00F09DB7 /* MinimapController.swift */; };
+		FF2086461ACC3C5400F09DB7 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086451ACC3C5400F09DB7 /* map.png */; };
 		FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */; };
 		FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */; };
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
@@ -179,6 +187,14 @@
 		66F866851A6F0B72007EE9FF /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
 		66F866861A6F0B72007EE9FF /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
 		66F866871A6F0B72007EE9FF /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		FF2086371AC9A00B00F09DB7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-button.png"; path = "mini-map/back-button.png"; sourceTree = SOURCE_ROOT; };
+		FF2086381AC9A00B00F09DB7 /* mini-map-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mini-map-0.png"; path = "mini-map/mini-map-0.png"; sourceTree = SOURCE_ROOT; };
+		FF2086391AC9A00B00F09DB7 /* mini-map-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mini-map-1.png"; path = "mini-map/mini-map-1.png"; sourceTree = SOURCE_ROOT; };
+		FF20863A1AC9A00B00F09DB7 /* mini-map-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mini-map-2.png"; path = "mini-map/mini-map-2.png"; sourceTree = SOURCE_ROOT; };
+		FF20863B1AC9A00B00F09DB7 /* mini-map-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mini-map-3.png"; path = "mini-map/mini-map-3.png"; sourceTree = SOURCE_ROOT; };
+		FF20863C1AC9A00B00F09DB7 /* mini-map-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mini-map-4.png"; path = "mini-map/mini-map-4.png"; sourceTree = SOURCE_ROOT; };
+		FF2086431AC9C65B00F09DB7 /* MinimapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinimapController.swift; sourceTree = "<group>"; };
+		FF2086451ACC3C5400F09DB7 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300_button_battle_0.png; sourceTree = "<group>"; };
 		FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball.png; sourceTree = "<group>"; };
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
@@ -278,6 +294,7 @@
 				FF6C10851A670BED00A5C7D7 /* GameViewController.swift */,
 				113329A61AB0CDA2008B46A2 /* ViewController.swift */,
 				112D92101AB4887200FCF399 /* LevelViewController.swift */,
+				FF2086431AC9C65B00F09DB7 /* MinimapController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -308,6 +325,13 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF2086451ACC3C5400F09DB7 /* map.png */,
+				FF2086371AC9A00B00F09DB7 /* back-button.png */,
+				FF2086381AC9A00B00F09DB7 /* mini-map-0.png */,
+				FF2086391AC9A00B00F09DB7 /* mini-map-1.png */,
+				FF20863A1AC9A00B00F09DB7 /* mini-map-2.png */,
+				FF20863B1AC9A00B00F09DB7 /* mini-map-3.png */,
+				FF20863C1AC9A00B00F09DB7 /* mini-map-4.png */,
 				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				116A211B1AB727870025F4C9 /* 80x80_star_slot.png */,
 				FFCF00001AB677BA006FAE44 /* 400x200_go.png */,
@@ -523,17 +547,22 @@
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
+				FF2086411AC9A00B00F09DB7 /* mini-map-3.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
 				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
+				FF2086461ACC3C5400F09DB7 /* map.png in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
 				1185848F1AB09923002622F8 /* 80x80_green_ball_filled.png in Resources */,
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
+				FF20863D1AC9A00B00F09DB7 /* back-button.png in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				113329B11AB0D5A2008B46A2 /* singleButton@2x.png in Resources */,
 				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
+				FF20863F1AC9A00B00F09DB7 /* mini-map-1.png in Resources */,
+				FF20863E1AC9A00B00F09DB7 /* mini-map-0.png in Resources */,
 				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
@@ -543,10 +572,12 @@
 				FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */,
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,
 				118584891AB098C0002622F8 /* 80x80_blue_star.png in Resources */,
+				FF2086421AC9A00B00F09DB7 /* mini-map-4.png in Resources */,
 				FFCF00061AB677BA006FAE44 /* blue_star_filled.png in Resources */,
 				11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				1185849C1AB0996F002622F8 /* 80x80_red_ball_filled.png in Resources */,
+				FF2086401AC9A00B00F09DB7 /* mini-map-2.png in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
 				118584981AB09947002622F8 /* 80x80_orange_star.png in Resources */,
 				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
@@ -591,6 +622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66F8668E1A6F0B72007EE9FF /* SKColor+Extensions.swift in Sources */,
+				FF2086441AC9C65B00F09DB7 /* MinimapController.swift in Sources */,
 				11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */,
 				66F866921A6F0B72007EE9FF /* SKTTimingFunctions.swift in Sources */,
 				11174ECF1AB299FB006013D7 /* LevelXScene.swift in Sources */,

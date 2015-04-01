@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 1
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!
@@ -371,6 +371,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 if connectedPeer == maxPlayer - 1 {
                     controller.playBtn.enabled = true
                     controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
+                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Disabled)
                     controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
                 }
             }
