@@ -78,8 +78,8 @@
                                     <action selector="play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iXX-Wa-0Hv"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" restorationIdentifier="lblHost" text="Host: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-WJ-4qM" userLabel="lblHost">
-                                <rect key="frame" x="364" y="175" width="152" height="21"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" restorationIdentifier="lblHost" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-WJ-4qM" userLabel="lblHost">
+                                <rect key="frame" x="364" y="180.5" width="152" height="21"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -90,7 +90,7 @@
                             <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
                             <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
-                            <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="114" id="cYv-9E-9Qm"/>
+                            <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="120" id="cYv-9E-9Qm"/>
                             <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="-140" id="jP9-A9-ujY"/>
                             <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" id="spz-Zf-jzg"/>
                         </constraints>

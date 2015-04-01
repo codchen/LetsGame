@@ -62,6 +62,8 @@
 		11D844A11AC9C5360078B62B /* Electric Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A01AC9C5360078B62B /* Electric Hit.mp3 */; };
 		11D844A31AC9CD2E0078B62B /* Electric Hit 02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */; };
 		11D844A51ACC3C330078B62B /* 100x100_icon_rank.png in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */; };
+		11ED25AD1ACC7549002803EC /* mini-map-0.png in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25AC1ACC7549002803EC /* mini-map-0.png */; };
+		11ED25AF1ACC75AD002803EC /* mini-map-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25AE1ACC75AD002803EC /* mini-map-3.png */; };
 		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */; };
 		3C7E84311A91052700212817 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E84301A91052700212817 /* Set.swift */; };
@@ -172,6 +174,8 @@
 		11D844A01AC9C5360078B62B /* Electric Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit.mp3"; sourceTree = "<group>"; };
 		11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit 02.mp3"; sourceTree = "<group>"; };
 		11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 100x100_icon_rank.png; sourceTree = "<group>"; };
+		11ED25AC1ACC7549002803EC /* mini-map-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-0.png"; sourceTree = "<group>"; };
+		11ED25AE1ACC75AD002803EC /* mini-map-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-3.png"; sourceTree = "<group>"; };
 		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelScene.swift; sourceTree = "<group>"; };
 		3C7E84301A91052700212817 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				11ED25AE1ACC75AD002803EC /* mini-map-3.png */,
+				11ED25AC1ACC7549002803EC /* mini-map-0.png */,
 				11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */,
 				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				112F12781AC5EA44008E65BF /* wall-mid.png */,
@@ -546,12 +552,14 @@
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
+				11ED25AD1ACC7549002803EC /* mini-map-0.png in Resources */,
 				1185848F1AB09923002622F8 /* 80x80_green_ball_filled.png in Resources */,
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				113329B11AB0D5A2008B46A2 /* singleButton@2x.png in Resources */,
 				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
+				11ED25AF1ACC75AD002803EC /* mini-map-3.png in Resources */,
 				112F12771AC5E947008E65BF /* new-map-1.sks in Resources */,
 				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
 				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
