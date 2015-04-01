@@ -100,7 +100,12 @@ class GameViewController: UIViewController {
             } else if name == "HiveMaze" {
                 connectionManager.gameMode = .HiveMaze
             }
+            if self.connectionManager.maxPlayer == 1 {
+                self.transitToInstruction()
+            }
+            else{
             self.connectionManager.generateRandomNumber()
+            }
         }
     }
     
