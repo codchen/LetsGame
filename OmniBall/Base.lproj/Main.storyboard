@@ -112,7 +112,7 @@
                         <viewControllerLayoutGuide type="top" id="XJE-yW-D7l"/>
                         <viewControllerLayoutGuide type="bottom" id="gXU-FK-J1Q"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="2Tz-1b-3tE">
+                    <view key="view" contentMode="scaleAspectFit" id="2Tz-1b-3tE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -125,19 +125,32 @@
                                     <action selector="back:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="bRB-Cl-qTh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLd-ga-tPD">
-                                <rect key="frame" x="236" y="42" width="165" height="21"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Swipe to select map!">
-                                        <attributes>
-                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0S4-9B-NAe">
+                                <rect key="frame" x="16" y="201" width="171" height="120"/>
+                                <state key="normal" image="mini-map-0.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="transitToBattleArena:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="qhM-oT-zoZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT2-I9-TXU">
+                                <rect key="frame" x="226" y="170" width="175" height="181"/>
+                                <state key="normal" image="mini-map-3.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="map3:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="Jrx-Mn-GjE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcE-7w-Pir">
+                                <rect key="frame" x="455" y="223" width="78" height="75"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="72"/>
+                                <state key="normal" title="?">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                     </view>

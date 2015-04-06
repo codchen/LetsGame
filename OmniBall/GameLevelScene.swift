@@ -21,6 +21,8 @@ class GameLevelScene: GameScene {
         println("\(destPosList.count)")
     }
     
+    var currentLevel = 0
+    
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
@@ -92,13 +94,29 @@ class GameLevelScene: GameScene {
     }
     
     override func checkGameOver() {
-        var scoreToWin = (Float((1 + slaveNum) * connection.maxLevel) * 0.5 + 1) / 2
-        if remainingSlave == 0 && Float(myNodes.score) >= scoreToWin
-            && currentLevel == connection.maxLevel {
-            gameOver = true
-            connection.sendGameOver()
-            gameOver(won: true)
+        
+        if remainingSlave == 0 && currentLevel == connection.maxLevel {
+            var maxScore: Int = 0
+            for (id, score) in connection.scoreBoard {
+                if score > maxScore {
+                    maxScore = score
+                }
+            }
+            if maxScore == connection.scoreBoard[Int(myNodes.id)] {
+                gameOver = true
+                connection.sendGameOver()
+                gameOver(won: true)
+            }
         }
+    }
+    
+    override func gameOver(#won: Bool) {
+        let gameOverScene = GameOverScene(size: size, won: won)
+        gameOverScene.currentLevel = currentLevel
+        gameOverScene.scaleMode = scaleMode
+        gameOverScene.controller = connection.controller
+        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        view?.presentScene(gameOverScene, transition: reveal)
     }
     
     override func scored() {

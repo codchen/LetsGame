@@ -15,13 +15,16 @@ class LevelViewController: UIViewController {
     var scrollController: MinimapController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
-        scrollController.view.frame = CGRectMake(0, 75, 650, 650)
-        scrollController.gameViewController = gameViewController
-        addChildViewController(scrollController)
-        view.addSubview(scrollController.view)
+//        scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
+//        scrollController.view.frame = CGRectMake(0, 75, 650, 650)
+//        scrollController.gameViewController = gameViewController
+//        addChildViewController(scrollController)
+//        view.addSubview(scrollController.view)
     }
     
+    @IBAction func transitToBattleArena(sender: AnyObject) {
+        
+    }
     @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
