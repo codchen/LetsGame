@@ -84,6 +84,7 @@ class Player: NSObject {
 
     func capture(target: SKSpriteNode, capturedTime: NSTimeInterval){
         if slaves[target.name!] == nil {
+            target.physicsBody?.dynamic = true
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
             target.texture = SKTexture(imageNamed: getSlaveImageName(color!, false))
         }
