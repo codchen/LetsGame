@@ -105,57 +105,133 @@
             <point key="canvasLocation" x="380" y="198"/>
         </scene>
         <!--LevelViewController-->
-        <scene sceneID="l28-ng-rMZ">
+        <scene sceneID="ZGM-WH-Qqb">
             <objects>
-                <viewController storyboardIdentifier="LevelViewController" title="LevelViewController" id="SE1-3Y-ygI" customClass="LevelViewController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LevelViewController" title="LevelViewController" id="OaH-gT-RiJ" customClass="LevelViewController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="k3J-5H-5N1"/>
-                        <viewControllerLayoutGuide type="bottom" id="TSi-2t-5di"/>
+                        <viewControllerLayoutGuide type="top" id="XJE-yW-D7l"/>
+                        <viewControllerLayoutGuide type="bottom" id="gXU-FK-J1Q"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFill" id="2gU-p3-HxQ">
+                    <view key="view" contentMode="scaleToFill" id="2Tz-1b-3tE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="70d-5g-CI7">
-                                <rect key="frame" x="86" y="164" width="429" height="112"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="55"/>
-                                <state key="normal" title="Battle Arena">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BZ-L8-Cwe">
+                                <rect key="frame" x="16" y="28" width="52" height="50"/>
+                                <state key="normal" image="back-button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showBattleArena:" destination="SE1-3Y-ygI" eventType="touchUpInside" id="UuA-Kj-8YX"/>
+                                    <action selector="back:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="bRB-Cl-qTh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTj-yQ-wGj">
-                                <rect key="frame" x="86" y="324" width="429" height="112"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="55"/>
-                                <state key="normal" title="Maze">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="showHiveMaze:" destination="SE1-3Y-ygI" eventType="touchUpInside" id="y6a-tN-4pG"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLd-ga-tPD">
+                                <rect key="frame" x="236" y="42" width="165" height="21"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Swipe to select map!">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="gTj-yQ-wGj" secondAttribute="centerX" id="bBK-Ms-26b"/>
-                            <constraint firstAttribute="centerY" secondItem="gTj-yQ-wGj" secondAttribute="centerY" constant="-80" id="iSg-UY-Pgo"/>
-                            <constraint firstAttribute="centerX" secondItem="70d-5g-CI7" secondAttribute="centerX" id="ocT-go-PML"/>
-                            <constraint firstAttribute="centerY" secondItem="70d-5g-CI7" secondAttribute="centerY" constant="80" id="xY7-7E-L7V"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="elZ-WM-NoJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s2c-w9-dAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1075" y="198"/>
+            <point key="canvasLocation" x="1083" y="198"/>
+        </scene>
+        <!--MinimapController-->
+        <scene sceneID="Guq-5B-RJ8">
+            <objects>
+                <viewController storyboardIdentifier="MinimapController" title="MinimapController" id="xNA-HQ-SPa" customClass="MinimapController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Uxf-7z-rPE"/>
+                        <viewControllerLayoutGuide type="bottom" id="luh-3O-nM1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tgd-qp-k7w">
+                        <rect key="frame" x="0.0" y="0.0" width="2500" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ahC-tc-HDC">
+                                <rect key="frame" x="0.0" y="0.0" width="2500" height="300"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8K-u8-Aan">
+                                        <rect key="frame" x="701" y="10" width="200" height="279"/>
+                                        <state key="normal" image="mini-map-1.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="map1:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="sYv-GZ-EaL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR7-30-wPO">
+                                        <rect key="frame" x="1150" y="10" width="200" height="279"/>
+                                        <state key="normal" image="mini-map-2.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="map2:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="W0q-LM-Woh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wPk-fN-0z3">
+                                        <rect key="frame" x="1610" y="10" width="270" height="279"/>
+                                        <state key="normal" image="mini-map-3.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="map3:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="XWm-Nr-UuA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="slb-kE-CsC">
+                                        <rect key="frame" x="2111" y="10" width="270" height="279"/>
+                                        <state key="normal" image="mini-map-4.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="map4:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="6dj-eM-rlQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce7-TT-Aqe">
+                                        <rect key="frame" x="152" y="30" width="340" height="240"/>
+                                        <state key="normal" image="mini-map-0.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="map0:" destination="xNA-HQ-SPa" eventType="touchUpInside" id="Dzc-Zc-xcB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="2500" height="300"/>
+                    <connections>
+                        <outlet property="scroller" destination="ahC-tc-HDC" id="Lly-Xl-pJP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9Z-Vt-tp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="891" y="871"/>
         </scene>
     </scenes>
     <resources>
         <image name="300x300_button_battle.png" width="300" height="300"/>
         <image name="300x300_button_connect.png" width="300" height="300"/>
+        <image name="back-button.png" width="146" height="150"/>
+        <image name="mini-map-0.png" width="340" height="240"/>
+        <image name="mini-map-1.png" width="300" height="416"/>
+        <image name="mini-map-2.png" width="300" height="416"/>
+        <image name="mini-map-3.png" width="430" height="416"/>
+        <image name="mini-map-4.png" width="494" height="529"/>
         <image name="multiButton.png" width="166" height="166"/>
         <image name="singleButton.png" width="166" height="166"/>
     </resources>

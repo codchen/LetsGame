@@ -94,13 +94,24 @@ class GameViewController: UIViewController {
     }
     
     func transitToGame(name: String) {
-        if connectionManager.gameState == .WaitingForMatch {
+        println("\(connectionManager.gameState.rawValue)")
+        if connectionManager.gameState == .WaitingForStart {
             if name == "BattleArena"  {
                 connectionManager.gameMode = .BattleArena
             } else if name == "HiveMaze" {
                 connectionManager.gameMode = .HiveMaze
+                
             }
-            self.connectionManager.generateRandomNumber()
+            
+            if self.connectionManager.maxPlayer == 1 {
+                self.transitToInstruction()
+            } else {
+                connectionManager.sendGameStart()
+                connectionManager.readyToSendFirstTrip()
+            }
+//            else{
+//            self.connectionManager.generateRandomNumber()
+//            }
         }
     }
     
@@ -132,7 +143,7 @@ class GameViewController: UIViewController {
     func transitToInstruction(){
         dispatch_async(dispatch_get_main_queue()) {
             let scene = InstructionScene(size: CGSize(width: 2048, height: 1536))
-                scene.scaleMode = .AspectFill
+                scene.scaleMode = .AspectFit
                 scene.connection = self.connectionManager
                 scene.controller = self
                 if self.currentView == nil {

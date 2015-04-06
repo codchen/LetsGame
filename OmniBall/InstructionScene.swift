@@ -54,7 +54,7 @@ class InstructionScene: SKScene {
                     self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
                 }
             case .HiveMaze:
-                let levelScene = LevelXScene(size: self.size, level: 0)
+                let levelScene = LevelXScene(size: self.size, level: self.controller.currentLevel + 1)
                 levelScene.scaleMode = self.scaleMode
                 levelScene.controller = self.controller
                 levelScene.connection = self.connection

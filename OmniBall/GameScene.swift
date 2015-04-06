@@ -85,6 +85,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        for var index = 0; index < slaveNum; ++index {
 //            neutralPos.append(CGPointZero)
 //        }
+        
+//        if childNodeWithName("boundary") != nil {
+//            let boundary = childNodeWithName("boundary") as SKSpriteNode
+//            boundary.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "map"), alphaThreshold: -0.1, size: boundary.size)
+//            boundary.physicsBody?.dynamic = false
+//        }
+        
         setupNeutral()
         if connection.gameMode == GameMode.BattleArena {
             enableBackgroundMove = false
