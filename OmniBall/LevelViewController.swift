@@ -23,6 +23,7 @@ class LevelViewController: UIViewController {
     }
     
     @IBAction func transitToBattleArena(sender: AnyObject) {
+        
     }
     @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
