@@ -304,6 +304,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func paused(){
     }
     
+    func changeDest(){
+    }
+    
     func updateNeutralInfo(message: MessageNeutralInfo, playerID: Int){
         let pointTo: Player = getPlayerByID(message.id)!
         let neutralName = "neutral" + String(message.index)

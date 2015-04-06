@@ -126,6 +126,7 @@ class OpponentNodes: Player {
             node.removeFromParent()
             deleteIndex = -1
             scene.addHudStars(self.id)
+            scene.changeDest()
         }
     }
     

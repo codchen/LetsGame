@@ -10,6 +10,16 @@ import Foundation
 import SpriteKit
 
 class GameLevelScene: GameScene {
+    var destPosList: [CGPoint] = []
+    var whichPos = 0
+    
+    override func didMoveToView(view: SKView){
+        super.didMoveToView(view)
+        enumerateChildNodesWithName("destHeart*") {node, _ in
+            self.destPosList.append(node.position)
+        }
+        println("\(destPosList.count)")
+    }
     
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
@@ -17,7 +27,7 @@ class GameLevelScene: GameScene {
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
-        destHeart = childNodeWithName("destHeart") as SKShapeNode
+        //destHeart = childNodeWithName("destHeart") as SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
@@ -113,5 +123,11 @@ class GameLevelScene: GameScene {
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
         
+    }
+    
+    override func changeDest(){
+        whichPos++
+        destPointer.position = destPosList[whichPos % destPosList.count]
+        destHeart.position = destPosList[whichPos % destPosList.count]
     }
 }

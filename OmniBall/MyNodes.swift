@@ -96,6 +96,7 @@ class MyNodes: Player {
                 slave.node.removeFromParent()
                 sendDead(UInt16(index))
                 scene.scored()
+                scene.changeDest()
             }
         }
         for deleteNode in deCapList {
