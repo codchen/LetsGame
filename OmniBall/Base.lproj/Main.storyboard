@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -61,8 +61,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-Yy-Hd7">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-Yy-Hd7">
                                 <rect key="frame" x="35" y="175" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="hPf-fd-gdj"/>
+                                    <constraint firstAttribute="width" constant="250" id="rzS-Xs-jxg"/>
+                                </constraints>
                                 <state key="normal" image="300x300_button_connect.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -76,8 +80,12 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
                                 <rect key="frame" x="315" y="175" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="4uz-C1-p4N"/>
+                                    <constraint firstAttribute="height" constant="250" id="nZV-cm-NcT"/>
+                                </constraints>
                                 <state key="normal" image="300x300_button_battle.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -117,7 +125,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BZ-L8-Cwe">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BZ-L8-Cwe">
                                 <rect key="frame" x="16" y="28" width="52" height="50"/>
                                 <state key="normal" image="back-button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,41 +134,7 @@
                                     <action selector="back:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="bRB-Cl-qTh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0S4-9B-NAe">
-                                <rect key="frame" x="16" y="240" width="171" height="120"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="171" id="BRn-1O-n9C"/>
-                                </constraints>
-                                <state key="normal" image="mini-map-0.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="BRn-1O-n9C"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="transitToBattleArena:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="qhM-oT-zoZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT2-I9-TXU">
-                                <rect key="frame" x="213" y="209" width="175" height="181"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="181" id="ulY-76-5gp"/>
-                                </constraints>
-                                <state key="normal" image="mini-map-3.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ulY-76-5gp"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="transitToMaze:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="mZv-RH-r4A"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcE-7w-Pir">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcE-7w-Pir">
                                 <rect key="frame" x="409" y="262" width="175" height="75"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="72"/>
                                 <state key="normal" title="?">
@@ -168,50 +142,54 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIp-zG-uX3">
+                                <rect key="frame" x="16" y="238" width="174" height="123"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="123" id="3YJ-E6-Eyl"/>
+                                    <constraint firstAttribute="width" constant="174" id="TGe-ax-Cnk"/>
+                                </constraints>
+                                <state key="normal" image="mini-map-0.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="arenaTransit:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="NQ2-oP-px7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydc-Cw-POf">
+                                <rect key="frame" x="218" y="201" width="204" height="197"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="204" id="JYF-RP-Nch"/>
+                                    <constraint firstAttribute="height" constant="197" id="bFD-Io-Jyc"/>
+                                </constraints>
+                                <state key="normal" image="mini-map-3.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="mazeTransit:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="vBJ-CL-h9D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="dcE-7w-Pir" firstAttribute="centerY" secondItem="WT2-I9-TXU" secondAttribute="centerY" id="1lw-Ih-fVT"/>
-                            <constraint firstAttribute="centerY" secondItem="0S4-9B-NAe" secondAttribute="centerY" id="4fA-ne-R4a"/>
-                            <constraint firstAttribute="centerX" secondItem="WT2-I9-TXU" secondAttribute="centerX" id="5a8-XY-GOj"/>
-                            <constraint firstItem="dcE-7w-Pir" firstAttribute="leading" secondItem="WT2-I9-TXU" secondAttribute="trailing" constant="21" id="9ex-56-adl"/>
-                            <constraint firstItem="gXU-FK-J1Q" firstAttribute="top" secondItem="WT2-I9-TXU" secondAttribute="bottom" constant="210" id="BGz-o0-vS6"/>
-                            <constraint firstAttribute="centerX" secondItem="0S4-9B-NAe" secondAttribute="centerX" constant="200" id="H5N-Du-wiQ"/>
-                            <constraint firstItem="WT2-I9-TXU" firstAttribute="centerX" secondItem="2Tz-1b-3tE" secondAttribute="centerX" id="HJN-Qv-cLy"/>
-                            <constraint firstItem="WT2-I9-TXU" firstAttribute="leading" secondItem="0S4-9B-NAe" secondAttribute="trailing" constant="8" symbolic="YES" id="INU-GU-WxI"/>
-                            <constraint firstItem="gXU-FK-J1Q" firstAttribute="top" secondItem="0S4-9B-NAe" secondAttribute="bottom" constant="240" id="N2D-aC-Q5z"/>
-                            <constraint firstItem="0S4-9B-NAe" firstAttribute="leading" secondItem="2Tz-1b-3tE" secondAttribute="leadingMargin" id="ZuD-ux-0lv"/>
-                            <constraint firstItem="0S4-9B-NAe" firstAttribute="centerY" secondItem="2Tz-1b-3tE" secondAttribute="centerY" id="bU2-zq-zup"/>
-                            <constraint firstItem="0S4-9B-NAe" firstAttribute="leading" secondItem="8BZ-L8-Cwe" secondAttribute="leading" id="kVZ-t3-DFA"/>
-                            <constraint firstAttribute="centerX" secondItem="0S4-9B-NAe" secondAttribute="centerX" constant="-200" id="ldt-rN-9Ii"/>
-                            <constraint firstItem="WT2-I9-TXU" firstAttribute="top" secondItem="dcE-7w-Pir" secondAttribute="bottom" constant="30" id="ljX-FJ-xoF"/>
+                            <constraint firstAttribute="centerX" secondItem="kIp-zG-uX3" secondAttribute="centerX" constant="197" id="7Ft-GE-ve4"/>
+                            <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-196" id="Aup-XU-Tmt"/>
+                            <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="H8w-Bp-flE"/>
+                            <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="LWD-Bm-yIK"/>
+                            <constraint firstAttribute="centerY" secondItem="kIp-zG-uX3" secondAttribute="centerY" id="N1h-Sp-DM2"/>
+                            <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="QbZ-WB-qj0"/>
+                            <constraint firstAttribute="centerY" secondItem="Ydc-Cw-POf" secondAttribute="centerY" id="ovT-2D-Jyd"/>
                             <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-200" id="qbi-jz-P2m"/>
                             <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="qgH-up-vtO"/>
-                            <constraint firstAttribute="centerY" secondItem="WT2-I9-TXU" secondAttribute="centerY" id="v2v-ke-Aii"/>
-                            <constraint firstAttribute="centerY" secondItem="WT2-I9-TXU" secondAttribute="centerY" id="vzy-Dr-xSZ"/>
+                            <constraint firstAttribute="centerY" secondItem="Ydc-Cw-POf" secondAttribute="centerY" id="vna-v3-nzz"/>
                             <constraint firstItem="dcE-7w-Pir" firstAttribute="trailing" secondItem="2Tz-1b-3tE" secondAttribute="trailingMargin" id="w6r-qT-2kf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="4fA-ne-R4a"/>
-                                <exclude reference="H5N-Du-wiQ"/>
-                                <exclude reference="ZuD-ux-0lv"/>
-                                <exclude reference="bU2-zq-zup"/>
-                                <exclude reference="kVZ-t3-DFA"/>
-                                <exclude reference="ldt-rN-9Ii"/>
-                                <exclude reference="5a8-XY-GOj"/>
-                                <exclude reference="HJN-Qv-cLy"/>
-                                <exclude reference="INU-GU-WxI"/>
-                                <exclude reference="ljX-FJ-xoF"/>
-                                <exclude reference="v2v-ke-Aii"/>
-                                <exclude reference="vzy-Dr-xSZ"/>
-                                <exclude reference="1lw-Ih-fVT"/>
-                                <exclude reference="9ex-56-adl"/>
+                                <exclude reference="LWD-Bm-yIK"/>
+                                <exclude reference="vna-v3-nzz"/>
                                 <exclude reference="qbi-jz-P2m"/>
                                 <exclude reference="qgH-up-vtO"/>
                                 <exclude reference="w6r-qT-2kf"/>
-                                <exclude reference="BGz-o0-vS6"/>
-                                <exclude reference="N2D-aC-Q5z"/>
                             </mask>
                         </variation>
                     </view>

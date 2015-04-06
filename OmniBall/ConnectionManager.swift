@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 3
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!

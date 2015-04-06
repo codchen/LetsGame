@@ -62,6 +62,7 @@
 		11D844A11AC9C5360078B62B /* Electric Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A01AC9C5360078B62B /* Electric Hit.mp3 */; };
 		11D844A31AC9CD2E0078B62B /* Electric Hit 02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */; };
 		11D844A51ACC3C330078B62B /* 100x100_icon_rank.png in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */; };
+		11ED25B21AD31436002803EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25B01AD31436002803EC /* Main.storyboard */; };
 		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */; };
 		3C7E84311A91052700212817 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E84301A91052700212817 /* Set.swift */; };
@@ -97,7 +98,6 @@
 		FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71051A8D322800FB3622 /* 80x80_yellow_ball.png */; };
 		FF5301201A7D43A300F04937 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* GameScene.swift */; };
 		FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */; };
-		FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10451A6572FB00A5C7D7 /* Main.storyboard */; };
 		FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10481A6572FB00A5C7D7 /* Images.xcassets */; };
 		FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */; };
 		FF6C10581A6572FC00A5C7D7 /* OmniBallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10571A6572FC00A5C7D7 /* OmniBallTests.swift */; };
@@ -181,6 +181,7 @@
 		11D844A01AC9C5360078B62B /* Electric Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit.mp3"; sourceTree = "<group>"; };
 		11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit 02.mp3"; sourceTree = "<group>"; };
 		11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 100x100_icon_rank.png; sourceTree = "<group>"; };
+		11ED25B11AD31436002803EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelScene.swift; sourceTree = "<group>"; };
 		3C7E84301A91052700212817 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
@@ -218,7 +219,6 @@
 		FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6C10401A6572FB00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FF6C10461A6572FB00A5C7D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FF6C10481A6572FB00A5C7D7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FF6C104B1A6572FB00A5C7D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		FF6C10511A6572FC00A5C7D7 /* OmniBallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OmniBallTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,8 +448,8 @@
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
 				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
-				FF6C10451A6572FB00A5C7D7 /* Main.storyboard */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,
+				11ED25B01AD31436002803EC /* Main.storyboard */,
 				FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */,
 				FF6C103F1A6572FB00A5C7D7 /* Supporting Files */,
 			);
@@ -575,6 +575,7 @@
 				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
+				11ED25B21AD31436002803EC /* Main.storyboard in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
 				1185848F1AB09923002622F8 /* 80x80_green_ball_filled.png in Resources */,
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
@@ -584,7 +585,6 @@
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				112F12771AC5E947008E65BF /* new-map-1.sks in Resources */,
 				FFCFFFFF1AAE16E7006FAE44 /* Level5.sks in Resources */,
-				FF6C10471A6572FB00A5C7D7 /* Main.storyboard in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
 				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
 				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
@@ -707,10 +707,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FF6C10451A6572FB00A5C7D7 /* Main.storyboard */ = {
+		11ED25B01AD31436002803EC /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FF6C10461A6572FB00A5C7D7 /* Base */,
+				11ED25B11AD31436002803EC /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
