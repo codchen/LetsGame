@@ -139,6 +139,7 @@ class OpponentNodes: Player {
     
     override func capture(target: SKSpriteNode, capturedTime: NSTimeInterval) {
         if slaves[target.name!] == nil {
+            target.physicsBody?.dynamic = true
             let name = target.name! as NSString
             let index = name.substringFromIndex(7).toInt()!
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)

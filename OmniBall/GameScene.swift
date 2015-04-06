@@ -272,16 +272,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkBackgroundBond() {
         
         let oldAnchorPoint = anchorPoint
-        if anchorPoint.x > 1 {
-            anchorPoint.x = 1
-        } else if anchorPoint.x < -1 {
-            anchorPoint.x = -1
+        if anchorPoint.x > 2 {
+            anchorPoint.x = 2
+        } else if anchorPoint.x < -2 {
+            anchorPoint.x = -2
         }
         
-        if anchorPoint.y > 1 {
-            anchorPoint.y = 1
-        } else if anchorPoint.y < -1 {
-            anchorPoint.y = -1
+        if anchorPoint.y > 2 {
+            anchorPoint.y = 2
+        } else if anchorPoint.y < -2 {
+            anchorPoint.y = -2
         }
         let offset = oldAnchorPoint - anchorPoint
         hudLayer.position += offset * CGPointMake(size.width, size.height)
