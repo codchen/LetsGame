@@ -46,7 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //hard coded!!
     let latency = 0.17
     let protectionInterval: Double = 2
-    var currentLevel = 0
     var gameOver: Bool = false
     
     //receive capture stuff
@@ -237,12 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
-        let gameOverScene = GameOverScene(size: size, won: won)
-        gameOverScene.currentLevel = currentLevel
-        gameOverScene.scaleMode = scaleMode
-        gameOverScene.controller = connection.controller
-        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-        view?.presentScene(gameOverScene, transition: reveal)
+
     }
     
     // MARK: Gestures
