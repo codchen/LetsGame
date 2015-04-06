@@ -12,6 +12,7 @@ import SpriteKit
 class GameLevelScene: GameScene {
     var destPosList: [CGPoint] = []
     var whichPos = 0
+    let btnComeBack = SKSpriteNode(imageNamed: "circle")
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
@@ -40,7 +41,7 @@ class GameLevelScene: GameScene {
     override func setupHUD() {
         
         let tempAnchor = anchorPoint
-        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.y * size.height)
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
@@ -61,6 +62,12 @@ class GameLevelScene: GameScene {
                 score--
             }
         }
+    
+        btnComeBack.name = "comeBack"
+        btnComeBack.position = CGPoint(x: size.width - 300, y: 300)
+        btnComeBack.position = hudLayer.convertPoint(btnComeBack.position, fromNode: self)
+        btnComeBack.setScale(1.5)
+        hudLayer.addChild(btnComeBack)
     }
     
     override func setupNeutral() {
@@ -147,5 +154,19 @@ class GameLevelScene: GameScene {
         whichPos++
         destPointer.position = destPosList[whichPos % destPosList.count]
         destHeart.position = destPosList[whichPos % destPosList.count]
+    }
+    
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        myNodes.touchesEnded(loc)
+        if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+            println("pressed button")
+            anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
+                y: -myNodes.players[0].position.y/size.height + 0.5)
+            hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
+        }
+        
+        
     }
 }
