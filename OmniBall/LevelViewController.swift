@@ -22,8 +22,13 @@ class LevelViewController: UIViewController {
 //        view.addSubview(scrollController.view)
     }
     
+    @IBAction func transitToMaze(sender: AnyObject) {
+        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        gameViewController.transitToGame("HiveMaze")
+    }
     @IBAction func transitToBattleArena(sender: AnyObject) {
-        
+        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        gameViewController.transitToGame("BattleArena")
     }
     @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)

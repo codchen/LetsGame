@@ -262,6 +262,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 for number in randomNumbers {
                     allNumbers.insert(number)
                 }
+                println("random number count: \(randomNumbers.count)")
                 if allNumbers.count == randomNumbers.count {
                     randomNumbers.sort {$0 > $1}
                     for var index = 0; index < randomNumbers.count; ++index {
@@ -283,6 +284,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.GameReady {
             let messageGameReady = UnsafePointer<MessageReadyToGame>(data.bytes).memory
             peersInGame[peerID] = Int(messageGameReady.playerID)
+            scoreBoard[peersInGame[peerID]!] = 0
             if peersInGame.count == maxPlayer - 1 {
                 if playerID == 0 {
                     controller.addHostLabel(self.peerID.displayName)
@@ -304,6 +306,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if mode != GameMode.None {
                 self.gameMode = mode!
             }
+            println("\(peersInGame[peerID])")
             scoreBoard[peersInGame[peerID]!] = 0
 
             readyToSendFirstTrip()
@@ -345,6 +348,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             let messageDead = UnsafePointer<MessageDead>(data.bytes).memory
             if peersInGame[peerID] != nil{
             	controller.updatePeerDeath(messageDead, peerPlayerID: peersInGame[peerID]!)
+                println("\(peersInGame[peerID])")
+                println("\(scoreBoard.count)")
                 scoreBoard[peersInGame[peerID]!]!++
             }
         } else if message.messageType == MessageType.Destination {
