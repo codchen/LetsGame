@@ -17,8 +17,9 @@ class GameLevelScene: GameScene {
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
-        destHeart = childNodeWithName("destHeart") as SKShapeNode
+        //destHeart = childNodeWithName("destHeart") as SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
+        destHeart.name = "destHeart"
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
         addChild(destHeart)
