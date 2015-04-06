@@ -344,6 +344,14 @@
 			isa = PBXGroup;
 			children = (
 				11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */,
+				FF2086551ACC799800F09DB7 /* back-button.png */,
+				FF2086471ACC797800F09DB7 /* map.png */,
+				FF2086481ACC797800F09DB7 /* maze.png */,
+				FF2086491ACC797800F09DB7 /* mini-map-0.png */,
+				FF20864A1ACC797800F09DB7 /* mini-map-1.png */,
+				FF20864B1ACC797800F09DB7 /* mini-map-2.png */,
+				FF20864C1ACC797800F09DB7 /* mini-map-3.png */,
+				FF20864D1ACC797800F09DB7 /* mini-map-4.png */,
 				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				112F12781AC5EA44008E65BF /* wall-mid.png */,
 				116A211B1AB727870025F4C9 /* 80x80_star_slot.png */,
@@ -616,6 +624,7 @@
 				118584B21AB0998C002622F8 /* 700x200_you_win.png in Resources */,
 				118584AF1AB0998C002622F8 /* 300x300_button_battle.png in Resources */,
 				11D844A51ACC3C330078B62B /* 100x100_icon_rank.png in Resources */,
+				FF20864F1ACC797800F09DB7 /* maze.png in Resources */,
 				118BB02E1AAF890F005B1718 /* Level1.sks in Resources */,
 				1185849E1AB0996F002622F8 /* 80x80_red_star.png in Resources */,
 				118584961AB09947002622F8 /* 80x80_orange_ball_filled.png in Resources */,

@@ -16,7 +16,7 @@ class LevelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
-        scrollController.view.frame = CGRectMake(0, 70, 650, 650)
+        scrollController.view.frame = CGRectMake(0, 75, 650, 650)
         scrollController.gameViewController = gameViewController
         addChildViewController(scrollController)
         view.addSubview(scrollController.view)

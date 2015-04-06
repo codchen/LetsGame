@@ -52,7 +52,6 @@ struct MessageReadyToGame {
 
 struct MessageGameStart {
     let message: Message
-    let playerID: UInt16
     let gameMode: UInt16
 }
 

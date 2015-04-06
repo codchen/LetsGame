@@ -12,7 +12,7 @@ import MultipeerConnectivity
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 1
+    let maxPlayer = 2
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!
@@ -119,8 +119,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func sendGameStart(){
-        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), playerID: playerID, gameMode: UInt16(self.gameMode.rawValue))
-        //println("My playerID is \(playerID)")
+        var message = MessageGameStart(message: Message(messageType: MessageType.GameStart), gameMode: UInt16(self.gameMode.rawValue))
+        println("send game start called")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
         sendData(data, reliable: true)
     }
@@ -210,6 +210,16 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         scoreBoard.removeAll(keepCapacity: false)
     }
     
+    func readyToSendFirstTrip(){
+        if peersInGame.count == maxPlayer - 1 {
+            for (peer, id) in peersInGame {
+                if id > Int(self.playerID) {
+                    sendFirstTrip(peer)
+                }
+            }
+        }
+    }
+    
     func browserViewControllerDidFinish(
         browserViewController: MCBrowserViewController!)  {
             // Called when the browser view controller is dismissed (ie the Done
@@ -285,23 +295,18 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                         }
                     }
                 }
-                
             }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
 //            peersInGame[peerID] = Int(messageGameStart.playerID)
+            println("Received game start")
             let mode = GameMode(rawValue: Int(messageGameStart.gameMode))
             if mode != GameMode.None {
                 self.gameMode = mode!
             }
             scoreBoard[peersInGame[peerID]!] = 0
-            if peersInGame.count == maxPlayer - 1 {
-                for (peer, id) in peersInGame {
-                    if id > Int(self.playerID) {
-                        sendFirstTrip(peer)
-                    }
-                }
-            }
+
+            readyToSendFirstTrip()
         } else if message.messageType == MessageType.FirstTrip{
             let messageFirstTrip = UnsafePointer<MessageFirstTrip>(data.bytes).memory
             let delta = NSDate().timeIntervalSince1970 - messageFirstTrip.time
@@ -318,7 +323,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
             sendThirdTrip(delta[peersInGame[peerID]!]!, peer: peerID)
             if (delta.count == maxPlayer - 1) {
-//                transitToGame(self.gameMode)
                 if controller.presentedViewController != nil{
                     controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
@@ -331,7 +335,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (delta.count == maxPlayer - 1) {
-//                transitToGame(self.gameMode)
                 if controller.presentedViewController != nil{
                     controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
                 }
