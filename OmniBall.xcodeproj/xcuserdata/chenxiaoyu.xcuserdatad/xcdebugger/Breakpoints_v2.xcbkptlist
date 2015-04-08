@@ -9,52 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "try/combatHostScene.swift"
-            timestampString = "444439209.917596"
+            filePath = "OmniBall/ConnectionManager.swift"
+            timestampString = "450211766.608783"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "update(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OmniBall/GameScene.swift"
-            timestampString = "449592976.504985"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-<<<<<<< HEAD
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "performScheduledCapture()"
-            landmarkType = "5">
-=======
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "GameScene"
-            landmarkType = "3">
->>>>>>> origin/MainBranch
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "OmniBall/PresentScene.swift"
-            timestampString = "448220655.213827"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "didMoveToView(_:)"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
+            landmarkName = "session(_:peer:didChangeState:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

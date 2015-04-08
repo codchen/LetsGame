@@ -289,7 +289,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if peersInGame.count == maxPlayer - 1 {
                 if playerID == 0 {
                     controller.addHostLabel(self.peerID.displayName)
-                    controller.playBtn.enabled = true
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.controller.playBtn.enabled = true
+                    }
                 } else {
                     for (peerid, playerid) in peersInGame {
                         if playerid == 0 {
@@ -401,9 +403,19 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 if connectedPeer == maxPlayer - 1 {
                     generateRandomNumber()
 //                    controller.playBtn.enabled = true
-                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
-                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Disabled)
-                    controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.controller.connectedPeers.text = self.controller.connectedPeers.text! + "\t" + peerID.displayName
+                        self.controller.connectPrompt.text = ""
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
+                    }
+                }
+                else{
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.controller.connectedPeers.text = self.controller.connectedPeers.text! + "\t" + peerID.displayName
+                        self.controller.connectPrompt.text = "Need to connect to \(self.maxPlayer - 1 - self.connectedPeer) more peers!"
+                    }
+
                 }
             }
             else if state == MCSessionState.NotConnected {

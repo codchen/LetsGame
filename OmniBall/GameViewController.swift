@@ -65,6 +65,8 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var playBtn: UIButton!
+    @IBOutlet weak var connectPrompt: UILabel!
+    @IBOutlet weak var connectedPeers: UILabel!
 //    var hostLabel: UILabel!
     var canStart = false
     
@@ -73,11 +75,27 @@ class GameViewController: UIViewController {
         connectionManager = ConnectionManager()
         connectionManager.controller = self
         playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
-        playBtn.enabled = false
+        dispatch_async(dispatch_get_main_queue()){
+            if (self.connectionManager.connectedPeer != self.connectionManager.maxPlayer - 1){
+                self.playBtn.enabled = false
+                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peers!"
+            }
+            else{
+                self.connectPrompt.text = ""
+                self.connectedPeers.text = ""
+            }
+            self.connectPrompt.alpha = 0
+        }
 //        hostLabel = UILabel(frame: CGRect(x: 315, y: 375, width: 300, height: 100))
 //        hostLabel.text = "Host: "
 //        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
 //        self.view.addSubview(hostLabel)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+            self.connectPrompt.alpha = 1
+            }, completion: nil)
     }
     
     @IBAction func connect(sender: UIButton) {
@@ -195,13 +213,13 @@ class GameViewController: UIViewController {
     }
     
     func addHostLabel(peerName: String) {
-
-        lblHost.text = "Host: " + peerName
 //        hostLabel.backgroundColor = UIColor.whiteColor()
 //        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
 //        println("Have we done this \(hostLabel.frame)")
 //        self.view.addSubview(hostLabel)
-        view.setNeedsDisplay()
+        dispatch_async(dispatch_get_main_queue()){
+            self.lblHost.text = "Host: " + peerName
+        }
 //        self.view.drawRect(lblHost.frame)
     }
     

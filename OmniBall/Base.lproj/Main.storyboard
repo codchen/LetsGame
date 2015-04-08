@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -76,12 +76,48 @@
                             </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" restorationIdentifier="lblHost" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xh-WJ-4qM" userLabel="lblHost">
                                 <rect key="frame" x="364" y="181" width="152" height="21"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
-                                <rect key="frame" x="315" y="175" width="250" height="250"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connected peers: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECk-ry-jLr">
+                                <rect key="frame" x="35" y="28" width="549" height="21"/>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Need to connect to 2 more peers!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxi-CT-nBc">
+                                <rect key="frame" x="16" y="168" width="293" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="QjG-40-kUr"/>
+                                    <constraint firstAttribute="width" constant="300" id="pfD-7d-PcB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Connect" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVF-iP-yhH">
+                                <rect key="frame" x="139" y="404" width="66" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="I9i-Kk-Xwl"/>
+                                    <constraint firstAttribute="height" constant="30" id="pz3-jJ-CDM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="31"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tya-vB-P4A">
+                                <rect key="frame" x="419" y="404" width="33" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="asB-og-iep"/>
+                                    <constraint firstAttribute="width" constant="45" id="qQG-yu-ALN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="31"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
+                                <rect key="frame" x="310" y="175" width="250" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="4uz-C1-p4N"/>
                                     <constraint firstAttribute="height" constant="250" id="nZV-cm-NcT"/>
@@ -97,14 +133,28 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
+                            <constraint firstAttribute="centerY" secondItem="pxi-CT-nBc" secondAttribute="centerY" constant="90" id="9OA-aT-3V6"/>
+                            <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="128" id="FK8-2t-oO4"/>
+                            <constraint firstAttribute="centerX" secondItem="tya-vB-P4A" secondAttribute="centerX" constant="-140" id="HT7-s0-lSI"/>
                             <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
+                            <constraint firstAttribute="centerX" secondItem="NVF-iP-yhH" secondAttribute="centerX" constant="140" id="Xc8-Z0-8VL"/>
+                            <constraint firstAttribute="centerY" secondItem="NVF-iP-yhH" secondAttribute="centerY" constant="-120" id="ZH7-cK-4q2"/>
                             <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="120" id="cYv-9E-9Qm"/>
+                            <constraint firstAttribute="centerY" secondItem="tya-vB-P4A" secondAttribute="centerY" constant="-120" id="d0v-EH-kGP"/>
+                            <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="70" id="fiP-A8-W6D"/>
                             <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="-140" id="jP9-A9-ujY"/>
                             <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" id="spz-Zf-jzg"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="fiP-A8-W6D"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="connectPrompt" destination="pxi-CT-nBc" id="GWo-3d-zqn"/>
+                        <outlet property="connectedPeers" destination="ECk-ry-jLr" id="gOX-yr-nTL"/>
                         <outlet property="lblHost" destination="0xh-WJ-4qM" id="aC2-LJ-Mai"/>
                         <outlet property="playBtn" destination="ADK-DC-inN" id="rnE-Qs-SzQ"/>
                     </connections>
