@@ -80,8 +80,8 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connected peers: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECk-ry-jLr">
-                                <rect key="frame" x="35" y="28" width="549" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Connected peers: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECk-ry-jLr">
+                                <rect key="frame" x="16" y="28" width="568" height="21"/>
                                 <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -137,10 +137,12 @@
                             <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="128" id="FK8-2t-oO4"/>
                             <constraint firstAttribute="centerX" secondItem="tya-vB-P4A" secondAttribute="centerX" constant="-140" id="HT7-s0-lSI"/>
                             <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
+                            <constraint firstAttribute="centerX" secondItem="ECk-ry-jLr" secondAttribute="centerX" id="IfB-4o-5tE"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
                             <constraint firstAttribute="centerX" secondItem="NVF-iP-yhH" secondAttribute="centerX" constant="140" id="Xc8-Z0-8VL"/>
+                            <constraint firstAttribute="centerY" secondItem="ECk-ry-jLr" secondAttribute="centerY" constant="140" id="Xuc-Ke-81y"/>
                             <constraint firstAttribute="centerY" secondItem="NVF-iP-yhH" secondAttribute="centerY" constant="-120" id="ZH7-cK-4q2"/>
-                            <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="120" id="cYv-9E-9Qm"/>
+                            <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="90" id="cYv-9E-9Qm"/>
                             <constraint firstAttribute="centerY" secondItem="tya-vB-P4A" secondAttribute="centerY" constant="-120" id="d0v-EH-kGP"/>
                             <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="70" id="fiP-A8-W6D"/>
                             <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="-140" id="jP9-A9-ujY"/>
