@@ -28,7 +28,7 @@ class GameOverScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         connection = controller.connectionManager
-        connection.gameState = .WaitingForMatch
+        connection.gameState = .WaitingForStart
         
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero

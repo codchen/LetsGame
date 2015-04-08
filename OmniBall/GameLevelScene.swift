@@ -18,8 +18,9 @@ class GameLevelScene: GameScene {
         super.didMoveToView(view)
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
+            node.physicsBody = nil
         }
-        println("\(destPosList.count)")
+//        println("\(destPosList.count)")
     }
     
     var currentLevel = 0
@@ -64,7 +65,7 @@ class GameLevelScene: GameScene {
         }
     
         btnComeBack.name = "comeBack"
-        btnComeBack.position = CGPoint(x: size.width - 300, y: 300)
+        btnComeBack.position = CGPoint(x: size.width - 100, y: 300)
         btnComeBack.position = hudLayer.convertPoint(btnComeBack.position, fromNode: self)
         btnComeBack.setScale(1.5)
         hudLayer.addChild(btnComeBack)
@@ -110,21 +111,14 @@ class GameLevelScene: GameScene {
                     maxScore = score
                 }
             }
+            println("in checking game over")
             if maxScore == connection.scoreBoard[Int(myNodes.id)] {
                 gameOver = true
                 connection.sendGameOver()
+                println("Game Over?")
                 gameOver(won: true)
             }
         }
-    }
-    
-    override func gameOver(#won: Bool) {
-        let gameOverScene = GameOverScene(size: size, won: won)
-        gameOverScene.currentLevel = currentLevel
-        gameOverScene.scaleMode = scaleMode
-        gameOverScene.controller = connection.controller
-        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-        view?.presentScene(gameOverScene, transition: reveal)
     }
     
     override func scored() {
@@ -157,17 +151,15 @@ class GameLevelScene: GameScene {
         destHeart.position = destPosList[whichPos % destPosList.count]
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        myNodes.touchesEnded(loc)
+        myNodes.touchesBegan(loc)
         if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
             println("pressed button")
             anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
                 y: -myNodes.players[0].position.y/size.height + 0.5)
             hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
         }
-        
-        
     }
 }

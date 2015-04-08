@@ -202,12 +202,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func gameOver(){
-        playerID = 0
+//        playerID = 0
         randomNumbers.removeAll(keepCapacity: false)
         receivedAllRandomNumber = false
-        peersInGame.removeAll(keepCapacity: false)
+//        peersInGame.removeAll(keepCapacity: false)
         delta.removeAll(keepCapacity: false)
         scoreBoard.removeAll(keepCapacity: false)
+        scoreBoard[Int(playerID)] = 0
     }
     
     func readyToSendFirstTrip(){
@@ -248,9 +249,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
             randomNumbers.append(messageRandomNumber.number)
             
-            if gameState == .WaitingForMatch {
-                generateRandomNumber()
-            }
+//            if gameState == .WaitingForMatch {
+//                generateRandomNumber()
+//            }
             
             if randomNumbers.count == maxPlayer{
                 receivedAllRandomNumber = true
@@ -269,6 +270,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                             playerID = UInt16(index)
                             scoreBoard[Int(playerID)] = 0
                             gameState = .WaitingForStart
+                    		
                             sendGameReady()
                             self.assistant.stop()
                             break

@@ -236,7 +236,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
-
+        let gameOverScene = GameOverScene(size: size, won: won)
+        gameOverScene.scaleMode = scaleMode
+        gameOverScene.controller = connection.controller
+        let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        view?.presentScene(gameOverScene, transition: reveal)
     }
     
     // MARK: Gestures

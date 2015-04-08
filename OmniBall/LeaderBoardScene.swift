@@ -42,7 +42,7 @@ class LeaderBoardScene: SKScene {
     override func didMoveToView(view: SKView) {
         controller.currentLevel = -1
         connection = controller.connectionManager
-        connection.gameState = .WaitingForMatch
+        connection.gameState = .WaitingForStart
         self.connection.gameMode = .None
         
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
@@ -163,7 +163,7 @@ class LeaderBoardScene: SKScene {
                     self.connection.gameMode = .HiveMaze
                     
                 }
-                connection.generateRandomNumber()
+//                connection.generateRandomNumber()
 //                controller.transitToRoundX(connection.roundNum)
             }
             
