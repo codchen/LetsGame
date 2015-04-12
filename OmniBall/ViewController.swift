@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBAction func showTutorial(sender: UIButton) {
         
-        let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
+        let scene = TutorialScene.unarchiveFromFile("Tutorial") as! TutorialScene
         if self.currentView == nil {
             let skView = SKView(frame: self.view.frame)
             // Configure the view.
@@ -39,9 +39,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showGVC(sender: UIButton) {
-    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
         self.presentViewController(gameViewController, animated: true, completion: nil)
         
+    }
+    
+    func clearCurrentView() {
+        self.currentView = nil
     }
     
     

@@ -11,7 +11,7 @@ import SpriteKit
 
 class MyNodes: Player {
     
-    let connection: ConnectionManager!
+    var _scene2modelAdptr: SceneToModelAdapter!
     var deadNodes:[Int] = []
     var successNodes: Int = 0
     var msgCount: UInt32 = 0
@@ -22,14 +22,13 @@ class MyNodes: Player {
     let maxSpeed:CGFloat = 1500
     var score = 0
     
-    init(connection: ConnectionManager, scene: GameScene) {
+    init(scene2modelAdptr: SceneToModelAdapter, scene: GameScene) {
         super.init()
-        
-        self.connection = connection
+        self._scene2modelAdptr = scene2modelAdptr
         self.scene = scene
-        self.id = connection.playerID
+        self.id = _scene2modelAdptr.getPlayerID()
         self.color = PlayerColors(rawValue: Int(id))
-        score = connection.scoreBoard[Int(self.id)]!
+        score = _scene2modelAdptr.getScore(playerID: self.id)
         setUpPlayers(color)
         selectedNode = players[0]
     	selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
@@ -89,7 +88,7 @@ class MyNodes: Player {
             if slave.node.intersectsNode(scene.destHeart) {
                 successNodes += 1
                 score++
-                connection.scoreBoard[Int(id)]!++
+                _scene2modelAdptr.increaseScore(playerID: self.id)
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 deCapList.append(slave.node)
@@ -108,7 +107,7 @@ class MyNodes: Player {
             if players[i].intersectsNode(scene.destHeart) {
                 players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 players[i].position = bornPos[i]
-                connection.sendReborn(UInt16(i))
+                _scene2modelAdptr.sendReborn(playerID: UInt16(i))
                 scene.anchorPoint = CGPointZero
                 scene.hudLayer.position = CGPointZero
             }
@@ -127,7 +126,7 @@ class MyNodes: Player {
         }
         
         for (name, slave) in slaves {
-            let node = scene.childNodeWithName(name) as SKSpriteNode
+            let node = scene.childNodeWithName(name) as! SKSpriteNode
             if closeEnough(location, node.position, CGFloat(280)) == true {
                 touchesBeganHelper(node, location: location, isSlave: true)
                 launchPoint = location
@@ -181,7 +180,7 @@ class MyNodes: Player {
     }
     
     func sendDead(index: UInt16){
-        connection.sendDeath(index, count: msgCount)
+        _scene2modelAdptr.sendDeath(index: index, msgCount: msgCount)
         msgCount++
     }
     
@@ -202,7 +201,7 @@ class MyNodes: Player {
     }
     
     func sendMoveHelper(node: SKSpriteNode, index: UInt16, isSlave: Bool) {
-        connection.sendMove(Float(node.position.x), y: Float(node.position.y), dx: Float(node.physicsBody!.velocity.dx), dy: Float(node.physicsBody!.velocity.dy), count: msgCount, index: index, dt: NSDate().timeIntervalSince1970, isSlave: isSlave)
+        _scene2modelAdptr.sendMove(Float(node.position.x), y: Float(node.position.y), dx: Float(node.physicsBody!.velocity.dx), dy: Float(node.physicsBody!.velocity.dy), count: msgCount, index: index, dt: NSDate().timeIntervalSince1970, isSlave: isSlave)
         msgCount++
 
     }

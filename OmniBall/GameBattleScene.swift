@@ -13,22 +13,36 @@ class GameBattleScene: GameScene {
     
     var destRect: CGRect!
     
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
+        enableBackgroundMove = false
+        enumerateChildNodesWithName("bar*") { node, _ in
+            node.physicsBody!.categoryBitMask = physicsCategory.wall
+        }
+        if (myNodes.id == 0){
+            setupDestination(true)
+        } else {
+            setupDestination(false)
+        }
+        println("scene loaded")
+    }
+    
     override func setupDestination(origin: Bool){
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
-        destHeart = childNodeWithName("destHeart") as SKShapeNode
+        destHeart = childNodeWithName("destHeart") as! SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.zPosition = -10
-        let neutral = childNodeWithName("neutral0") as SKSpriteNode
+        let neutral = childNodeWithName("neutral0") as! SKSpriteNode
         
         if origin {
-            let topWall = childNodeWithName("barTop") as SKSpriteNode
-            let bottomWall = childNodeWithName("barBottom") as SKSpriteNode
-            let leftWall = childNodeWithName("barLeft") as SKSpriteNode
-            let rightWall = childNodeWithName("barRight") as SKSpriteNode
+            let topWall = childNodeWithName("barTop") as! SKSpriteNode
+            let bottomWall = childNodeWithName("barBottom") as! SKSpriteNode
+            let leftWall = childNodeWithName("barLeft") as! SKSpriteNode
+            let rightWall = childNodeWithName("barRight") as! SKSpriteNode
             neutralPos = randomPos()
             destRect = CGRectMake(leftWall.position.x + ballSize + 0.5 * destPointer.size.width,
                 bottomWall.position.y + ballSize + 0.5 * destPointer.size.height,
@@ -36,9 +50,7 @@ class GameBattleScene: GameScene {
                 topWall.position.y - 2 * ballSize - destPointer.size.height - 5 - bottomWall.position.y)
             destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
-            connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
-			//println("Sent destination is \(destPos), neutralPos \(neutralPos)")
-            
+            _scene2modelAdptr.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
         }
         neutral.position = neutralPos
 
@@ -55,7 +67,7 @@ class GameBattleScene: GameScene {
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
-        for var i = 0; i < connection.maxPlayer; ++i {
+        for var i = 0; i < _scene2modelAdptr.getMaxPlayer(); ++i {
             var startPos: CGPoint!
             if i == 0 {
                 startPos = CGPoint(x: 100, y: size.height - 300)
@@ -164,7 +176,7 @@ class GameBattleScene: GameScene {
     
     override func scored() {
         addHudStars(myNodes.id)
-        connection.sendPause()
+        _scene2modelAdptr.sendPause()
         paused()
         remainingSlave--
         myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
@@ -214,7 +226,7 @@ class GameBattleScene: GameScene {
     override func checkGameOver(){
         if myNodes.successNodes == self.maxSucessNodes {
             gameOver = true
-            connection.sendGameOver()
+            _scene2modelAdptr.sendGameOver()
             gameOver(won: true)
         }
     }

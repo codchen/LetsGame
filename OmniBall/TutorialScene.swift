@@ -19,9 +19,10 @@ class TutorialScene: GameScene {
     var controller: ViewController!
     
     override func didMoveToView(view: SKView) {
-        connection = ConnectionManager()
-        connection.assistant.stop()
-        myNodes = MyNodes(connection: connection, scene: self)
+
+        _scene2modelAdptr = SceneToModelAdapter()
+        _scene2modelAdptr.model = ConnectionManager()
+        myNodes = MyNodes(scene2modelAdptr: _scene2modelAdptr, scene: self)
         enableBackgroundMove = false
         maxSucessNodes = 1
         setupDestination(true)
@@ -40,7 +41,7 @@ class TutorialScene: GameScene {
     }
     
     override func setupDestination(origin: Bool) {
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destHeart = SKShapeNode(circleOfRadius: 180)
         destHeart.fillColor = UIColor.blackColor()
@@ -101,7 +102,6 @@ class TutorialScene: GameScene {
     override func checkGameOver() {
         if myNodes.successNodes == 1 {
             gameOver = true
-            connection.sendGameOver()
             gameOver(won: true)
         }
     }
@@ -153,13 +153,12 @@ class TutorialScene: GameScene {
                     }
 //                    hudMinions[index].texture = target.texture
                     neutralBalls[target.name!]?.lastCapture = now
-                    connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
     }
     
     override func setupNeutral() {
         
-        var node = childNodeWithName("neutral0") as SKSpriteNode
+        var node = childNodeWithName("neutral0") as! SKSpriteNode
         node.size = CGSize(width: 110, height: 110)
         node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
         node.physicsBody!.restitution = 1
@@ -174,22 +173,23 @@ class TutorialScene: GameScene {
         
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-		if !hadFirstStarSelect && myNodes.selectedNode.name!.hasPrefix("neutral") {
-            let text = "Bring it into the ring"
-            tapLabel.removeAllActions()
-            tapLabel.setScale(0)
-            tapLabel.text = text
-            tapLabel.position = CGPoint(x: size.width/2, y: size.height/2 - 300)
-            let wait = SKAction.waitForDuration(0.2)
-            let block = SKAction.runBlock {
-                self.tapLabel.setScale(1)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+            if !hadFirstStarSelect && myNodes.selectedNode.name!.hasPrefix("neutral") {
+                let text = "Bring it into the ring"
+                tapLabel.removeAllActions()
+                tapLabel.setScale(0)
+                tapLabel.text = text
+                tapLabel.position = CGPoint(x: size.width/2, y: size.height/2 - 300)
+                let wait = SKAction.waitForDuration(0.2)
+                let block = SKAction.runBlock {
+                    self.tapLabel.setScale(1)
+                }
+                tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
+                hadFirstStarSelect = true
             }
-            tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
-            hadFirstStarSelect = true
         }
     }
 

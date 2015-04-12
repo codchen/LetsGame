@@ -19,25 +19,25 @@ class MinimapController: UIViewController {
     }
     @IBAction func map0(sender: AnyObject) {
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("BattleArena")
+//        gameViewController.transitToGame("BattleArena")
     }
     @IBAction func map1(sender: AnyObject) {
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+//        gameViewController.transitToGame("HiveMaze")
     }
     @IBAction func map2(sender: AnyObject) {
         gameViewController.currentLevel = 0
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+//        gameViewController.transitToGame("HiveMaze")
     }
     @IBAction func map3(sender: AnyObject) {
         gameViewController.currentLevel = 1
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+//        gameViewController.transitToGame("HiveMaze")
     }
     @IBAction func map4(sender: AnyObject) {
         gameViewController.currentLevel = 2
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+//        gameViewController.transitToGame("HiveMaze")
     }
 }

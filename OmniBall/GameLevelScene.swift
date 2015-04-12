@@ -16,17 +16,19 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
+        println(self.size)
+        enableBackgroundMove = true
+        setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
-//        println("\(destPosList.count)")
     }
     
     var currentLevel = 0
     
     override func setupDestination(origin: Bool) {
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
@@ -46,7 +48,7 @@ class GameLevelScene: GameScene {
         hudLayer.zPosition = 5
         addChild(hudLayer)
         
-        let totalSlaveNum = ((1 + slaveNum) * (connection.maxLevel + 1))/2
+        let totalSlaveNum = ((1 + slaveNum) * (_scene2modelAdptr.getMaxLevel() + 1))/2
         let startPos = CGPoint(x: 100, y: size.height - 300)
         for var i = 0; i < totalSlaveNum; ++i {
             let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
@@ -57,10 +59,12 @@ class GameLevelScene: GameScene {
             collectedMinions.append(false)
         }
                 
-        for (id, var score) in connection.scoreBoard {
-            while score > 0 {
-                addHudStars(UInt16(id))
-                score--
+        for peer in _scene2modelAdptr.getPeers() {
+            println("ADD HUD STARS!!" + String(peer.playerID))
+            var peerScore: Int = peer.score
+            while peerScore > 0 {
+                addHudStars(peer.playerID)
+                peerScore--
             }
         }
     
@@ -73,7 +77,7 @@ class GameLevelScene: GameScene {
     
     override func setupNeutral() {
         enumerateChildNodesWithName("neutral*"){ node, _ in
-            let neutralNode = node as SKSpriteNode
+            let neutralNode = node as! SKSpriteNode
             neutralNode.size = CGSize(width: 110, height: 110)
             neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
             neutralNode.physicsBody?.dynamic = false
@@ -104,17 +108,12 @@ class GameLevelScene: GameScene {
     
     override func checkGameOver() {
         
-        if remainingSlave == 0 && currentLevel == connection.maxLevel {
-            var maxScore: Int = 0
-            for (id, score) in connection.scoreBoard {
-                if score > maxScore {
-                    maxScore = score
-                }
-            }
+        if remainingSlave == 0 && currentLevel == _scene2modelAdptr.getMaxLevel() {
+            var maxScore: Int = _scene2modelAdptr.getMaxScore()
             println("in checking game over")
-            if maxScore == connection.scoreBoard[Int(myNodes.id)] {
+            if maxScore == _scene2modelAdptr.getScore(playerID: myNodes.id) {
                 gameOver = true
-                connection.sendGameOver()
+                _scene2modelAdptr.sendGameOver()
                 println("Game Over?")
                 gameOver(won: true)
             }
@@ -126,8 +125,8 @@ class GameLevelScene: GameScene {
         addHudStars(myNodes.id)
         if remainingSlave == 0 {
             checkGameOver()
-            if (gameOver == false && connection.controller.currentLevel < connection.maxLevel){
-                connection.sendPause()
+            if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){
+                _scene2modelAdptr.sendPause()
                 paused()
             }
         }
@@ -138,8 +137,7 @@ class GameLevelScene: GameScene {
         currentLevel++
         let levelScene = LevelXScene(size: self.size, level: currentLevel)
         levelScene.scaleMode = self.scaleMode
-        levelScene.controller = connection.controller
-        levelScene.connection = connection
+        levelScene._scene2controllerAdptr = _scene2controllerAdptr
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
         
@@ -151,15 +149,16 @@ class GameLevelScene: GameScene {
         destHeart.position = destPosList[whichPos % destPosList.count]
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-        if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-            println("pressed button")
-            anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
-                y: -myNodes.players[0].position.y/size.height + 0.5)
-            hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+            if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+                println("pressed button")
+                anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
+                    y: -myNodes.players[0].position.y/size.height + 0.5)
+                hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
+            }
         }
     }
 }

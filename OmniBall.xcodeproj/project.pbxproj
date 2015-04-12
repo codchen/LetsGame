@@ -10,6 +10,9 @@
 		11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */; };
 		11174ECF1AB299FB006013D7 /* LevelXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11174ECE1AB299FB006013D7 /* LevelXScene.swift */; };
 		1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124FB601AB216470060A1B2 /* TutorialOverScene.swift */; };
+		112D91D51AD5E05200223C67 /* ModelToSceneAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D91D41AD5E05200223C67 /* ModelToSceneAdapter.swift */; };
+		112D91D81AD5F9A600223C67 /* SceneToModelAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D91D71AD5F9A600223C67 /* SceneToModelAdapter.swift */; };
+		112D91DA1AD6036D00223C67 /* SceneToControllerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D91D91AD6036D00223C67 /* SceneToControllerAdapter.swift */; };
 		112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112D92101AB4887200FCF399 /* LevelViewController.swift */; };
 		112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 112F126E1AC5D8DB008E65BF /* BodyHit01.wav */; };
 		112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12701AC5DC13008E65BF /* Switch3.mp3 */; };
@@ -65,7 +68,6 @@
 		11ED25B21AD31436002803EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25B01AD31436002803EC /* Main.storyboard */; };
 		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */; };
-		3C7E84311A91052700212817 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E84301A91052700212817 /* Set.swift */; };
 		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
 		66C206FA1A6EF6B700F4782C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C206F91A6EF6B700F4782C /* circle.png */; };
@@ -108,7 +110,6 @@
 		FFCF00051AB677BA006FAE44 /* 400x200_ready.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00011AB677BA006FAE44 /* 400x200_ready.png */; };
 		FFCF00061AB677BA006FAE44 /* blue_star_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00021AB677BA006FAE44 /* blue_star_filled.png */; };
 		FFCF00071AB677BA006FAE44 /* blue_star.png in Resources */ = {isa = PBXBuildFile; fileRef = FFCF00031AB677BA006FAE44 /* blue_star.png */; };
-		FFCF00091AB72699006FAE44 /* PresentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCF00081AB72699006FAE44 /* PresentScene.swift */; };
 		FFCFFFF51AAE165C006FAE44 /* Level0.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF41AAE165C006FAE44 /* Level0.sks */; };
 		FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF81AAE16A3006FAE44 /* Level2.sks */; };
 		FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */; };
@@ -130,6 +131,9 @@
 		11174ECC1AB28B20006013D7 /* 600x200_leaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 600x200_leaderboard.png; sourceTree = "<group>"; };
 		11174ECE1AB299FB006013D7 /* LevelXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelXScene.swift; sourceTree = "<group>"; };
 		1124FB601AB216470060A1B2 /* TutorialOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialOverScene.swift; sourceTree = "<group>"; };
+		112D91D41AD5E05200223C67 /* ModelToSceneAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelToSceneAdapter.swift; sourceTree = "<group>"; };
+		112D91D71AD5F9A600223C67 /* SceneToModelAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneToModelAdapter.swift; sourceTree = "<group>"; };
+		112D91D91AD6036D00223C67 /* SceneToControllerAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneToControllerAdapter.swift; sourceTree = "<group>"; };
 		112D92101AB4887200FCF399 /* LevelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
 		112F126E1AC5D8DB008E65BF /* BodyHit01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BodyHit01.wav; sourceTree = "<group>"; };
 		112F12701AC5DC13008E65BF /* Switch3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Switch3.mp3; sourceTree = "<group>"; };
@@ -184,7 +188,6 @@
 		11ED25B11AD31436002803EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelScene.swift; sourceTree = "<group>"; };
-		3C7E84301A91052700212817 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		66C206F91A6EF6B700F4782C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
@@ -231,7 +234,6 @@
 		FFCF00011AB677BA006FAE44 /* 400x200_ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 400x200_ready.png; sourceTree = "<group>"; };
 		FFCF00021AB677BA006FAE44 /* blue_star_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_star_filled.png; sourceTree = "<group>"; };
 		FFCF00031AB677BA006FAE44 /* blue_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_star.png; sourceTree = "<group>"; };
-		FFCF00081AB72699006FAE44 /* PresentScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentScene.swift; sourceTree = "<group>"; };
 		FFCFFFF41AAE165C006FAE44 /* Level0.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level0.sks; path = ../Maps/Level0.sks; sourceTree = "<group>"; };
 		FFCFFFF61AAE1683006FAE44 /* Level1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level1.sks; path = ../Maps/Level1.sks; sourceTree = "<group>"; };
 		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = ../Maps/Level2.sks; sourceTree = "<group>"; };
@@ -259,6 +261,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		112D91D61AD5E2CA00223C67 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				112D91D41AD5E05200223C67 /* ModelToSceneAdapter.swift */,
+				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		112F126D1AC5D761008E65BF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,7 +296,8 @@
 				1124FB601AB216470060A1B2 /* TutorialOverScene.swift */,
 				11174ECE1AB299FB006013D7 /* LevelXScene.swift */,
 				11F828A51AB527E800E25D3F /* InstructionScene.swift */,
-				FFCF00081AB72699006FAE44 /* PresentScene.swift */,
+				112D91D71AD5F9A600223C67 /* SceneToModelAdapter.swift */,
+				112D91D91AD6036D00223C67 /* SceneToControllerAdapter.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -322,7 +334,6 @@
 			children = (
 				66D5BDF61A79BF2000A34A42 /* Message.swift */,
 				119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */,
-				3C7E84301A91052700212817 /* Set.swift */,
 				113063BF1ABB2B67006340AE /* ProtectionHalo.sks */,
 				113063C01ABB2B67006340AE /* spark.png */,
 			);
@@ -439,6 +450,7 @@
 		FF6C103E1A6572FB00A5C7D7 /* OmniBall */ = {
 			isa = PBXGroup;
 			children = (
+				112D91D61AD5E2CA00223C67 /* Model */,
 				112F126D1AC5D761008E65BF /* Sounds */,
 				119AF3CF1AB1466700CD5C3C /* OmniBallUtil */,
 				119AF3CE1AB1463700CD5C3C /* Controller */,
@@ -447,7 +459,6 @@
 				11A57C621A9681A000C695E7 /* Entities */,
 				3C8530E01A8BE20300FFD14C /* GameScene.sks */,
 				FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */,
-				66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */,
 				FF6C10481A6572FB00A5C7D7 /* Images.xcassets */,
 				11ED25B01AD31436002803EC /* Main.storyboard */,
 				FF6C104A1A6572FB00A5C7D7 /* LaunchScreen.xib */,
@@ -660,6 +671,7 @@
 				FF6C10871A670BED00A5C7D7 /* GameViewController.swift in Sources */,
 				11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */,
 				66F8668A1A6F0B72007EE9FF /* CGVector+Extensions.swift in Sources */,
+				112D91D81AD5F9A600223C67 /* SceneToModelAdapter.swift in Sources */,
 				FF5301201A7D43A300F04937 /* GameScene.swift in Sources */,
 				66F866901A6F0B72007EE9FF /* SKTAudio.swift in Sources */,
 				1124FB611AB216470060A1B2 /* TutorialOverScene.swift in Sources */,
@@ -668,22 +680,22 @@
 				66F866881A6F0B72007EE9FF /* CGFloat+Extensions.swift in Sources */,
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
-				FFCF00091AB72699006FAE44 /* PresentScene.swift in Sources */,
 				113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */,
 				119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */,
 				11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */,
 				66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */,
 				66F8668B1A6F0B72007EE9FF /* Int+Extensions.swift in Sources */,
 				66F866891A6F0B72007EE9FF /* CGPoint+Extensions.swift in Sources */,
-				3C7E84311A91052700212817 /* Set.swift in Sources */,
 				113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */,
 				11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */,
 				112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */,
+				112D91DA1AD6036D00223C67 /* SceneToControllerAdapter.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				113329AD1AB0D109008B46A2 /* TutorialScene.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,
 				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
 				119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */,
+				112D91D51AD5E05200223C67 /* ModelToSceneAdapter.swift in Sources */,
 				FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -812,6 +824,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OmniBall/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";
@@ -825,6 +838,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OmniBall/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";

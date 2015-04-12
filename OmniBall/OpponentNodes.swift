@@ -50,11 +50,6 @@ class OpponentNodes: Player {
         mutating func update(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16, hasUpdated: Bool) {
             let name = "neutral" + String(index)
-//                println("updating \(name)")
-//                if hasUpdated {
-//                    assert(info[name] != nil, "The neutral doesn't exists")
-//                }
-                
             if !hasUpdated || (hasUpdated && info[name] != nil) {
                 info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
                 updated[name] = hasUpdated
@@ -121,7 +116,7 @@ class OpponentNodes: Player {
     func checkDead(){
         if deleteIndex != -1 {
             let name = "neutral" + String(deleteIndex)
-            let node = scene.childNodeWithName(name) as SKSpriteNode
+            let node = scene.childNodeWithName(name) as! SKSpriteNode
             decapture(node)
             node.removeFromParent()
             deleteIndex = -1

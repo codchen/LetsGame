@@ -11,6 +11,9 @@ import MultipeerConnectivity
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var _scene2modelAdptr: SceneToModelAdapter!
+    var _scene2controllerAdptr: SceneToControllerAdapter!
+    
     var margin: CGFloat!
     let ballSize: CGFloat = 110
     var destPos: CGPoint!
@@ -38,13 +41,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var myNodes: MyNodes!
     var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
-	var connection: ConnectionManager!
+//	var connection: ConnectionManager!
     
     //physics constants
     let maxSpeed = 600
     
     //hard coded!!
-    let latency = 0.17
+//    let latency = 0.17
     let protectionInterval: Double = 2
     var gameOver: Bool = false
     
@@ -72,48 +75,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         
         remainingSlave = slaveNum
-        connection.gameState = .InGame
-        myNodes = MyNodes(connection: connection, scene: self)
+        _scene2modelAdptr.setGameState(GameState.InGame)
+        myNodes = MyNodes(scene2modelAdptr: _scene2modelAdptr, scene: self)
         opponentsWrapper = OpponentsWrapper()
-        for var index = 0; index < connection.maxPlayer; ++index {
-            if Int(connection.playerID) != index {
+        for var index = 0; index < _scene2modelAdptr.getMaxPlayer(); ++index {
+            if Int(myNodes.id) != index {
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
         }
-//        for var index = 0; index < slaveNum; ++index {
-//            neutralPos.append(CGPointZero)
-//        }
-        
-//        if childNodeWithName("boundary") != nil {
-//            let boundary = childNodeWithName("boundary") as SKSpriteNode
-//            boundary.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "map"), alphaThreshold: -0.1, size: boundary.size)
-//            boundary.physicsBody?.dynamic = false
-//        }
         
         setupNeutral()
-        if connection.gameMode == GameMode.BattleArena {
-            enableBackgroundMove = false
-        } else {
-            enableBackgroundMove = true
-        }
-        
-        if (connection.playerID == 0){
-            setupDestination(true)
-        }
-        else {
-            setupDestination(false)
-        }
-        
         setupHUD()
 
         /* Setup your scene here */
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
-        
-        enumerateChildNodesWithName("bar*") { node, _ in
-            node.physicsBody!.categoryBitMask = physicsCategory.wall
-        }
         
         enumerateChildNodesWithName("wall") { node, _ in
             node.physicsBody!.categoryBitMask = physicsCategory.wall
@@ -141,19 +118,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        var slaveNode: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
-        var hunterNode: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
+        var slaveNode: SKSpriteNode = contact.bodyA.node! as! SKSpriteNode
+        var hunterNode: SKSpriteNode = contact.bodyB.node! as! SKSpriteNode
 
         if collision == physicsCategory.Me | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as SKSpriteNode
+                slaveNode = contact.bodyB.node! as! SKSpriteNode
             }
             runAction(collisionSound)
             capture(target: slaveNode, hunter: myNodes)
         } else if collision == physicsCategory.Opponent | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as SKSpriteNode
-                hunterNode = contact.bodyA.node! as SKSpriteNode
+                slaveNode = contact.bodyB.node! as! SKSpriteNode
+                hunterNode = contact.bodyA.node! as! SKSpriteNode
             }
             var opp = opponentsWrapper.getOpponentByName(hunterNode.name!)
             runAction(collisionSound)
@@ -174,14 +151,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (now >= targetInfo.lastCapture + protectionInterval ||
             (now > targetInfo.lastCapture - protectionInterval &&
                 now < targetInfo.lastCapture))&&(hunter.slaves[target.name!] == nil){
-			
             opponentsWrapper.decapture(target)
             myNodes.decapture(target)
             assert(hunter.slaves[target.name!] == nil, "hunter is not nil before capture")
             hunter.capture(target, capturedTime: now)
             assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")
             neutralBalls[target.name!]?.lastCapture = now
-            connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
+            _scene2modelAdptr.sendNeutralInfo(index: UInt16(index), id: hunter.id, lastCaptured: now)
         }
     }
     
@@ -193,10 +169,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
             opponentsWrapper.decapture(scheduleToCapture[0])
-            assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
+//            assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
-            neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]
+            neutralBalls[name as String]?.lastCapture = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
             scheduleUpdateTime.removeAtIndex(0)
@@ -238,39 +214,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver(#won: Bool) {
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
-        gameOverScene.controller = connection.controller
+        gameOverScene._scene2modelAdptr = _scene2modelAdptr
+        gameOverScene._scene2controllerAdptr = _scene2controllerAdptr
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(gameOverScene, transition: reveal)
     }
     
     // MARK: Gestures
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-    }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+        }
+    }
+
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         if enableBackgroundMove && myNodes.launchPoint == nil {
-            let touch = touches.anyObject() as UITouch
-            let currentLocation = touch.locationInNode(self)
-            let previousLocation = touch.previousLocationInNode(self)
-            if myNodes.launchPoint == nil {
-                let translation = currentLocation - previousLocation
-                // move anchorPoint
-                anchorPoint += translation/CGPointMake(size.width, size.height)
-                // move hudLayer
-                hudLayer.position -= translation
-                checkBackgroundBond()
+            if let touch = touches.first as? UITouch {
+                let currentLocation = touch.locationInNode(self)
+                let previousLocation = touch.previousLocationInNode(self)
+                if myNodes.launchPoint == nil {
+                    let translation = currentLocation - previousLocation
+                    // move anchorPoint
+                    anchorPoint += translation/CGPointMake(size.width, size.height)
+                    // move hudLayer
+                    hudLayer.position -= translation
+                    checkBackgroundBond()
+                }
             }
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesEnded(loc)
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesEnded(loc)
+        }
     }
     
     func checkBackgroundBond() {
@@ -299,7 +280,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
-        opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
+        if opponentsWrapper != nil {
+            opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
+        }
     }
     
     func updateReborn(message: MessageReborn, peerPlayerID: Int){
@@ -321,7 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        let sentTime = message.lastCaptured - connection.delta[playerID]!
+        let sentTime = message.lastCaptured - _scene2modelAdptr.getDelta(playerID)
         if sentTime > target.lastCapture + protectionInterval || (sentTime > target.lastCapture - protectionInterval && sentTime < target.lastCapture){
             scheduleToCapture.append(target.node)
             scheduleCaptureBy.append(pointTo)
