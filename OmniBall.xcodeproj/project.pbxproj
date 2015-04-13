@@ -72,6 +72,7 @@
 		11ED25B21AD31436002803EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25B01AD31436002803EC /* Main.storyboard */; };
 		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */; };
+		11FDFFBF1ADC4C9700571E71 /* Flynn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11FDFFBE1ADC4C9700571E71 /* Flynn.mp3 */; };
 		3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3C8530E01A8BE20300FFD14C /* GameScene.sks */; };
 		66C206F81A6CA9BE00F4782C /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */; };
 		66C206FA1A6EF6B700F4782C /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 66C206F91A6EF6B700F4782C /* circle.png */; };
@@ -196,6 +197,7 @@
 		11ED25B11AD31436002803EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelScene.swift; sourceTree = "<group>"; };
+		11FDFFBE1ADC4C9700571E71 /* Flynn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Flynn.mp3; sourceTree = "<group>"; };
 		3C8530E01A8BE20300FFD14C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		66C206F71A6CA9BE00F4782C /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		66C206F91A6EF6B700F4782C /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				112F12741AC5E684008E65BF /* Yeah.mp3 */,
 				117C896A1ADC4233000137DF /* lose_star.mp3 */,
 				117C89641ADC4040000137DF /* catch_star.mp3 */,
+				11FDFFBE1ADC4C9700571E71 /* Flynn.mp3 */,
 				112F12701AC5DC13008E65BF /* Switch3.mp3 */,
 				11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */,
 				112F126E1AC5D8DB008E65BF /* BodyHit01.wav */,
@@ -588,6 +591,7 @@
 			files = (
 				FF2086521ACC797800F09DB7 /* mini-map-2.png in Resources */,
 				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
+				11FDFFBF1ADC4C9700571E71 /* Flynn.mp3 in Resources */,
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,

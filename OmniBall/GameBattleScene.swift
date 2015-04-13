@@ -172,6 +172,7 @@ class GameBattleScene: GameScene {
     
     override func paused(){
         player.pause()
+        cleanCapturedArrays()
     	physicsWorld.speed = 0
     }
     

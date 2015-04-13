@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
 
     let serviceType = "LetsGame"
-    let maxPlayer: Int = 2
+    let maxPlayer: Int = 3
 //    var connectedPeer = 0
     var connectedPeerNames: [String] = []
     var _model2sceneAdptr: ModelToSceneAdapter = ModelToSceneAdapter()
@@ -159,6 +159,11 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 return false
             }
         }
+        mutating func printRandomNumbers() {
+            for peer in peers {
+                println(peer.randomNumber)
+            }
+        }
     }
     var peersInGame: PeersInGame!
     
@@ -266,7 +271,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func sendGameReady(){
         var message = MessageReadyToGame(message: Message(messageType: MessageType.GameReady), playerID: me.playerID)
-        //println("My playerID is \(playerID)")
+//        println("My playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
         sendData(data, reliable: true)
     }
@@ -400,6 +405,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
             if peersInGame.receivedAllRandomNumbers(){
 //                receivedAllRandomNumber = true
+                peersInGame.printRandomNumbers()
                 let sortedPeers: NSMutableArray = NSMutableArray(array: peersInGame.peers)
                 let sortByRandomNumber = NSSortDescriptor(key: "randomNumber", ascending: false)
                 let sortDescriptors = [sortByRandomNumber]

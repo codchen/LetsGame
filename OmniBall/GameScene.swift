@@ -180,7 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
             opponentsWrapper.decapture(scheduleToCapture[0])
-//            assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
+            assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
             neutralBalls[name as String]?.lastCapture = scheduleUpdateTime[0]
