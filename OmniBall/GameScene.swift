@@ -8,6 +8,7 @@
 
 import SpriteKit
 import MultipeerConnectivity
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -60,12 +61,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     var collectedMinions: [Bool] = []
+    
+    var player: AVAudioPlayer!
 
     // special effect
 //    var emitterHalo: SKEmitterNode!
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("Flynn", ofType: "mp3")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
         
         size = CGSize(width: 2048, height: 1536)
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -212,6 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
+        player.stop()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene._scene2modelAdptr = _scene2modelAdptr

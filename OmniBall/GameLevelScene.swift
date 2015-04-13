@@ -133,6 +133,7 @@ class GameLevelScene: GameScene {
     }
     
     override func paused(){
+        player.stop()
         physicsWorld.speed = 0
         currentLevel++
         let levelScene = LevelXScene(size: self.size, level: currentLevel)
