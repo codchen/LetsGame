@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
 
     let serviceType = "LetsGame"
-    let maxPlayer: Int = 2
+    let maxPlayer: Int = 3
 //    var connectedPeer = 0
     var connectedPeerNames: [String] = []
     var _model2sceneAdptr: ModelToSceneAdapter = ModelToSceneAdapter()
