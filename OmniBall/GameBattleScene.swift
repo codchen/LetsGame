@@ -171,6 +171,7 @@ class GameBattleScene: GameScene {
     }
     
     override func paused(){
+        player.pause()
     	physicsWorld.speed = 0
     }
     
@@ -218,6 +219,7 @@ class GameBattleScene: GameScene {
         let action2 = SKAction.waitForDuration(0.5)
         let block2 = SKAction.runBlock{
             label.removeFromParent()
+            self.player.play()
         }
         label.runAction(SKAction.sequence([action1, block1, action2, block2]))
     }
