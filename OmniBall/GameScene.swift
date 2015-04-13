@@ -59,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scheduleToCapture: [SKSpriteNode] = []
     var scheduleCaptureBy: [Player] = []
     var scheduleUpdateTime: [Double] = []
+    var scheduleNum: Int!
     
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
@@ -173,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func performScheduledCapture(){
-        while scheduleToCapture.count > 0{
+        for (var i = 0; i < scheduleNum; ++i){
             //check if already captured
             //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
@@ -205,6 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !gameOver {
             checkGameOver()
         }
+        scheduleNum = scheduleUpdateTime.count
         performScheduledCapture()
         myNodes.checkOutOfBound()
         opponentsWrapper.checkDead()
