@@ -24,9 +24,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
     
-    let collisionSound = SKAction.playSoundFileNamed("Electric Hit.mp3", waitForCompletion: false)
+    let collisionSound = SKAction.playSoundFileNamed("collision.mp3", waitForCompletion: false)
     let whatSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
     let yeahSound = SKAction.playSoundFileNamed("Yeah.mp3", waitForCompletion: false)
+    let catchStarSound = SKAction.playSoundFileNamed("catch_star.mp3", waitForCompletion: false)
+    let loseStarSound = SKAction.playSoundFileNamed("lose_star.mp3", waitForCompletion: false)
+    let scoredSound = SKAction.playSoundFileNamed("score_star.mp3", waitForCompletion: false)
     var enableSound: Bool = true
     
     // Game Play
@@ -180,6 +183,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scored(){
+        addHudStars(myNodes.id)
+        self.remainingSlave--
+        runAction(scoredSound)
     }
     
     func addHudStars(id: UInt16) {

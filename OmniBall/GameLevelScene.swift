@@ -121,8 +121,7 @@ class GameLevelScene: GameScene {
     }
     
     override func scored() {
-        self.remainingSlave--
-        addHudStars(myNodes.id)
+        super.scored()
         if remainingSlave == 0 {
             checkGameOver()
             if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){

@@ -175,10 +175,9 @@ class GameBattleScene: GameScene {
     }
     
     override func scored() {
-        addHudStars(myNodes.id)
+        super.scored()
         _scene2modelAdptr.sendPause()
         paused()
-        remainingSlave--
         myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
         cleanCapturedArrays()
         setupNeutral()
