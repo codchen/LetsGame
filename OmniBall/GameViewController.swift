@@ -162,6 +162,7 @@ class GameViewController: UIViewController {
                     self.configureCurrentView()
             	}
             self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        	println("Instruction Scene opened")
         }
     }
     
@@ -188,6 +189,7 @@ class GameViewController: UIViewController {
                 }
                 self.currentGameScene = scene
                 self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+                println("Battle Areana Scene opened")
             }
         }
     }

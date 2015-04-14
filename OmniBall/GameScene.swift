@@ -45,13 +45,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var myNodes: MyNodes!
     var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
-//	var connection: ConnectionManager!
     
     //physics constants
     let maxSpeed = 600
     
     //hard coded!!
-//    let latency = 0.17
     let protectionInterval: Double = 2
     var gameOver: Bool = false
     
@@ -59,7 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scheduleToCapture: [SKSpriteNode] = []
     var scheduleCaptureBy: [Player] = []
     var scheduleUpdateTime: [Double] = []
-    var scheduleNum: Int!
     
     // hud layer stuff
     var hudMinions: [SKSpriteNode] = []
@@ -67,9 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var collectedMinions: [Bool] = []
     
     var player: AVAudioPlayer!
-
-    // special effect
-//    var emitterHalo: SKEmitterNode!
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
@@ -174,7 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func performScheduledCapture(){
-        for (var i = 0; i < scheduleNum; ++i){
+        while (scheduleUpdateTime.count > 0){
             //check if already captured
             //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
@@ -192,9 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scored(){
-        addHudStars(myNodes.id)
-        self.remainingSlave--
-        runAction(scoredSound)
+
     }
     
     func addHudStars(id: UInt16) {
@@ -206,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !gameOver {
             checkGameOver()
         }
-        scheduleNum = scheduleUpdateTime.count
+//        scheduleNum = scheduleUpdateTime.count
         performScheduledCapture()
         myNodes.checkOutOfBound()
         opponentsWrapper.checkDead()
@@ -234,7 +226,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverScene._scene2modelAdptr = _scene2modelAdptr
         gameOverScene._scene2controllerAdptr = _scene2controllerAdptr
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+        println("should open gameOverScene")
         view?.presentScene(gameOverScene, transition: reveal)
+        println("GameOverScene Opened")
     }
     
     // MARK: Gestures

@@ -172,19 +172,24 @@ class GameBattleScene: GameScene {
     
     override func paused(){
         player.pause()
-        cleanCapturedArrays()
+//        cleanCapturedArrays()
     	physicsWorld.speed = 0
     }
     
     override func scored() {
-        super.scored()
+        addHudStars(myNodes.id)
+        self.remainingSlave--
+        runAction(scoredSound)
         _scene2modelAdptr.sendPause()
         paused()
         myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
         cleanCapturedArrays()
-        setupNeutral()
-        setupDestination(true)
-        readyGo()
+        checkGameOver()
+        if !gameOver {
+            setupNeutral()
+            setupDestination(true)
+            readyGo()
+        }
     }
     
     func cleanCapturedArrays(){
@@ -229,6 +234,7 @@ class GameBattleScene: GameScene {
         if myNodes.successNodes == self.maxSucessNodes {
             gameOver = true
             _scene2modelAdptr.sendGameOver()
+            println("Sent Game Over")
             gameOver(won: true)
         }
     }

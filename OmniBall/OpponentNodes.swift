@@ -116,12 +116,13 @@ class OpponentNodes: Player {
     func checkDead(){
         if deleteIndex != -1 {
             let name = "neutral" + String(deleteIndex)
-            let node = scene.childNodeWithName(name) as! SKSpriteNode
-            decapture(node)
-            node.removeFromParent()
-            deleteIndex = -1
-            scene.addHudStars(self.id)
-            scene.changeDest()
+            if let node = scene.childNodeWithName(name) as? SKSpriteNode {
+                decapture(node)
+                node.removeFromParent()
+                deleteIndex = -1
+                scene.addHudStars(self.id)
+                scene.changeDest()
+            }
         }
     }
     

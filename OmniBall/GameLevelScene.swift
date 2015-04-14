@@ -107,7 +107,8 @@ class GameLevelScene: GameScene {
     }
     
     override func checkGameOver() {
-        
+        println("CurrentLevel is " + String(currentLevel))
+        println("Remaining slave is " + String(remainingSlave))
         if remainingSlave == 0 && currentLevel == _scene2modelAdptr.getMaxLevel() {
             var maxScore: Int = _scene2modelAdptr.getMaxScore()
             println("in checking game over")
@@ -121,7 +122,10 @@ class GameLevelScene: GameScene {
     }
     
     override func scored() {
-        super.scored()
+        addHudStars(myNodes.id)
+        self.remainingSlave--
+        runAction(scoredSound)
+        println(remainingSlave)
         if remainingSlave == 0 {
             checkGameOver()
             if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){

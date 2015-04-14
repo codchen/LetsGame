@@ -54,6 +54,7 @@ class GameOverScene: SKScene {
             myScene._scene2controllerAdptr = self._scene2controllerAdptr
             myScene._scene2modelAdptr = self._scene2modelAdptr
             self.view?.presentScene(myScene, transition: reveal)
+            println("Leaderboard scene opened")
         }
         self.runAction(SKAction.sequence([wait, block]))
         
