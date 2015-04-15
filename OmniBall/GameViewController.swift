@@ -51,9 +51,11 @@ class GameViewController: UIViewController {
     var _model2sceneAdptr: ModelToSceneAdapter!
     
     @IBOutlet weak var lblHost: UILabel!
+    @IBOutlet weak var connectBtn: UIButton!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var connectPrompt: UILabel!
     @IBOutlet weak var connectedPeers: UILabel!
+    @IBOutlet weak var instructionText: UILabel!
 //    var hostLabel: UILabel!
     var canStart = false
     
@@ -61,15 +63,17 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
-        playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle_0"), forState: UIControlState.Disabled)
+        playBtn.setBackgroundImage(UIImage(named: "playc"), forState: UIControlState.Disabled)
         dispatch_async(dispatch_get_main_queue()){
             if (self.connectionManager.peersInGame.getNumPlayers() != self.connectionManager.maxPlayer){
                 self.playBtn.enabled = false
-                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peers!"
+                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peer"
+                self.connectedPeers.text = self.connectionManager.getConnectedMessage()
             }
             else{
-                self.connectPrompt.text = ""
-                self.connectedPeers.text = ""
+                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
+                self.connectedPeers.text = self.connectionManager.getConnectedMessage()
+                self.instructionText.text = "Click \"play\" to start game!"
             }
             self.connectPrompt.alpha = 0
         }
@@ -88,6 +92,19 @@ class GameViewController: UIViewController {
         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
             self.connectPrompt.alpha = 1
             }, completion: nil)
+        if connectionManager.maxPlayer != 1 {
+            UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
+                self.connectBtn.alpha = 0.5
+            }, completion: nil)
+        }
+        else {
+            UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
+                self.playBtn.alpha = 0.5
+                }, completion: nil)
+            dispatch_async(dispatch_get_main_queue()){
+               self.view.setNeedsDisplay()
+            }
+        }
     }
     
     @IBAction func connect(sender: UIButton) {

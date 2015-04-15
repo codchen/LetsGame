@@ -197,11 +197,31 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func getConnectedMessage() -> String {
+        if peersInGame.peers.count == 1 {
+            return "Not connected to anyone yet!"
+        }
         var result = "Connected peers:"
         for peer in peersInGame.peers {
-            result = result + "\t\t" + peer.getName()
+            if peer.getName() != me.getName() {
+                result = result + "\t\t" + peer.getName()
+            }
         }
         return result
+    }
+    
+    func getConnectionPrompt() -> String {
+        if maxPlayer == 1 {
+            return "Single mode"
+        }
+        if (maxPlayer - peersInGame.peers.count) == 0 {
+            return ""
+        }
+        if (maxPlayer - peersInGame.peers.count) == 1 {
+            return "Need to connect to 1 more peer!"
+        }
+        else {
+            return "Need to connect to \(maxPlayer - peersInGame.peers.count) more players!"
+        }
     }
     
     func generateRandomNumber(){
@@ -401,6 +421,10 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     dispatch_async(dispatch_get_main_queue()){
                         println("host is 0 is me " + String(self.me.getName()))
                         self.controller.playBtn.enabled = true
+                        self.controller.instructionText.text = "You are the host. Click \"Play\" to start game!"
+                        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
+                            self.controller.playBtn.alpha = 0.5
+                            }, completion: nil)
                     }
                 }
                 gameState = .WaitingForReconcil
@@ -531,15 +555,21 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     generateRandomNumber()
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = ""
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Normal)
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Selected)
+                        self.controller.connectBtn.layer.removeAllAnimations()
+                        self.controller.connectPrompt.layer.removeAllAnimations()
+                        self.controller.instructionText.text = "Waiting for the host to start game..."
+                        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+                            self.controller.instructionText.alpha = 0
+                            }, completion: nil)
                     }
                 }
                 else {
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = "Need to connect to \(self.maxPlayer - self.peersInGame.getNumPlayers()) more peers!"
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
                     }
 
                 }
@@ -553,8 +583,10 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 }
                 if let peer = peersInGame.getPeer(peerID) {
                     connectedPeerNames = connectedPeerNames.filter({$0 != peer.getName()})
-                    self.controller.connectedPeers.text = self.getConnectedMessage()
-                    self.controller.connectPrompt.text = "Need to connect to \(self.maxPlayer - self.peersInGame.getNumPlayers()) more peers!"
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.controller.connectedPeers.text = self.getConnectedMessage()
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
+                    }
                 }
             }
 
