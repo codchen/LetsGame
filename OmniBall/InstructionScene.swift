@@ -51,6 +51,7 @@ class InstructionScene: SKScene {
 //            self.controller.transitToGame(self.connection.gameMode, gameState: GameState.WaitingForStart)
             switch self.connection.gameMode {
             case .BattleArena:
+                NSLog("instruction called")
                 if self.connection.me.playerID == 0{
                     self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
                 }

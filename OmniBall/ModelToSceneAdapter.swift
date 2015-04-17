@@ -13,19 +13,27 @@ class ModelToSceneAdapter: NSObject {
     var scene: GameScene!
     
     func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
-        scene.updateNeutralInfo(message, playerID: peerPlayerID)
+        if scene != nil {
+            scene.updateNeutralInfo(message, playerID: peerPlayerID)
+        }
     }
     
     func updateReborn(message: MessageReborn, peerPlayerID: Int){
-       	scene.updateReborn(message, peerPlayerID: peerPlayerID)
+        if scene != nil {
+            scene.updateReborn(message, peerPlayerID: peerPlayerID)
+        }
     }
     
     func gameOver(){
-        scene.gameOver(won: false)
+        if scene != nil {
+            scene.gameOver(won: false)
+        }
     }
     
     func pause(){
-        scene.paused()
+        if scene != nil {
+            scene.paused()
+        }
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
@@ -35,7 +43,9 @@ class ModelToSceneAdapter: NSObject {
     }
     
     func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
-        scene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
+        if scene != nil {
+            scene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
+        }
     }
     
 }

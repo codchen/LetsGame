@@ -52,6 +52,7 @@ class OpponentNodes: Player {
             let name = "neutral" + String(index)
             if !hasUpdated || (hasUpdated && info[name] != nil) {
                 info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                //println("info count: \(info.count)")
                 updated[name] = hasUpdated
             }
         }
@@ -76,6 +77,7 @@ class OpponentNodes: Player {
         }
         
         mutating func delete(name: String) {
+            println("decaptureed")
             info[name] = nil
             updated[name] = nil
         }

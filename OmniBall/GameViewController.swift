@@ -63,11 +63,12 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
-        playBtn.setBackgroundImage(UIImage(named: "playc"), forState: UIControlState.Disabled)
+        playBtn.setBackgroundImage(UIImage(named: "playc2"), forState: UIControlState.Disabled)
+        playBtn.setBackgroundImage(UIImage(named: "playc2"), forState: UIControlState.Normal)
         dispatch_async(dispatch_get_main_queue()){
             if (self.connectionManager.peersInGame.getNumPlayers() != self.connectionManager.maxPlayer){
                 self.playBtn.enabled = false
-                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peer"
+                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
             }
             else{
@@ -75,7 +76,8 @@ class GameViewController: UIViewController {
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
                 self.instructionText.text = "Click \"play\" to start game!"
             }
-            self.connectPrompt.alpha = 0
+            self.connectPrompt.alpha = 1
+            self.connectBtn.alpha = 0.5
         }
         _scene2modelAdptr = SceneToModelAdapter()
         _scene2modelAdptr.model = connectionManager
@@ -89,12 +91,12 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
-            self.connectPrompt.alpha = 1
-            }, completion: nil)
+//        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+//            self.connectPrompt.alpha = 1
+//            }, completion: nil)
         if connectionManager.maxPlayer != 1 {
             UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                self.connectBtn.alpha = 0.5
+                self.connectBtn.alpha = 1
             }, completion: nil)
         }
         else {
@@ -169,7 +171,7 @@ class GameViewController: UIViewController {
     }
     
     func transitToInstruction(){
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(dispatch_get_main_queue()){
             let scene = InstructionScene(size: CGSize(width: 2048, height: 1536))
                 scene.scaleMode = .AspectFit
             
@@ -179,7 +181,7 @@ class GameViewController: UIViewController {
                     self.configureCurrentView()
             	}
             self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-        	println("Instruction Scene opened")
+        	NSLog("Instruction Scene opened")
         }
     }
     
@@ -190,7 +192,7 @@ class GameViewController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                println("opening scene")
+                NSLog("opening scene")
                 let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
                 scene._scene2modelAdptr = self._scene2modelAdptr
                 scene._scene2controllerAdptr = self._scene2controllerAdptr
@@ -257,7 +259,7 @@ class GameViewController: UIViewController {
 
     func updateDestination(message: MessageDestination){
         dispatch_async(dispatch_get_main_queue()) {
-            println("received destination")
+            NSLog("received destination")
             self.transitToBattleArena(destination: CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate), starPos: CGPointMake(CGFloat(message.starX), CGFloat(message.starY)))
         }
     }

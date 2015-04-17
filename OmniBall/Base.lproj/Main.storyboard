@@ -102,7 +102,7 @@
                                     <constraint firstAttribute="width" constant="130" id="4uz-C1-p4N"/>
                                     <constraint firstAttribute="height" constant="70" id="nZV-cm-NcT"/>
                                 </constraints>
-                                <state key="normal" image="play.png">
+                                <state key="normal" image="playc2.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -326,7 +326,7 @@
         <image name="mini-map-3.png" width="430" height="416"/>
         <image name="mini-map-4.png" width="494" height="529"/>
         <image name="multiButton.png" width="166" height="166"/>
-        <image name="play.png" width="280" height="150"/>
+        <image name="playc2.png" width="258" height="126"/>
         <image name="singleButton.png" width="166" height="166"/>
     </resources>
 </document>
