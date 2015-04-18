@@ -23,7 +23,7 @@ extension SKNode {
             return scene
             
         } else {
-            println("is nil")
+            NSLog("is nil")
             return nil
         }
     }
@@ -101,9 +101,9 @@ class GameViewController: UIViewController {
             UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
                 self.playBtn.alpha = 0.5
                 }, completion: nil)
-            dispatch_async(dispatch_get_main_queue()){
-               self.view.setNeedsDisplay()
-            }
+//            dispatch_async(dispatch_get_main_queue()){
+//               self.view.setNeedsDisplay()
+//            }
         }
     }
     
@@ -113,15 +113,15 @@ class GameViewController: UIViewController {
 
     
     @IBAction func play(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) {
+        //dispatch_async(dispatch_get_main_queue()) {
             let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as! LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
-        }
+        //}
     }
     
     func transitToGame(gameMode: GameMode, gameState: GameState) {
-        println("\(connectionManager.gameState.rawValue)")
+        NSLog("\(connectionManager.gameState.rawValue)")
         switch gameState {
         case .WaitingForReconcil:
             switch gameMode {
@@ -179,7 +179,7 @@ class GameViewController: UIViewController {
                     self.configureCurrentView()
             	}
             self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-        	println("Instruction Scene opened")
+        	NSLog("Instruction Scene opened")
         }
     }
     
@@ -190,7 +190,7 @@ class GameViewController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                println("opening scene")
+                NSLog("opening scene")
                 let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
                 scene._scene2modelAdptr = self._scene2modelAdptr
                 scene._scene2controllerAdptr = self._scene2controllerAdptr
@@ -206,14 +206,14 @@ class GameViewController: UIViewController {
                 }
                 self.currentGameScene = scene
                 self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-                println("Battle Areana Scene opened")
+                NSLog("Battle Areana Scene opened")
             }
         }
     }
     
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
-            println("Current level is " + String(self.currentLevel))
+            NSLog("Current level is " + String(self.currentLevel))
             let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as! GameLevelScene
         	scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel + 1
@@ -246,7 +246,7 @@ class GameViewController: UIViewController {
     func addHostLabel(peerName: String) {
 //        hostLabel.backgroundColor = UIColor.whiteColor()
 //        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
-//        println("Have we done this \(hostLabel.frame)")
+//        NSLog("Have we done this \(hostLabel.frame)")
 //        self.view.addSubview(hostLabel)
         dispatch_async(dispatch_get_main_queue()){
             self.lblHost.text = "Host: " + peerName
@@ -257,7 +257,7 @@ class GameViewController: UIViewController {
 
     func updateDestination(message: MessageDestination){
         dispatch_async(dispatch_get_main_queue()) {
-            println("received destination")
+            NSLog("received destination")
             self.transitToBattleArena(destination: CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate), starPos: CGPointMake(CGFloat(message.starX), CGFloat(message.starY)))
         }
     }

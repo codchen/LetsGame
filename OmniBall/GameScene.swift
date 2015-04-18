@@ -170,7 +170,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func performScheduledCapture(){
         while (scheduleUpdateTime.count > 0){
             //check if already captured
-            //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
+            //NSLog("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
             let index: Int = name.substringFromIndex(7).toInt()!
             myNodes.decapture(scheduleToCapture[0])
@@ -226,9 +226,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverScene._scene2modelAdptr = _scene2modelAdptr
         gameOverScene._scene2controllerAdptr = _scene2controllerAdptr
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-        println("should open gameOverScene")
+        NSLog("should open gameOverScene")
         view?.presentScene(gameOverScene, transition: reveal)
-        println("GameOverScene Opened")
+        NSLog("GameOverScene Opened")
     }
     
     // MARK: Gestures
@@ -342,7 +342,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
-        println("invalid id")
+        NSLog("invalid id")
         return nil
     }
     

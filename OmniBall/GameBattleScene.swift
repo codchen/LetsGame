@@ -24,7 +24,7 @@ class GameBattleScene: GameScene {
         } else {
             setupDestination(false)
         }
-        println("scene loaded")
+        NSLog("scene loaded")
     }
     
     override func setupDestination(origin: Bool){
@@ -58,7 +58,7 @@ class GameBattleScene: GameScene {
         destPointer.physicsBody?.categoryBitMask = physicsCategory.wall
         destPointer.zRotation = destRotation
         destHeart.position = destPos
-        //println("Actual destination is \(destPos), neutralPos \(neutralPos)")
+        //NSLog("Actual destination is \(destPos), neutralPos \(neutralPos)")
     }
     
     override func setupHUD() {
@@ -123,7 +123,7 @@ class GameBattleScene: GameScene {
         destHeart.position = pos
         
         while !checkPosValid(destHeart, isNeutral: false) {
-            //println("Invalid \(destHeart.position)")
+            //NSLog("Invalid \(destHeart.position)")
             pos = CGPointMake(
                 CGFloat.random(min: CGRectGetMinX(destRect), max: CGRectGetMaxX(destRect)),
                 CGFloat.random(min: CGRectGetMinY(destRect), max: CGRectGetMaxY(destRect)))
@@ -234,7 +234,7 @@ class GameBattleScene: GameScene {
         if myNodes.successNodes == self.maxSucessNodes {
             gameOver = true
             _scene2modelAdptr.sendGameOver()
-            println("Sent Game Over")
+            NSLog("Sent Game Over")
             gameOver(won: true)
         }
     }

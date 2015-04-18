@@ -16,7 +16,7 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
-        println(self.size)
+        //NSLog(self.size)
         enableBackgroundMove = true
         setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
@@ -60,7 +60,7 @@ class GameLevelScene: GameScene {
         }
                 
         for peer in _scene2modelAdptr.getPeers() {
-            println("ADD HUD STARS!!" + String(peer.playerID))
+            NSLog("ADD HUD STARS!!" + String(peer.playerID))
             var peerScore: Int = peer.score
             while peerScore > 0 {
                 addHudStars(peer.playerID)
@@ -107,15 +107,15 @@ class GameLevelScene: GameScene {
     }
     
     override func checkGameOver() {
-        println("CurrentLevel is " + String(currentLevel))
-        println("Remaining slave is " + String(remainingSlave))
+        NSLog("CurrentLevel is " + String(currentLevel))
+        NSLog("Remaining slave is " + String(remainingSlave))
         if remainingSlave == 0 && currentLevel == _scene2modelAdptr.getMaxLevel() {
             var maxScore: Int = _scene2modelAdptr.getMaxScore()
-            println("in checking game over")
+            NSLog("in checking game over")
             if maxScore == _scene2modelAdptr.getScore(playerID: myNodes.id) {
                 gameOver = true
                 _scene2modelAdptr.sendGameOver()
-                println("Game Over?")
+                NSLog("Game Over?")
                 gameOver(won: true)
             }
         }
@@ -125,7 +125,7 @@ class GameLevelScene: GameScene {
         addHudStars(myNodes.id)
         self.remainingSlave--
         runAction(scoredSound)
-        println(remainingSlave)
+        //NSLog(remainingSlave)
         if remainingSlave == 0 {
             checkGameOver()
             if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){
@@ -158,7 +158,7 @@ class GameLevelScene: GameScene {
             let loc = touch.locationInNode(self)
             myNodes.touchesBegan(loc)
             if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-                println("pressed button")
+                NSLog("pressed button")
                 anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
                     y: -myNodes.players[0].position.y/size.height + 0.5)
                 hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)

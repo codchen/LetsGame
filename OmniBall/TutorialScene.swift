@@ -134,7 +134,7 @@ class TutorialScene: GameScene {
             (now > targetInfo.lastCapture - protectionInterval &&
                 now < targetInfo.lastCapture))&&(hunter.slaves[target.name!] == nil){
                     myNodes.decapture(target)
-                    //println("Hunter \(hunter.sprite) captured \(target.name!)")
+                    //NSLog("Hunter \(hunter.sprite) captured \(target.name!)")
                     assert(hunter.slaves[target.name!] == nil, "hunter is not nil before capture")
                     hunter.capture(target, capturedTime: now)
                     assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")

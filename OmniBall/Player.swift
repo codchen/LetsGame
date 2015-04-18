@@ -60,7 +60,7 @@ class Player: NSObject {
         case .Blue:
             sprite = "node3"
         default:
-            println("error in setup player color")
+            NSLog("error in setup player color")
         }
         
         var node1: SKSpriteNode!

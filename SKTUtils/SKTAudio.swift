@@ -37,7 +37,7 @@ public class SKTAudio {
   public func playBackgroundMusic(filename: String) {
     let url = NSBundle.mainBundle().URLForResource(filename, withExtension: nil)
     if (url == nil) {
-      println("Could not find file: \(filename)")
+      NSLog("Could not find file: \(filename)")
       return
     }
 
@@ -48,7 +48,7 @@ public class SKTAudio {
       player.prepareToPlay()
       player.play()
     } else {
-      println("Could not create audio player: \(error!)")
+      NSLog("Could not create audio player: \(error!)")
     }
   }
 
@@ -71,7 +71,7 @@ public class SKTAudio {
   public func playSoundEffect(filename: String) {
     let url = NSBundle.mainBundle().URLForResource(filename, withExtension: nil)
     if (url == nil) {
-      println("Could not find file: \(filename)")
+      NSLog("Could not find file: \(filename)")
       return
     }
 
@@ -82,7 +82,7 @@ public class SKTAudio {
       player.prepareToPlay()
       player.play()
     } else {
-      println("Could not create audio player: \(error!)")
+      NSLog("Could not create audio player: \(error!)")
     }
   }
 }

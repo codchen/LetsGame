@@ -190,7 +190,7 @@ class OpponentNodes: Player {
                 }
 
             } else {
-                println("YAY it's nil!")
+                NSLog("YAY it's nil!")
             }
         }
     }
