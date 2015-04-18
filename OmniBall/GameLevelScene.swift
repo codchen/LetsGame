@@ -16,7 +16,6 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
-        println(self.size)
         enableBackgroundMove = true
         setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
