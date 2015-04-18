@@ -50,6 +50,8 @@ class GameViewController: UIViewController {
     var _scene2controllerAdptr: SceneToControllerAdapter!
     var _model2sceneAdptr: ModelToSceneAdapter!
     
+    var canTransitToGame = false
+    
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var connectBtn: UIButton!
     @IBOutlet weak var playBtn: UIButton!
@@ -179,9 +181,15 @@ class GameViewController: UIViewController {
                     self.configureCurrentView()
             	}
             self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-        	println("Instruction Scene opened")
+            
+            println("Instruction Scene opened")
         }
+//        let timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "enableTransit", userInfo: nil, repeats: false)
     }
+    
+//    func enableTransit() {
+//        self.canTransitToGame = true
+//    }
     
     func transitToBattleArena(destination: CGPoint = CGPointZero, rotate: CGFloat = 1, starPos: CGPoint = CGPointZero){
         dispatch_async(dispatch_get_main_queue()) {
@@ -190,7 +198,7 @@ class GameViewController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                println("opening scene")
+                println("opening scene \(NSDate().timeIntervalSince1970)")
                 let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
                 scene._scene2modelAdptr = self._scene2modelAdptr
                 scene._scene2controllerAdptr = self._scene2controllerAdptr
@@ -206,7 +214,7 @@ class GameViewController: UIViewController {
                 }
                 self.currentGameScene = scene
                 self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
-                println("Battle Areana Scene opened")
+                println("Battle Areana Scene opened \(NSDate().timeIntervalSince1970)")
             }
         }
     }
@@ -256,10 +264,9 @@ class GameViewController: UIViewController {
     
 
     func updateDestination(message: MessageDestination){
-        dispatch_async(dispatch_get_main_queue()) {
-            println("received destination")
+//        dispatch_async(dispatch_get_main_queue()) {
             self.transitToBattleArena(destination: CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate), starPos: CGPointMake(CGFloat(message.starX), CGFloat(message.starY)))
-        }
+//        }
     }
     
 

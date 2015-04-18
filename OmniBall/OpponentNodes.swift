@@ -196,9 +196,6 @@ class OpponentNodes: Player {
     }
     
     func updatePeerPos(message: MessageMove) {
-//        if Int(message.index) >= count{
-//            return
-//        }
         if (message.count > lastCount){
             lastCount = message.count
             if message.isSlave {

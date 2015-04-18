@@ -12,6 +12,8 @@ import SpriteKit
 class InstructionScene: SKScene {
     var controller: GameViewController!
     var connection: ConnectionManager!
+    var inTransit: Bool = false
+    var animationOver: Bool = false
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -47,26 +49,23 @@ class InstructionScene: SKScene {
         
         let wait = SKAction.waitForDuration(3)
         let block = SKAction.runBlock {
-            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-//            self.controller.transitToGame(self.connection.gameMode, gameState: GameState.WaitingForStart)
-            switch self.connection.gameMode {
-            case .BattleArena:
-                if self.connection.me.playerID == 0{
-                    self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
-                }
-            case .HiveMaze:
-                let levelScene = LevelXScene(size: self.size, level: self.controller.currentLevel + 1)
-                levelScene.scaleMode = self.scaleMode
-                levelScene._scene2controllerAdptr = SceneToControllerAdapter()
-                levelScene._scene2controllerAdptr.controller = self.controller
-                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-                self.view!.presentScene(levelScene, transition: reveal)
-            default:
-                return
+            if self.connection.gameState == GameState.WaitingForStart {
+                self.controller.transitToGame(self.connection.gameMode, gameState: GameState.WaitingForStart)
+
             }
-            
+            self.animationOver = true
         }
         self.runAction(SKAction.sequence([wait, block]))
+    }
+    
+    override func update(currentTime: NSTimeInterval) {
+        if !inTransit && animationOver {
+            if connection.gameState == GameState.WaitingForStart{
+                inTransit = true
+                self.controller.transitToGame(self.connection.gameMode, gameState: self.connection.gameState)
+            }
+        }
+
     }
 
 }
