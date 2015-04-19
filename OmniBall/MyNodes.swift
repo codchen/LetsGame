@@ -86,18 +86,20 @@ class MyNodes: Player {
     
     func checkOutOfBound(){
         var deCapList = [SKSpriteNode]()
-        for (name, slave) in slaves {
-            if slave.node.intersectsNode(scene.destHeart) {
-                successNodes += 1
-                score++
-                _scene2modelAdptr.increaseScore(playerID: self.id)
-                let slaveName = name as NSString
-                let index: Int = slaveName.substringFromIndex(7).toInt()!
-                deCapList.append(slave.node)
-                slave.node.removeFromParent()
-                sendDead(UInt16(index))
-                scene.scored()
-                scene.changeDest()
+        if (slaves.count != 0){
+            for (name, slave) in slaves {
+                if slave.node.intersectsNode(scene.destHeart) {
+                    successNodes += 1
+                    score++
+                    _scene2modelAdptr.increaseScore(playerID: self.id)
+                    let slaveName = name as NSString
+                    let index: Int = slaveName.substringFromIndex(7).toInt()!
+                    deCapList.append(slave.node)
+                    slave.node.removeFromParent()
+                    sendDead(UInt16(index))
+                    scene.scored()
+                    scene.changeDest()
+                }
             }
         }
         for deleteNode in deCapList {
@@ -126,17 +128,17 @@ class MyNodes: Player {
                 break
             }
         }
-        
-        for (name, slave) in slaves {
-            let node = scene.childNodeWithName(name) as! SKSpriteNode
-            if closeEnough(location, node.position, CGFloat(280)) == true {
-                touchesBeganHelper(node, location: location, isSlave: true)
-                launchPoint = location
-                launchTime = NSDate()
-                break
+        if slaves.count != 0 {
+            for (name, slave) in slaves {
+                let node = scene.childNodeWithName(name) as! SKSpriteNode
+                if closeEnough(location, node.position, CGFloat(280)) == true {
+                    touchesBeganHelper(node, location: location, isSlave: true)
+                    launchPoint = location
+                    launchTime = NSDate()
+                    break
+                }
             }
         }
-
     }
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
@@ -194,11 +196,14 @@ class MyNodes: Player {
         }
         
         // send move of my slaves
-        for (name, slave) in slaves {
-            let slaveNode = slave.node
-            let name: NSString = slaveNode.name! as NSString
-            let index: Int = name.substringFromIndex(7).toInt()!
-            sendMoveHelper(slaveNode, index: UInt16(index), isSlave: true)
+        if slaves.count != 0 {
+            for (name, slave) in slaves {
+                NSLog(name + "'s move sent")
+                let slaveNode = slave.node
+                let name: NSString = slaveNode.name! as NSString
+                let index: Int = name.substringFromIndex(7).toInt()!
+                sendMoveHelper(slaveNode, index: UInt16(index), isSlave: true)
+            }
         }
     }
     

@@ -184,7 +184,7 @@ class GameBattleScene: GameScene {
         if !gameOver {
             setupNeutral()
             setupDestination(true)
-            readyGo()
+            readyGo(0.7)
         }
     }
     
@@ -205,26 +205,10 @@ class GameBattleScene: GameScene {
             setupNeutral()
             setupDestination(false)
             updateDest = false
-            readyGo()
+            readyGo(0.7)
         }
     }
-    
-    func readyGo(){
-        var label = SKSpriteNode(imageNamed: "400x200_ready")
-        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
-        addChild(label)
-        let action1 = SKAction.scaleTo(4, duration: 0.7)
-        let block1 = SKAction.runBlock{
-            label.texture = SKTexture(imageNamed: "400x200_go")
-            self.physicsWorld.speed = 1
-        }
-        let action2 = SKAction.waitForDuration(0.5)
-        let block2 = SKAction.runBlock{
-            label.removeFromParent()
-            self.player.play()
-        }
-        label.runAction(SKAction.sequence([action1, block1, action2, block2]))
-    }
+
     
     override func checkGameOver(){
         if myNodes.successNodes == self.maxSucessNodes {

@@ -14,20 +14,26 @@ class OpponentNodes: Player {
     struct OpponentSpecs {
         var info: [nodeInfo] = []
         var updated: [Bool] = []
-        
+        var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.oppospecs", DISPATCH_QUEUE_SERIAL)
         mutating func add(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16) {
-                info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
-        	updated.append(false)
+                dispatch_sync(execQ){
+                    self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
+                    self.updated.append(false)
+                }
         }
         mutating func update (x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16){
-                info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-            updated[Int(index)] = true
+                dispatch_sync(execQ){
+                    self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                    self.updated[Int(index)] = true
+                }
         }
         
         mutating func setUpdated(index: Int, update: Bool) {
-            updated[index] = update
+            dispatch_sync(execQ){
+                self.updated[index] = update
+            }
         }
         
         mutating func getInfoPosition(index: Int) -> CGPoint {
@@ -46,14 +52,16 @@ class OpponentNodes: Player {
     struct SlaveSpecs {
         var info: Dictionary<String, nodeInfo> = Dictionary<String, nodeInfo>()
         var updated: Dictionary<String, Bool> = Dictionary<String, Bool>()
-        
+        var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.slavespecs", DISPATCH_QUEUE_SERIAL)
         mutating func update(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16, hasUpdated: Bool) {
-            let name = "neutral" + String(index)
-            if !hasUpdated || (hasUpdated && info[name] != nil) {
-                info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                updated[name] = hasUpdated
-            }
+                dispatch_sync(execQ){
+                    let name = "neutral" + String(index)
+                    if !hasUpdated || (hasUpdated && self.info[name] != nil) {
+                        self.info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                        self.updated[name] = hasUpdated
+                    }
+                }
         }
         
         mutating func isUpdated(name: String) -> Bool {
@@ -72,12 +80,16 @@ class OpponentNodes: Player {
         }
         
         mutating func setUpdated(name: String, update: Bool) {
-            updated[name] = update
+            dispatch_sync(execQ){
+                self.updated[name] = update
+            }
         }
         
         mutating func delete(name: String) {
-            info[name] = nil
-            updated[name] = nil
+            dispatch_sync(execQ){
+                self.info[name] = nil
+                self.updated[name] = nil
+            }
         }
     }
     
@@ -168,7 +180,7 @@ class OpponentNodes: Player {
             	else {
                 	players[index].physicsBody!.velocity = specs.getInfoVelocity(index) + CGVector(point: specs.getInfoPosition(index) - players[index].position)
                 }
-            	specs.setUpdated(index, update: false)
+                specs.setUpdated(index, update: false)
             }
         }
         
