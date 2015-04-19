@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
 
     let serviceType = "LetsGame"
-    let maxPlayer: Int = 3
+    let maxPlayer: Int = 2
     var connectedPeerNames: [String] = []
     var _model2sceneAdptr: ModelToSceneAdapter = ModelToSceneAdapter()
     
@@ -53,6 +53,17 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         }
         mutating func addPeer(peerID: MCPeerID) {
             peers.append(Peer(peerID: peerID))
+        }
+        
+        mutating func removePeer(peer: Peer) {
+            var removeIdx = 0
+            for var i = 0; i < peers.count; ++i {
+                if peers[i].playerID == peer.playerID {
+                    removeIdx = i
+                    break
+                }
+            }
+            peers.removeAtIndex(removeIdx)
         }
         
         mutating func getNumPlayers() -> Int {
@@ -186,6 +197,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as! MCPeerID
         }
         
+//        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
         if peerID == nil {
             println("It's nil!")
         }
@@ -328,6 +340,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         sendData(data, reliable: true)
     }
     
+    func sendExit() {
+        var message = MessageExit(message: Message(messageType: MessageType.Exit))
+        let data = NSData(bytes: &message, length: sizeof(MessageExit))
+        sendData(data, reliable: true)
+    }
+    
     func sendDataTo(data: NSData, peerID: MCPeerID, reliable: Bool) {
         var error : NSError?
         var success: Bool!
@@ -369,6 +387,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     
     func clearGameData(){
         peersInGame.clearGameData()
+    }
+    
+    func exitGame() {
+        session.disconnect()
+        peersInGame = PeersInGame()
+        peersInGame.maxPlayer = maxPlayer
+        assistant.start()
     }
     
     func readyToSendFirstTrip(){
@@ -541,6 +566,12 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if let peer = peersInGame.getPeer(peerID) {
             	_model2sceneAdptr.updateReborn(messageReborn, peerPlayerID: Int(peer.playerID))
             }
+        } else if message.messageType == MessageType.Exit {
+            let messageExit = UnsafePointer<MessageExit>(data.bytes).memory
+            if let peer = peersInGame.getPeer(peerID) {
+                _model2sceneAdptr.playerExit(peer.getName())
+                peersInGame.removePeer(peer)
+            }
         }
     }
     
@@ -599,7 +630,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 
                 var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                controller.presentViewController(alert, animated: true, completion: nil)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.controller.presentViewController(alert, animated: true, completion: nil)
+                }
 
                 
                 if let peer = peersInGame.getPeer(peerID) {

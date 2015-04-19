@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ModelToSceneAdapter: NSObject {
     
@@ -43,6 +44,14 @@ class ModelToSceneAdapter: NSObject {
     func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
         if scene != nil {
             scene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
+        }
+    }
+    
+    func playerExit(playerName: String) {
+        if scene != nil {
+            var alert = UIAlertController(title: "Player Exited Game", message: playerName + " has exit the game", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+        	scene._scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
         }
     }
     

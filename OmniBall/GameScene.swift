@@ -46,9 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
     
-    //physics constants
-    let maxSpeed = 600
-    
     //hard coded!!
     let protectionInterval: Double = 2
     var gameOver: Bool = false
@@ -62,6 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     var collectedMinions: [Bool] = []
+    let btnExit: SKSpriteNode = SKSpriteNode(imageNamed: "cross")
     
     var player: AVAudioPlayer!
 	
@@ -109,12 +107,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupHUD(){
-        //        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
-        //        scoreLabel.fontSize = 60
-        //        scoreLabel.fontColor = SKColor.whiteColor()
-        //        scoreLabel.fontName = "Copperplate"
-        //        scoreLabel.text = "score: " + String(myNodes.score)
-        //        hudLayer.addChild(scoreLabel)
+        let tempAnchor = anchorPoint
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        btnExit.position = CGPoint(x: size.width - 100, y: size.height - 300)
+        hudLayer.convertPoint(btnExit.position, fromNode: self)
+        hudLayer.addChild(btnExit)
     }
     
     func setupNeutral(){
@@ -237,6 +237,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let touch = touches.first as? UITouch {
             let loc = touch.locationInNode(self)
             myNodes.touchesBegan(loc)
+            if btnExit.containsPoint(loc) {
+                println("we got btnexit")
+                var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+                let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                    self._scene2modelAdptr.sendExit()
+                    self._scene2modelAdptr.exitGame()
+                    UIView.transitionWithView(self.view!, duration: 0.5,
+                        options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                        animations: {
+                            self.view!.removeFromSuperview()
+                            self._scene2controllerAdptr.clearCurrentView()
+                        }, completion: nil)
+                    
+                }
+                alert.addAction(yesAction)
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                _scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
+            }
         }
     }
 

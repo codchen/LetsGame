@@ -45,6 +45,10 @@ class SceneToModelAdapter: NSObject {
         return model.peersInGame.getDelta(playerID)
     }
     
+    func getNumActivePlayers() -> Int {
+        return model.peersInGame.getNumPlayers()
+    }
+    
     func getMaxPlayer() -> Int {
         return model.maxPlayer
     }
@@ -91,6 +95,14 @@ class SceneToModelAdapter: NSObject {
     
     func sendMove(x: Float, y: Float, dx: Float, dy: Float, count: UInt32, index: UInt16, dt: NSTimeInterval, isSlave: Bool){
         model.sendMove(x, y: y, dx: dx, dy: dy, count: count, index: index, dt: dt, isSlave: isSlave)
+    }
+    
+    func sendExit() {
+        model.sendExit()
+    }
+    
+    func exitGame() {
+        model.exitGame()
     }
     
     func clearGameData() {

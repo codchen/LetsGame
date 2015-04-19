@@ -138,6 +138,10 @@ class GameViewController: UIViewController {
             if self.connectionManager.maxPlayer > 1 {
                 connectionManager.sendGameStart()
                 connectionManager.readyToSendFirstTrip()
+            } else {
+                connectionManager.gameState = .WaitingForStart
+                connectionManager.me.playerID = 0
+                transitToInstruction()
             }
 //            transitToInstruction()
             

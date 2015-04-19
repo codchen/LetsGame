@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SceneToControllerAdapter: NSObject {
     
@@ -32,6 +33,14 @@ class SceneToControllerAdapter: NSObject {
 
         }
     }
+    
+    
+    func presentViewController(viewControllerToPresent: UIViewController, animated: Bool, completion: (()->Void)?) {
+        dispatch_async(dispatch_get_main_queue()){
+            self.controller.presentViewController(viewControllerToPresent, animated: animated, completion: completion)
+        }
+    }
+    
     
     func clearCurrentView() {
         controller.currentView = nil

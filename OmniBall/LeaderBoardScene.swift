@@ -135,7 +135,13 @@ class LeaderBoardScene: SKScene {
                 
             }
             if btnAgain != nil && btnAgain.containsPoint(loc){
-                _scene2controllerAdptr.transitToGame(_scene2modelAdptr.getGameMode(), gameState: _scene2modelAdptr.getGameState())
+                if _scene2modelAdptr.getNumActivePlayers() < _scene2modelAdptr.getMaxPlayer() {
+                    var alert = UIAlertController(title: "Not Enough Players", message: "Please connect to \(_scene2modelAdptr.getMaxPlayer()) players to start the game)", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                    self._scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    _scene2controllerAdptr.transitToGame(_scene2modelAdptr.getGameMode(), gameState: _scene2modelAdptr.getGameState())
+                }
             }
         }
     }
