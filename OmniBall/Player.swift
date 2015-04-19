@@ -83,6 +83,9 @@ class Player: NSObject {
     }
 
     func capture(target: SKSpriteNode, capturedTime: NSTimeInterval){
+        if (target.name!.hasPrefix("neutral") == false){
+            return
+        }
         if slaves[target.name!] == nil {
             target.physicsBody?.dynamic = true
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)

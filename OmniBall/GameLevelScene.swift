@@ -16,12 +16,14 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
+        physicsWorld.speed = 0
         enableBackgroundMove = true
         setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
+        readyGo(3)
     }
     
     var currentLevel = 0

@@ -16,46 +16,23 @@ class OpponentNodes: Player {
         var updated: [Bool] = []
         var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.oppospecs", DISPATCH_QUEUE_SERIAL)
         mutating func add(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
-            dt: CGFloat, index: UInt16, sync: Bool) {
-                if (sync == true) {
-                    dispatch_sync(execQ){
-                        self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
-                        self.updated.append(false)
-                    }
-                }
-                else{
-                    dispatch_async(execQ){
-                        self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
-                        self.updated.append(false)
-                    }
+            dt: CGFloat, index: UInt16) {
+                dispatch_sync(execQ){
+                    self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
+                    self.updated.append(false)
                 }
         }
         mutating func update (x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
-            dt: CGFloat, index: UInt16, sync: Bool){
-                if (sync == true) {
-                    dispatch_sync(execQ){
-                        self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                        self.updated[Int(index)] = true
-                    }
-                }
-                else{
-                    dispatch_async(execQ){
-                        self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                        self.updated[Int(index)] = true
-                    }
+            dt: CGFloat, index: UInt16){
+                dispatch_sync(execQ){
+                    self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                    self.updated[Int(index)] = true
                 }
         }
         
-        mutating func setUpdated(index: Int, update: Bool, sync: Bool) {
-            if (sync == true) {
-                dispatch_sync(execQ){
-                    self.updated[index] = update
-                }
-            }
-            else{
-                dispatch_async(execQ){
-                    self.updated[index] = update
-                }
+        mutating func setUpdated(index: Int, update: Bool) {
+            dispatch_sync(execQ){
+                self.updated[index] = update
             }
         }
         
@@ -77,23 +54,12 @@ class OpponentNodes: Player {
         var updated: Dictionary<String, Bool> = Dictionary<String, Bool>()
         var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.slavespecs", DISPATCH_QUEUE_SERIAL)
         mutating func update(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
-            dt: CGFloat, index: UInt16, hasUpdated: Bool, sync: Bool) {
-                if (sync == true) {
-                    dispatch_sync(execQ){
-                        let name = "neutral" + String(index)
-                        if !hasUpdated || (hasUpdated && self.info[name] != nil) {
-                            self.info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                            self.updated[name] = hasUpdated
-                        }
-                    }
-                }
-                else{
-                    dispatch_async(execQ){
-                        let name = "neutral" + String(index)
-                        if !hasUpdated || (hasUpdated && self.info[name] != nil) {
-                            self.info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                            self.updated[name] = hasUpdated
-                        }
+            dt: CGFloat, index: UInt16, hasUpdated: Bool) {
+                dispatch_sync(execQ){
+                    let name = "neutral" + String(index)
+                    if !hasUpdated || (hasUpdated && self.info[name] != nil) {
+                        self.info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                        self.updated[name] = hasUpdated
                     }
                 }
         }
@@ -113,31 +79,16 @@ class OpponentNodes: Player {
             return CGVector(dx: info[name]!.dx, dy: info[name]!.dy)
         }
         
-        mutating func setUpdated(name: String, update: Bool, sync: Bool) {
-            if (sync == true) {
-                dispatch_sync(execQ){
-                    self.updated[name] = update
-                }
-            }
-            else{
-                dispatch_async(execQ){
-                    self.updated[name] = update
-                }
+        mutating func setUpdated(name: String, update: Bool) {
+            dispatch_sync(execQ){
+                self.updated[name] = update
             }
         }
         
-        mutating func delete(name: String, sync: Bool) {
-            if (sync == true) {
-                dispatch_sync(execQ){
-                    self.info[name] = nil
-                    self.updated[name] = nil
-                }
-            }
-            else {
-                dispatch_async(execQ){
-                    self.info[name] = nil
-                    self.updated[name] = nil
-                }
+        mutating func delete(name: String) {
+            dispatch_sync(execQ){
+                self.info[name] = nil
+                self.updated[name] = nil
             }
         }
     }
@@ -160,7 +111,7 @@ class OpponentNodes: Player {
     
     override func addPlayer(node: SKSpriteNode) {
         players.append(node)
-        specs.add(node.position.x, y: node.position.y, dx: 0, dy: 0, dt: 0, index: playerCount, sync: true)
+        specs.add(node.position.x, y: node.position.y, dx: 0, dy: 0, dt: 0, index: playerCount)
         playerCount++
     }
     
@@ -201,14 +152,14 @@ class OpponentNodes: Player {
             let index = name.substringFromIndex(7).toInt()!
             slaves[target.name!] = NeutralBall(node: target, lastCapture: capturedTime)
             captureAnimation(target, isOppo: true)
-            slaveSpecs.update(target.position.x, y: target.position.y, dx: target.physicsBody!.velocity.dx, dy: target.physicsBody!.velocity.dy, dt: 0, index: UInt16(index), hasUpdated: false, sync: true)
+            slaveSpecs.update(target.position.x, y: target.position.y, dx: target.physicsBody!.velocity.dx, dy: target.physicsBody!.velocity.dy, dt: 0, index: UInt16(index), hasUpdated: false)
         }
     }
     
     override func decapture(target: SKSpriteNode) {
         if slaves[target.name!] != nil {
             slaves[target.name!] = nil
-            slaveSpecs.delete(target.name!, sync: true)
+            slaveSpecs.delete(target.name!)
         }
     }
     
@@ -229,7 +180,7 @@ class OpponentNodes: Player {
             	else {
                 	players[index].physicsBody!.velocity = specs.getInfoVelocity(index) + CGVector(point: specs.getInfoPosition(index) - players[index].position)
                 }
-                specs.setUpdated(index, update: false, sync: true)
+                specs.setUpdated(index, update: false)
             }
         }
         
@@ -247,7 +198,7 @@ class OpponentNodes: Player {
                     else {
                         slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name) + CGVector(point: slaveSpecs.getInfoPosition(name) - slaves[name]!.node.position)
                     }
-                    slaveSpecs.setUpdated(name, update: false, sync: true)
+                    slaveSpecs.setUpdated(name, update: false)
                 }
 
             } else {
@@ -260,9 +211,9 @@ class OpponentNodes: Player {
         if (message.count > lastCount){
             lastCount = message.count
             if message.isSlave {
-                slaveSpecs.update(CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index, hasUpdated: true, sync: false)
+                slaveSpecs.update(CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index, hasUpdated: true)
             } else {
-                specs.update(CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index, sync: false)
+                specs.update(CGFloat(message.x), y: CGFloat(message.y), dx: CGFloat(message.dx), dy: CGFloat(message.dy), dt: CGFloat(message.dt), index: message.index)
             }
             
         }
