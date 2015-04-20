@@ -67,7 +67,7 @@
                                     <constraint firstAttribute="height" constant="62" id="hPf-fd-gdj"/>
                                     <constraint firstAttribute="width" constant="275" id="rzS-Xs-jxg"/>
                                 </constraints>
-                                <state key="normal" image="Connect.png">
+                                <state key="normal" image="connect.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -102,7 +102,7 @@
                                     <constraint firstAttribute="width" constant="130" id="4uz-C1-p4N"/>
                                     <constraint firstAttribute="height" constant="70" id="nZV-cm-NcT"/>
                                 </constraints>
-                                <state key="normal" image="Play.png">
+                                <state key="normal" image="playc.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -318,15 +318,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Connect.png" width="550" height="124"/>
-        <image name="Play.png" width="280" height="150"/>
         <image name="back-button.png" width="146" height="150"/>
+        <image name="connect.png" width="550" height="124"/>
         <image name="mini-map-0.png" width="340" height="240"/>
         <image name="mini-map-1.png" width="300" height="416"/>
         <image name="mini-map-2.png" width="300" height="416"/>
         <image name="mini-map-3.png" width="430" height="416"/>
         <image name="mini-map-4.png" width="494" height="529"/>
         <image name="multiButton.png" width="166" height="166"/>
+        <image name="playc.png" width="258" height="126"/>
         <image name="singleButton.png" width="166" height="166"/>
     </resources>
 </document>

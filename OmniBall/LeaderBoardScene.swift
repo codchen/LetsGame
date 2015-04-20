@@ -12,8 +12,8 @@ import SpriteKit
 class PlayerScore: NSObject {
     let name: String
     let score: Int
-    let id: Int
-    init(name: String, score: Int, id: Int) {
+    let id: UInt16
+    init(name: String, score: Int, id: UInt16) {
         self.name = name
         self.score = score
         self.id = id
@@ -74,35 +74,21 @@ class LeaderBoardScene: SKScene {
         lblScore.horizontalAlignmentMode = .Left
         addChild(lblScore)
         
-        
-        var score: [PlayerScore] = []
-        var myName = connection.peerID.displayName
-        let myId = Int(connection.playerID)
-        let myScore = connection.scoreBoard[myId]
-
-        score.append(PlayerScore(name: myName, score: myScore!, id: myId))
-        
-        for (mcId, playerId) in connection.peersInGame {
-            var playerName = mcId.displayName
-            let playerScore = connection.scoreBoard[playerId]
-            score.append(PlayerScore(name: playerName, score: playerScore!, id: playerId))
-        }
-        
-        let sortedScore: NSMutableArray = NSMutableArray(array: score)
+        let peers = connection.peersInGame.peers
+        let sortedScore: NSMutableArray = NSMutableArray(array: peers)
         let sortByScore = NSSortDescriptor(key: "score", ascending: false)
         let sortDescriptors = [sortByScore]
         sortedScore.sortUsingDescriptors(sortDescriptors)
+        var peerScore = NSArray(array: sortedScore) as [Peer]
         
-        score = NSArray(array: sortedScore) as [PlayerScore]
-        
-        for var index = 0; index < score.count; ++index {
-            let player = score[index]
+        for var index = 0; index < peerScore.count; ++index {
+            let player = peerScore[index]
             let rank = SKLabelNode(text: String(index + 1))
             rank.fontName = "Chalkduster"
             rank.fontSize = 60
             rank.position = CGPoint(x: lblRank.position.x, y: lblRank.position.y - CGFloat(index + 1) * 100)
             addChild(rank)
-            let name = SKLabelNode(text: player.name)
+            let name = SKLabelNode(text: player.getName())
             name.fontName = "Chalkduster"
             name.fontSize = 60
             name.position = CGPoint(x: lblPlayer.position.x,
@@ -110,52 +96,39 @@ class LeaderBoardScene: SKScene {
             name.horizontalAlignmentMode = .Center
             addChild(name)
             for var star = 0; star < player.score; ++star {
-                let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: player.id)!, false))
+                let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: Int(player.playerID))!, false))
                 icnStar.position = CGPoint(x: lblScore.position.x + CGFloat(star) * (icnStar.size.width), y: lblScore.position.y - CGFloat(index + 1) * 100)
                 addChild(icnStar)
             }
         }
         
-        connection.gameOver()
-        
         btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
         addChild(btnNext)
         
-        btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
-        btnAgain.position = CGPoint(x: size.width - 500, y: 400)
-        addChild(btnAgain)
+        if (connection.me.playerID == 0) {
+            btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
+            btnAgain.position = CGPoint(x: size.width - 500, y: 400)
+            addChild(btnAgain)
+        }
         
-//        btnShow = SKLabelNode(text: "Next")
-//        btnShow.position = CGPoint(x: 500, y: 400)
-//        addChild(btnShow)
-        
-//        connection.roundNum++
-//        
-//        if connection.roundNum <= connection.maxRoundNum {
-//            let wait = SKAction.waitForDuration(4.0)
-//            let block = SKAction.runBlock {
-////                self.controller.transitToRoundX(self.connection.roundNum)
-//            }
-//            self.runAction(SKAction.sequence([wait, block]))
-//        } else {
-//            
-//
-//        }
+        connection.gameOver()
+    
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        if btnNext != nil && btnAgain != nil {
-            if btnNext.containsPoint(loc) {
-                UIView.transitionWithView(view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self.controller.currentView = nil
-                    }, completion: nil)
-            } else if btnAgain.containsPoint(loc) {
+        
+        if btnNext.containsPoint(loc) {
+            UIView.transitionWithView(view!, duration: 0.5,
+                options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                animations: {
+                    self.view!.removeFromSuperview()
+                    self.controller.currentView = nil
+                }, completion: nil)
+        } else if btnAgain != nil {
+            if btnAgain.containsPoint(loc) {
                 if gameType == "BattleArena"{
                     self.connection.gameMode = .BattleArena
                 }
@@ -163,9 +136,23 @@ class LeaderBoardScene: SKScene {
                     self.connection.gameMode = .HiveMaze
                     
                 }
+            }
+        }
+        
+//        if btnNext != nil && btnAgain != nil {
+//
+//
+//            } else if btnAgain.containsPoint(loc) {
+//                if gameType == "BattleArena"{
+//                    self.connection.gameMode = .BattleArena
+//                }
+//                else if gameType == "HiveMaze"{
+//                    self.connection.gameMode = .HiveMaze
+//                    
+//                }
 //                connection.generateRandomNumber()
 //                controller.transitToRoundX(connection.roundNum)
-            }
+//            }
             
 //            else if btnShow.containsPoint(loc) {
 //                let scene = PresentScene.unarchiveFromFilePresent("Level2") as PresentScene
@@ -173,7 +160,7 @@ class LeaderBoardScene: SKScene {
 //                scene.scaleMode = scaleMode
 //                view!.presentScene(scene)
 //            }
-        }
+        
     }
     
     override func className() -> String{

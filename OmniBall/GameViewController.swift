@@ -88,7 +88,6 @@ class GameViewController: UIViewController {
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
                 self.instructionText.text = "Click \"play\" to start game!"
             }
-            self.connectPrompt.alpha = 0
             self.connectBtn.alpha = 0.5
         }
 //        hostLabel = UILabel(frame: CGRect(x: 315, y: 375, width: 300, height: 100))

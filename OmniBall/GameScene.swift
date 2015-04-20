@@ -8,6 +8,7 @@
 
 import SpriteKit
 import MultipeerConnectivity
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -24,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let collisionSound = SKAction.playSoundFileNamed("Electric Hit.mp3", waitForCompletion: false)
     let whatSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
     let yeahSound = SKAction.playSoundFileNamed("Yeah.mp3", waitForCompletion: false)
+    var player: AVAudioPlayer!
     var enableSound: Bool = true
     
     // Game Play
@@ -64,6 +66,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("Flynn", ofType: "mp3")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
         
         size = CGSize(width: 2048, height: 1536)
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -239,6 +246,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
+        player.stop()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = connection.controller
@@ -256,8 +264,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("we got btnexit")
             var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                connection.sendExit()
-                connection.exitGame()
+                self.connection.sendExit()
+                self.connection.exitGame()
                 UIView.transitionWithView(self.view!, duration: 0.5,
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {
@@ -268,7 +276,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             alert.addAction(yesAction)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            controller.presentViewController(alert, animated: true, completion: nil)
+            connection.controller.presentViewController(alert, animated: true, completion: nil)
         }
 
     }
@@ -343,7 +351,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        let sentTime = message.lastCaptured - connection.delta[playerID]!
+        let sentTime = message.lastCaptured - connection.peersInGame.getDelta(playerID)
         if sentTime > target.lastCapture + protectionInterval || (sentTime > target.lastCapture - protectionInterval && sentTime < target.lastCapture){
             scheduleToCapture.append(target.node)
             scheduleCaptureBy.append(pointTo)

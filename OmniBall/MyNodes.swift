@@ -29,7 +29,7 @@ class MyNodes: Player {
         self.scene = scene
         self.id = connection.playerID
         self.color = PlayerColors(rawValue: Int(id))
-        score = connection.scoreBoard[Int(self.id)]!
+        score = connection.peersInGame.getPeer(self.id)!.score
         setUpPlayers(color)
         selectedNode = players[0]
     	selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
@@ -89,7 +89,7 @@ class MyNodes: Player {
             if slave.node.intersectsNode(scene.destHeart) {
                 successNodes += 1
                 score++
-                connection.scoreBoard[Int(id)]!++
+                connection.peersInGame.increaseScore(self.id)
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 deCapList.append(slave.node)

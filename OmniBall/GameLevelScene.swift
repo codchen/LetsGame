@@ -52,10 +52,11 @@ class GameLevelScene: GameScene {
             collectedMinions.append(false)
         }
                 
-        for (id, var score) in connection.scoreBoard {
-            while score > 0 {
-                addHudStars(UInt16(id))
-                score--
+        for peer in connection.peersInGame.peers {
+            var peerScore: Int = peer.score
+            while peerScore > 0 {
+                addHudStars(peer.playerID)
+                peerScore--
             }
         }
     
@@ -101,13 +102,13 @@ class GameLevelScene: GameScene {
         
         if remainingSlave == 0 && currentLevel == connection.maxLevel {
             var maxScore: Int = 0
-            for (id, score) in connection.scoreBoard {
-                if score > maxScore {
-                    maxScore = score
+            for peer in connection.peersInGame.peers {
+                if peer.score > maxScore {
+                    maxScore = peer.score
                 }
             }
             println("in checking game over")
-            if maxScore == connection.scoreBoard[Int(myNodes.id)] {
+            if maxScore == connection.peersInGame.getPeer(myNodes.id)?.score {
                 gameOver = true
                 connection.sendGameOver()
                 println("Game Over?")
@@ -129,6 +130,7 @@ class GameLevelScene: GameScene {
     }
     
     override func paused(){
+        player.stop()
         physicsWorld.speed = 0
         currentLevel++
         let levelScene = LevelXScene(size: self.size, level: currentLevel)
