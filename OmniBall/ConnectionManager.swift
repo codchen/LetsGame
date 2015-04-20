@@ -194,6 +194,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //    var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
     var maxLevel: Int = 5
     
+    var gameStartMsgCnt: Int = 0
+    
     
     override init() {
         super.init()
@@ -463,10 +465,17 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                             self.controller.playBtn.alpha = 0.5
                             }, completion: nil)
                     }
+                } else {
+                    sendGameReady()
                 }
                 gameState = .WaitingForStart
-//                sendGameReady()
                 self.assistant.stop()
+            }
+        } else if message.messageType == MessageType.GameReady {
+            gameStartMsgCnt++
+            if gameStartMsgCnt == maxPlayer - 1 {
+            	
+            	gameStartMsgCnt = 0
             }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory

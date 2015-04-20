@@ -217,7 +217,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scored(){
-        runAction(self.scoreSound)
+        runAction(self.scoredSound)
     }
     
     func addHudStars(id: UInt16) {
