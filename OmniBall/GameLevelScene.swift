@@ -81,12 +81,6 @@ class GameLevelScene: GameScene {
         }
     }
     
-    override func update(currentTime: CFTimeInterval) {
-        performScheduledCapture()
-        myNodes.checkOutOfBound()
-        opponentsWrapper.checkDead()
-    }
-    
     override func addHudStars(id: UInt16) {
         var startIndex = 0
         let player = getPlayerByID(id)!
@@ -101,14 +95,10 @@ class GameLevelScene: GameScene {
     override func checkGameOver() {
         
         if remainingSlave == 0 && currentLevel == connection.maxLevel {
-            var maxScore: Int = 0
-            for peer in connection.peersInGame.peers {
-                if peer.score > maxScore {
-                    maxScore = peer.score
-                }
-            }
+            var maxScore: Int = connection.peersInGame.getMaxScore()
             println("in checking game over")
-            if maxScore == connection.peersInGame.getPeer(myNodes.id)?.score {
+            println("maxscore: \(maxScore), me score: \(connection.me.score)")
+            if maxScore == connection.me.score {
                 gameOver = true
                 connection.sendGameOver()
                 println("Game Over?")
@@ -132,8 +122,7 @@ class GameLevelScene: GameScene {
     override func paused(){
         player.stop()
         physicsWorld.speed = 0
-        currentLevel++
-        let levelScene = LevelXScene(size: self.size, level: currentLevel)
+        let levelScene = LevelXScene(size: self.size, level: currentLevel + 1)
         levelScene.scaleMode = self.scaleMode
         levelScene.controller = connection.controller
         levelScene.connection = connection

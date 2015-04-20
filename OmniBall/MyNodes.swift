@@ -127,12 +127,13 @@ class MyNodes: Player {
         }
         
         for (name, slave) in slaves {
-            let node = scene.childNodeWithName(name) as SKSpriteNode
-            if closeEnough(location, node.position, CGFloat(280)) == true {
-                touchesBeganHelper(node, location: location, isSlave: true)
-                launchPoint = location
-                launchTime = NSDate()
-                break
+            if let node = scene.childNodeWithName(name) as? SKSpriteNode {
+                if closeEnough(location, node.position, CGFloat(280)) == true {
+                    touchesBeganHelper(node, location: location, isSlave: true)
+                    launchPoint = location
+                    launchTime = NSDate()
+                    break
+                }
             }
         }
 

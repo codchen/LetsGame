@@ -80,7 +80,7 @@ class GameViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()){
             if (self.connectionManager.peersInGame.getNumPlayers() != self.connectionManager.maxPlayer){
                 self.playBtn.enabled = false
-                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peer"
+                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
             }
             else{

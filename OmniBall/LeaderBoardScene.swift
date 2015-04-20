@@ -58,19 +58,19 @@ class LeaderBoardScene: SKScene {
         let lblRank = SKLabelNode(text: "Rank")
         lblRank.fontName = "Chalkduster"
         lblRank.fontSize = 60
-        lblRank.position = CGPoint(x: 500, y: size.height - 600)
+        lblRank.position = CGPoint(x: 200, y: size.height - 600)
         addChild(lblRank)
     
         let lblPlayer = SKLabelNode(text: "Player")
         lblPlayer.fontName = "Chalkduster"
         lblPlayer.fontSize = 60
-        lblPlayer.position = CGPoint(x: 1000, y: size.height - 600)
+        lblPlayer.position = CGPoint(x: 700, y: size.height - 600)
         addChild(lblPlayer)
         
         let lblScore = SKLabelNode(text: "Score")
         lblScore.fontName = "Chalkduster"
         lblScore.fontSize = 60
-        lblScore.position = CGPoint(x: 1500, y: size.height - 600)
+        lblScore.position = CGPoint(x: 1200, y: size.height - 600)
         lblScore.horizontalAlignmentMode = .Left
         addChild(lblScore)
         
@@ -106,7 +106,7 @@ class LeaderBoardScene: SKScene {
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
         addChild(btnNext)
         
-        if (connection.me.playerID == 0) {
+        if (connection.me.playerID == 0 && connection.peersInGame.peers.count == connection.maxPlayer) {
             btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
             btnAgain.position = CGPoint(x: size.width - 500, y: 400)
             addChild(btnAgain)
@@ -129,13 +129,7 @@ class LeaderBoardScene: SKScene {
                 }, completion: nil)
         } else if btnAgain != nil {
             if btnAgain.containsPoint(loc) {
-                if gameType == "BattleArena"{
-                    self.connection.gameMode = .BattleArena
-                }
-                else if gameType == "HiveMaze"{
-                    self.connection.gameMode = .HiveMaze
-                    
-                }
+                self.controller.transitToGame(gameType)
             }
         }
         

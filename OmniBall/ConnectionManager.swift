@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 3
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!
@@ -249,7 +249,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             return "Need to connect to 1 more peer!"
         }
         else {
-            return "Need to connect to \(maxPlayer - peersInGame.peers.count) more players!"
+            return "Need to connect to \(maxPlayer - peersInGame.peers.count) more peers!"
         }
     }
     
