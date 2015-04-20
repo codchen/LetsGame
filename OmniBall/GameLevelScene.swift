@@ -158,5 +158,23 @@ class GameLevelScene: GameScene {
                 y: -myNodes.players[0].position.y/size.height + 0.5)
             hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
         }
+        else if btnExit.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+            println("we got btnexit")
+            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                self.connection.sendExit()
+                self.connection.exitGame()
+                UIView.transitionWithView(self.view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.connection.controller.clearCurrentView()
+                    }, completion: nil)
+                
+            }
+            alert.addAction(yesAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            connection.controller.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 }
