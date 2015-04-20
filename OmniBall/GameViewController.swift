@@ -223,6 +223,10 @@ class GameViewController: UIViewController {
 //        self.view.drawRect(lblHost.frame)
     }
     
+    func clearCurrentView() {
+        self.currentView = nil
+    }
+    
     func pause(){
         dispatch_async(dispatch_get_main_queue()) {
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {

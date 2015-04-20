@@ -57,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     var collectedMinions: [Bool] = []
+    let btnExit: SKSpriteNode = SKSpriteNode(imageNamed: "cross")
 
     // special effect
 //    var emitterHalo: SKEmitterNode!
@@ -126,12 +127,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupHUD(){
-        //        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
-        //        scoreLabel.fontSize = 60
-        //        scoreLabel.fontColor = SKColor.whiteColor()
-        //        scoreLabel.fontName = "Copperplate"
-        //        scoreLabel.text = "score: " + String(myNodes.score)
-        //        hudLayer.addChild(scoreLabel)
+        let tempAnchor = anchorPoint
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        btnExit.position = CGPoint(x: size.width - 100, y: size.height - 300)
+        hudLayer.convertPoint(btnExit.position, fromNode: self)
+        hudLayer.addChild(btnExit)
     }
     
     func setupNeutral(){
@@ -249,6 +252,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         myNodes.touchesBegan(loc)
+        if btnExit.containsPoint(loc) {
+            println("we got btnexit")
+            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                connection.sendExit()
+                connection.exitGame()
+                UIView.transitionWithView(self.view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.connection.controller.clearCurrentView()
+                    }, completion: nil)
+                
+            }
+            alert.addAction(yesAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            controller.presentViewController(alert, animated: true, completion: nil)
+        }
+
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {

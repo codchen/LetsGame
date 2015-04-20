@@ -40,12 +40,7 @@ class GameLevelScene: GameScene {
     }
     
     override func setupHUD() {
-        
-        let tempAnchor = anchorPoint
-        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.y * size.height)
-        hudLayer.zPosition = 5
-        addChild(hudLayer)
-        
+        super.setupHUD()
         let totalSlaveNum = ((1 + slaveNum) * (connection.maxLevel + 1))/2
         let startPos = CGPoint(x: 100, y: size.height - 300)
         for var i = 0; i < totalSlaveNum; ++i {

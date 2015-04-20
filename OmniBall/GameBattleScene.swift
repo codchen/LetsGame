@@ -50,11 +50,7 @@ class GameBattleScene: GameScene {
     }
     
     override func setupHUD() {
-        let tempAnchor = anchorPoint
-        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
-        hudLayer.zPosition = 5
-        addChild(hudLayer)
-        
+        super.setupHUD()
         for var i = 0; i < connection.maxPlayer; ++i {
             var startPos: CGPoint!
             if i == 0 {
