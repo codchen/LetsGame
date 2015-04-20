@@ -30,15 +30,15 @@ class OpponentNodes: Player {
             updated[index] = update
         }
         
-        mutating func getInfoPosition(index: Int) -> CGPoint {
+        func getInfoPosition(index: Int) -> CGPoint {
             return CGPoint(x: info[index].x, y: info[index].y)
         }
         
-        mutating func getInfoVelocity(index: Int) -> CGVector {
+        func getInfoVelocity(index: Int) -> CGVector {
             return CGVector(dx: info[index].dx, dy: info[index].dy)
         }
         
-        mutating func isUpdated(index: Int) -> Bool {
+        func isUpdated(index: Int) -> Bool {
             return updated[index]
         }
     }
@@ -61,18 +61,18 @@ class OpponentNodes: Player {
             }
         }
         
-        mutating func isUpdated(name: String) -> Bool {
+        func isUpdated(name: String) -> Bool {
             if updated[name] == nil {
                 return false
             }
             return updated[name]!
         }
         
-        mutating func getInfoPosition(name: String) -> CGPoint {
+        func getInfoPosition(name: String) -> CGPoint {
             return CGPoint(x: info[name]!.x, y: info[name]!.y)
         }
         
-        mutating func getInfoVelocity(name: String) -> CGVector {
+        func getInfoVelocity(name: String) -> CGVector {
             return CGVector(dx: info[name]!.dx, dy: info[name]!.dy)
         }
         

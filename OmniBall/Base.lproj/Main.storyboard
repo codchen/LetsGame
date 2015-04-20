@@ -210,15 +210,51 @@
                                     <action selector="mazeTransit:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="vBJ-CL-h9D"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select Game Mode!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecu-A9-Mmd">
+                                <rect key="frame" x="167" y="105" width="154" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="AmE-MT-s4v"/>
+                                    <constraint firstAttribute="height" constant="21" id="eX3-t4-7PR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Arena" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6j-br-xBr">
+                                <rect key="frame" x="82" y="433" width="45" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="QnT-gD-2r0"/>
+                                    <constraint firstAttribute="height" constant="50" id="r3A-zD-pkn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="35"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Maze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBT-ax-Poi">
+                                <rect key="frame" x="298" y="433" width="45" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="CZD-4J-d4W"/>
+                                    <constraint firstAttribute="width" constant="80" id="mH5-kJ-6r4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="35"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Z6j-br-xBr" secondAttribute="centerX" constant="200" id="334-FJ-8hm"/>
+                            <constraint firstAttribute="centerX" secondItem="ecu-A9-Mmd" secondAttribute="centerX" constant="-15" id="5ca-0e-0ec"/>
                             <constraint firstAttribute="centerX" secondItem="kIp-zG-uX3" secondAttribute="centerX" constant="197" id="7Ft-GE-ve4"/>
                             <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-196" id="Aup-XU-Tmt"/>
                             <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="H8w-Bp-flE"/>
                             <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="LWD-Bm-yIK"/>
                             <constraint firstAttribute="centerY" secondItem="kIp-zG-uX3" secondAttribute="centerY" id="N1h-Sp-DM2"/>
                             <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="QbZ-WB-qj0"/>
+                            <constraint firstAttribute="centerY" secondItem="vBT-ax-Poi" secondAttribute="centerY" constant="-120" id="Tml-6r-iU4"/>
+                            <constraint firstAttribute="centerY" secondItem="ecu-A9-Mmd" secondAttribute="centerY" constant="130" id="bn5-CJ-THH"/>
+                            <constraint firstAttribute="centerY" secondItem="Z6j-br-xBr" secondAttribute="centerY" constant="-120" id="cyD-U1-faR"/>
+                            <constraint firstAttribute="centerX" secondItem="vBT-ax-Poi" secondAttribute="centerX" constant="-20" id="fb1-9X-TxC"/>
                             <constraint firstAttribute="centerY" secondItem="Ydc-Cw-POf" secondAttribute="centerY" id="ovT-2D-Jyd"/>
                             <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-200" id="qbi-jz-P2m"/>
                             <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="qgH-up-vtO"/>
