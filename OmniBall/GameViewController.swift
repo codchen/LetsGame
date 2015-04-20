@@ -18,7 +18,7 @@ extension SKNode {
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
             archiver.finishDecoding()
             return scene
             
@@ -116,7 +116,7 @@ class GameViewController: UIViewController {
     
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
-            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as! LevelViewController
+            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
         }
@@ -203,7 +203,7 @@ class GameViewController: UIViewController {
                 }
             } else {
                 println("opening scene \(NSDate().timeIntervalSince1970)")
-                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
+                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as GameBattleScene
                 scene._scene2modelAdptr = self._scene2modelAdptr
                 scene._scene2controllerAdptr = self._scene2controllerAdptr
                 self.connectionManager._model2sceneAdptr.scene = scene
@@ -226,7 +226,7 @@ class GameViewController: UIViewController {
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
             println("Current level is " + String(self.currentLevel))
-            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as! GameLevelScene
+            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
         	scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel + 1
             scene._scene2modelAdptr = self._scene2modelAdptr

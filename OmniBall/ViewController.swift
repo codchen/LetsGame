@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showGVC(sender: UIButton) {
-    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
+    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
         self.presentViewController(gameViewController, animated: true, completion: nil)
         
     }

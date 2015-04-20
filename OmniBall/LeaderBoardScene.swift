@@ -84,7 +84,7 @@ class LeaderBoardScene: SKScene {
         let sortByScore = NSSortDescriptor(key: "score", ascending: false)
         let sortDescriptors = [sortByScore]
         sortedScore.sortUsingDescriptors(sortDescriptors)
-        var peerScore = NSArray(array: sortedScore) as! [Peer]
+        var peerScore = NSArray(array: sortedScore) as [Peer]
 
         
         for var index = 0; index < peerScore.count; ++index {
@@ -121,27 +121,26 @@ class LeaderBoardScene: SKScene {
         }
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if let touch = touches.first as? UITouch {
-            let loc = touch.locationInNode(self)
-            if btnNext != nil && btnNext.containsPoint(loc){
-                _scene2modelAdptr.setGameMode(GameMode.None)
-                UIView.transitionWithView(view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self._scene2controllerAdptr.clearCurrentView()
-                    }, completion: nil)
-                
-            }
-            if btnAgain != nil && btnAgain.containsPoint(loc){
-                if _scene2modelAdptr.getNumActivePlayers() < _scene2modelAdptr.getMaxPlayer() {
-                    var alert = UIAlertController(title: "Not Enough Players", message: "Please connect to \(_scene2modelAdptr.getMaxPlayer()) players to start the game)", preferredStyle: UIAlertControllerStyle.Alert)
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        if btnNext != nil && btnNext.containsPoint(loc){
+            _scene2modelAdptr.setGameMode(GameMode.None)
+            UIView.transitionWithView(view!, duration: 0.5,
+                options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                animations: {
+                    self.view!.removeFromSuperview()
+                    self._scene2controllerAdptr.clearCurrentView()
+                }, completion: nil)
+            
+        }
+        if btnAgain != nil && btnAgain.containsPoint(loc){
+            if _scene2modelAdptr.getNumActivePlayers() < _scene2modelAdptr.getMaxPlayer() {
+                var alert = UIAlertController(title: "Not Enough Players", message: "Please connect to \(_scene2modelAdptr.getMaxPlayer()) players to start the game)", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-                    self._scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
-                } else {
-                    _scene2controllerAdptr.transitToGame(_scene2modelAdptr.getGameMode(), gameState: _scene2modelAdptr.getGameState())
-                }
+                self._scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                _scene2controllerAdptr.transitToGame(_scene2modelAdptr.getGameMode(), gameState: _scene2modelAdptr.getGameState())
             }
         }
     }

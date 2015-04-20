@@ -194,7 +194,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
         NSUserDefaults.standardUserDefaults().setObject(NSKeyedArchiver.archivedDataWithRootObject(self.peerID), forKey: "peerID")
         } else {
-            self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as! MCPeerID
+            self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as MCPeerID
         }
         
 //        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
@@ -452,7 +452,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 let sortByRandomNumber = NSSortDescriptor(key: "randomNumber", ascending: false)
                 let sortDescriptors = [sortByRandomNumber]
                 sortedPeers.sortUsingDescriptors(sortDescriptors)
-                peersInGame.peers = NSArray(array: sortedPeers) as! [Peer]
+                peersInGame.peers = NSArray(array: sortedPeers) as [Peer]
                 for var i = 0; i < peersInGame.peers.count; ++i {
                     peersInGame.peers[i].playerID = UInt16(i)
                     if (i == 0) {

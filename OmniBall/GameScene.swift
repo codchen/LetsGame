@@ -124,19 +124,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        var slaveNode: SKSpriteNode = contact.bodyA.node! as! SKSpriteNode
-        var hunterNode: SKSpriteNode = contact.bodyB.node! as! SKSpriteNode
+        var slaveNode: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
+        var hunterNode: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
 
         if collision == physicsCategory.Me | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as! SKSpriteNode
+                slaveNode = contact.bodyB.node! as SKSpriteNode
             }
             runAction(collisionSound)
             capture(target: slaveNode, hunter: myNodes)
         } else if collision == physicsCategory.Opponent | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as! SKSpriteNode
-                hunterNode = contact.bodyA.node! as! SKSpriteNode
+                slaveNode = contact.bodyB.node! as SKSpriteNode
+                hunterNode = contact.bodyA.node! as SKSpriteNode
             }
             var opp = opponentsWrapper.getOpponentByName(hunterNode.name!)
             runAction(collisionSound)
@@ -233,54 +233,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: Gestures
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if let touch = touches.first as? UITouch {
-            let loc = touch.locationInNode(self)
-            myNodes.touchesBegan(loc)
-            if btnExit.containsPoint(loc) {
-                println("we got btnexit")
-                var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
-                let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                    self._scene2modelAdptr.sendExit()
-                    self._scene2modelAdptr.exitGame()
-                    UIView.transitionWithView(self.view!, duration: 0.5,
-                        options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                        animations: {
-                            self.view!.removeFromSuperview()
-                            self._scene2controllerAdptr.clearCurrentView()
-                        }, completion: nil)
-                    
-                }
-                alert.addAction(yesAction)
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                _scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        myNodes.touchesBegan(loc)
+        if btnExit.containsPoint(loc) {
+            println("we got btnexit")
+            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                self._scene2modelAdptr.sendExit()
+                self._scene2modelAdptr.exitGame()
+                UIView.transitionWithView(self.view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self._scene2controllerAdptr.clearCurrentView()
+                    }, completion: nil)
+                
             }
+            alert.addAction(yesAction)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                _scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
         }
     }
 
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         if enableBackgroundMove && myNodes.launchPoint == nil {
-            if let touch = touches.first as? UITouch {
-                let currentLocation = touch.locationInNode(self)
-                let previousLocation = touch.previousLocationInNode(self)
-                if myNodes.launchPoint == nil {
-                    let translation = currentLocation - previousLocation
-                    // move anchorPoint
-                    anchorPoint += translation/CGPointMake(size.width, size.height)
-                    // move hudLayer
-                    hudLayer.position -= translation
-                    checkBackgroundBond()
-                }
+            let touch = touches.anyObject() as UITouch
+            let currentLocation = touch.locationInNode(self)
+            let previousLocation = touch.previousLocationInNode(self)
+            if myNodes.launchPoint == nil {
+                let translation = currentLocation - previousLocation
+                // move anchorPoint
+                anchorPoint += translation/CGPointMake(size.width, size.height)
+                // move hudLayer
+                hudLayer.position -= translation
+                checkBackgroundBond()
             }
         }
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if let touch = touches.first as? UITouch {
-            let loc = touch.locationInNode(self)
-            myNodes.touchesEnded(loc)
-        }
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        myNodes.touchesEnded(loc)
     }
     
     func checkBackgroundBond() {

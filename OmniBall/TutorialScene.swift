@@ -53,7 +53,7 @@ class TutorialScene: GameScene {
     }
     
     func setupPlayer() {
-        playerNode = childNodeWithName("node1") as! SKSpriteNode
+        playerNode = childNodeWithName("node1") as SKSpriteNode
         playerNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: getPlayerImageName(color, true)), alphaThreshold: 0.99, size: CGSize(width: 150, height: 150))
             //node1.physicsBody = SKPhysicsBody(circleOfRadius: node1.size.width / 2 - 25)
         playerNode.physicsBody?.linearDamping = 0
@@ -66,7 +66,7 @@ class TutorialScene: GameScene {
     }
     
     override func setupDestination(origin: Bool) {
-        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
         destHeart = SKShapeNode(circleOfRadius: 180)
         destHeart.fillColor = UIColor.blackColor()
@@ -197,7 +197,7 @@ class TutorialScene: GameScene {
     
     override func setupNeutral() {
         
-        slaveNode = childNodeWithName("neutral0") as! SKSpriteNode
+        slaveNode = childNodeWithName("neutral0") as SKSpriteNode
         slaveNode.size = CGSize(width: 110, height: 110)
         slaveNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
         slaveNode.physicsBody!.restitution = 1
@@ -211,39 +211,38 @@ class TutorialScene: GameScene {
         
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        let touch = touches.anyObject() as UITouch
+        let loc = touch.locationInNode(self)
+        if closeEnough(loc, playerNode.position, CGFloat(250)) == true{
+            touchesBeganHelper(playerNode, location: loc, isSlave: false)
+            launchPoint = loc
+            launchTime = NSDate()
+        }
         
-        if let touch = touches.first as? UITouch {
-            let loc = touch.locationInNode(self)
-            if closeEnough(loc, playerNode.position, CGFloat(250)) == true{
-                touchesBeganHelper(playerNode, location: loc, isSlave: false)
+        if hadFirstCapture {
+            if closeEnough(loc, slaveNode.position, CGFloat(280)) == true {
+                touchesBeganHelper(slaveNode, location: loc, isSlave: true)
                 launchPoint = loc
                 launchTime = NSDate()
             }
-            
-            if hadFirstCapture {
-                if closeEnough(loc, slaveNode.position, CGFloat(280)) == true {
-                    touchesBeganHelper(slaveNode, location: loc, isSlave: true)
-                    launchPoint = loc
-                    launchTime = NSDate()
-                }
+        }
+        
+        if !hadFirstStarSelect && selectedNode.name!.hasPrefix("neutral") {
+            let text = "Bring it into the ring"
+            tapLabel.removeAllActions()
+            tapLabel.setScale(0)
+            tapLabel.text = text
+            tapLabel.position = CGPoint(x: size.width/2, y: size.height/2 - 300)
+            let wait = SKAction.waitForDuration(0.2)
+            let block = SKAction.runBlock {
+                self.tapLabel.setScale(1)
             }
-            
-            if !hadFirstStarSelect && selectedNode.name!.hasPrefix("neutral") {
-                let text = "Bring it into the ring"
-                tapLabel.removeAllActions()
-                tapLabel.setScale(0)
-                tapLabel.text = text
-                tapLabel.position = CGPoint(x: size.width/2, y: size.height/2 - 300)
-                let wait = SKAction.waitForDuration(0.2)
-                let block = SKAction.runBlock {
-                    self.tapLabel.setScale(1)
-                }
-                tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
-                hadFirstStarSelect = true
-            }
+            tapLabel.runAction(SKAction.sequence([wait, block, SKAction.repeatActionForever(self.flashAction)]))
+            hadFirstStarSelect = true
         }
     }
+    
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
         if selectedNode.name!.hasPrefix("neutral"){
@@ -261,38 +260,36 @@ class TutorialScene: GameScene {
         
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         
     }
     
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent){
-        
-        if let touch = touches.first as? UITouch {
-            let location = touch.locationInNode(self)
-            if (launchTime != nil && launchPoint != nil) {
-                let now = NSDate()
-                var offset: CGPoint = (location - launchPoint)/CGFloat(now.timeIntervalSinceDate(launchTime!))
-                if offset.length() > maxSpeed{
-                    offset.normalize()
-                    offset.x = offset.x * maxSpeed
-                    offset.y = offset.y * maxSpeed
-                }
-                selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2.3, dy: offset.y / 2.3)
-                launchTime = nil
-                launchPoint = nil
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent){
+        let touch = touches.anyObject() as UITouch
+        let location = touch.locationInNode(self)
+        if (launchTime != nil && launchPoint != nil) {
+            let now = NSDate()
+            var offset: CGPoint = (location - launchPoint)/CGFloat(now.timeIntervalSinceDate(launchTime!))
+            if offset.length() > maxSpeed{
+                offset.normalize()
+                offset.x = offset.x * maxSpeed
+                offset.y = offset.y * maxSpeed
             }
+            selectedNode.physicsBody?.velocity = CGVector(dx: offset.x / 2.3, dy: offset.y / 2.3)
+            launchTime = nil
+            launchPoint = nil
         }
     }
     
     override func didBeginContact(contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        var slaveNode: SKSpriteNode = contact.bodyA.node! as! SKSpriteNode
-        var hunterNode: SKSpriteNode = contact.bodyB.node! as! SKSpriteNode
+        var slaveNode: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
+        var hunterNode: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
         
         if collision == physicsCategory.Me | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as! SKSpriteNode
+                slaveNode = contact.bodyB.node! as SKSpriteNode
             }
             runAction(collisionSound)
             capture(target: slaveNode)
