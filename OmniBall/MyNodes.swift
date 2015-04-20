@@ -130,12 +130,13 @@ class MyNodes: Player {
         }
         if slaves.count != 0 {
             for (name, slave) in slaves {
-                let node = scene.childNodeWithName(name) as! SKSpriteNode
-                if closeEnough(location, node.position, CGFloat(280)) == true {
-                    touchesBeganHelper(node, location: location, isSlave: true)
-                    launchPoint = location
-                    launchTime = NSDate()
-                    break
+                if let node = scene.childNodeWithName(name) as? SKSpriteNode {
+                    if closeEnough(location, node.position, CGFloat(280)) == true {
+                        touchesBeganHelper(node, location: location, isSlave: true)
+                        launchPoint = location
+                        launchTime = NSDate()
+                        break
+                    }
                 }
             }
         }
@@ -198,7 +199,6 @@ class MyNodes: Player {
         // send move of my slaves
         if slaves.count != 0 {
             for (name, slave) in slaves {
-                NSLog(name + "'s move sent")
                 let slaveNode = slave.node
                 let name: NSString = slaveNode.name! as NSString
                 let index: Int = name.substringFromIndex(7).toInt()!

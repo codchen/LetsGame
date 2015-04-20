@@ -23,7 +23,7 @@ class GameLevelScene: GameScene {
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
-        readyGo(3)
+        readyGo(1.5)
     }
     
     var currentLevel = 0

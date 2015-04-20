@@ -14,82 +14,108 @@ class OpponentNodes: Player {
     struct OpponentSpecs {
         var info: [nodeInfo] = []
         var updated: [Bool] = []
-        var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.oppospecs", DISPATCH_QUEUE_SERIAL)
+//        let execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.oppospecs", DISPATCH_QUEUE_SERIAL)
         mutating func add(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16) {
-                dispatch_sync(execQ){
+//                dispatch_sync(execQ){
                     self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
                     self.updated.append(false)
-                }
+//                }
         }
         mutating func update (x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16){
-                dispatch_sync(execQ){
+//                dispatch_sync(execQ){
                     self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
                     self.updated[Int(index)] = true
-                }
+//                }
         }
         
         mutating func setUpdated(index: Int, update: Bool) {
-            dispatch_sync(execQ){
+//            dispatch_sync(execQ){
                 self.updated[index] = update
-            }
+//            }
         }
         
-        mutating func getInfoPosition(index: Int) -> CGPoint {
-            return CGPoint(x: info[index].x, y: info[index].y)
+		func getInfoPosition(index: Int) -> CGPoint {
+            var result: CGPoint!
+//            dispatch_sync(execQ) {
+                result = CGPoint(x: self.info[index].x, y: self.info[index].y)
+//            }
+            return result
         }
         
-        mutating func getInfoVelocity(index: Int) -> CGVector {
-            return CGVector(dx: info[index].dx, dy: info[index].dy)
+        func getInfoVelocity(index: Int) -> CGVector {
+            var result: CGVector!
+//            dispatch_sync(execQ) {
+                result = CGVector(dx: self.info[index].dx, dy: self.info[index].dy)
+//            }
+            return result
         }
         
-        mutating func isUpdated(index: Int) -> Bool {
-            return updated[index]
+        func isUpdated(index: Int) -> Bool {
+            var result: Bool!
+//            dispatch_sync(execQ) {
+                result = self.updated[index]
+//            }
+            return result
         }
     }
     
     struct SlaveSpecs {
         var info: Dictionary<String, nodeInfo> = Dictionary<String, nodeInfo>()
         var updated: Dictionary<String, Bool> = Dictionary<String, Bool>()
-        var execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.slavespecs", DISPATCH_QUEUE_SERIAL)
+//        let execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.slavespecs", DISPATCH_QUEUE_SERIAL)
         mutating func update(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16, hasUpdated: Bool) {
-                dispatch_sync(execQ){
-                    let name = "neutral" + String(index)
-                    if !hasUpdated || (hasUpdated && self.info[name] != nil) {
-                        self.info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                        self.updated[name] = hasUpdated
-                    }
+//            dispatch_sync(execQ){
+                let name = "neutral" + String(index)
+                if let node = self.info[name] {
+                    self.info.updateValue(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index), forKey: name)
+                    self.updated.updateValue(hasUpdated, forKey: name)
+                } else if !hasUpdated {
+                    self.info.updateValue(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index), forKey: name)
+                    self.updated.updateValue(hasUpdated, forKey: name)
                 }
+//            }
         }
         
-        mutating func isUpdated(name: String) -> Bool {
-            if updated[name] == nil {
-                return false
-            }
-            return updated[name]!
+        func isUpdated(name: String) -> Bool {
+            var result = false
+//            dispatch_sync(execQ) {
+                if self.updated[name] != nil{
+                    result = self.updated[name]!
+                }
+//            }
+            return result
         }
         
-        mutating func getInfoPosition(name: String) -> CGPoint {
-            return CGPoint(x: info[name]!.x, y: info[name]!.y)
+        func getInfoPosition(name: String) -> CGPoint {
+            var result: CGPoint!
+//            dispatch_sync(execQ) {
+                result = CGPoint(x: self.info[name]!.x, y: self.info[name]!.y)
+//            }
+            return result
         }
         
-        mutating func getInfoVelocity(name: String) -> CGVector {
-            return CGVector(dx: info[name]!.dx, dy: info[name]!.dy)
+        func getInfoVelocity(name: String) -> CGVector {
+            var result: CGVector!
+//            dispatch_sync(execQ) {
+                result = CGVector(dx: self.info[name]!.dx, dy: self.info[name]!.dy)
+//            }
+            return result
         }
         
         mutating func setUpdated(name: String, update: Bool) {
-            dispatch_sync(execQ){
-                self.updated[name] = update
-            }
+//            dispatch_sync(execQ){
+                self.updated.updateValue(update, forKey: name)
+//            }
         }
         
         mutating func delete(name: String) {
-            dispatch_sync(execQ){
-                self.info[name] = nil
-                self.updated[name] = nil
-            }
+//            dispatch_sync(execQ){
+                self.info.removeValueForKey(name)
+                self.updated.removeValueForKey(name)
+//            }
         }
     }
     
@@ -157,8 +183,8 @@ class OpponentNodes: Player {
     }
     
     override func decapture(target: SKSpriteNode) {
-        if slaves[target.name!] != nil {
-            slaves[target.name!] = nil
+        if let slave = slaves[target.name!] {
+            slaves.removeValueForKey(target.name!)
             slaveSpecs.delete(target.name!)
         }
     }
@@ -186,23 +212,20 @@ class OpponentNodes: Player {
         
         // update opponent slave nodes
         for (name, slave) in slaves {
-            if slaves[name] != nil {
+            if let slaveNode = slaves[name] {
                 if slaveSpecs.isUpdated(name) {
-                    if closeEnough(slaveSpecs.getInfoPosition(name), point2: slaves[name]!.node.position){
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
+                    if closeEnough(slaveSpecs.getInfoPosition(name), point2: slaveNode.node.position){
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
                     }
-                    else if farEnough(slaveSpecs.getInfoPosition(name), point2: slaves[name]!.node.position){
-                        slaves[name]!.node.position = slaveSpecs.getInfoPosition(name)
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
+                    else if farEnough(slaveSpecs.getInfoPosition(name), point2: slaveNode.node.position){
+                        slaveNode.node.position = slaveSpecs.getInfoPosition(name)
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
                     }
                     else {
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name) + CGVector(point: slaveSpecs.getInfoPosition(name) - slaves[name]!.node.position)
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name) + CGVector(point: slaveSpecs.getInfoPosition(name) - slaveNode.node.position)
                     }
                     slaveSpecs.setUpdated(name, update: false)
                 }
-
-            } else {
-                println("YAY it's nil!")
             }
         }
     }
