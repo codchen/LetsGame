@@ -13,20 +13,6 @@ class GameBattleScene: GameScene {
     
     var destRect: CGRect!
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
-        enableBackgroundMove = false
-        enumerateChildNodesWithName("bar*") { node, _ in
-            node.physicsBody!.categoryBitMask = physicsCategory.wall
-        }
-        if (myNodes.id == 0){
-            setupDestination(true)
-        } else {
-            setupDestination(false)
-        }
-        println("scene loaded")
-    }
-    
     override func setupDestination(origin: Bool){
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
         destPointer.zPosition = -5
@@ -50,7 +36,9 @@ class GameBattleScene: GameScene {
                 topWall.position.y - 2 * ballSize - destPointer.size.height - 5 - bottomWall.position.y)
             destPos = randomDesPos()
             destRotation = CGFloat.random() * π * CGFloat.randomSign()
-            _scene2modelAdptr.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
+            connection.sendDestinationPos(Float(destPos.x), y: Float(destPos.y), rotate: Float(destRotation), starX: Float(neutralPos.x), starY: Float(neutralPos.y))
+			//println("Sent destination is \(destPos), neutralPos \(neutralPos)")
+            
         }
         neutral.position = neutralPos
 
@@ -62,8 +50,12 @@ class GameBattleScene: GameScene {
     }
     
     override func setupHUD() {
-		super.setupHUD()
-        for var i = 0; i < _scene2modelAdptr.getMaxPlayer(); ++i {
+        let tempAnchor = anchorPoint
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        for var i = 0; i < connection.maxPlayer; ++i {
             var startPos: CGPoint!
             if i == 0 {
                 startPos = CGPoint(x: 100, y: size.height - 300)
@@ -167,25 +159,19 @@ class GameBattleScene: GameScene {
     }
     
     override func paused(){
-        player.pause()
-//        cleanCapturedArrays()
     	physicsWorld.speed = 0
     }
     
     override func scored() {
         addHudStars(myNodes.id)
-        self.remainingSlave--
-        runAction(scoredSound)
-        _scene2modelAdptr.sendPause()
+        connection.sendPause()
         paused()
+        remainingSlave--
         myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
         cleanCapturedArrays()
-        checkGameOver()
-        if !gameOver {
-            setupNeutral()
-            setupDestination(true)
-            readyGo(0.7)
-        }
+        setupNeutral()
+        setupDestination(true)
+        readyGo()
     }
     
     func cleanCapturedArrays(){
@@ -205,16 +191,30 @@ class GameBattleScene: GameScene {
             setupNeutral()
             setupDestination(false)
             updateDest = false
-            readyGo(0.7)
+            readyGo()
         }
     }
-
+    
+    func readyGo(){
+        var label = SKSpriteNode(imageNamed: "400x200_ready")
+        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
+        addChild(label)
+        let action1 = SKAction.scaleTo(4, duration: 0.7)
+        let block1 = SKAction.runBlock{
+            label.texture = SKTexture(imageNamed: "400x200_go")
+            self.physicsWorld.speed = 1
+        }
+        let action2 = SKAction.waitForDuration(0.5)
+        let block2 = SKAction.runBlock{
+            label.removeFromParent()
+        }
+        label.runAction(SKAction.sequence([action1, block1, action2, block2]))
+    }
     
     override func checkGameOver(){
         if myNodes.successNodes == self.maxSucessNodes {
             gameOver = true
-            _scene2modelAdptr.sendGameOver()
-            println("Sent Game Over")
+            connection.sendGameOver()
             gameOver(won: true)
         }
     }

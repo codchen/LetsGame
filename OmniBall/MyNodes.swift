@@ -11,7 +11,7 @@ import SpriteKit
 
 class MyNodes: Player {
     
-    var _scene2modelAdptr: SceneToModelAdapter!
+    let connection: ConnectionManager!
     var deadNodes:[Int] = []
     var successNodes: Int = 0
     var msgCount: UInt32 = 0
@@ -22,13 +22,14 @@ class MyNodes: Player {
     let maxSpeed:CGFloat = 1500
     var score = 0
     
-    init(scene2modelAdptr: SceneToModelAdapter, scene: GameScene) {
+    init(connection: ConnectionManager, scene: GameScene) {
         super.init()
-        self._scene2modelAdptr = scene2modelAdptr
+        
+        self.connection = connection
         self.scene = scene
-        self.id = _scene2modelAdptr.getPlayerID()
+        self.id = connection.playerID
         self.color = PlayerColors(rawValue: Int(id))
-        score = _scene2modelAdptr.getScore(playerID: self.id)
+        score = connection.scoreBoard[Int(self.id)]!
         setUpPlayers(color)
         selectedNode = players[0]
     	selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))
@@ -55,8 +56,7 @@ class MyNodes: Player {
             }
             slaves[target.name!] = nil
             if scene.enableSound {
-//                scene.runAction(scene.whatSound)
-                scene.runAction(scene.loseStarSound)
+                scene.runAction(scene.whatSound)
             }
         }
     }
@@ -72,8 +72,7 @@ class MyNodes: Player {
         }
         selectedNode = target
         captureAnimation(target, isOppo: false)
-        scene.runAction(scene.catchStarSound)
-//        scene.runAction(scene.yeahSound)
+        scene.runAction(scene.yeahSound)
     }
     
     override func setMasks(){
@@ -86,20 +85,18 @@ class MyNodes: Player {
     
     func checkOutOfBound(){
         var deCapList = [SKSpriteNode]()
-        if (slaves.count != 0){
-            for (name, slave) in slaves {
-                if slave.node.intersectsNode(scene.destHeart) {
-                    successNodes += 1
-                    score++
-                    _scene2modelAdptr.increaseScore(playerID: self.id)
-                    let slaveName = name as NSString
-                    let index: Int = slaveName.substringFromIndex(7).toInt()!
-                    deCapList.append(slave.node)
-                    slave.node.removeFromParent()
-                    sendDead(UInt16(index))
-                    scene.scored()
-                    scene.changeDest()
-                }
+        for (name, slave) in slaves {
+            if slave.node.intersectsNode(scene.destHeart) {
+                successNodes += 1
+                score++
+                connection.scoreBoard[Int(id)]!++
+                let slaveName = name as NSString
+                let index: Int = slaveName.substringFromIndex(7).toInt()!
+                deCapList.append(slave.node)
+                slave.node.removeFromParent()
+                sendDead(UInt16(index))
+                scene.scored()
+                scene.changeDest()
             }
         }
         for deleteNode in deCapList {
@@ -111,7 +108,7 @@ class MyNodes: Player {
             if players[i].intersectsNode(scene.destHeart) {
                 players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 players[i].position = bornPos[i]
-                _scene2modelAdptr.sendReborn(playerID: UInt16(i))
+                connection.sendReborn(UInt16(i))
                 scene.anchorPoint = CGPointZero
                 scene.hudLayer.position = CGPointZero
             }
@@ -128,18 +125,17 @@ class MyNodes: Player {
                 break
             }
         }
-        if slaves.count != 0 {
-            for (name, slave) in slaves {
-                if let node = scene.childNodeWithName(name) as? SKSpriteNode {
-                    if closeEnough(location, node.position, CGFloat(280)) == true {
-                        touchesBeganHelper(node, location: location, isSlave: true)
-                        launchPoint = location
-                        launchTime = NSDate()
-                        break
-                    }
-                }
+        
+        for (name, slave) in slaves {
+            let node = scene.childNodeWithName(name) as SKSpriteNode
+            if closeEnough(location, node.position, CGFloat(280)) == true {
+                touchesBeganHelper(node, location: location, isSlave: true)
+                launchPoint = location
+                launchTime = NSDate()
+                break
             }
         }
+
     }
     
     func touchesBeganHelper(node: SKSpriteNode, location: CGPoint, isSlave: Bool) {
@@ -185,7 +181,7 @@ class MyNodes: Player {
     }
     
     func sendDead(index: UInt16){
-        _scene2modelAdptr.sendDeath(index: index, msgCount: msgCount)
+        connection.sendDeath(index, count: msgCount)
         msgCount++
     }
     
@@ -197,18 +193,16 @@ class MyNodes: Player {
         }
         
         // send move of my slaves
-        if slaves.count != 0 {
-            for (name, slave) in slaves {
-                let slaveNode = slave.node
-                let name: NSString = slaveNode.name! as NSString
-                let index: Int = name.substringFromIndex(7).toInt()!
-                sendMoveHelper(slaveNode, index: UInt16(index), isSlave: true)
-            }
+        for (name, slave) in slaves {
+            let slaveNode = slave.node
+            let name: NSString = slaveNode.name! as NSString
+            let index: Int = name.substringFromIndex(7).toInt()!
+            sendMoveHelper(slaveNode, index: UInt16(index), isSlave: true)
         }
     }
     
     func sendMoveHelper(node: SKSpriteNode, index: UInt16, isSlave: Bool) {
-        _scene2modelAdptr.sendMove(Float(node.position.x), y: Float(node.position.y), dx: Float(node.physicsBody!.velocity.dx), dy: Float(node.physicsBody!.velocity.dy), count: msgCount, index: index, dt: NSDate().timeIntervalSince1970, isSlave: isSlave)
+        connection.sendMove(Float(node.position.x), y: Float(node.position.y), dx: Float(node.physicsBody!.velocity.dx), dy: Float(node.physicsBody!.velocity.dy), count: msgCount, index: index, dt: NSDate().timeIntervalSince1970, isSlave: isSlave)
         msgCount++
 
     }

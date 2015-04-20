@@ -51,9 +51,9 @@ class TutorialOverScene: SKScene {
             UIView.transitionWithView(view!, duration: 0.5,
                 options: UIViewAnimationOptions.TransitionFlipFromBottom,
                 animations: {
-                    self.view!.removeFromSuperview()
-                    self.controller.clearCurrentView()
-                }, completion: nil)
+            		self.view!.removeFromSuperview()
+                    self.controller.currentView = nil
+            	}, completion: nil)
         } else if btnAgain.containsPoint(loc) {
             let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
             scene.controller = controller

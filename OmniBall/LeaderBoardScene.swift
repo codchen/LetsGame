@@ -25,13 +25,10 @@ class LeaderBoardScene: SKScene {
     var btnAgain: SKSpriteNode!
     var btnNext: SKSpriteNode!
 //    var btnShow: SKLabelNode!
-    
-    var _scene2modelAdptr: SceneToModelAdapter!
-    var _scene2controllerAdptr: SceneToControllerAdapter!
-//    var controller: GameViewController!
-//    var connection: ConnectionManager!
+    var controller: GameViewController!
+    var connection: ConnectionManager!
     var currentLevel = 0
-//    var gameType: String!
+    var gameType: String!
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -43,11 +40,10 @@ class LeaderBoardScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        _scene2controllerAdptr.setCurrentLevel(-1)
-//        controller.currentLevel = -1
-        _scene2modelAdptr.setGameState(GameState.WaitingForReconcil)
-//        connection.gameState = .WaitingForStart
-//        self.connection.gameMode = .None
+        controller.currentLevel = -1
+        connection = controller.connectionManager
+        connection.gameState = .WaitingForStart
+        self.connection.gameMode = .None
         
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
@@ -62,39 +58,51 @@ class LeaderBoardScene: SKScene {
         let lblRank = SKLabelNode(text: "Rank")
         lblRank.fontName = "Chalkduster"
         lblRank.fontSize = 60
-        lblRank.position = CGPoint(x: 200, y: size.height - 600)
+        lblRank.position = CGPoint(x: 500, y: size.height - 600)
         addChild(lblRank)
     
         let lblPlayer = SKLabelNode(text: "Player")
         lblPlayer.fontName = "Chalkduster"
         lblPlayer.fontSize = 60
-        lblPlayer.position = CGPoint(x: 700, y: size.height - 600)
+        lblPlayer.position = CGPoint(x: 1000, y: size.height - 600)
         addChild(lblPlayer)
         
         let lblScore = SKLabelNode(text: "Score")
         lblScore.fontName = "Chalkduster"
         lblScore.fontSize = 60
-        lblScore.position = CGPoint(x: 1200, y: size.height - 600)
+        lblScore.position = CGPoint(x: 1500, y: size.height - 600)
         lblScore.horizontalAlignmentMode = .Left
         addChild(lblScore)
         
         
-        let peers = _scene2modelAdptr.getPeers()
-        let sortedScore: NSMutableArray = NSMutableArray(array: peers)
+        var score: [PlayerScore] = []
+        var myName = connection.peerID.displayName
+        let myId = Int(connection.playerID)
+        let myScore = connection.scoreBoard[myId]
+
+        score.append(PlayerScore(name: myName, score: myScore!, id: myId))
+        
+        for (mcId, playerId) in connection.peersInGame {
+            var playerName = mcId.displayName
+            let playerScore = connection.scoreBoard[playerId]
+            score.append(PlayerScore(name: playerName, score: playerScore!, id: playerId))
+        }
+        
+        let sortedScore: NSMutableArray = NSMutableArray(array: score)
         let sortByScore = NSSortDescriptor(key: "score", ascending: false)
         let sortDescriptors = [sortByScore]
         sortedScore.sortUsingDescriptors(sortDescriptors)
-        var peerScore = NSArray(array: sortedScore) as [Peer]
-
         
-        for var index = 0; index < peerScore.count; ++index {
-            let player = peerScore[index]
+        score = NSArray(array: sortedScore) as [PlayerScore]
+        
+        for var index = 0; index < score.count; ++index {
+            let player = score[index]
             let rank = SKLabelNode(text: String(index + 1))
             rank.fontName = "Chalkduster"
             rank.fontSize = 60
             rank.position = CGPoint(x: lblRank.position.x, y: lblRank.position.y - CGFloat(index + 1) * 100)
             addChild(rank)
-            let name = SKLabelNode(text: player.getName())
+            let name = SKLabelNode(text: player.name)
             name.fontName = "Chalkduster"
             name.fontSize = 60
             name.position = CGPoint(x: lblPlayer.position.x,
@@ -102,46 +110,69 @@ class LeaderBoardScene: SKScene {
             name.horizontalAlignmentMode = .Center
             addChild(name)
             for var star = 0; star < player.score; ++star {
-                let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: Int(player.playerID))!, false))
+                let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: player.id)!, false))
                 icnStar.position = CGPoint(x: lblScore.position.x + CGFloat(star) * (icnStar.size.width), y: lblScore.position.y - CGFloat(index + 1) * 100)
                 addChild(icnStar)
             }
         }
         
-        _scene2modelAdptr.clearGameData()
+        connection.gameOver()
         
         btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
         addChild(btnNext)
         
-        if (_scene2modelAdptr.getPlayerID() == 0) {
-            btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
-            btnAgain.position = CGPoint(x: size.width - 500, y: 400)
-            addChild(btnAgain)
-        }
+        btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
+        btnAgain.position = CGPoint(x: size.width - 500, y: 400)
+        addChild(btnAgain)
+        
+//        btnShow = SKLabelNode(text: "Next")
+//        btnShow.position = CGPoint(x: 500, y: 400)
+//        addChild(btnShow)
+        
+//        connection.roundNum++
+//        
+//        if connection.roundNum <= connection.maxRoundNum {
+//            let wait = SKAction.waitForDuration(4.0)
+//            let block = SKAction.runBlock {
+////                self.controller.transitToRoundX(self.connection.roundNum)
+//            }
+//            self.runAction(SKAction.sequence([wait, block]))
+//        } else {
+//            
+//
+//        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
-        if btnNext != nil && btnNext.containsPoint(loc){
-            _scene2modelAdptr.setGameMode(GameMode.None)
-            UIView.transitionWithView(view!, duration: 0.5,
-                options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                animations: {
-                    self.view!.removeFromSuperview()
-                    self._scene2controllerAdptr.clearCurrentView()
-                }, completion: nil)
-            
-        }
-        if btnAgain != nil && btnAgain.containsPoint(loc){
-            if _scene2modelAdptr.getNumActivePlayers() < _scene2modelAdptr.getMaxPlayer() {
-                var alert = UIAlertController(title: "Not Enough Players", message: "Please connect to \(_scene2modelAdptr.getMaxPlayer()) players to start the game)", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-                self._scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
-            } else {
-                _scene2controllerAdptr.transitToGame(_scene2modelAdptr.getGameMode(), gameState: _scene2modelAdptr.getGameState())
+        if btnNext != nil && btnAgain != nil {
+            if btnNext.containsPoint(loc) {
+                UIView.transitionWithView(view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.controller.currentView = nil
+                    }, completion: nil)
+            } else if btnAgain.containsPoint(loc) {
+                if gameType == "BattleArena"{
+                    self.connection.gameMode = .BattleArena
+                }
+                else if gameType == "HiveMaze"{
+                    self.connection.gameMode = .HiveMaze
+                    
+                }
+//                connection.generateRandomNumber()
+//                controller.transitToRoundX(connection.roundNum)
             }
+            
+//            else if btnShow.containsPoint(loc) {
+//                let scene = PresentScene.unarchiveFromFilePresent("Level2") as PresentScene
+//                scene.controller = controller
+//                scene.scaleMode = scaleMode
+//                view!.presentScene(scene)
+//            }
         }
     }
     

@@ -8,12 +8,8 @@
 
 import SpriteKit
 import MultipeerConnectivity
-import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var _scene2modelAdptr: SceneToModelAdapter!
-    var _scene2controllerAdptr: SceneToControllerAdapter!
     
     var margin: CGFloat!
     let ballSize: CGFloat = 110
@@ -25,12 +21,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
     
-    let collisionSound = SKAction.playSoundFileNamed("collision.mp3", waitForCompletion: false)
+    let collisionSound = SKAction.playSoundFileNamed("Electric Hit.mp3", waitForCompletion: false)
     let whatSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
     let yeahSound = SKAction.playSoundFileNamed("Yeah.mp3", waitForCompletion: false)
-    let catchStarSound = SKAction.playSoundFileNamed("catch_star.mp3", waitForCompletion: false)
-    let loseStarSound = SKAction.playSoundFileNamed("lose_star.mp3", waitForCompletion: false)
-    let scoredSound = SKAction.playSoundFileNamed("score_star.mp3", waitForCompletion: false)
     var enableSound: Bool = true
     
     // Game Play
@@ -45,8 +38,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var myNodes: MyNodes!
     var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
+	var connection: ConnectionManager!
+    
+    //physics constants
+    let maxSpeed = 600
     
     //hard coded!!
+    let latency = 0.17
     let protectionInterval: Double = 2
     var gameOver: Bool = false
     
@@ -59,17 +57,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hudMinions: [SKSpriteNode] = []
     let hudLayer: SKNode = SKNode()
     var collectedMinions: [Bool] = []
-    let btnExit: SKSpriteNode = SKSpriteNode(imageNamed: "cross")
-    
-    var player: AVAudioPlayer!
+
+    // special effect
+//    var emitterHalo: SKEmitterNode!
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
-        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("Flynn", ofType: "mp3")!)
-        player = AVAudioPlayer(contentsOfURL: url, error: nil)
-        player.numberOfLoops = -1
-        player.prepareToPlay()
-        player.play()
         
         size = CGSize(width: 2048, height: 1536)
         let maxAspectRatio: CGFloat = 16.0/9.0
@@ -79,22 +72,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let playableRect: CGRect = CGRect(x: 0, y: playableMargin, width: size.width, height: size.height - playableMargin * 2)
         
         remainingSlave = slaveNum
-        _scene2modelAdptr.setGameState(GameState.InGame)
-        myNodes = MyNodes(scene2modelAdptr: _scene2modelAdptr, scene: self)
+        connection.gameState = .InGame
+        myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
-        for var index = 0; index < _scene2modelAdptr.getMaxPlayer(); ++index {
-            if Int(myNodes.id) != index {
+        for var index = 0; index < connection.maxPlayer; ++index {
+            if Int(connection.playerID) != index {
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
         }
+//        for var index = 0; index < slaveNum; ++index {
+//            neutralPos.append(CGPointZero)
+//        }
+        
+//        if childNodeWithName("boundary") != nil {
+//            let boundary = childNodeWithName("boundary") as SKSpriteNode
+//            boundary.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "map"), alphaThreshold: -0.1, size: boundary.size)
+//            boundary.physicsBody?.dynamic = false
+//        }
         
         setupNeutral()
+        if connection.gameMode == GameMode.BattleArena {
+            enableBackgroundMove = false
+        } else {
+            enableBackgroundMove = true
+        }
+        
+        if (connection.playerID == 0){
+            setupDestination(true)
+        }
+        else {
+            setupDestination(false)
+        }
+        
         setupHUD()
 
         /* Setup your scene here */
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
+        
+        enumerateChildNodesWithName("bar*") { node, _ in
+            node.physicsBody!.categoryBitMask = physicsCategory.wall
+        }
         
         enumerateChildNodesWithName("wall") { node, _ in
             node.physicsBody!.categoryBitMask = physicsCategory.wall
@@ -107,14 +126,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func setupHUD(){
-        let tempAnchor = anchorPoint
-        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
-        hudLayer.zPosition = 5
-        addChild(hudLayer)
-        
-        btnExit.position = CGPoint(x: size.width - 100, y: size.height - 300)
-        hudLayer.convertPoint(btnExit.position, fromNode: self)
-        hudLayer.addChild(btnExit)
+        //        scoreLabel.position = CGPoint(x: size.width - 300, y: size.height - 320)
+        //        scoreLabel.fontSize = 60
+        //        scoreLabel.fontColor = SKColor.whiteColor()
+        //        scoreLabel.fontName = "Copperplate"
+        //        scoreLabel.text = "score: " + String(myNodes.score)
+        //        hudLayer.addChild(scoreLabel)
     }
     
     func setupNeutral(){
@@ -157,18 +174,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (now >= targetInfo.lastCapture + protectionInterval ||
             (now > targetInfo.lastCapture - protectionInterval &&
                 now < targetInfo.lastCapture))&&(hunter.slaves[target.name!] == nil){
+			
             opponentsWrapper.decapture(target)
             myNodes.decapture(target)
             assert(hunter.slaves[target.name!] == nil, "hunter is not nil before capture")
             hunter.capture(target, capturedTime: now)
             assert(hunter.slaves[target.name!] != nil, "Hunter didn't captured \(target.name!)")
             neutralBalls[target.name!]?.lastCapture = now
-            _scene2modelAdptr.sendNeutralInfo(index: UInt16(index), id: hunter.id, lastCaptured: now)
+            connection.sendNeutralInfo(UInt16(index), id: hunter.id, lastCaptured: now)
         }
     }
     
     func performScheduledCapture(){
-        while (scheduleUpdateTime.count > 0){
+        while scheduleToCapture.count > 0{
             //check if already captured
             //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
@@ -178,7 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
-            neutralBalls[name as String]?.lastCapture = scheduleUpdateTime[0]
+            neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
             scheduleUpdateTime.removeAtIndex(0)
@@ -186,7 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func scored(){
-
     }
     
     func addHudStars(id: UInt16) {
@@ -198,7 +215,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !gameOver {
             checkGameOver()
         }
-//        scheduleNum = scheduleUpdateTime.count
         performScheduledCapture()
         myNodes.checkOutOfBound()
         opponentsWrapper.checkDead()
@@ -220,43 +236,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOver(#won: Bool) {
-        player.stop()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
-        gameOverScene._scene2modelAdptr = _scene2modelAdptr
-        gameOverScene._scene2controllerAdptr = _scene2controllerAdptr
+        gameOverScene.controller = connection.controller
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-        println("should open gameOverScene")
         view?.presentScene(gameOverScene, transition: reveal)
-        println("GameOverScene Opened")
     }
     
     // MARK: Gestures
-    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+
         let touch = touches.anyObject() as UITouch
         let loc = touch.locationInNode(self)
         myNodes.touchesBegan(loc)
-        if btnExit.containsPoint(loc) {
-            println("we got btnexit")
-            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self._scene2modelAdptr.sendExit()
-                self._scene2modelAdptr.exitGame()
-                UIView.transitionWithView(self.view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self._scene2controllerAdptr.clearCurrentView()
-                    }, completion: nil)
-                
-            }
-            alert.addAction(yesAction)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-                _scene2controllerAdptr.presentViewController(alert, animated: true, completion: nil)
-        }
     }
-
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         if enableBackgroundMove && myNodes.launchPoint == nil {
@@ -306,9 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
-        if opponentsWrapper != nil {
-            opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
-        }
+        opponentsWrapper.updatePeerPos(peerPlayerID, message: message)
     }
     
     func updateReborn(message: MessageReborn, peerPlayerID: Int){
@@ -330,7 +321,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        let sentTime = message.lastCaptured - _scene2modelAdptr.getDelta(playerID)
+        let sentTime = message.lastCaptured - connection.delta[playerID]!
         if sentTime > target.lastCapture + protectionInterval || (sentTime > target.lastCapture - protectionInterval && sentTime < target.lastCapture){
             scheduleToCapture.append(target.node)
             scheduleCaptureBy.append(pointTo)
@@ -363,22 +354,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func className() -> String{
         return "GameScene"
-    }
-    
-    func readyGo(duration: CGFloat){
-        var label = SKSpriteNode(imageNamed: "400x200_ready")
-        label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
-        addChild(label)
-        let action1 = SKAction.scaleTo(4, duration: NSTimeInterval(duration))
-        let block1 = SKAction.runBlock{
-            label.texture = SKTexture(imageNamed: "400x200_go")
-            self.physicsWorld.speed = 1
-        }
-        let action2 = SKAction.waitForDuration(0.5)
-        let block2 = SKAction.runBlock{
-            label.removeFromParent()
-            self.player.play()
-        }
-        label.runAction(SKAction.sequence([action1, block1, action2, block2]))
     }
 }

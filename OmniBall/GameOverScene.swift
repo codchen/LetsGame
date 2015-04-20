@@ -13,10 +13,8 @@ class GameOverScene: SKScene {
     let won: Bool
     var restartBtn: SKSpriteNode!
     var nextLevelBtn: SKSpriteNode!
-    var _scene2modelAdptr: SceneToModelAdapter!
-    var _scene2controllerAdptr: SceneToControllerAdapter!
-//    var controller: GameViewController!
-//    var connection: ConnectionManager!
+    var controller: GameViewController!
+    var connection: ConnectionManager!
     var currentLevel = 0
     
     init(size: CGSize, won: Bool) {
@@ -29,7 +27,8 @@ class GameOverScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        _scene2modelAdptr.setGameState(GameState.WaitingForStart)
+        connection = controller.connectionManager
+        connection.gameState = .WaitingForStart
         
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
@@ -50,11 +49,18 @@ class GameOverScene: SKScene {
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             let myScene = LeaderBoardScene(size: self.size)
+            switch self.connection.gameMode {
+            case .BattleArena:
+                myScene.gameType = "BattleArena"
+            case .HiveMaze:
+                myScene.gameType = "HiveMaze"
+            default:
+                return
+            }
             myScene.scaleMode = self.scaleMode
-            myScene._scene2controllerAdptr = self._scene2controllerAdptr
-            myScene._scene2modelAdptr = self._scene2modelAdptr
+            myScene.connection = self.connection
+            myScene.controller = self.controller
             self.view?.presentScene(myScene, transition: reveal)
-            println("Leaderboard scene opened")
         }
         self.runAction(SKAction.sequence([wait, block]))
         

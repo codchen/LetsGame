@@ -12,6 +12,8 @@
 	<dict>
 		<key>90B6448C9EE3490AAABC09BCDB26DB3C8998BAC8</key>
 		<string>https://github.com/codchen/LetsGame.git</string>
+		<key>D2F8F058883FD4A26826A5A3C823B228145E0537</key>
+		<string>https://github.com/codchen/TestForCollision.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>OmniBall.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>90B6448C9EE3490AAABC09BCDB26DB3C8998BAC8</key>
 		<string>../..</string>
+		<key>D2F8F058883FD4A26826A5A3C823B228145E0537</key>
+		<string>../../../development/TestForCollision</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/codchen/LetsGame.git</string>
@@ -35,6 +39,14 @@
 			<string>90B6448C9EE3490AAABC09BCDB26DB3C8998BAC8</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LetsGame</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D2F8F058883FD4A26826A5A3C823B228145E0537</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TestForCollision</string>
 		</dict>
 	</array>
 </dict>

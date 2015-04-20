@@ -16,14 +16,11 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
-        physicsWorld.speed = 0
-        enableBackgroundMove = true
-        setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
-        readyGo(1.5)
+//        println("\(destPosList.count)")
     }
     
     var currentLevel = 0
@@ -43,8 +40,13 @@ class GameLevelScene: GameScene {
     }
     
     override func setupHUD() {
-		super.setupHUD()
-        let totalSlaveNum = ((1 + slaveNum) * (_scene2modelAdptr.getMaxLevel() + 1))/2
+        
+        let tempAnchor = anchorPoint
+        hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.y * size.height)
+        hudLayer.zPosition = 5
+        addChild(hudLayer)
+        
+        let totalSlaveNum = ((1 + slaveNum) * (connection.maxLevel + 1))/2
         let startPos = CGPoint(x: 100, y: size.height - 300)
         for var i = 0; i < totalSlaveNum; ++i {
             let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
@@ -55,12 +57,10 @@ class GameLevelScene: GameScene {
             collectedMinions.append(false)
         }
                 
-        for peer in _scene2modelAdptr.getPeers() {
-            println("ADD HUD STARS!!" + String(peer.playerID))
-            var peerScore: Int = peer.score
-            while peerScore > 0 {
-                addHudStars(peer.playerID)
-                peerScore--
+        for (id, var score) in connection.scoreBoard {
+            while score > 0 {
+                addHudStars(UInt16(id))
+                score--
             }
         }
     
@@ -103,14 +103,18 @@ class GameLevelScene: GameScene {
     }
     
     override func checkGameOver() {
-        println("CurrentLevel is " + String(currentLevel))
-        println("Remaining slave is " + String(remainingSlave))
-        if remainingSlave == 0 && currentLevel == _scene2modelAdptr.getMaxLevel() {
-            var maxScore: Int = _scene2modelAdptr.getMaxScore()
+        
+        if remainingSlave == 0 && currentLevel == connection.maxLevel {
+            var maxScore: Int = 0
+            for (id, score) in connection.scoreBoard {
+                if score > maxScore {
+                    maxScore = score
+                }
+            }
             println("in checking game over")
-            if maxScore == _scene2modelAdptr.getScore(playerID: myNodes.id) {
+            if maxScore == connection.scoreBoard[Int(myNodes.id)] {
                 gameOver = true
-                _scene2modelAdptr.sendGameOver()
+                connection.sendGameOver()
                 println("Game Over?")
                 gameOver(won: true)
             }
@@ -118,26 +122,24 @@ class GameLevelScene: GameScene {
     }
     
     override func scored() {
-        addHudStars(myNodes.id)
         self.remainingSlave--
-        runAction(scoredSound)
-        println(remainingSlave)
+        addHudStars(myNodes.id)
         if remainingSlave == 0 {
             checkGameOver()
-            if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){
-                _scene2modelAdptr.sendPause()
+            if (gameOver == false && connection.controller.currentLevel < connection.maxLevel){
+                connection.sendPause()
                 paused()
             }
         }
     }
     
     override func paused(){
-        player.stop()
         physicsWorld.speed = 0
         currentLevel++
         let levelScene = LevelXScene(size: self.size, level: currentLevel)
         levelScene.scaleMode = self.scaleMode
-        levelScene._scene2controllerAdptr = _scene2controllerAdptr
+        levelScene.controller = connection.controller
+        levelScene.connection = connection
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
         
