@@ -56,7 +56,7 @@ class MyNodes: Player {
             }
             slaves[target.name!] = nil
             if scene.enableSound {
-                scene.runAction(scene.whatSound)
+                scene.runAction(scene.loseStarSound)
             }
         }
     }
@@ -72,7 +72,7 @@ class MyNodes: Player {
         }
         selectedNode = target
         captureAnimation(target, isOppo: false)
-        scene.runAction(scene.yeahSound)
+        scene.runAction(scene.catchStarSound)
     }
     
     override func setMasks(){

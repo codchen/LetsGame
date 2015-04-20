@@ -160,6 +160,7 @@ class GameBattleScene: GameScene {
     }
     
     override func scored() {
+        super.scored()
         addHudStars(myNodes.id)
         connection.sendPause()
         paused()
