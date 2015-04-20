@@ -380,7 +380,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             if peersInGame[peerID] != nil{
                 controller.updateReborn(messageReborn, peerPlayerID: peersInGame[peerID]!)
             }
-            }
+        }
     }
     
     // The following methods do nothing, but the MCSessionDelegate protocol

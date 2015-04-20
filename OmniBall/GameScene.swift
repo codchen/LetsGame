@@ -186,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func performScheduledCapture(){
-        while scheduleToCapture.count > 0{
+        while scheduleUpdateTime.count > 0{
             //check if already captured
             //println("perform scheduled capture \(scheduleToCapture.count), \(scheduleCaptureBy.count), \(scheduleUpdateTime.count)")
             let name: NSString = scheduleToCapture[0].name! as NSString
