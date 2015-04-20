@@ -93,6 +93,9 @@
 		FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864D1ACC797800F09DB7 /* mini-map-4.png */; };
 		FF2086561ACC799800F09DB7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086551ACC799800F09DB7 /* back-button.png */; };
 		FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */; };
+		FF3CE8F21AE5519F0035CC75 /* Connect.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8EF1AE5519F0035CC75 /* Connect.png */; };
+		FF3CE8F31AE5519F0035CC75 /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F01AE5519F0035CC75 /* Play.png */; };
+		FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F11AE5519F0035CC75 /* playc.png */; };
 		FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */; };
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
@@ -213,6 +216,9 @@
 		FF20864D1ACC797800F09DB7 /* mini-map-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-4.png"; sourceTree = "<group>"; };
 		FF2086551ACC799800F09DB7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300_button_battle_0.png; sourceTree = "<group>"; };
+		FF3CE8EF1AE5519F0035CC75 /* Connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Connect.png; sourceTree = "<group>"; };
+		FF3CE8F01AE5519F0035CC75 /* Play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play.png; sourceTree = "<group>"; };
+		FF3CE8F11AE5519F0035CC75 /* playc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playc.png; sourceTree = "<group>"; };
 		FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball.png; sourceTree = "<group>"; };
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
@@ -345,6 +351,9 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF3CE8EF1AE5519F0035CC75 /* Connect.png */,
+				FF3CE8F01AE5519F0035CC75 /* Play.png */,
+				FF3CE8F11AE5519F0035CC75 /* playc.png */,
 				11D844A41ACC3C330078B62B /* 100x100_icon_rank.png */,
 				FF2086551ACC799800F09DB7 /* back-button.png */,
 				11DCA0371AE548E900BF5766 /* cross.png */,
@@ -572,8 +581,10 @@
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
+				FF3CE8F21AE5519F0035CC75 /* Connect.png in Resources */,
 				FF2086561ACC799800F09DB7 /* back-button.png in Resources */,
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
+				FF3CE8F31AE5519F0035CC75 /* Play.png in Resources */,
 				FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
 				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
@@ -581,6 +592,7 @@
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
 				11ED25B21AD31436002803EC /* Main.storyboard in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
+				FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */,
 				1185848F1AB09923002622F8 /* 80x80_green_ball_filled.png in Resources */,
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,

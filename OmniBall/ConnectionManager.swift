@@ -30,7 +30,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     let serviceType = "LetsGame"
     let maxPlayer = 3
     var connectedPeer = 0
-    var connectedPeerNames: [String] = []
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
@@ -227,11 +226,31 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func getConnectedMessage() -> String {
+        if peersInGame.peers.count == 1 {
+            return "Not connected to anyone yet!"
+        }
         var result = "Connected peers:"
-        for name in connectedPeerNames {
-            result = result + "\t\t" + name
+        for peer in peersInGame.peers {
+            if peer.getName() != me.getName() {
+                result = result + "\t\t" + peer.getName()
+            }
         }
         return result
+    }
+    
+    func getConnectionPrompt() -> String {
+        if maxPlayer == 1 {
+            return "Single mode"
+        }
+        if (maxPlayer - peersInGame.peers.count) == 0 {
+            return ""
+        }
+        if (maxPlayer - peersInGame.peers.count) == 1 {
+            return "Need to connect to 1 more peer!"
+        }
+        else {
+            return "Need to connect to \(maxPlayer - peersInGame.peers.count) more players!"
+        }
     }
     
     func generateRandomNumber(){
@@ -566,32 +585,45 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         didChangeState state: MCSessionState)  {
             // Called when a connected peer changes state (for example, goes offline)
             if state == MCSessionState.Connected {
-                connectedPeer++
-                connectedPeerNames.append(peerID.displayName)
-                if connectedPeer == maxPlayer - 1 {
+                let peer = Peer(peerID: peerID)
+                peersInGame.addPeer(peer)
+                if peersInGame.hasAllPlayers(){
                     generateRandomNumber()
-//                    controller.playBtn.enabled = true
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = ""
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Normal)
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "300x300_button_battle"), forState: UIControlState.Selected)
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Normal)
+                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Selected)
+                        self.controller.connectBtn.layer.removeAllAnimations()
+                        self.controller.connectPrompt.layer.removeAllAnimations()
+                        self.controller.instructionText.text = "Waiting for the host to start game..."
+                        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+                            self.controller.instructionText.alpha = 0
+                            }, completion: nil)
                     }
                 }
-                else{
+                else {
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = "Need to connect to \(self.maxPlayer - 1 - self.connectedPeer) more peers!"
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
                     }
-
+                    
                 }
             }
             else if state == MCSessionState.NotConnected {
-                if contains(connectedPeerNames, peerID.displayName!) {
-                    connectedPeer--
-                    connectedPeerNames = connectedPeerNames.filter({$0 != peerID.displayName!})
-                    self.controller.connectedPeers.text = self.getConnectedMessage()
-                    self.controller.connectPrompt.text = "Need to connect to \(self.maxPlayer - 1 - self.connectedPeer) more peers!"
+                
+                var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.controller.presentViewController(alert, animated: true, completion: nil)
+                }
+                
+                
+                if let peer = peersInGame.getPeer(peerID) {
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.controller.connectedPeers.text = self.getConnectedMessage()
+                        self.controller.connectPrompt.text = self.getConnectionPrompt()
+                    }
                 }
             }
 

@@ -62,12 +62,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYG-Yy-Hd7">
-                                <rect key="frame" x="35" y="175" width="250" height="250"/>
+                                <rect key="frame" x="23" y="269" width="275" height="62"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="hPf-fd-gdj"/>
-                                    <constraint firstAttribute="width" constant="250" id="rzS-Xs-jxg"/>
+                                    <constraint firstAttribute="height" constant="62" id="hPf-fd-gdj"/>
+                                    <constraint firstAttribute="width" constant="275" id="rzS-Xs-jxg"/>
                                 </constraints>
-                                <state key="normal" image="300x300_button_connect.png">
+                                <state key="normal" image="Connect.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -96,57 +96,45 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Connect" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVF-iP-yhH">
-                                <rect key="frame" x="139" y="404" width="66" height="21"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
+                                <rect key="frame" x="375" y="270" width="130" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="I9i-Kk-Xwl"/>
-                                    <constraint firstAttribute="height" constant="30" id="pz3-jJ-CDM"/>
+                                    <constraint firstAttribute="width" constant="130" id="4uz-C1-p4N"/>
+                                    <constraint firstAttribute="height" constant="70" id="nZV-cm-NcT"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="31"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tya-vB-P4A">
-                                <rect key="frame" x="419" y="404" width="33" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="asB-og-iep"/>
-                                    <constraint firstAttribute="width" constant="45" id="qQG-yu-ALN"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="31"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADK-DC-inN">
-                                <rect key="frame" x="310" y="175" width="250" height="250"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="4uz-C1-p4N"/>
-                                    <constraint firstAttribute="height" constant="250" id="nZV-cm-NcT"/>
-                                </constraints>
-                                <state key="normal" image="300x300_button_battle.png">
+                                <state key="normal" image="Play.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="play:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iXX-Wa-0Hv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tap &quot;Connect&quot; to find other players or wait for other players' invitation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fn-cQ-Ztg">
+                                <rect key="frame" x="23" y="419" width="561" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="561" id="BAY-zk-Ei4"/>
+                                    <constraint firstAttribute="height" constant="21" id="eaT-18-cXs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="0fn-cQ-Ztg" secondAttribute="centerY" constant="-120" id="1qK-06-lVO"/>
                             <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
                             <constraint firstAttribute="centerY" secondItem="pxi-CT-nBc" secondAttribute="centerY" constant="90" id="9OA-aT-3V6"/>
                             <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="128" id="FK8-2t-oO4"/>
-                            <constraint firstAttribute="centerX" secondItem="tya-vB-P4A" secondAttribute="centerX" constant="-140" id="HT7-s0-lSI"/>
                             <constraint firstAttribute="centerX" secondItem="YYG-Yy-Hd7" secondAttribute="centerX" constant="140" id="INB-G3-3Ff"/>
                             <constraint firstAttribute="centerX" secondItem="ECk-ry-jLr" secondAttribute="centerX" id="IfB-4o-5tE"/>
+                            <constraint firstAttribute="centerX" secondItem="0fn-cQ-Ztg" secondAttribute="centerX" id="NfP-mK-yJb"/>
                             <constraint firstAttribute="centerY" secondItem="YYG-Yy-Hd7" secondAttribute="centerY" id="VNx-1e-YVy"/>
-                            <constraint firstAttribute="centerX" secondItem="NVF-iP-yhH" secondAttribute="centerX" constant="140" id="Xc8-Z0-8VL"/>
                             <constraint firstAttribute="centerY" secondItem="ECk-ry-jLr" secondAttribute="centerY" constant="140" id="Xuc-Ke-81y"/>
-                            <constraint firstAttribute="centerY" secondItem="NVF-iP-yhH" secondAttribute="centerY" constant="-120" id="ZH7-cK-4q2"/>
                             <constraint firstAttribute="centerY" secondItem="0xh-WJ-4qM" secondAttribute="centerY" constant="90" id="cYv-9E-9Qm"/>
-                            <constraint firstAttribute="centerY" secondItem="tya-vB-P4A" secondAttribute="centerY" constant="-120" id="d0v-EH-kGP"/>
                             <constraint firstAttribute="centerX" secondItem="pxi-CT-nBc" secondAttribute="centerX" constant="70" id="fiP-A8-W6D"/>
                             <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="-140" id="jP9-A9-ujY"/>
-                            <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" id="spz-Zf-jzg"/>
+                            <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" constant="-5" id="spz-Zf-jzg"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -155,8 +143,10 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="connectBtn" destination="YYG-Yy-Hd7" id="qTj-dc-mtl"/>
                         <outlet property="connectPrompt" destination="pxi-CT-nBc" id="GWo-3d-zqn"/>
                         <outlet property="connectedPeers" destination="ECk-ry-jLr" id="gOX-yr-nTL"/>
+                        <outlet property="instructionText" destination="0fn-cQ-Ztg" id="m6A-7J-Hb5"/>
                         <outlet property="lblHost" destination="0xh-WJ-4qM" id="aC2-LJ-Mai"/>
                         <outlet property="playBtn" destination="ADK-DC-inN" id="rnE-Qs-SzQ"/>
                     </connections>
@@ -328,8 +318,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="300x300_button_battle.png" width="300" height="300"/>
-        <image name="300x300_button_connect.png" width="300" height="300"/>
+        <image name="Connect.png" width="550" height="124"/>
+        <image name="Play.png" width="280" height="150"/>
         <image name="back-button.png" width="146" height="150"/>
         <image name="mini-map-0.png" width="340" height="240"/>
         <image name="mini-map-1.png" width="300" height="416"/>
