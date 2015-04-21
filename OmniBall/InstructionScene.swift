@@ -50,7 +50,7 @@ class InstructionScene: SKScene {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             switch self.connection.gameMode {
             case .BattleArena:
-                if self.connection.playerID == 0{
+                if self.connection.me.playerID == 0{
                     self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
                 }
             case .HiveMaze:

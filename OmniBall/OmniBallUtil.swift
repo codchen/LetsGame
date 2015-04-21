@@ -46,24 +46,24 @@ func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
     if !isSelected {
         switch playerColor {
         case .Green:
-            return "80x80_green_ball"
+            return "green_circle"
         case .Red:
-            return "80x80_red_ball"
+            return "red_circle"
         case .Yellow:
             return "80x80_yellow_ball"
         case .Blue:
-            return "80x80_blue_ball"
+            return "blue_circle"
         }
     } else {
         switch playerColor {
         case .Green:
-            return "80x80_green_ball_filled"
+            return "green_ball"
         case .Red:
-            return "80x80_red_ball_filled"
+            return "red_ball"
         case .Yellow:
             return "80x80_yellow_ball_filled"
         case .Blue:
-            return "80x80_blue_ball_filled"
+            return "blue_ball"
         }
     }
 }
@@ -72,24 +72,24 @@ func getSlaveImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
     if !isSelected {
         switch playerColor {
         case .Green:
-            return "80x80_green_star"
+            return "green_aster"
         case .Red:
-            return "80x80_red_star"
+            return "red_aster"
         case .Yellow:
             return "yellow_star"
         case .Blue:
-            return "blue_star"
+            return "blue_aster"
         }
     } else {
         switch playerColor {
         case .Green:
-            return "80x80_green_star_filled"
+            return "green_star"
         case .Red:
-            return "80x80_red_star_filled"
+            return "red_star"
         case .Yellow:
             return "80x80_yellow_star_filled"
         case .Blue:
-            return "80x80_blue_star_filled"
+            return "blue_star"
         }
     }
 }

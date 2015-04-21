@@ -27,7 +27,7 @@ class MyNodes: Player {
         
         self.connection = connection
         self.scene = scene
-        self.id = connection.playerID
+        self.id = connection.me.playerID
         self.color = PlayerColors(rawValue: Int(id))
         score = connection.me.score
         setUpPlayers(color)

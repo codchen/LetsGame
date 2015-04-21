@@ -71,7 +71,7 @@ class GameLevelScene: GameScene {
         enumerateChildNodesWithName("neutral*"){ node, _ in
             let neutralNode = node as SKSpriteNode
             neutralNode.size = CGSize(width: 110, height: 110)
-            neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
+            neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
             neutralNode.physicsBody?.dynamic = false
             neutralNode.physicsBody!.restitution = 1
             neutralNode.physicsBody!.linearDamping = 0

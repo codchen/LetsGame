@@ -40,7 +40,7 @@ class LeaderBoardScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        controller.currentLevel = -1
+        controller.currentLevel = 0
         connection = controller.connectionManager
         connection.gameState = .WaitingForStart
         self.connection.gameMode = .None
@@ -97,6 +97,7 @@ class LeaderBoardScene: SKScene {
             addChild(name)
             for var star = 0; star < player.score; ++star {
                 let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: Int(player.playerID))!, false))
+                icnStar.size = CGSize(width: icnStar.size.width * 0.6, height: icnStar.size.height * 0.6)
                 icnStar.position = CGPoint(x: lblScore.position.x + CGFloat(star) * (icnStar.size.width), y: lblScore.position.y - CGFloat(index + 1) * 100)
                 addChild(icnStar)
             }

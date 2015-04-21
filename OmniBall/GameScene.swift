@@ -87,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
         for var index = 0; index < connection.maxPlayer; ++index {
-            if Int(connection.playerID) != index {
+            if Int(connection.me.playerID) != index {
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
@@ -109,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enableBackgroundMove = true
         }
         
-        if (connection.playerID == 0){
+        if (connection.me.playerID == 0){
             setupDestination(true)
         }
         else {

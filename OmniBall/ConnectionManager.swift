@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 3
+    let maxPlayer = 2
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!
@@ -192,7 +192,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
 //    var delta: Dictionary<Int, NSTimeInterval> = Dictionary<Int, NSTimeInterval>()
     var timeDifference: Dictionary<Int, Double> = Dictionary<Int, Double>()
 //    var scoreBoard: Dictionary<Int, Int> = Dictionary<Int, Int>()
-    var maxLevel: Int = 5
+    var maxLevel: Int = 4
     
     var gameStartMsgCnt: Int = 0
     

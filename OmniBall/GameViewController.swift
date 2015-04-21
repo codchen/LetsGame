@@ -61,7 +61,7 @@ class GameViewController: UIViewController {
     var currentView: SKView!
     var currentGameScene: GameScene!
     
-    var currentLevel = -1
+    var currentLevel = 0
     
     @IBOutlet weak var connectBtn: UIButton!
     @IBOutlet weak var instructionText: UILabel!
@@ -213,7 +213,7 @@ class GameViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
         	scene.currentLevel = self.currentLevel
-            scene.slaveNum = self.currentLevel + 1
+            scene.slaveNum = self.currentLevel
             scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager
             if self.currentView == nil {

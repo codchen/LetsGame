@@ -74,9 +74,9 @@ class GameBattleScene: GameScene {
     
     override func setupNeutral() {
         for var i = 0; i < slaveNum; ++i{
-            var node = SKSpriteNode(imageNamed: "80x80_orange_star")
+            var node = SKSpriteNode(imageNamed: "staro")
             node.size = CGSize(width: 110, height: 110)
-            node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
+            node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
             node.name = "neutral" + String(i)
             node.physicsBody!.restitution = 1
             node.physicsBody!.linearDamping = 0
