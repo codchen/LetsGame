@@ -29,7 +29,7 @@ class MyNodes: Player {
         self.scene = scene
         self.id = connection.playerID
         self.color = PlayerColors(rawValue: Int(id))
-        score = connection.peersInGame.getPeer(self.id)!.score
+        score = connection.me.score
         setUpPlayers(color)
         selectedNode = players[0]
     	selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, true))

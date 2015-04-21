@@ -185,7 +185,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     var gameMode: GameMode = .None
     var receivedAllRandomNumber: Bool = false
 //    var randomNumbers = Array<UInt32>()
-    var playerID: UInt16 = 0   // the player ID of current player
+//    var playerID: UInt16 = 0   // the player ID of current player
     
     // reconcil data info
     var latency: NSTimeInterval!
@@ -307,10 +307,16 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
     }
     
     func sendGameReady(){
-        var message = MessageReadyToGame(message: Message(messageType: MessageType.GameReady), playerID: playerID)
+        var message = MessageReadyToGame(message: Message(messageType: MessageType.GameReady), playerID: me.playerID)
         //println("My playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
-        sendData(data, reliable: true)
+        for peer in peersInGame.peers {
+            if peer.playerID == 0 {
+                sendDataTo(data, peerID: peer.peerID, reliable: true)
+                break
+            }
+        }
+
     }
     
     func sendNeutralInfo(index: UInt16, id: UInt16, lastCaptured: Double){
@@ -455,7 +461,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                         self.controller.addHostLabel(self.peersInGame.peers[i].getName())
                     }
                 }
-                playerID = me.playerID
                 if me.playerID == 0 {
                     dispatch_async(dispatch_get_main_queue()){
                         println("host is 0 is me " + String(self.me.getName()))
@@ -466,7 +471,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                             }, completion: nil)
                     }
                 } else {
-                    sendGameReady()
+                    if me.playerID != 0 {
+                        sendGameReady()
+                    }
                 }
                 gameState = .WaitingForStart
                 self.assistant.stop()
@@ -474,6 +481,14 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.GameReady {
             gameStartMsgCnt++
             if gameStartMsgCnt == maxPlayer - 1 {
+            	dispatch_async(dispatch_get_main_queue()){
+                        println("host is 0 is me " + String(self.me.getName()))
+                        self.controller.playBtn.enabled = true
+                        self.controller.instructionText.text = "You are the host. Click \"Play\" to start game!"
+                        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
+                            self.controller.playBtn.alpha = 0.5
+                            }, completion: nil)
+                    }
             	gameStartMsgCnt = 0
             }
         } else if message.messageType == MessageType.GameStart {
@@ -510,8 +525,8 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
             
         } else if message.messageType == MessageType.ThirdTrip {
             let messageThirdTrip = UnsafePointer<MessageThirdTrip>(data.bytes).memory
-                let calculatedDelta = messageThirdTrip.delta * -1.0
-                peersInGame.setDelta(peerID, delta: calculatedDelta)
+            let calculatedDelta = messageThirdTrip.delta * -1.0
+            peersInGame.setDelta(peerID, delta: calculatedDelta)
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (peersInGame.receivedAllDelta()) {
@@ -549,7 +564,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.Exit {
             if let peer = peersInGame.getPeer(peerID){
                 peersInGame.removePeer(peer)
-                }
+            }
         }
     }
     
