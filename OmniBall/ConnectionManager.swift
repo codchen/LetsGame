@@ -460,7 +460,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     dispatch_async(dispatch_get_main_queue()){
                         println("host is 0 is me " + String(self.me.getName()))
                         self.controller.playBtn.enabled = true
-                        self.controller.instructionText.text = "You are the host. Click \"Play\" to start game!"
+                        self.controller.instructionText.text = "You are the host. Tap \"Play\" to start game!"
                         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
                             self.controller.playBtn.alpha = 0.5
                             }, completion: nil)
@@ -474,7 +474,6 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         } else if message.messageType == MessageType.GameReady {
             gameStartMsgCnt++
             if gameStartMsgCnt == maxPlayer - 1 {
-            	
             	gameStartMsgCnt = 0
             }
         } else if message.messageType == MessageType.GameStart {
@@ -580,6 +579,18 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 peersInGame.addPeer(peer)
                 if peersInGame.hasAllPlayers(){
                     generateRandomNumber()
+                    var alert = UIAlertController(title: "Connection Complete", message: "You have connected to maximum number of players!", preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Default) { action in
+                        self.browser.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    alert.addAction(okAction)
+                    if (browser.view.window != nil){
+                        browser.presentViewController(alert, animated: true, completion: nil)
+                    }
+//                    dispatch_async(dispatch_get_main_queue()) {
+//                        self.controller.presentViewController(alert, animated: true, completion: nil)
+//                    }
+
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
                         self.controller.connectPrompt.text = self.getConnectionPrompt()

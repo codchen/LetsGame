@@ -125,7 +125,7 @@ class LeaderBoardScene: SKScene {
                 options: UIViewAnimationOptions.TransitionFlipFromBottom,
                 animations: {
                     self.view!.removeFromSuperview()
-                    self.controller.currentView = nil
+                    self.controller.clearCurrentView()
                 }, completion: nil)
         } else if btnAgain != nil {
             if btnAgain.containsPoint(loc) {
