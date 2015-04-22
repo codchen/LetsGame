@@ -34,6 +34,8 @@ class InstructionScene: SKScene {
             label = SKLabelNode(text: "Collect FIVE Stars to Win!")
         case .HiveMaze:
             label = SKLabelNode(text: "Collect Stars to Win!")
+        case .PoolArena:
+            label = SKLabelNode(text: "Knock Out Stars to Win!")
         default:
             return
         }
@@ -60,6 +62,9 @@ class InstructionScene: SKScene {
                 levelScene.connection = self.connection
                 let reveal = SKTransition.flipHorizontalWithDuration(0.5)
                 self.view!.presentScene(levelScene, transition: reveal)
+            case .PoolArena:
+                println("called 1")
+                self.controller.transitToPoolArena()
             default:
                 return
             }

@@ -132,7 +132,8 @@ class GameViewController: UIViewController {
                 connectionManager.gameMode = .BattleArena
             } else if name == "HiveMaze" {
                 connectionManager.gameMode = .HiveMaze
-                
+            } else if name == "PoolArena" {
+                connectionManager.gameMode = .PoolArena
             }
             
             if self.connectionManager.maxPlayer == 1 {
@@ -141,9 +142,6 @@ class GameViewController: UIViewController {
                 connectionManager.sendGameStart()
                 connectionManager.readyToSendFirstTrip()
             }
-//            else{
-//            self.connectionManager.generateRandomNumber()
-//            }
         }
     }
     
@@ -223,7 +221,21 @@ class GameViewController: UIViewController {
             self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
 
         }
-
+    }
+    
+    func transitToPoolArena() {
+        dispatch_async(dispatch_get_main_queue()) {
+            println("called 2")
+            let scene = GamePoolScene.unarchiveFromFile("PoolArena") as GamePoolScene
+            scene.slaveNum = 7
+            scene.scaleMode = .AspectFill
+            scene.connection = self.connectionManager
+            if self.currentView == nil {
+                self.configureCurrentView()
+            }
+            self.currentGameScene = scene
+            self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        }
     }
     
     func addHostLabel(peerName: String) {

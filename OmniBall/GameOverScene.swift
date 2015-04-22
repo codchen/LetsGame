@@ -54,6 +54,8 @@ class GameOverScene: SKScene {
                 myScene.gameType = "BattleArena"
             case .HiveMaze:
                 myScene.gameType = "HiveMaze"
+            case .PoolArena:
+                myScene.gameType = "PoolArena"
             default:
                 return
             }

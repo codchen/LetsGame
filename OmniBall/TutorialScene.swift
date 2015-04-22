@@ -95,7 +95,7 @@ class TutorialScene: GameScene {
         if !gameOver {
             checkGameOver()
         }
-        myNodes.checkOutOfBound()
+        checkOutOfBound()
     }
     
     override func checkGameOver() {

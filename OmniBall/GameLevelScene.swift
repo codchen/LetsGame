@@ -13,6 +13,7 @@ class GameLevelScene: GameScene {
     var destPosList: [CGPoint] = []
     var whichPos = 0
     let btnComeBack = SKSpriteNode(imageNamed: "circle")
+    var currentLevel = 0
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
@@ -20,10 +21,7 @@ class GameLevelScene: GameScene {
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
-//        println("\(destPosList.count)")
     }
-    
-    var currentLevel = 0
     
     override func setupDestination(origin: Bool) {
         destPointer = childNodeWithName("destPointer") as SKSpriteNode
@@ -89,7 +87,6 @@ class GameLevelScene: GameScene {
         }
         collectedMinions[startIndex] = true
         hudMinions[startIndex].texture = SKTexture(imageNamed: getSlaveImageName(player.color, false))
-
     }
     
     override func checkGameOver() {

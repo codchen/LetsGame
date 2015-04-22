@@ -92,21 +92,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 opponentsWrapper.addOpponent(opponent)
             }
         }
-//        for var index = 0; index < slaveNum; ++index {
-//            neutralPos.append(CGPointZero)
-//        }
-        
-//        if childNodeWithName("boundary") != nil {
-//            let boundary = childNodeWithName("boundary") as SKSpriteNode
-//            boundary.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "map"), alphaThreshold: -0.1, size: boundary.size)
-//            boundary.physicsBody?.dynamic = false
-//        }
         
         setupNeutral()
-        if connection.gameMode == GameMode.BattleArena {
-            enableBackgroundMove = false
-        } else {
+        if connection.gameMode == GameMode.HiveMaze {
             enableBackgroundMove = true
+        } else {
+            enableBackgroundMove = false
         }
         
         if (connection.me.playerID == 0){
@@ -230,7 +221,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             checkGameOver()
         }
         performScheduledCapture()
-        myNodes.checkOutOfBound()
+        checkOutOfBound()
         opponentsWrapper.checkDead()
     }
     
@@ -297,7 +288,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 anchorPoint += translation/CGPointMake(size.width, size.height)
                 // move hudLayer
                 hudLayer.position -= translation
-                checkBackgroundBond()
+                checkBackgroundBound()
             }
         }
     }
@@ -308,7 +299,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         myNodes.touchesEnded(loc)
     }
     
-    func checkBackgroundBond() {
+    func checkBackgroundBound() {
         
         let oldAnchorPoint = anchorPoint
         if anchorPoint.x > 2 {
@@ -324,7 +315,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let offset = oldAnchorPoint - anchorPoint
         hudLayer.position += offset * CGPointMake(size.width, size.height)
+    }
+    
+    func checkOutOfBound() {
+        var deCapList = [SKSpriteNode]()
+        for (name, slave) in myNodes.slaves {
+            if slave.node.intersectsNode(destHeart) {
+                myNodes.successNodes += 1
+                myNodes.score++
+                connection.peersInGame.increaseScore(myNodes.id)
+                let slaveName = name as NSString
+                let index: Int = slaveName.substringFromIndex(7).toInt()!
+                deCapList.append(slave.node)
+                slave.node.removeFromParent()
+                myNodes.sendDead(UInt16(index))
+                scored()
+                changeDest()
+            }
+        }
+        for deleteNode in deCapList {
+            enableSound = false
+            myNodes.decapture(deleteNode)
+        }
         
+        for var i = 0; i < myNodes.count; ++i {
+            if myNodes.players[i].intersectsNode(destHeart) {
+                myNodes.players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                myNodes.players[i].position = myNodes.bornPos[i]
+                connection.sendReborn(UInt16(i))
+                anchorPoint = CGPointZero
+                hudLayer.position = CGPointZero
+            }
+        }
+        enableSound = true
     }
 
     // MARK: Update from peerMessage

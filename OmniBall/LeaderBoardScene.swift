@@ -42,9 +42,14 @@ class LeaderBoardScene: SKScene {
     override func didMoveToView(view: SKView) {
         controller.currentLevel = 0
         connection = controller.connectionManager
+        var startPos: CGFloat!
+        if connection.gameMode == .HiveMaze {
+        	startPos = 200
+        } else {
+            startPos = 500
+        }
         connection.gameState = .WaitingForStart
         self.connection.gameMode = .None
-        
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
         background.position = CGPointZero
@@ -58,19 +63,19 @@ class LeaderBoardScene: SKScene {
         let lblRank = SKLabelNode(text: "Rank")
         lblRank.fontName = "Chalkduster"
         lblRank.fontSize = 60
-        lblRank.position = CGPoint(x: 200, y: size.height - 600)
+        lblRank.position = CGPoint(x: startPos, y: size.height - 600)
         addChild(lblRank)
     
         let lblPlayer = SKLabelNode(text: "Player")
         lblPlayer.fontName = "Chalkduster"
         lblPlayer.fontSize = 60
-        lblPlayer.position = CGPoint(x: 700, y: size.height - 600)
+        lblPlayer.position = CGPoint(x: startPos + 500, y: size.height - 600)
         addChild(lblPlayer)
         
         let lblScore = SKLabelNode(text: "Score")
         lblScore.fontName = "Chalkduster"
         lblScore.fontSize = 60
-        lblScore.position = CGPoint(x: 1200, y: size.height - 600)
+        lblScore.position = CGPoint(x: startPos + 1000, y: size.height - 600)
         lblScore.horizontalAlignmentMode = .Left
         addChild(lblScore)
         
@@ -133,28 +138,6 @@ class LeaderBoardScene: SKScene {
                 self.controller.transitToGame(gameType)
             }
         }
-        
-//        if btnNext != nil && btnAgain != nil {
-//
-//
-//            } else if btnAgain.containsPoint(loc) {
-//                if gameType == "BattleArena"{
-//                    self.connection.gameMode = .BattleArena
-//                }
-//                else if gameType == "HiveMaze"{
-//                    self.connection.gameMode = .HiveMaze
-//                    
-//                }
-//                connection.generateRandomNumber()
-//                controller.transitToRoundX(connection.roundNum)
-//            }
-            
-//            else if btnShow.containsPoint(loc) {
-//                let scene = PresentScene.unarchiveFromFilePresent("Level2") as PresentScene
-//                scene.controller = controller
-//                scene.scaleMode = scaleMode
-//                view!.presentScene(scene)
-//            }
         
     }
     

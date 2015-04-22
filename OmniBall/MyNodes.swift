@@ -83,39 +83,6 @@ class MyNodes: Player {
         }
     }
     
-    func checkOutOfBound(){
-        var deCapList = [SKSpriteNode]()
-        for (name, slave) in slaves {
-            if slave.node.intersectsNode(scene.destHeart) {
-                successNodes += 1
-                score++
-                connection.peersInGame.increaseScore(self.id)
-                let slaveName = name as NSString
-                let index: Int = slaveName.substringFromIndex(7).toInt()!
-                deCapList.append(slave.node)
-                slave.node.removeFromParent()
-                sendDead(UInt16(index))
-                scene.scored()
-                scene.changeDest()
-            }
-        }
-        for deleteNode in deCapList {
-            scene.enableSound = false
-            decapture(deleteNode)
-        }
-        
-        for var i = 0; i < count; ++i {
-            if players[i].intersectsNode(scene.destHeart) {
-                players[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                players[i].position = bornPos[i]
-                connection.sendReborn(UInt16(i))
-                scene.anchorPoint = CGPointZero
-                scene.hudLayer.position = CGPointZero
-            }
-        }
-        scene.enableSound = true
-    }
-    
     func touchesBegan(location: CGPoint) {
     	for node in players {
             if closeEnough(location, node.position, CGFloat(250)) == true{

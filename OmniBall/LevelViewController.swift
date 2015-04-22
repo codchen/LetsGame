@@ -32,6 +32,12 @@ class LevelViewController: UIViewController {
         gameViewController.transitToGame("BattleArena")
     }
 
+    @IBAction func poolTransit(sender: UIButton) {
+        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        gameViewController.transitToGame("PoolArena")
+    }
+
+
     @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }

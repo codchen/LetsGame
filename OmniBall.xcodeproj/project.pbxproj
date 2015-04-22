@@ -67,6 +67,8 @@
 		11DCA03E1AE5860C00BF5766 /* collision.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11DCA03A1AE5860C00BF5766 /* collision.mp3 */; };
 		11DCA03F1AE5860C00BF5766 /* lose_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11DCA03B1AE5860C00BF5766 /* lose_star.mp3 */; };
 		11DCA0401AE5860C00BF5766 /* score_star.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11DCA03C1AE5860C00BF5766 /* score_star.mp3 */; };
+		11DCA0421AE730CC00BF5766 /* PoolArena.sks in Resources */ = {isa = PBXBuildFile; fileRef = 11DCA0411AE730CC00BF5766 /* PoolArena.sks */; };
+		11DCA0441AE7315800BF5766 /* GamePoolScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DCA0431AE7315800BF5766 /* GamePoolScene.swift */; };
 		11ED25B21AD31436002803EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11ED25B01AD31436002803EC /* Main.storyboard */; };
 		11F828A61AB527E800E25D3F /* InstructionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A51AB527E800E25D3F /* InstructionScene.swift */; };
 		11F828AA1AB5E2B400E25D3F /* GameLevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */; };
@@ -207,6 +209,8 @@
 		11DCA03A1AE5860C00BF5766 /* collision.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collision.mp3; sourceTree = "<group>"; };
 		11DCA03B1AE5860C00BF5766 /* lose_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose_star.mp3; sourceTree = "<group>"; };
 		11DCA03C1AE5860C00BF5766 /* score_star.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = score_star.mp3; sourceTree = "<group>"; };
+		11DCA0411AE730CC00BF5766 /* PoolArena.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PoolArena.sks; sourceTree = "<group>"; };
+		11DCA0431AE7315800BF5766 /* GamePoolScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePoolScene.swift; sourceTree = "<group>"; };
 		11ED25B11AD31436002803EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11F828A51AB527E800E25D3F /* InstructionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionScene.swift; sourceTree = "<group>"; };
 		11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelScene.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 				FF53011F1A7D43A300F04937 /* GameScene.swift */,
 				119F18701AB7B751002A7EAA /* GameBattleScene.swift */,
 				11F828A91AB5E2B400E25D3F /* GameLevelScene.swift */,
+				11DCA0431AE7315800BF5766 /* GamePoolScene.swift */,
 				FFA0D60B1A8D4495000D1C37 /* GameOverScene.swift */,
 				113329A21AB0C027008B46A2 /* LeaderBoardScene.swift */,
 				113329AC1AB0D109008B46A2 /* TutorialScene.swift */,
@@ -340,6 +345,7 @@
 		118BB02D1AAF8625005B1718 /* Maps */ = {
 			isa = PBXGroup;
 			children = (
+				11DCA0411AE730CC00BF5766 /* PoolArena.sks */,
 				112F12761AC5E947008E65BF /* new-map-1.sks */,
 				113329AA1AB0D0C9008B46A2 /* Tutorial.sks */,
 				118BB02B1AAF821B005B1718 /* LevelTraining.sks */,
@@ -632,6 +638,7 @@
 				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
 				11DCA03F1AE5860C00BF5766 /* lose_star.mp3 in Resources */,
+				11DCA0421AE730CC00BF5766 /* PoolArena.sks in Resources */,
 				11DCA03D1AE5860C00BF5766 /* catch_star.mp3 in Resources */,
 				FF3CE8F61AE573D70035CC75 /* Flynn.mp3 in Resources */,
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
@@ -763,6 +770,7 @@
 				113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */,
 				11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */,
 				112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */,
+				11DCA0441AE7315800BF5766 /* GamePoolScene.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				113329AD1AB0D109008B46A2 /* TutorialScene.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,

@@ -179,12 +179,7 @@ class GameBattleScene: GameScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        if !gameOver {
-            checkGameOver()
-        }
-        performScheduledCapture()
-        myNodes.checkOutOfBound()
-        opponentsWrapper.checkDead()
+        super.update(currentTime)
         if updateDest {
             setupNeutral()
             setupDestination(false)
