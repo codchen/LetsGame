@@ -11,9 +11,9 @@ import SpriteKit
 
 class LevelXScene: SKScene {
     
-//    var controller: GameViewController!
+    var controller: GameViewController!
+    var connection: ConnectionManager!
     var level: Int!
-    var _scene2controllerAdptr: SceneToControllerAdapter!
     
     init(size: CGSize, level: Int) {
         super.init(size: size)
@@ -41,8 +41,8 @@ class LevelXScene: SKScene {
         let wait = SKAction.waitForDuration(1)
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            self._scene2controllerAdptr.setCurrentLevel(self._scene2controllerAdptr.getCurrentLevel()+1)
-            self._scene2controllerAdptr.transitToHiveMaze()
+            self.controller.currentLevel++
+            self.controller.transitToHiveMaze()
         }
         self.runAction(SKAction.sequence([wait, block]))
     }

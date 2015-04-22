@@ -17,7 +17,7 @@ enum GameState: Int {
 }
 
 enum GameMode: Int {
-    case None, BattleArena, HiveMaze
+    case None, BattleArena, HiveMaze, PoolArena
 }
 
 struct Message {

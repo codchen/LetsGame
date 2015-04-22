@@ -12,8 +12,6 @@ import SpriteKit
 class InstructionScene: SKScene {
     var controller: GameViewController!
     var connection: ConnectionManager!
-    var inTransit: Bool = false
-    var animationOver: Bool = false
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -36,6 +34,8 @@ class InstructionScene: SKScene {
             label = SKLabelNode(text: "Collect FIVE Stars to Win!")
         case .HiveMaze:
             label = SKLabelNode(text: "Collect Stars to Win!")
+        case .PoolArena:
+            label = SKLabelNode(text: "Knock Out Stars to Win!")
         default:
             return
         }
@@ -49,23 +49,28 @@ class InstructionScene: SKScene {
         
         let wait = SKAction.waitForDuration(3)
         let block = SKAction.runBlock {
-            if self.connection.gameState == GameState.WaitingForStart {
-                self.controller.transitToGame(self.connection.gameMode, gameState: GameState.WaitingForStart)
-
+            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+            switch self.connection.gameMode {
+            case .BattleArena:
+                if self.connection.me.playerID == 0{
+                    self.controller.transitToBattleArena(destination: CGPointZero, rotate: 1, starPos:CGPointZero)
+                }
+            case .HiveMaze:
+                let levelScene = LevelXScene(size: self.size, level: self.controller.currentLevel + 1)
+                levelScene.scaleMode = self.scaleMode
+                levelScene.controller = self.controller
+                levelScene.connection = self.connection
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view!.presentScene(levelScene, transition: reveal)
+            case .PoolArena:
+                println("called 1")
+                self.controller.transitToPoolArena()
+            default:
+                return
             }
-            self.animationOver = true
+                
         }
         self.runAction(SKAction.sequence([wait, block]))
-    }
-    
-    override func update(currentTime: NSTimeInterval) {
-        if !inTransit && animationOver {
-            if connection.gameState == GameState.WaitingForStart{
-                inTransit = true
-                self.controller.transitToGame(self.connection.gameMode, gameState: self.connection.gameState)
-            }
-        }
-
     }
 
 }

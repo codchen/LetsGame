@@ -53,16 +53,16 @@ class OpponentsWrapper {
         opponents[id]?.updateReborn(message)
     }
     
-//    func updateCaptured(id: Int, target: SKSpriteNode, capturedTime: NSTimeInterval, lastCount: UInt32) {
-//        for (player_id, opponent) in opponents {
-//            if id == player_id {
-//                opponent.capture(target, capturedTime: capturedTime)
-//                opponent.lastCount = lastCount
-//            } else {
-//                opponent.decapture(target)
-//            }
-//        }
-//    }
+    func updateCaptured(id: Int, target: SKSpriteNode, capturedTime: NSTimeInterval, lastCount: UInt32) {
+        for (player_id, opponent) in opponents {
+            if id == player_id {
+                opponent.capture(target, capturedTime: capturedTime)
+                opponent.lastCount = lastCount
+            } else {
+                opponent.decapture(target)
+            }
+        }
+    }
     
     func decapture(target: SKSpriteNode){
         for (id, opponent) in opponents{
