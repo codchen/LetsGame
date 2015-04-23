@@ -82,8 +82,11 @@ class GameViewController: UIViewController {
             self.playBtn.alpha = 0.1
             self.playBtn.enabled = false
         }
+        player1.text = connectionManager.me.getName()
         playerList.append(player1)
+        player2.text = ""
         playerList.append(player2)
+        player3.text = ""
         playerList.append(player3)
     }
     
@@ -99,6 +102,8 @@ class GameViewController: UIViewController {
     }
     @IBAction func exit(sender: AnyObject) {
         self.connectionManager.session.disconnect()
+        connectionManager.advertiser.stopAdvertisingPeer()
+        connectionManager.browser.stopBrowsingForPeers()
         dismissViewControllerAnimated(true, completion: nil)
     }
     

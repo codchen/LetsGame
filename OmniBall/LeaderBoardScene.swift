@@ -133,6 +133,9 @@ class LeaderBoardScene: SKScene {
                     self.view!.removeFromSuperview()
                     self.controller.clearCurrentView()
                 }, completion: nil)
+            if connection.peersInGame.peers.count != connection.maxPlayer {
+                connection.exitGame()
+            }
         } else if btnAgain != nil {
             if btnAgain.containsPoint(loc) {
                 self.controller.transitToGame(gameType)

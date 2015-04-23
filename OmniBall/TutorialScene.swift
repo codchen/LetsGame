@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class TutorialScene: GameScene {
-    
+
     let tapLabel = SKLabelNode()
     var flashAction: SKAction!
 //    var hadFirstSelect: Bool = false
@@ -20,7 +20,8 @@ class TutorialScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         connection = ConnectionManager()
-        connection.assistant.stop()
+        connection.advertiser.stopAdvertisingPeer()
+        connection.browser.stopBrowsingForPeers()
         myNodes = MyNodes(connection: connection, scene: self)
         enableBackgroundMove = false
         maxSucessNodes = 1
