@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 3
     var connectedPeer = 0
     
     var browser : MCBrowserViewController!
@@ -595,7 +595,7 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 if peersInGame.hasAllPlayers(){
                     generateRandomNumber()
                     var alert = UIAlertController(title: "Connection Complete", message: "You have connected to maximum number of players!", preferredStyle: UIAlertControllerStyle.Alert)
-                    let okAction = UIAlertAction(title: "OK", style: .Default) { action in
+                    let okAction = UIAlertAction(title: "Back to menu", style: .Default) { action in
                         self.browser.dismissViewControllerAnimated(true, completion: nil)
                     }
                     alert.addAction(okAction)
@@ -620,6 +620,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     }
                 }
                 else {
+                    var alert = UIAlertController(title: "Connected to a new peer", message: "You have connected to a new player. Still need to connected to \(maxPlayer - peersInGame.peers.count) more.", preferredStyle: UIAlertControllerStyle.Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Default) { action in
+                    }
+                    alert.addAction(okAction)
+                    if (browser.view.window != nil){
+                        browser.presentViewController(alert, animated: true, completion: nil)
+                    }
                     dispatch_async(dispatch_get_main_queue()){
                         self.controller.connectedPeers.text = self.getConnectedMessage()
                         self.controller.connectPrompt.text = self.getConnectionPrompt()

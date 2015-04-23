@@ -117,6 +117,18 @@
 		FF3CE8F31AE5519F0035CC75 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F01AE5519F0035CC75 /* play.png */; };
 		FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F11AE5519F0035CC75 /* playc.png */; };
 		FF3CE8F61AE573D70035CC75 /* Flynn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F51AE573D70035CC75 /* Flynn.mp3 */; };
+		FF4B6D601AE9409700BE12FE /* arena_easy.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D541AE9409600BE12FE /* arena_easy.png */; };
+		FF4B6D611AE9409700BE12FE /* arena_hard.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D551AE9409600BE12FE /* arena_hard.png */; };
+		FF4B6D621AE9409700BE12FE /* arena.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D561AE9409600BE12FE /* arena.png */; };
+		FF4B6D631AE9409700BE12FE /* backbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D571AE9409600BE12FE /* backbtn.png */; };
+		FF4B6D641AE9409700BE12FE /* connectbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D581AE9409600BE12FE /* connectbtn.png */; };
+		FF4B6D651AE9409700BE12FE /* exitbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D591AE9409600BE12FE /* exitbtn.png */; };
+		FF4B6D661AE9409700BE12FE /* maze_easy.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5A1AE9409600BE12FE /* maze_easy.png */; };
+		FF4B6D671AE9409700BE12FE /* maze_hard.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5B1AE9409600BE12FE /* maze_hard.png */; };
+		FF4B6D681AE9409700BE12FE /* mazebtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5C1AE9409600BE12FE /* mazebtn.png */; };
+		FF4B6D691AE9409700BE12FE /* playbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5D1AE9409600BE12FE /* playbtn.png */; };
+		FF4B6D6A1AE9409700BE12FE /* playericon.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5E1AE9409600BE12FE /* playericon.png */; };
+		FF4B6D6B1AE9409700BE12FE /* tutorialbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5F1AE9409600BE12FE /* tutorialbtn.png */; };
 		FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */; };
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
@@ -259,6 +271,18 @@
 		FF3CE8F01AE5519F0035CC75 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		FF3CE8F11AE5519F0035CC75 /* playc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playc.png; sourceTree = "<group>"; };
 		FF3CE8F51AE573D70035CC75 /* Flynn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Flynn.mp3; path = Music/Flynn.mp3; sourceTree = SOURCE_ROOT; };
+		FF4B6D541AE9409600BE12FE /* arena_easy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arena_easy.png; sourceTree = "<group>"; };
+		FF4B6D551AE9409600BE12FE /* arena_hard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arena_hard.png; sourceTree = "<group>"; };
+		FF4B6D561AE9409600BE12FE /* arena.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arena.png; sourceTree = "<group>"; };
+		FF4B6D571AE9409600BE12FE /* backbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backbtn.png; sourceTree = "<group>"; };
+		FF4B6D581AE9409600BE12FE /* connectbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectbtn.png; sourceTree = "<group>"; };
+		FF4B6D591AE9409600BE12FE /* exitbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exitbtn.png; sourceTree = "<group>"; };
+		FF4B6D5A1AE9409600BE12FE /* maze_easy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maze_easy.png; sourceTree = "<group>"; };
+		FF4B6D5B1AE9409600BE12FE /* maze_hard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maze_hard.png; sourceTree = "<group>"; };
+		FF4B6D5C1AE9409600BE12FE /* mazebtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mazebtn.png; sourceTree = "<group>"; };
+		FF4B6D5D1AE9409600BE12FE /* playbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playbtn.png; sourceTree = "<group>"; };
+		FF4B6D5E1AE9409600BE12FE /* playericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playericon.png; sourceTree = "<group>"; };
+		FF4B6D5F1AE9409600BE12FE /* tutorialbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorialbtn.png; sourceTree = "<group>"; };
 		FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball.png; sourceTree = "<group>"; };
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
@@ -394,6 +418,18 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF4B6D541AE9409600BE12FE /* arena_easy.png */,
+				FF4B6D551AE9409600BE12FE /* arena_hard.png */,
+				FF4B6D561AE9409600BE12FE /* arena.png */,
+				FF4B6D571AE9409600BE12FE /* backbtn.png */,
+				FF4B6D581AE9409600BE12FE /* connectbtn.png */,
+				FF4B6D591AE9409600BE12FE /* exitbtn.png */,
+				FF4B6D5A1AE9409600BE12FE /* maze_easy.png */,
+				FF4B6D5B1AE9409600BE12FE /* maze_hard.png */,
+				FF4B6D5C1AE9409600BE12FE /* mazebtn.png */,
+				FF4B6D5D1AE9409600BE12FE /* playbtn.png */,
+				FF4B6D5E1AE9409600BE12FE /* playericon.png */,
+				FF4B6D5F1AE9409600BE12FE /* tutorialbtn.png */,
 				FF0DCA8F1AE6A16B003EC278 /* blue_aster.png */,
 				FF0DCA901AE6A16B003EC278 /* blue_ball.png */,
 				FF0DCA911AE6A16B003EC278 /* blue_circle.png */,
@@ -635,8 +671,10 @@
 				FF0DCAA91AE6A16B003EC278 /* staro.png in Resources */,
 				11DCA0381AE548E900BF5766 /* cross.png in Resources */,
 				FF2086521ACC797800F09DB7 /* mini-map-2.png in Resources */,
+				FF4B6D6B1AE9409700BE12FE /* tutorialbtn.png in Resources */,
 				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
 				1185849D1AB0996F002622F8 /* 80x80_red_star_filled.png in Resources */,
+				FF4B6D621AE9409700BE12FE /* arena.png in Resources */,
 				11DCA03F1AE5860C00BF5766 /* lose_star.mp3 in Resources */,
 				11DCA0421AE730CC00BF5766 /* PoolArena.sks in Resources */,
 				11DCA03D1AE5860C00BF5766 /* catch_star.mp3 in Resources */,
@@ -650,6 +688,7 @@
 				FF0DCAA41AE6A16B003EC278 /* green_star.png in Resources */,
 				FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
+				FF4B6D651AE9409700BE12FE /* exitbtn.png in Resources */,
 				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
@@ -657,6 +696,8 @@
 				FF0DCA9E1AE6A16B003EC278 /* blue_ball.png in Resources */,
 				11ED25B21AD31436002803EC /* Main.storyboard in Resources */,
 				FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */,
+				FF4B6D611AE9409700BE12FE /* arena_hard.png in Resources */,
+				FF4B6D691AE9409700BE12FE /* playbtn.png in Resources */,
 				FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */,
 				11DCA0401AE5860C00BF5766 /* score_star.mp3 in Resources */,
 				1185848F1AB09923002622F8 /* 80x80_green_ball_filled.png in Resources */,
@@ -668,11 +709,13 @@
 				FF0DCAA31AE6A16B003EC278 /* green_circle.png in Resources */,
 				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
+				FF4B6D681AE9409700BE12FE /* mazebtn.png in Resources */,
 				112F12771AC5E947008E65BF /* new-map-1.sks in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
 				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
 				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
+				FF4B6D631AE9409700BE12FE /* backbtn.png in Resources */,
 				11D844A31AC9CD2E0078B62B /* Electric Hit 02.mp3 in Resources */,
 				FF0DCAA01AE6A16B003EC278 /* exit.png in Resources */,
 				FF0DCAA21AE6A16B003EC278 /* green_ball.png in Resources */,
@@ -688,7 +731,9 @@
 				118584981AB09947002622F8 /* 80x80_orange_star.png in Resources */,
 				FF0DCAA71AE6A16B003EC278 /* red_circle.png in Resources */,
 				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
+				FF4B6D671AE9409700BE12FE /* maze_hard.png in Resources */,
 				FF20864E1ACC797800F09DB7 /* map.png in Resources */,
+				FF4B6D601AE9409700BE12FE /* arena_easy.png in Resources */,
 				FF0DCAA11AE6A16B003EC278 /* green_aster.png in Resources */,
 				118584871AB098C0002622F8 /* 80x80_blue_ball_filled.png in Resources */,
 				FF2086531ACC797800F09DB7 /* mini-map-3.png in Resources */,
@@ -701,12 +746,14 @@
 				11BF7FC11AB1E190002C7371 /* 200x200_hole.png in Resources */,
 				FFCF00071AB677BA006FAE44 /* blue_star.png in Resources */,
 				118584911AB09923002622F8 /* 80x80_green_star_filled.png in Resources */,
+				FF4B6D661AE9409700BE12FE /* maze_easy.png in Resources */,
 				118584A41AB0997D002622F8 /* 80x80_yellow_star.png in Resources */,
 				FF6C104C1A6572FB00A5C7D7 /* LaunchScreen.xib in Resources */,
 				112F12751AC5E684008E65BF /* Yeah.mp3 in Resources */,
 				11D844A11AC9C5360078B62B /* Electric Hit.mp3 in Resources */,
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				FFCF00051AB677BA006FAE44 /* 400x200_ready.png in Resources */,
+				FF4B6D641AE9409700BE12FE /* connectbtn.png in Resources */,
 				FF2086501ACC797800F09DB7 /* mini-map-0.png in Resources */,
 				FF0DCAA51AE6A16B003EC278 /* red_aster.png in Resources */,
 				118584881AB098C0002622F8 /* 80x80_blue_star_filled.png in Resources */,
@@ -723,6 +770,7 @@
 				FF0DCA9D1AE6A16B003EC278 /* blue_aster.png in Resources */,
 				112F12791AC5EA44008E65BF /* wall-mid.png in Resources */,
 				118584B01AB0998C002622F8 /* 300x300_button_connect.png in Resources */,
+				FF4B6D6A1AE9409700BE12FE /* playericon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

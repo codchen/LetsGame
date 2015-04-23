@@ -28,7 +28,12 @@ class MyNodes: Player {
         self.connection = connection
         self.scene = scene
         self.id = connection.me.playerID
-        self.color = PlayerColors(rawValue: Int(id))
+        if (Int(id) >= 0 && Int(id) <= 3) {
+            self.color = PlayerColors(rawValue: Int(id))
+        }
+        else{
+            self.color = PlayerColors(rawValue: 0)
+        }
         score = connection.me.score
         setUpPlayers(color)
         selectedNode = players[0]

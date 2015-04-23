@@ -93,8 +93,6 @@ class GameLevelScene: GameScene {
         
         if remainingSlave == 0 && currentLevel == connection.maxLevel {
             var maxScore: Int = connection.peersInGame.getMaxScore()
-            println("in checking game over")
-            println("maxscore: \(maxScore), me score: \(connection.me.score)")
             if maxScore == connection.me.score {
                 gameOver = true
                 connection.sendGameOver()

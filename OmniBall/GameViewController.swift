@@ -112,6 +112,10 @@ class GameViewController: UIViewController {
         }
     }
     
+//    @IBAction func back(sender: AnyObject) {
+//        connectionManager.session.disconnect()
+//        dismissViewControllerAnimated(true, completion: nil)
+//    }
     @IBAction func connect(sender: UIButton) {
     	self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
     }
