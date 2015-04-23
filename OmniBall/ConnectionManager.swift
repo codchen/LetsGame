@@ -590,6 +590,9 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
         didChangeState state: MCSessionState)  {
             // Called when a connected peer changes state (for example, goes offline)
             if state == MCSessionState.Connected {
+                dispatch_async(dispatch_get_main_queue()){
+                    self.controller.playerList[self.peersInGame.peers.count]!.text = peerID.displayName
+                }
                 let peer = Peer(peerID: peerID)
                 peersInGame.addPeer(peer)
                 if peersInGame.hasAllPlayers(){
@@ -602,36 +605,13 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                     if (browser.view.window != nil){
                         browser.presentViewController(alert, animated: true, completion: nil)
                     }
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        self.controller.presentViewController(alert, animated: true, completion: nil)
-//                    }
 
                     dispatch_async(dispatch_get_main_queue()){
-                        self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = self.getConnectionPrompt()
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Normal)
-                        self.controller.playBtn.setBackgroundImage(UIImage(named: "play"), forState: UIControlState.Selected)
-                        self.controller.connectBtn.layer.removeAllAnimations()
-                        self.controller.connectPrompt.layer.removeAllAnimations()
                         self.controller.instructionText.text = "Waiting for the host to start game..."
                         UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
                             self.controller.instructionText.alpha = 0.5
                             }, completion: nil)
                     }
-                }
-                else {
-                    var alert = UIAlertController(title: "Connected to a new peer", message: "You have connected to a new player. Still need to connected to \(maxPlayer - peersInGame.peers.count) more.", preferredStyle: UIAlertControllerStyle.Alert)
-                    let okAction = UIAlertAction(title: "OK", style: .Default) { action in
-                    }
-                    alert.addAction(okAction)
-                    if (browser.view.window != nil){
-                        browser.presentViewController(alert, animated: true, completion: nil)
-                    }
-                    dispatch_async(dispatch_get_main_queue()){
-                        self.controller.connectedPeers.text = self.getConnectedMessage()
-                        self.controller.connectPrompt.text = self.getConnectionPrompt()
-                    }
-                    
                 }
             }
             else if state == MCSessionState.NotConnected {
@@ -651,16 +631,15 @@ class ConnectionManager: NSObject, MCBrowserViewControllerDelegate, MCSessionDel
                 }
                 dispatch_async(dispatch_get_main_queue()){
                     self.controller.lblHost.text = ""
-                    self.controller.connectedPeers.text = self.getConnectedMessage()
-                    self.controller.connectPrompt.text = self.getConnectionPrompt()
-                    self.controller.instructionText.text = "Tap \"Connect\" to find other players or wait for other players' invitation"
-                    self.controller.playBtn.layer.removeAllAnimations()
+                    self.controller.instructionText.text = "Waiting for other players"
                     self.controller.playBtn.enabled = false
-                    self.controller.playBtn.alpha = 1
-                    self.controller.connectBtn.alpha = 0.5
-                    UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                        self.controller.connectBtn.alpha = 1
-                        }, completion: nil)
+                    self.controller.playBtn.alpha = 0.1
+                    for player in self.controller.playerList {
+                        if player.text == peerID.displayName {
+                            player.text = ""
+                            break
+                        }
+                    }
                 }
             }
 

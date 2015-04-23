@@ -63,12 +63,14 @@ class GameViewController: UIViewController {
     
     var currentLevel = 0
     
-    @IBOutlet weak var connectBtn: UIButton!
     @IBOutlet weak var instructionText: UILabel!
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var playBtn: UIButton!
-    @IBOutlet weak var connectPrompt: UILabel!
-    @IBOutlet weak var connectedPeers: UILabel!
+    @IBOutlet weak var player1: UILabel!
+    @IBOutlet weak var player2: UILabel!
+    @IBOutlet weak var player3: UILabel!
+    
+    var playerList: [UILabel!] = []
 //    var hostLabel: UILabel!
     var canStart = false
     
@@ -76,50 +78,17 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
-        playBtn.setBackgroundImage(UIImage(named: "playc"), forState: UIControlState.Disabled)
         dispatch_async(dispatch_get_main_queue()){
-            if (self.connectionManager.peersInGame.getNumPlayers() != self.connectionManager.maxPlayer){
-                self.playBtn.enabled = false
-                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
-                self.connectedPeers.text = self.connectionManager.getConnectedMessage()
-            }
-            else{
-                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
-                self.connectedPeers.text = self.connectionManager.getConnectedMessage()
-                self.instructionText.text = "Click \"play\" to start game!"
-            }
-            self.connectBtn.alpha = 0.5
+            self.playBtn.alpha = 0.1
+            self.playBtn.enabled = false
         }
-//        hostLabel = UILabel(frame: CGRect(x: 315, y: 375, width: 300, height: 100))
-//        hostLabel.text = "Host: "
-//        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
-//        self.view.addSubview(hostLabel)
+        playerList.append(player1)
+        playerList.append(player2)
+        playerList.append(player3)
     }
     
     override func viewDidAppear(animated: Bool) {
-        if connectionManager.maxPlayer != 1 {
-            UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                self.connectBtn.alpha = 1
-                }, completion: nil)
-        }
-        else {
-            UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                self.playBtn.alpha = 0.5
-                }, completion: nil)
-            dispatch_async(dispatch_get_main_queue()){
-                self.view.setNeedsDisplay()
-            }
-        }
     }
-    
-//    @IBAction func back(sender: AnyObject) {
-//        connectionManager.session.disconnect()
-//        dismissViewControllerAnimated(true, completion: nil)
-//    }
-    @IBAction func connect(sender: UIButton) {
-    	self.presentViewController(self.connectionManager.browser, animated: true, completion: nil)
-    }
-
     
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
@@ -127,6 +96,10 @@ class GameViewController: UIViewController {
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
         }
+    }
+    @IBAction func exit(sender: AnyObject) {
+        self.connectionManager.session.disconnect()
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func transitToGame(name: String) {
