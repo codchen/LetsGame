@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -212,33 +211,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BZ-L8-Cwe">
-                                <rect key="frame" x="16" y="28" width="52" height="50"/>
-                                <state key="normal" image="back-button.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="back:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="bRB-Cl-qTh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcE-7w-Pir">
-                                <rect key="frame" x="409" y="262" width="175" height="75"/>
-                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="72"/>
-                                <state key="normal" title="?">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="poolTransit:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="Cth-9V-al5"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIp-zG-uX3">
-                                <rect key="frame" x="16" y="238" width="174" height="123"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kIp-zG-uX3">
+                                <rect key="frame" x="65" y="212" width="172" height="176"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="123" id="3YJ-E6-Eyl"/>
-                                    <constraint firstAttribute="width" constant="174" id="TGe-ax-Cnk"/>
+                                    <constraint firstAttribute="height" constant="132" id="3YJ-E6-Eyl"/>
+                                    <constraint firstAttribute="width" constant="172" id="TGe-ax-Cnk"/>
                                 </constraints>
-                                <state key="normal" image="mini-map-0.png">
+                                <state key="normal" image="arena.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -246,12 +225,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ydc-Cw-POf">
-                                <rect key="frame" x="218" y="201" width="204" height="197"/>
+                                <rect key="frame" x="371" y="212" width="159" height="176"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="204" id="JYF-RP-Nch"/>
-                                    <constraint firstAttribute="height" constant="197" id="bFD-Io-Jyc"/>
+                                    <constraint firstAttribute="width" constant="159" id="JYF-RP-Nch"/>
+                                    <constraint firstAttribute="height" constant="176" id="bFD-Io-Jyc"/>
                                 </constraints>
-                                <state key="normal" image="mini-map-3.png">
+                                <state key="normal" image="mazebtn.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -268,54 +247,37 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Arena" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6j-br-xBr">
-                                <rect key="frame" x="82" y="433" width="45" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BZ-L8-Cwe">
+                                <rect key="frame" x="16" y="20" width="52" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="QnT-gD-2r0"/>
-                                    <constraint firstAttribute="height" constant="50" id="r3A-zD-pkn"/>
+                                    <constraint firstAttribute="height" constant="50" id="9iM-DZ-8aV"/>
+                                    <constraint firstAttribute="width" constant="52" id="sUQ-gF-l2X"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="35"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Maze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBT-ax-Poi">
-                                <rect key="frame" x="298" y="433" width="45" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="CZD-4J-d4W"/>
-                                    <constraint firstAttribute="width" constant="80" id="mH5-kJ-6r4"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="35"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" image="backbtn.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="OaH-gT-RiJ" eventType="touchUpInside" id="bRB-Cl-qTh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="Z6j-br-xBr" secondAttribute="centerX" constant="200" id="334-FJ-8hm"/>
-                            <constraint firstAttribute="centerX" secondItem="ecu-A9-Mmd" secondAttribute="centerX" constant="-15" id="5ca-0e-0ec"/>
-                            <constraint firstAttribute="centerX" secondItem="kIp-zG-uX3" secondAttribute="centerX" constant="197" id="7Ft-GE-ve4"/>
-                            <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-196" id="Aup-XU-Tmt"/>
-                            <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="H8w-Bp-flE"/>
+                            <constraint firstAttribute="centerX" secondItem="ecu-A9-Mmd" secondAttribute="centerX" id="5ca-0e-0ec"/>
+                            <constraint firstAttribute="centerX" secondItem="kIp-zG-uX3" secondAttribute="centerX" constant="150" id="7Ft-GE-ve4"/>
+                            <constraint firstAttribute="centerY" secondItem="8BZ-L8-Cwe" secondAttribute="centerY" constant="120" id="7ZC-Kd-OnR"/>
                             <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="LWD-Bm-yIK"/>
                             <constraint firstAttribute="centerY" secondItem="kIp-zG-uX3" secondAttribute="centerY" id="N1h-Sp-DM2"/>
-                            <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-20" id="QbZ-WB-qj0"/>
-                            <constraint firstAttribute="centerY" secondItem="vBT-ax-Poi" secondAttribute="centerY" constant="-120" id="Tml-6r-iU4"/>
-                            <constraint firstAttribute="centerY" secondItem="ecu-A9-Mmd" secondAttribute="centerY" constant="130" id="bn5-CJ-THH"/>
-                            <constraint firstAttribute="centerY" secondItem="Z6j-br-xBr" secondAttribute="centerY" constant="-120" id="cyD-U1-faR"/>
-                            <constraint firstAttribute="centerX" secondItem="vBT-ax-Poi" secondAttribute="centerX" constant="-20" id="fb1-9X-TxC"/>
+                            <constraint firstAttribute="centerX" secondItem="Ydc-Cw-POf" secondAttribute="centerX" constant="-150" id="QbZ-WB-qj0"/>
+                            <constraint firstAttribute="centerY" secondItem="ecu-A9-Mmd" secondAttribute="centerY" constant="120" id="bn5-CJ-THH"/>
                             <constraint firstAttribute="centerY" secondItem="Ydc-Cw-POf" secondAttribute="centerY" id="ovT-2D-Jyd"/>
-                            <constraint firstAttribute="centerX" secondItem="dcE-7w-Pir" secondAttribute="centerX" constant="-200" id="qbi-jz-P2m"/>
-                            <constraint firstAttribute="centerY" secondItem="dcE-7w-Pir" secondAttribute="centerY" id="qgH-up-vtO"/>
+                            <constraint firstAttribute="centerX" secondItem="8BZ-L8-Cwe" secondAttribute="centerX" constant="230" id="pjj-8v-WgO"/>
                             <constraint firstAttribute="centerY" secondItem="Ydc-Cw-POf" secondAttribute="centerY" id="vna-v3-nzz"/>
-                            <constraint firstItem="dcE-7w-Pir" firstAttribute="trailing" secondItem="2Tz-1b-3tE" secondAttribute="trailingMargin" id="w6r-qT-2kf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="LWD-Bm-yIK"/>
                                 <exclude reference="vna-v3-nzz"/>
-                                <exclude reference="qbi-jz-P2m"/>
-                                <exclude reference="qgH-up-vtO"/>
-                                <exclude reference="w6r-qT-2kf"/>
                             </mask>
                         </variation>
                     </view>
@@ -323,6 +285,146 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s2c-w9-dAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1083" y="198"/>
+        </scene>
+        <!--arenaDifficultyController-->
+        <scene sceneID="g6V-Ne-tuv">
+            <objects>
+                <viewController title="arenaDifficultyController" id="ODE-dK-gxw" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Yo7-RQ-haV"/>
+                        <viewControllerLayoutGuide type="bottom" id="Svt-OK-qDS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fSA-aE-b0b">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhw-iS-57t">
+                                <rect key="frame" x="29" y="209" width="264" height="171"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="Vj3-It-qH6"/>
+                                    <constraint firstAttribute="width" constant="172" id="xjH-jV-lAC"/>
+                                </constraints>
+                                <state key="normal" image="arena_easy.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Qa-pK-RsA">
+                                <rect key="frame" x="352" y="209" width="264" height="171"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="172" id="eLh-Su-wTf"/>
+                                    <constraint firstAttribute="height" constant="132" id="saK-WX-742"/>
+                                </constraints>
+                                <state key="normal" image="arena_hard.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zd-CA-KAs">
+                                <rect key="frame" x="16" y="28" width="52" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="52" id="Fjn-oJ-h7u"/>
+                                    <constraint firstAttribute="height" constant="50" id="MKr-5P-FoZ"/>
+                                </constraints>
+                                <state key="normal" image="backbtn.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select difficulty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7T-HD-3sn">
+                                <rect key="frame" x="279" y="57" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="190" id="6DO-71-gqM"/>
+                                    <constraint firstAttribute="height" constant="21" id="gLg-cS-u2h"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="c7T-HD-3sn" secondAttribute="centerY" constant="120" id="EGY-Ea-lWb"/>
+                            <constraint firstAttribute="centerY" secondItem="9Zd-CA-KAs" secondAttribute="centerY" constant="120" id="MYp-Je-C1Y"/>
+                            <constraint firstAttribute="centerX" secondItem="c7T-HD-3sn" secondAttribute="centerX" id="OEt-xF-qFD"/>
+                            <constraint firstAttribute="centerX" secondItem="fhw-iS-57t" secondAttribute="centerX" constant="150" id="R5v-Sg-U13"/>
+                            <constraint firstAttribute="centerY" secondItem="5Qa-pK-RsA" secondAttribute="centerY" id="RPY-1U-n1E"/>
+                            <constraint firstAttribute="centerX" secondItem="5Qa-pK-RsA" secondAttribute="centerX" constant="-150" id="YFB-mi-Giz"/>
+                            <constraint firstAttribute="centerX" secondItem="9Zd-CA-KAs" secondAttribute="centerX" constant="230" id="iwE-Uc-Hy9"/>
+                            <constraint firstAttribute="centerY" secondItem="fhw-iS-57t" secondAttribute="centerY" id="vqq-Rj-nqb"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5K-hG-QRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1710" y="198"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SR4-Yb-CNW">
+            <objects>
+                <viewController id="UGf-0f-1te" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jdI-pR-fjm"/>
+                        <viewControllerLayoutGuide type="bottom" id="DMK-Hr-Z66"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W7M-y3-ff7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n70-vY-kBN">
+                                <rect key="frame" x="29" y="173" width="226" height="263"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="159" id="Bny-k0-r5g"/>
+                                    <constraint firstAttribute="height" constant="176" id="wOA-Jh-Ak2"/>
+                                </constraints>
+                                <state key="normal" image="maze_easy.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ie4-5q-y8W">
+                                <rect key="frame" x="346" y="173" width="226" height="263"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="176" id="AyH-0r-yds"/>
+                                    <constraint firstAttribute="width" constant="159" id="eXQ-sa-oyt"/>
+                                </constraints>
+                                <state key="normal" image="maze_hard.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7m-xJ-ar6">
+                                <rect key="frame" x="29" y="28" width="52" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="RUH-GI-dbI"/>
+                                    <constraint firstAttribute="width" constant="52" id="SgN-3y-99H"/>
+                                </constraints>
+                                <state key="normal" image="backbtn.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select difficulty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf2-f4-mbT">
+                                <rect key="frame" x="279" y="57" width="117" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="QO9-fc-cNz"/>
+                                    <constraint firstAttribute="width" constant="190" id="eFw-AK-gwP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="C7m-xJ-ar6" secondAttribute="centerY" constant="120" id="0SE-c4-Mep"/>
+                            <constraint firstAttribute="centerX" secondItem="n70-vY-kBN" secondAttribute="centerX" constant="150" id="29E-fx-XxP"/>
+                            <constraint firstAttribute="centerX" secondItem="C7m-xJ-ar6" secondAttribute="centerX" constant="230" id="IY0-sd-Kwq"/>
+                            <constraint firstAttribute="centerX" secondItem="Ie4-5q-y8W" secondAttribute="centerX" constant="-150" id="TIB-7Q-o6k"/>
+                            <constraint firstAttribute="centerX" secondItem="zf2-f4-mbT" secondAttribute="centerX" id="TQY-a6-Zmq"/>
+                            <constraint firstAttribute="centerY" secondItem="zf2-f4-mbT" secondAttribute="centerY" constant="120" id="fb6-tM-ZL5"/>
+                            <constraint firstAttribute="centerY" secondItem="n70-vY-kBN" secondAttribute="centerY" id="jHQ-Qx-icC"/>
+                            <constraint firstAttribute="centerY" secondItem="Ie4-5q-y8W" secondAttribute="centerY" id="ju2-cF-E2r"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HPa-gw-gMb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2333" y="195"/>
         </scene>
         <!--MinimapController-->
         <scene sceneID="Guq-5B-RJ8">
@@ -402,9 +504,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="back-button.png" width="146" height="150"/>
+        <image name="arena.png" width="688" height="528"/>
+        <image name="arena_easy.png" width="688" height="528"/>
+        <image name="arena_hard.png" width="688" height="528"/>
+        <image name="backbtn.png" width="158" height="152"/>
         <image name="connectbtn.png" width="688" height="688"/>
         <image name="exitbtn.png" width="688" height="248"/>
+        <image name="maze_easy.png" width="636" height="704"/>
+        <image name="maze_hard.png" width="636" height="704"/>
+        <image name="mazebtn.png" width="636" height="704"/>
         <image name="mini-map-0.png" width="340" height="240"/>
         <image name="mini-map-1.png" width="300" height="416"/>
         <image name="mini-map-2.png" width="300" height="416"/>
