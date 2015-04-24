@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 3
     var connectedPeer = 0
     
     var advertiser: MCNearbyServiceAdvertiser!
@@ -54,7 +54,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         mutating func removePeer(peer: Peer) {
             var removeIdx = 0
             for var i = 0; i < peers.count; ++i {
-                if peers[i].playerID == peer.playerID {
+                if peers[i].peerID.isEqual(peer.peerID) {
                     removeIdx = i
                     break
                 }
@@ -502,8 +502,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         println("host is 0 is me " + String(self.me.getName()))
                         self.controller.playBtn.enabled = true
                         self.controller.instructionText.text = "You are the host. Tap \"Play\" to start game!"
+                        self.controller.playBtn.alpha = 0.5
                         UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                            self.controller.playBtn.alpha = 0.5
+                            self.controller.playBtn.alpha = 1
                             }, completion: nil)
                     }
                 } else {
@@ -628,13 +629,16 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             // Called when a connected peer changes state (for example, goes offline)
             if state == MCSessionState.Connected {
                 println("Connected to \(peerID.displayName)")
+                var lblIdx = self.peersInGame.peers.count
                 dispatch_async(dispatch_get_main_queue()){
-                    self.controller.playerList[self.peersInGame.peers.count]!.text = peerID.displayName
+                    self.controller.playerList[lblIdx]!.text = peerID.displayName
                 }
                 if !peersInGame.hasPeer(peerID) {
+                    println("add: "+peerID.displayName)
                     let peer = Peer(peerID: peerID)
                     peersInGame.addPeer(peer)
                 }
+                println("\(peersInGame.getNumPlayers())")
                 if peersInGame.hasAllPlayers(){
                     generateRandomNumber()
                     var alert = UIAlertController(title: "Connection Complete", message: "You have connected to maximum number of players!", preferredStyle: UIAlertControllerStyle.Alert)
@@ -656,8 +660,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 dispatch_async(dispatch_get_main_queue()) {
                     self.controller.presentViewController(alert, animated: true, completion: nil)
                 }
+                println("should remove"+peerID.displayName)
                 if let peer = peersInGame.getPeer(peerID) {
                     peersInGame.removePeer(peer)
+                    println("removed "+peerID.displayName)
                     deleteFromInvited(peerID)
                 }
                 peersInGame.numOfDelta = 1
@@ -670,9 +676,15 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.instructionText.text = "Waiting for other players"
                     self.controller.playBtn.enabled = false
                     self.controller.playBtn.alpha = 0.1
-                    for player in self.controller.playerList {
-                        if player.text == peerID.displayName {
-                            player.text = ""
+                    for var i = 0; i < self.controller.playerList.count; ++i {
+                        if self.controller.playerList[i].text == peerID.displayName {
+                            if i == 1 {
+                                self.controller.playerList[i].text = self.controller.playerList[i + 1].text
+                                self.controller.playerList[i + 1].text = ""
+                            }
+                            else{
+                                self.controller.playerList[i].text = ""
+                            }
                             break
                         }
                     }

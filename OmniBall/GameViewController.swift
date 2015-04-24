@@ -105,8 +105,8 @@ class GameViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
         connectionManager.gameState = .InViewController
         self.connectionManager.session.disconnect()
-//        connectionManager.advertiser.stopAdvertisingPeer()
-//        connectionManager.browser.stopBrowsingForPeers()
+        connectionManager.advertiser.stopAdvertisingPeer()
+        connectionManager.browser.stopBrowsingForPeers()
 //        dismissViewControllerAnimated(true, completion: nil)
     }
     
