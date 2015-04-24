@@ -57,6 +57,7 @@ class InstructionScene: SKScene {
                 }
             case .HiveMaze:
                 let levelScene = LevelXScene(size: self.size, level: self.controller.currentLevel + 1)
+                levelScene.easy = true
                 levelScene.scaleMode = self.scaleMode
                 levelScene.controller = self.controller
                 levelScene.connection = self.connection
@@ -65,6 +66,14 @@ class InstructionScene: SKScene {
             case .PoolArena:
                 println("called 1")
                 self.controller.transitToPoolArena()
+            case .HiveMaze2:
+                let levelScene = LevelXScene(size: self.size, level: self.controller.currentLevel + 1)
+                levelScene.easy = false
+                levelScene.scaleMode = self.scaleMode
+                levelScene.controller = self.controller
+                levelScene.connection = self.connection
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                self.view!.presentScene(levelScene, transition: reveal)
             default:
                 return
             }

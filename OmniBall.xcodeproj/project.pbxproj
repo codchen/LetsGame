@@ -129,6 +129,8 @@
 		FF4B6D691AE9409700BE12FE /* playbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5D1AE9409600BE12FE /* playbtn.png */; };
 		FF4B6D6A1AE9409700BE12FE /* playericon.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5E1AE9409600BE12FE /* playericon.png */; };
 		FF4B6D6B1AE9409700BE12FE /* tutorialbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4B6D5F1AE9409600BE12FE /* tutorialbtn.png */; };
+		FF4B6D6D1AE9C84300BE12FE /* arenaDifficultyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4B6D6C1AE9C84300BE12FE /* arenaDifficultyController.swift */; };
+		FF4B6D6F1AE9CD1C00BE12FE /* mazeDifficultyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4B6D6E1AE9CD1C00BE12FE /* mazeDifficultyController.swift */; };
 		FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */; };
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
@@ -283,6 +285,8 @@
 		FF4B6D5D1AE9409600BE12FE /* playbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playbtn.png; sourceTree = "<group>"; };
 		FF4B6D5E1AE9409600BE12FE /* playericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playericon.png; sourceTree = "<group>"; };
 		FF4B6D5F1AE9409600BE12FE /* tutorialbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorialbtn.png; sourceTree = "<group>"; };
+		FF4B6D6C1AE9C84300BE12FE /* arenaDifficultyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = arenaDifficultyController.swift; sourceTree = "<group>"; };
+		FF4B6D6E1AE9CD1C00BE12FE /* mazeDifficultyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = mazeDifficultyController.swift; sourceTree = "<group>"; };
 		FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_blue_ball.png; sourceTree = "<group>"; };
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
@@ -388,6 +392,8 @@
 				113329A61AB0CDA2008B46A2 /* ViewController.swift */,
 				112D92101AB4887200FCF399 /* LevelViewController.swift */,
 				FF2086431AC9C65B00F09DB7 /* MinimapController.swift */,
+				FF4B6D6C1AE9C84300BE12FE /* arenaDifficultyController.swift */,
+				FF4B6D6E1AE9CD1C00BE12FE /* mazeDifficultyController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -817,6 +823,7 @@
 				3C7E84311A91052700212817 /* Set.swift in Sources */,
 				113329A71AB0CDA2008B46A2 /* ViewController.swift in Sources */,
 				11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */,
+				FF4B6D6D1AE9C84300BE12FE /* arenaDifficultyController.swift in Sources */,
 				112D92111AB4887200FCF399 /* LevelViewController.swift in Sources */,
 				11DCA0441AE7315800BF5766 /* GamePoolScene.swift in Sources */,
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
@@ -825,6 +832,7 @@
 				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
 				119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */,
 				FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */,
+				FF4B6D6F1AE9CD1C00BE12FE /* mazeDifficultyController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,11 +13,11 @@ enum MessageType: Int {
 }
 
 enum GameState: Int {
-    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done
+    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done, InViewController, InGameViewController
 }
 
 enum GameMode: Int {
-    case None, BattleArena, HiveMaze, PoolArena
+    case None, BattleArena, HiveMaze, PoolArena, HiveMaze2
 }
 
 struct Message {

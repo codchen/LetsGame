@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -82,7 +82,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for other players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fn-cQ-Ztg">
-                                <rect key="frame" x="-90" y="159.5" width="561" height="21"/>
+                                <rect key="frame" x="-90" y="160" width="561" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="561" id="BAY-zk-Ei4"/>
                                     <constraint firstAttribute="height" constant="21" id="eaT-18-cXs"/>
@@ -126,7 +126,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GuY-dP-vre">
-                                <rect key="frame" x="105" y="229.5" width="200" height="21"/>
+                                <rect key="frame" x="105" y="230" width="200" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Vg5-M5-YQO"/>
                                     <constraint firstAttribute="width" constant="200" id="Yp9-oi-XmH"/>
@@ -136,7 +136,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label2" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xTj-nQ-cwH">
-                                <rect key="frame" x="105" y="289.5" width="200" height="21"/>
+                                <rect key="frame" x="105" y="290" width="200" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="PHW-DU-yOR"/>
                                     <constraint firstAttribute="width" constant="200" id="aga-Tl-f7V"/>
@@ -251,7 +251,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Game Mode!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecu-A9-Mmd">
-                                <rect key="frame" x="205" y="169.5" width="190" height="21"/>
+                                <rect key="frame" x="205" y="170" width="190" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="190" id="AmE-MT-s4v"/>
                                     <constraint firstAttribute="height" constant="21" id="eX3-t4-7PR"/>
@@ -289,7 +289,7 @@
         <!--arenaDifficultyController-->
         <scene sceneID="g6V-Ne-tuv">
             <objects>
-                <viewController title="arenaDifficultyController" id="ODE-dK-gxw" sceneMemberID="viewController">
+                <viewController title="arenaDifficultyController" id="ODE-dK-gxw" customClass="arenaDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yo7-RQ-haV"/>
                         <viewControllerLayoutGuide type="bottom" id="Svt-OK-qDS"/>
@@ -307,6 +307,9 @@
                                 <state key="normal" image="arena_easy.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="easy:" destination="ODE-dK-gxw" eventType="touchUpInside" id="hrf-e5-t0o"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Qa-pK-RsA">
                                 <rect key="frame" x="352" y="209" width="264" height="171"/>
@@ -317,6 +320,9 @@
                                 <state key="normal" image="arena_hard.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="hard:" destination="ODE-dK-gxw" eventType="touchUpInside" id="n0e-z2-CFd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zd-CA-KAs">
                                 <rect key="frame" x="16" y="28" width="52" height="50"/>
@@ -356,10 +362,10 @@
             </objects>
             <point key="canvasLocation" x="1710" y="198"/>
         </scene>
-        <!--View Controller-->
+        <!--mazeDifficultyController-->
         <scene sceneID="SR4-Yb-CNW">
             <objects>
-                <viewController id="UGf-0f-1te" sceneMemberID="viewController">
+                <viewController title="mazeDifficultyController" id="UGf-0f-1te" customClass="mazeDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jdI-pR-fjm"/>
                         <viewControllerLayoutGuide type="bottom" id="DMK-Hr-Z66"/>
@@ -377,6 +383,9 @@
                                 <state key="normal" image="maze_easy.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="easy:" destination="UGf-0f-1te" eventType="touchUpInside" id="ABZ-iM-v4x"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ie4-5q-y8W">
                                 <rect key="frame" x="346" y="173" width="226" height="263"/>
@@ -387,6 +396,9 @@
                                 <state key="normal" image="maze_hard.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="hard:" destination="UGf-0f-1te" eventType="touchUpInside" id="PYR-tf-xmL"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7m-xJ-ar6">
                                 <rect key="frame" x="29" y="28" width="52" height="50"/>

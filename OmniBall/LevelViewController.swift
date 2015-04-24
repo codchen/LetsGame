@@ -12,7 +12,7 @@ import SpriteKit
 class LevelViewController: UIViewController {
     
     var gameViewController: GameViewController!
-    var scrollController: MinimapController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 //        scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
@@ -28,8 +28,9 @@ class LevelViewController: UIViewController {
     }
     
     @IBAction func arenaTransit(sender: AnyObject) {
-        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("BattleArena")
+        let arenaDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("arenaDifficultyController") as arenaDifficultyController
+        arenaDifficultyController.gameViewController = self.gameViewController
+        self.presentViewController(arenaDifficultyController, animated: true, completion: nil)
     }
 
     @IBAction func poolTransit(sender: UIButton) {

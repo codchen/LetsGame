@@ -676,6 +676,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         }
                     }
                 }
+                if gameState != .InViewController && gameState != .InGame {
+                    advertiser.startAdvertisingPeer()
+                    browser.startBrowsingForPeers()
+                }
             }
 
     }

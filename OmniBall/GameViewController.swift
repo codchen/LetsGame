@@ -78,6 +78,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
+        connectionManager.gameState = .InGameViewController
         dispatch_async(dispatch_get_main_queue()){
             self.playBtn.alpha = 0.1
             self.playBtn.enabled = false
@@ -101,10 +102,12 @@ class GameViewController: UIViewController {
         }
     }
     @IBAction func exit(sender: AnyObject) {
-        self.connectionManager.session.disconnect()
-        connectionManager.advertiser.stopAdvertisingPeer()
-        connectionManager.browser.stopBrowsingForPeers()
         dismissViewControllerAnimated(true, completion: nil)
+        connectionManager.gameState = .InViewController
+        self.connectionManager.session.disconnect()
+//        connectionManager.advertiser.stopAdvertisingPeer()
+//        connectionManager.browser.stopBrowsingForPeers()
+//        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func transitToGame(name: String) {
@@ -113,9 +116,15 @@ class GameViewController: UIViewController {
             if name == "BattleArena"  {
                 connectionManager.gameMode = .BattleArena
             } else if name == "HiveMaze" {
+                currentLevel = 0
+                connectionManager.maxLevel = 4
                 connectionManager.gameMode = .HiveMaze
             } else if name == "PoolArena" {
                 connectionManager.gameMode = .PoolArena
+            } else if name == "HiveMaze2" {
+                currentLevel = -1
+                connectionManager.maxLevel = 5
+                connectionManager.gameMode = .HiveMaze2
             }
             
             if self.connectionManager.maxPlayer == 1 {
@@ -202,6 +211,22 @@ class GameViewController: UIViewController {
             self.currentGameScene = scene
             self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
 
+        }
+    }
+    
+    func transitToHiveMaze2(){
+        dispatch_async(dispatch_get_main_queue()) {
+            let scene = GameLevelScene.unarchiveFromFile("HLevel"+String(self.currentLevel)) as GameLevelScene
+            scene.currentLevel = self.currentLevel
+            scene.slaveNum = self.currentLevel + 1
+            scene.scaleMode = .AspectFill
+            scene.connection = self.connectionManager
+            if self.currentView == nil {
+                self.configureCurrentView()
+            }
+            self.currentGameScene = scene
+            self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+            
         }
     }
     
