@@ -17,13 +17,13 @@ class ArenaDifficultyController: UIViewController {
     }
 
     @IBAction func easyBtn(sender: AnyObject) {
-        self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
         gameViewController.transitToGame("BattleArena")
+        //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func hardBtn(sender: AnyObject) {
-        self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
         gameViewController.transitToGame("PoolArena")
+        //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func backBtn(sender: AnyObject) {

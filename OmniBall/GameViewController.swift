@@ -80,7 +80,7 @@ class GameViewController: UIViewController {
         connectionManager.controller = self
         connectionManager.gameState = .InGameViewController
         dispatch_async(dispatch_get_main_queue()){
-            self.playBtn.alpha = 0.1
+            self.playBtn.alpha = 0
             self.playBtn.enabled = false
         }
         player1.text = connectionManager.me.getName()
@@ -90,8 +90,11 @@ class GameViewController: UIViewController {
         player3.text = ""
         playerList.append(player3)
     }
-    
+    //disable animation
     override func viewDidAppear(animated: Bool) {
+//        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+//            self.instructionText.scale = 2
+//            }, completion: nil)
     }
     
     @IBAction func play(sender: UIButton) {

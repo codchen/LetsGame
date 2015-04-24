@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -82,7 +82,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for other players" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fn-cQ-Ztg">
-                                <rect key="frame" x="-90" y="160" width="561" height="21"/>
+                                <rect key="frame" x="-90" y="180" width="561" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="561" id="BAY-zk-Ei4"/>
                                     <constraint firstAttribute="height" constant="21" id="eaT-18-cXs"/>
@@ -165,7 +165,7 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="xTj-nQ-cwH" secondAttribute="centerY" id="1Qc-Lr-XSW"/>
-                            <constraint firstAttribute="centerY" secondItem="0fn-cQ-Ztg" secondAttribute="centerY" constant="130" id="1qK-06-lVO"/>
+                            <constraint firstAttribute="centerY" secondItem="0fn-cQ-Ztg" secondAttribute="centerY" constant="110" id="1qK-06-lVO"/>
                             <constraint firstAttribute="centerX" secondItem="ADK-DC-inN" secondAttribute="centerX" constant="-140" id="55B-AK-4L7"/>
                             <constraint firstAttribute="centerX" secondItem="fSY-s9-Im7" secondAttribute="centerX" constant="230" id="57o-N5-BFv"/>
                             <constraint firstAttribute="centerY" secondItem="icF-5d-Maw" secondAttribute="centerY" constant="-95" id="8ba-Wh-9Q5"/>
