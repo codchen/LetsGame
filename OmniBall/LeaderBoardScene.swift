@@ -25,7 +25,7 @@ class LeaderBoardScene: SKScene {
     var btnAgain: SKSpriteNode!
     var btnNext: SKSpriteNode!
 //    var btnShow: SKLabelNode!
-    var controller: GameViewController!
+    var controller: DifficultyController!
     var connection: ConnectionManager!
     var currentLevel = 0
     var gameType: String!
@@ -41,6 +41,7 @@ class LeaderBoardScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         controller.currentLevel = 0
+        connection.controller.currentLevel = 0
         connection = controller.connectionManager
         var startPos: CGFloat!
         if connection.gameMode == .HiveMaze {

@@ -108,7 +108,7 @@ class GameLevelScene: GameScene {
         addHudStars(myNodes.id)
         if remainingSlave == 0 {
             checkGameOver()
-            if (gameOver == false && connection.controller.currentLevel < connection.maxLevel){
+            if (gameOver == false && controller.currentLevel < connection.maxLevel){
                 connection.sendPause()
                 paused()
             }
@@ -123,7 +123,7 @@ class GameLevelScene: GameScene {
             levelScene.easy = false
         }
         levelScene.scaleMode = self.scaleMode
-        levelScene.controller = connection.controller
+        levelScene.controller = controller
         levelScene.connection = connection
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
@@ -152,17 +152,19 @@ class GameLevelScene: GameScene {
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
                 self.connection.sendExit()
                 self.connection.exitGame()
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                 UIView.transitionWithView(self.view!, duration: 0.5,
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {
                         self.view!.removeFromSuperview()
-                        self.connection.controller.clearCurrentView()
+                        self.controller.clearCurrentView()
                     }, completion: nil)
                 
             }
             alert.addAction(yesAction)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            connection.controller.presentViewController(alert, animated: true, completion: nil)
+            controller.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

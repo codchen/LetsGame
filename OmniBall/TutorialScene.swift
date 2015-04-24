@@ -16,7 +16,7 @@ class TutorialScene: GameScene {
 //    var hadFirstSelect: Bool = false
     var hadFirstStarSelect: Bool = false
     var hadFirstCapture: Bool = false
-    var controller: ViewController!
+    var vcontroller: ViewController!
     
     override func didMoveToView(view: SKView) {
         connection = ConnectionManager()
@@ -110,7 +110,7 @@ class TutorialScene: GameScene {
     override func gameOver(#won: Bool) {
         tapLabel.removeAllActions()
         let tutorialOverScene = TutorialOverScene(size: self.size)
-        tutorialOverScene.controller = controller
+        tutorialOverScene.controller = vcontroller
         tutorialOverScene.scaleMode = scaleMode
 //        tutorialOverScene.controller = self.controller
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)

@@ -12,6 +12,7 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var controller: DifficultyController!
     var margin: CGFloat!
     let ballSize: CGFloat = 110
     var destPos: CGPoint!
@@ -244,7 +245,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.stop()
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
-        gameOverScene.controller = connection.controller
+        gameOverScene.controller = controller
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(gameOverScene, transition: reveal)
     }
@@ -266,13 +267,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {
                         self.view!.removeFromSuperview()
-                        self.connection.controller.clearCurrentView()
+                        self.controller.clearCurrentView()
+                        self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                        self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                     }, completion: nil)
                 
             }
             alert.addAction(yesAction)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            connection.controller.presentViewController(alert, animated: true, completion: nil)
+            controller.presentViewController(alert, animated: true, completion: nil)
         }
 
     }

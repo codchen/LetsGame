@@ -9,9 +9,8 @@
 import Foundation
 import SpriteKit
 
-class MazeDifficultyController: UIViewController {
-    
-    var gameViewController: GameViewController!
+class MazeDifficultyController: DifficultyController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

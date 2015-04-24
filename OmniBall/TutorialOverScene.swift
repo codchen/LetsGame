@@ -56,7 +56,7 @@ class TutorialOverScene: SKScene {
             	}, completion: nil)
         } else if btnAgain.containsPoint(loc) {
             let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
-            scene.controller = controller
+            scene.vcontroller = controller
             scene.scaleMode = scaleMode
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             view?.presentScene(scene, transition: reveal)

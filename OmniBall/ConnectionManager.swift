@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 3
+    let maxPlayer = 2
     var connectedPeer = 0
     
     var advertiser: MCNearbyServiceAdvertiser!
@@ -189,6 +189,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     var peersInGame: PeersInGame!
     var controller: GameViewController!
+    var diffController: DifficultyController!
     var gameState: GameState = .WaitingForMatch
     var gameMode: GameMode = .None
     var receivedAllRandomNumber: Bool = false
@@ -515,6 +516,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 gameState = .WaitingForStart
                 advertiser.stopAdvertisingPeer()
                 browser.stopBrowsingForPeers()
+                diffController = nil
             }
         } else if message.messageType == MessageType.GameReady {
             gameStartMsgCnt++
@@ -555,10 +557,15 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
             sendThirdTrip(calculatedDelta, peer: peerID)
             if (peersInGame.receivedAllDelta()) {
-                if controller.presentedViewController != nil{
-                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                if controller.presentedViewController != nil{
+//                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                }
+                if diffController != nil {
+                    diffController.transitToInstruction()
                 }
-                controller.transitToInstruction()
+                else{
+                    controller.transitToInstruction()
+                }
             }
             
         } else if message.messageType == MessageType.ThirdTrip {
@@ -568,10 +575,15 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (peersInGame.receivedAllDelta()) {
-                if controller.presentedViewController != nil{
-                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                if controller.presentedViewController != nil{
+//                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                }
+                if diffController != nil {
+                    diffController.transitToInstruction()
                 }
-                controller.transitToInstruction()
+                else{
+                    controller.transitToInstruction()
+                }
             }
             
         } else if message.messageType == MessageType.Dead{
@@ -693,6 +705,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     advertiser.startAdvertisingPeer()
                     browser.startBrowsingForPeers()
                 }
+                self.controller.playBtn.layer.removeAllAnimations()
             }
 
     }

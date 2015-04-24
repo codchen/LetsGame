@@ -13,7 +13,7 @@ class GameOverScene: SKScene {
     let won: Bool
     var restartBtn: SKSpriteNode!
     var nextLevelBtn: SKSpriteNode!
-    var controller: GameViewController!
+    var controller: DifficultyController!
     var connection: ConnectionManager!
     var currentLevel = 0
     

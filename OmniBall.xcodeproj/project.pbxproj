@@ -157,6 +157,7 @@
 		FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF81AAE16A3006FAE44 /* Level2.sks */; };
 		FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */; };
 		FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */; };
+		FFE557221AEAE4B200F2045A /* DifficultyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE557211AEAE4B200F2045A /* DifficultyController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -324,6 +325,7 @@
 		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = ../Maps/Level2.sks; sourceTree = "<group>"; };
 		FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level3.sks; path = ../Maps/Level3.sks; sourceTree = "<group>"; };
 		FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level4.sks; path = ../Maps/Level4.sks; sourceTree = "<group>"; };
+		FFE557211AEAE4B200F2045A /* DifficultyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -412,6 +414,7 @@
 				FF2086431AC9C65B00F09DB7 /* MinimapController.swift */,
 				FF4B6D6C1AE9C84300BE12FE /* ArenaDifficultyController.swift */,
 				FF4B6D6E1AE9CD1C00BE12FE /* MazeDifficultyController.swift */,
+				FFE557211AEAE4B200F2045A /* DifficultyController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 				66F8668F1A6F0B72007EE9FF /* SKNode+Extensions.swift in Sources */,
 				66F866911A6F0B72007EE9FF /* SKTEffects.swift in Sources */,
 				FFCF00091AB72699006FAE44 /* PresentScene.swift in Sources */,
+				FFE557221AEAE4B200F2045A /* DifficultyController.swift in Sources */,
 				113329A31AB0C027008B46A2 /* LeaderBoardScene.swift in Sources */,
 				119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */,
 				11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */,

@@ -11,7 +11,7 @@ import SpriteKit
 
 class PresentScene: SKScene{
     var currentLevel = 2
-    var controller: GameViewController!
+    var controller: DifficultyController!
     let btnNext = SKLabelNode(text: "Next")
     override func didMoveToView(view: SKView) {
         size = CGSize(width: 2048*4, height: 1536*4)

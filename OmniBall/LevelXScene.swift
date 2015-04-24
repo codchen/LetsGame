@@ -11,7 +11,7 @@ import SpriteKit
 
 class LevelXScene: SKScene {
     
-    var controller: GameViewController!
+    var controller: DifficultyController!
     var connection: ConnectionManager!
     var level: Int!
     var easy = true
@@ -43,6 +43,9 @@ class LevelXScene: SKScene {
         let block = SKAction.runBlock {
             let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             self.controller.currentLevel++
+            if (self.connection.diffController != nil){
+                self.connection.controller.currentLevel++
+            }
             if (self.easy == true){
                 self.controller.transitToHiveMaze()
             }

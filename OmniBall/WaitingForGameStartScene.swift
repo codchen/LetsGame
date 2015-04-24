@@ -12,7 +12,7 @@ import SpriteKit
 class WaitingForGameStartScene: SKScene {
     
     var connection: ConnectionManager!
-    var controller: GameViewController!
+    var controller: DifficultyController!
     
     override func didMoveToView(view: SKView) {
         view.backgroundColor = UIColor.blackColor()

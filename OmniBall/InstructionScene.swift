@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 class InstructionScene: SKScene {
-    var controller: GameViewController!
+    var controller: DifficultyController!
     var connection: ConnectionManager!
     
     override init(size: CGSize) {

@@ -9,24 +9,24 @@
 import Foundation
 import SpriteKit
 
-class ArenaDifficultyController: UIViewController {
-    
-    var gameViewController: GameViewController!
+class ArenaDifficultyController: DifficultyController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     @IBAction func easyBtn(sender: AnyObject) {
-        gameViewController.transitToGame("BattleArena")
+        transitToGame("BattleArena")
         //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func hardBtn(sender: AnyObject) {
-        gameViewController.transitToGame("PoolArena")
+        transitToGame("PoolArena")
         //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     @IBAction func backBtn(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+
 }
