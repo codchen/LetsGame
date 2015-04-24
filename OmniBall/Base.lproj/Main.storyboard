@@ -286,10 +286,10 @@
             </objects>
             <point key="canvasLocation" x="1083" y="198"/>
         </scene>
-        <!--arenaDifficultyController-->
+        <!--ArenaDifficultyController-->
         <scene sceneID="g6V-Ne-tuv">
             <objects>
-                <viewController title="arenaDifficultyController" id="ODE-dK-gxw" customClass="arenaDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArenaDifficultyController" title="ArenaDifficultyController" id="ODE-dK-gxw" customClass="ArenaDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Yo7-RQ-haV"/>
                         <viewControllerLayoutGuide type="bottom" id="Svt-OK-qDS"/>
@@ -308,7 +308,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="easy:" destination="ODE-dK-gxw" eventType="touchUpInside" id="hrf-e5-t0o"/>
+                                    <action selector="easyBtn:" destination="ODE-dK-gxw" eventType="touchUpInside" id="tKT-c1-0E4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Qa-pK-RsA">
@@ -321,7 +321,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="hard:" destination="ODE-dK-gxw" eventType="touchUpInside" id="n0e-z2-CFd"/>
+                                    <action selector="hardBtn:" destination="ODE-dK-gxw" eventType="touchUpInside" id="ZnS-D8-nl2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Zd-CA-KAs">
@@ -333,6 +333,9 @@
                                 <state key="normal" image="backbtn.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="backBtn:" destination="ODE-dK-gxw" eventType="touchUpInside" id="N9p-5z-iGT"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select difficulty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7T-HD-3sn">
                                 <rect key="frame" x="279" y="57" width="42" height="21"/>
@@ -362,10 +365,10 @@
             </objects>
             <point key="canvasLocation" x="1710" y="198"/>
         </scene>
-        <!--mazeDifficultyController-->
+        <!--MazeDifficultyController-->
         <scene sceneID="SR4-Yb-CNW">
             <objects>
-                <viewController title="mazeDifficultyController" id="UGf-0f-1te" customClass="mazeDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MazeDifficultyController" title="MazeDifficultyController" id="UGf-0f-1te" customClass="MazeDifficultyController" customModule="OmniBall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jdI-pR-fjm"/>
                         <viewControllerLayoutGuide type="bottom" id="DMK-Hr-Z66"/>
@@ -409,6 +412,9 @@
                                 <state key="normal" image="backbtn.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="back:" destination="UGf-0f-1te" eventType="touchUpInside" id="yAX-sr-nyk"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Select difficulty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zf2-f4-mbT">
                                 <rect key="frame" x="279" y="57" width="117" height="21"/>

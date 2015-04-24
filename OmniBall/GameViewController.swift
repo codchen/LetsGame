@@ -116,14 +116,10 @@ class GameViewController: UIViewController {
             if name == "BattleArena"  {
                 connectionManager.gameMode = .BattleArena
             } else if name == "HiveMaze" {
-                currentLevel = 0
-                connectionManager.maxLevel = 4
                 connectionManager.gameMode = .HiveMaze
             } else if name == "PoolArena" {
                 connectionManager.gameMode = .PoolArena
             } else if name == "HiveMaze2" {
-                currentLevel = -1
-                connectionManager.maxLevel = 5
                 connectionManager.gameMode = .HiveMaze2
             }
             
@@ -200,6 +196,7 @@ class GameViewController: UIViewController {
     
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
+            self.connectionManager.maxLevel = 4
             let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
         	scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel
@@ -216,9 +213,10 @@ class GameViewController: UIViewController {
     
     func transitToHiveMaze2(){
         dispatch_async(dispatch_get_main_queue()) {
+            self.connectionManager.maxLevel = 6
             let scene = GameLevelScene.unarchiveFromFile("HLevel"+String(self.currentLevel)) as GameLevelScene
             scene.currentLevel = self.currentLevel
-            scene.slaveNum = self.currentLevel + 1
+            scene.slaveNum = self.currentLevel
             scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager
             if self.currentView == nil {

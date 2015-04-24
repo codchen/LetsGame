@@ -1,5 +1,5 @@
 //
-//  DifficultyViewController.swift
+//  mazeDifficultyController.swift
 //  OmniBall
 //
 //  Created by Xiaoyu Chen on 4/23/15.
@@ -9,19 +9,21 @@
 import Foundation
 import SpriteKit
 
-class arenaDifficultyController: UIViewController {
+class MazeDifficultyController: UIViewController {
     
     var gameViewController: GameViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
     @IBAction func easy(sender: AnyObject) {
         self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("BattleArena")
+        gameViewController.transitToGame("HiveMaze")
     }
     @IBAction func hard(sender: AnyObject) {
         self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("PoolArena")
+        gameViewController.transitToGame("HiveMaze2")
+    }
+    @IBAction func back(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

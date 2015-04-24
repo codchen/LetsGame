@@ -36,6 +36,8 @@ class InstructionScene: SKScene {
             label = SKLabelNode(text: "Collect Stars to Win!")
         case .PoolArena:
             label = SKLabelNode(text: "Knock Out Stars to Win!")
+        case .HiveMaze2:
+            label = SKLabelNode(text: "Collect Stars to Win!")
         default:
             return
         }

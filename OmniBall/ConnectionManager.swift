@@ -406,6 +406,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         me = Peer(peerID: self.peerID)
         peersInGame.addPeer(me)
         peersInGame.maxPlayer = maxPlayer
+        controller.currentLevel = 0
         advertiser.startAdvertisingPeer()
         browser.startBrowsingForPeers()
     }

@@ -119,6 +119,9 @@ class GameLevelScene: GameScene {
         player.stop()
         physicsWorld.speed = 0
         let levelScene = LevelXScene(size: self.size, level: currentLevel + 1)
+        if connection.gameMode == .HiveMaze2 {
+            levelScene.easy = false
+        }
         levelScene.scaleMode = self.scaleMode
         levelScene.controller = connection.controller
         levelScene.connection = connection

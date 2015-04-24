@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         setupNeutral()
-        if connection.gameMode == GameMode.HiveMaze {
+        if connection.gameMode == GameMode.HiveMaze || connection.gameMode == GameMode.HiveMaze2{
             enableBackgroundMove = true
         } else {
             enableBackgroundMove = false

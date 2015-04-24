@@ -23,19 +23,15 @@ class LevelViewController: UIViewController {
     }
     
     @IBAction func mazeTransit(sender: AnyObject) {
-        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+        let mazeDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("MazeDifficultyController") as MazeDifficultyController
+        mazeDifficultyController.gameViewController = self.gameViewController
+        self.presentViewController(mazeDifficultyController, animated: true, completion: nil)
     }
     
     @IBAction func arenaTransit(sender: AnyObject) {
-        let arenaDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("arenaDifficultyController") as arenaDifficultyController
+        let arenaDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("ArenaDifficultyController") as ArenaDifficultyController
         arenaDifficultyController.gameViewController = self.gameViewController
         self.presentViewController(arenaDifficultyController, animated: true, completion: nil)
-    }
-
-    @IBAction func poolTransit(sender: UIButton) {
-        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("PoolArena")
     }
 
 

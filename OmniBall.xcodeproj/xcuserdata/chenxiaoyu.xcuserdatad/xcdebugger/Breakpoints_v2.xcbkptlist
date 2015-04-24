@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451252985.495259"
+            timestampString = "451534286.77708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
+            startingLineNumber = "430"
+            endingLineNumber = "430"
             landmarkName = "ConnectionManager"
             landmarkType = "3">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451420769.939342"
+            timestampString = "451534286.77708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
+            startingLineNumber = "639"
+            endingLineNumber = "639"
             landmarkName = "session(_:peer:didChangeState:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451323530.465433"
+            timestampString = "451534286.77708"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "565"
-            endingLineNumber = "565"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
             landmarkName = "session(_:didReceiveData:fromPeer:)"
             landmarkType = "5">
          </BreakpointContent>
