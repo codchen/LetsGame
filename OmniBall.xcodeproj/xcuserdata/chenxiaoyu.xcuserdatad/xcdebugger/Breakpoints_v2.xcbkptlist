@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451604363.564295"
+            timestampString = "451671623.31347"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
+            startingLineNumber = "669"
+            endingLineNumber = "669"
             landmarkName = "session(_:peer:didChangeState:)"
             landmarkType = "5">
          </BreakpointContent>

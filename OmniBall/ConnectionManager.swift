@@ -28,7 +28,7 @@ class Peer: NSObject {
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
     let serviceType = "LetsGame"
-    let maxPlayer = 2
+    let maxPlayer = 3
     var connectedPeer = 0
     
     var advertiser: MCNearbyServiceAdvertiser!
@@ -408,6 +408,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         peersInGame.addPeer(me)
         peersInGame.maxPlayer = maxPlayer
         controller.currentLevel = 0
+        gameState = .InGameViewController
         advertiser.startAdvertisingPeer()
         browser.startBrowsingForPeers()
     }
@@ -639,12 +640,30 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func session(session: MCSession!, peer peerID: MCPeerID!,
         didChangeState state: MCSessionState)  {
             // Called when a connected peer changes state (for example, goes offline)
+            dispatch_async(dispatch_get_main_queue()) {
+                switch self.session.connectedPeers.count {
+                case 0:
+                    self.controller.player2.text = ""
+                    self.controller.player3.text = ""
+                case 1:
+                    let peer1 = self.session.connectedPeers[0] as MCPeerID
+                    self.controller.player2.text = peer1.displayName
+                    self.controller.player3.text = ""
+                case 2:
+                    let peer1 = self.session.connectedPeers[0] as MCPeerID
+                    let peer2 = self.session.connectedPeers[1] as MCPeerID
+                    self.controller.player2.text = peer1.displayName
+                    self.controller.player3.text = peer2.displayName
+                default:
+                    break
+                }
+            }
             if state == MCSessionState.Connected {
                 println("Connected to \(peerID.displayName)")
-                var lblIdx = self.peersInGame.peers.count
-                dispatch_async(dispatch_get_main_queue()){
-                    self.controller.playerList[lblIdx]!.text = peerID.displayName
-                }
+//                var lblIdx = self.peersInGame.peers.count
+//                dispatch_async(dispatch_get_main_queue()){
+//                    self.controller.playerList[lblIdx]!.text = peerID.displayName
+//                }
                 if !peersInGame.hasPeer(peerID) {
                     println("add: "+peerID.displayName)
                     let peer = Peer(peerID: peerID)
@@ -678,6 +697,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     println("removed "+peerID.displayName)
                     deleteFromInvited(peerID)
                 }
+                println("remaining peers: \(self.peersInGame.peers.count)")
                 peersInGame.numOfDelta = 1
                 peersInGame.numOfRandomNumber = 0
                 for peer in peersInGame.peers {
@@ -687,27 +707,60 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.lblHost.text = ""
                     self.controller.instructionText.text = "Waiting for other players"
                     self.controller.playBtn.enabled = false
-                    self.controller.playBtn.alpha = 0.1
-                    for var i = 0; i < self.controller.playerList.count; ++i {
-                        if self.controller.playerList[i].text == peerID.displayName {
-                            if i == 1 {
-                                self.controller.playerList[i].text = self.controller.playerList[i + 1].text
-                                self.controller.playerList[i + 1].text = ""
-                            }
-                            else{
-                                self.controller.playerList[i].text = ""
-                            }
-                            break
-                        }
-                    }
+                    self.controller.playBtn.alpha = 0
+                    self.controller.playBtn.layer.removeAllAnimations()
+//                    for var i = 0; i < self.controller.playerList.count; ++i {
+//                        if self.controller.playerList[i].text == peerID.displayName {
+//                            if i == 1 {
+//                                self.controller.playerList[i].text = self.controller.playerList[i + 1].text
+//                                self.controller.playerList[i + 1].text = ""
+//                            }
+//                            else{
+//                                self.controller.playerList[i].text = ""
+//                            }
+//                            break
+//                        }
+//                    }
                 }
                 if gameState != .InViewController && gameState != .InGame {
                     advertiser.startAdvertisingPeer()
                     browser.startBrowsingForPeers()
                 }
-                self.controller.playBtn.layer.removeAllAnimations()
             }
 
+    }
+    
+    func checkMatch() -> Bool{
+        if session.connectedPeers.count != peersInGame.peers.count - 1 {
+            return false
+        }
+        switch session.connectedPeers.count {
+        case 0:
+            return true
+        case 1:
+            let peer1 = session.connectedPeers[0] as MCPeerID
+            if (!peer1.isEqual(peersInGame.peers[0].peerID) && !peer1.isEqual(peersInGame.peers[1].peerID)) {
+                return false
+            }
+            return true
+        case 2:
+            let peer1 = session.connectedPeers[0] as MCPeerID
+            let peer2 = session.connectedPeers[1] as MCPeerID
+            for var i = 0; i < 3; ++i {
+                if peer1.isEqual(peersInGame.peers[i].peerID) {
+                    for var j = 0; j < 3; ++j {
+                        if peer2.isEqual(peersInGame.peers[j].peerID) {
+                            return true
+                        }
+                    }
+                    return false
+                }
+            }
+            return false
+        default:
+            println("incorrect connected peers number")
+            return true
+        }
     }
     
 }

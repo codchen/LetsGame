@@ -92,9 +92,9 @@ class GameViewController: DifficultyController {
     }
     //disable animation
     override func viewDidAppear(animated: Bool) {
-//        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
-//            self.instructionText.scale = 2
-//            }, completion: nil)
+        UIView.animateWithDuration(1, delay:0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+            self.instructionText.alpha = 0.5
+        }, completion: nil)
     }
     
     @IBAction func play(sender: UIButton) {
@@ -106,10 +106,10 @@ class GameViewController: DifficultyController {
     }
     @IBAction func exit(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
-        connectionManager.gameState = .InViewController
-        self.connectionManager.session.disconnect()
         connectionManager.advertiser.stopAdvertisingPeer()
         connectionManager.browser.stopBrowsingForPeers()
+        connectionManager.gameState = .InViewController
+        self.connectionManager.session.disconnect()
 //        dismissViewControllerAnimated(true, completion: nil)
     }
     
