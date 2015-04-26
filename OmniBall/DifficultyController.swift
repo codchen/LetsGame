@@ -17,7 +17,7 @@ class DifficultyController: UIViewController {
     var currentLevel = 0
     
     func transitToGame(name: String) {
-        if connectionManager.gameState == .WaitingForStart {
+        if connectionManager.gameState == .InLevelViewController {
             if name == "BattleArena"  {
                 connectionManager.gameMode = .BattleArena
             } else if name == "HiveMaze" {

@@ -49,7 +49,7 @@ class LeaderBoardScene: SKScene {
         } else {
             startPos = 500
         }
-        connection.gameState = .WaitingForStart
+        connection.gameState = .InLevelViewController
         self.connection.gameMode = .None
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero

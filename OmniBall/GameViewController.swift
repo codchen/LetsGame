@@ -69,7 +69,7 @@ class GameViewController: DifficultyController {
     @IBOutlet weak var player1: UILabel!
     @IBOutlet weak var player2: UILabel!
     @IBOutlet weak var player3: UILabel!
-    
+    @IBOutlet weak var exitBtn: UIButton!
     var playerList: [UILabel!] = []
 //    var hostLabel: UILabel!
 //    var canStart = false
@@ -92,9 +92,11 @@ class GameViewController: DifficultyController {
     }
     //disable animation
     override func viewDidAppear(animated: Bool) {
+        println("Called?")
         if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
             connectionManager.startConnecting()
             connectionManager.gameState = .WaitingForStart
+            connectionManager.diffController = nil
         }
     }
     
@@ -254,6 +256,27 @@ class GameViewController: DifficultyController {
         }
     }
     
+    func deletePlayerLabel(peerName: String) {
+        dispatch_async(dispatch_get_main_queue()){
+            self.lblHost.text = ""
+            self.playBtn.enabled = false
+            self.playBtn.alpha = 0.1
+            for var i = 0; i < self.playerList.count; ++i {
+                if self.playerList[i].text == peerName {
+                    if i == 1 {
+                        self.playerList[i].text = self.playerList[i + 1].text
+                        self.playerList[i + 1].text = ""
+                    }
+                    else{
+                        self.playerList[i].text = ""
+                    }
+                    break
+                }
+            }
+        }
+
+    }
+    
     func setHostUI(isHost: Bool) {
         dispatch_async(dispatch_get_main_queue()){
             if isHost {
@@ -265,6 +288,8 @@ class GameViewController: DifficultyController {
                     }, completion: nil)
             } else {
                 self.playBtn.enabled = false
+                self.playBtn.alpha = 0.1
+                self.playBtn.layer.removeAllAnimations()
                 self.instructionText.text = "Waiting for the host to start game..."
                 UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
                     self.instructionText.alpha = 0.5
