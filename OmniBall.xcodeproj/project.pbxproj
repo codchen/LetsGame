@@ -141,6 +141,7 @@
 		FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */; };
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
 		FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71051A8D322800FB3622 /* 80x80_yellow_ball.png */; };
+		FF5055361AEDACC900C1D73C /* WaveXScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5055351AEDACC900C1D73C /* WaveXScene.swift */; };
 		FF5301201A7D43A300F04937 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* GameScene.swift */; };
 		FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */; };
 		FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10481A6572FB00A5C7D7 /* Images.xcassets */; };
@@ -304,6 +305,7 @@
 		FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_orange_ball.png; sourceTree = "<group>"; };
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
 		FF4C71051A8D322800FB3622 /* 80x80_yellow_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_yellow_ball.png; sourceTree = "<group>"; };
+		FF5055351AEDACC900C1D73C /* WaveXScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveXScene.swift; sourceTree = "<group>"; };
 		FF53011F1A7D43A300F04937 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6C10401A6572FB00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				11174ECE1AB299FB006013D7 /* LevelXScene.swift */,
 				11F828A51AB527E800E25D3F /* InstructionScene.swift */,
 				FFCF00081AB72699006FAE44 /* PresentScene.swift */,
+				FF5055351AEDACC900C1D73C /* WaveXScene.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				66F8668D1A6F0B72007EE9FF /* SKAction+SpecialEffects.swift in Sources */,
 				113329AD1AB0D109008B46A2 /* TutorialScene.swift in Sources */,
 				66F866931A6F0B72007EE9FF /* Vector3.swift in Sources */,
+				FF5055361AEDACC900C1D73C /* WaveXScene.swift in Sources */,
 				FFA0D60C1A8D4495000D1C37 /* GameOverScene.swift in Sources */,
 				119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */,
 				FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */,
