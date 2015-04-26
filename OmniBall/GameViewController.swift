@@ -78,7 +78,6 @@ class GameViewController: DifficultyController {
         super.viewDidLoad()
         connectionManager = ConnectionManager()
         connectionManager.controller = self
-        connectionManager.gameState = .InGameViewController
         dispatch_async(dispatch_get_main_queue()){
             self.playBtn.enabled = true
         }
@@ -95,7 +94,7 @@ class GameViewController: DifficultyController {
     override func viewDidAppear(animated: Bool) {
         if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
             connectionManager.startConnecting()
-            connectionManager.gameState = .InGameViewController
+            connectionManager.gameState = .WaitingForStart
         }
     }
     

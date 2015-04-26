@@ -192,7 +192,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var peersInGame: PeersInGame!
     var controller: GameViewController!
     var diffController: DifficultyController!
-    var gameState: GameState = .WaitingForMatch
+    var gameState: GameState = .WaitingForStart
     var gameMode: GameMode = .None
     var receivedAllRandomNumber: Bool = false
     
@@ -257,7 +257,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func generateRandomNumber(){
         peersInGame.setRandomNumber(me.peerID, number: arc4random())
-        gameState = .WaitingForRandomNumber
         println("My Random Number is \(me.randomNumber)")
         sendRandomNumber(me.randomNumber)
     }
@@ -424,10 +423,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func readyToChooseGameMode() {
-        gameState = .WaitingForStart
+        gameState = .InLevelViewController
+        stopConnecting()
         peersInGame.numOfPlayers = peersInGame.getNumPlayers()
         sendChooseGameMode()
-        stopConnecting()
     }
     
     func startConnecting() {
@@ -450,11 +449,17 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
     }
     
+    func determineHost() {
+        stopConnecting()	// will restart connecting when finishing randomnumber exchange
+        controller.setHostUI(false)
+        generateRandomNumber()
+    }
+    
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!,
         withContext context: NSData!, invitationHandler: ((Bool,
         MCSession!) -> Void)!) {
             println("received invitation from \(peerID.displayName)")
-            if gameState == .WaitingForStart {
+            if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
                 invitationHandler(true, session)
@@ -536,7 +541,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     sendGameReady()
                 }
                 
-                gameState = .WaitingForStart
+//                gameState = .WaitingForStart
                 diffController = nil
             }
         } else if message.messageType == MessageType.GameReady {
@@ -631,7 +636,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         } else if message.messageType == MessageType.ChooseGameMode {
             let messageChooseGameMode = UnsafePointer<MessageChooseGameMode>(data.bytes).memory
             let numConnectedPeers = messageChooseGameMode.numConnectedPeers
-            gameState = .WaitingForStart
+            gameState = .InLevelViewController
             peersInGame.numOfPlayers = Int(numConnectedPeers)	// set numOfPlayersEnterGame
             stopConnecting()
             if peersInGame.getNumPlayers() > Int(numConnectedPeers) {
@@ -690,9 +695,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 
                 println("Connected to \(peerID.displayName)")
                 
-                stopConnecting()	// will restart connecting when finishing randomnumber exchange
-                controller.setHostUI(false)
-                generateRandomNumber()
+                determineHost()
                 
 //                var lblIdx = self.peersInGame.peers.count
 //                dispatch_async(dispatch_get_main_queue()){
@@ -730,11 +733,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     println("removed "+peerID.displayName)
                     deleteFromInvited(peerID)
                 }
-                peersInGame.numOfDelta = 1
-                peersInGame.numOfRandomNumber = 0
-                for peer in peersInGame.peers {
-                    peer.randomNumber = 0
-                }
+//                peersInGame.numOfDelta = 1
+//                peersInGame.numOfRandomNumber = 0
+//                for peer in peersInGame.peers {
+//                    peer.randomNumber = 0
+//                }
                 dispatch_async(dispatch_get_main_queue()){
                     self.controller.lblHost.text = ""
                     self.controller.instructionText.text = "Waiting for other players"

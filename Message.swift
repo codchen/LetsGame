@@ -13,7 +13,7 @@ enum MessageType: Int {
 }
 
 enum GameState: Int {
-    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done, InViewController, InGameViewController, InLevelViewController
+    case WaitingForReconcil, WaitingForStart, InGame, Done, InViewController, InLevelViewController
 }
 
 enum GameMode: Int {
