@@ -13,7 +13,7 @@ class Peer: NSObject {
     var peerID: MCPeerID!
     var score: Int = 0
     var randomNumber: UInt32 = 0
-    var playerID: UInt16 = 4
+    var playerID: UInt16 = 0
     var delta: Double = 0
     init(peerID: MCPeerID) {
         super.init()
@@ -36,11 +36,13 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var session : MCSession!
     var peerID: MCPeerID!
     var invitedPeers: [MCPeerID] = []
+    var connectingPeers: [MCPeerID] = []
 
     var me: Peer!
     struct PeersInGame {
         var peers: [Peer] = []
-        var maxPlayer: Int = 3
+//        var maxPlayer: Int = 3
+        var numOfPlayers = 0		// num of players entered the game, will stay unchanged
         var numOfRandomNumber = 0
         var numOfDelta = 1
         
@@ -158,7 +160,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
         
        func receivedAllRandomNumbers() -> Bool {
-            if numOfRandomNumber == maxPlayer {
+            if numOfRandomNumber == getNumPlayers() {
                 return true
             } else {
                 return false
@@ -166,7 +168,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
         
         func receivedAllDelta() -> Bool {
-            if numOfDelta == maxPlayer {
+            if numOfDelta == getNumPlayers() {
                 return true
             } else {
                 return false
@@ -174,7 +176,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
         
         func hasAllPlayers() -> Bool {
-            if getNumPlayers() == maxPlayer {
+            if getNumPlayers() == numOfPlayers {
                 return true
             } else {
                 return false
@@ -216,12 +218,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         // create the browser viewcontroller with a unique service name
         self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
         self.advertiser.delegate = self
-        advertiser.startAdvertisingPeer()
         self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
         self.browser.delegate = self
-        browser.startBrowsingForPeers()
+		self.startConnecting()
         peersInGame = PeersInGame()
-        peersInGame.maxPlayer = maxPlayer
+//        peersInGame.maxPlayer = maxPlayer
         self.me = Peer(peerID: self.peerID)
         self.peersInGame.addPeer(me)
     }
@@ -307,7 +308,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func sendGameReady(){
         var message = MessageReadyToGame(message: Message(messageType: MessageType.GameReady), playerID: me.playerID)
-        //println("My playerID is \(playerID)")
         let data = NSData(bytes: &message, length: sizeof(MessageGameStart))
         for peer in peersInGame.peers {
             if peer.playerID == 0 {
@@ -352,6 +352,18 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         var message = MessageExit(message: Message(messageType: MessageType.Exit))
         let data = NSData(bytes: &message, length: sizeof(MessageExit))
         sendData(data, reliable: true)
+    }
+    
+    func sendChooseGameMode() {
+        var message = MessageChooseGameMode(message: Message(messageType: MessageType.ChooseGameMode), numConnectedPeers: UInt16(peersInGame.getNumPlayers()))
+        let data = NSData(bytes: &message, length: sizeof(MessageChooseGameMode))
+        sendData(data, reliable: true)
+    }
+    
+    func sendForceExitSession(peer: MCPeerID) {
+        var message = MessageForceExitSession(message: Message(messageType: MessageType.ForceExitSession))
+        let data = NSData(bytes: &message, length: sizeof(MessageForceExitSession))
+        sendDataTo(data, peerID: peer, reliable: true)
     }
     
     func sendDataTo(data: NSData, peerID: MCPeerID, reliable: Bool) {
@@ -406,15 +418,31 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         peersInGame = PeersInGame()
         me = Peer(peerID: self.peerID)
         peersInGame.addPeer(me)
-        peersInGame.maxPlayer = maxPlayer
+//        peersInGame.maxPlayer = maxPlayer
         controller.currentLevel = 0
         gameState = .InGameViewController
+        startConnecting()
+    }
+    
+    func readyToChooseGameMode() {
+        gameState = .WaitingForStart
+        peersInGame.numOfPlayers = peersInGame.getNumPlayers()
+        sendChooseGameMode()
+        stopConnecting()
+    }
+    
+    func startConnecting() {
         advertiser.startAdvertisingPeer()
         browser.startBrowsingForPeers()
     }
     
+    func stopConnecting() {
+        advertiser.stopAdvertisingPeer()
+        browser.stopBrowsingForPeers()
+    }
+    
     func readyToSendFirstTrip(){
-        if peersInGame.peers.count == maxPlayer {
+        if peersInGame.hasAllPlayers() {
             for peer in peersInGame.peers {
                 if peer.playerID > me.playerID {
                     sendFirstTrip(peer.peerID)
@@ -427,7 +455,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         withContext context: NSData!, invitationHandler: ((Bool,
         MCSession!) -> Void)!) {
             println("received invitation from \(peerID.displayName)")
-            invitationHandler(true, session)
+            if gameState == .WaitingForStart {
+                invitationHandler(false, session)
+            } else {
+                invitationHandler(true, session)
+            }
     }
     
     func hasInvitedPeer(peerID: MCPeerID) -> Bool{
@@ -443,9 +475,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         foundPeer peerID: MCPeerID!,
         withDiscoveryInfo info: [NSObject : AnyObject]!) {
             if !hasInvitedPeer(peerID) {
-                browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 30)
+                browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 10)
                 invitedPeers.append(peerID)
-                NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
+                NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
             }
             println("found peer \(peerID.displayName)")
             
@@ -493,43 +525,30 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 let sortDescriptors = [sortByRandomNumber]
                 sortedPeers.sortUsingDescriptors(sortDescriptors)
                 peersInGame.peers = NSArray(array: sortedPeers) as [Peer]
-                for var i = 0; i < peersInGame.peers.count; ++i {
+                for var i = 0; i < peersInGame.getNumPlayers(); ++i {
                     peersInGame.peers[i].playerID = UInt16(i)
                     if (i == 0) {
                         self.controller.addHostLabel(self.peersInGame.peers[i].getName())
                     }
                 }
-                if me.playerID == 0 {
-                    dispatch_async(dispatch_get_main_queue()){
-                        println("host is 0 is me " + String(self.me.getName()))
-                        self.controller.playBtn.enabled = true
-                        self.controller.instructionText.text = "You are the host. Tap \"Play\" to start game!"
-                        self.controller.playBtn.alpha = 0.5
-                        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                            self.controller.playBtn.alpha = 1
-                            }, completion: nil)
-                    }
-                } else {
-                    if me.playerID != 0 {
-                        sendGameReady()
-                    }
+                
+               	if me.playerID != 0 {
+                    self.controller.setHostUI(false)
+                    sendGameReady()
                 }
+                
                 gameState = .WaitingForStart
-                advertiser.stopAdvertisingPeer()
-                browser.stopBrowsingForPeers()
                 diffController = nil
             }
         } else if message.messageType == MessageType.GameReady {
             gameStartMsgCnt++
-            if gameStartMsgCnt == maxPlayer - 1 {
+            if gameStartMsgCnt == peersInGame.getNumPlayers() - 1 {
             	dispatch_async(dispatch_get_main_queue()){
-                        println("host is 0 is me " + String(self.me.getName()))
-                        self.controller.playBtn.enabled = true
-                        self.controller.instructionText.text = "You are the host. Tap \"Play\" to start game!"
-                        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                            self.controller.playBtn.alpha = 0.5
-                            }, completion: nil)
+                       self.controller.setHostUI(true)
                     }
+                if gameStartMsgCnt < maxPlayer {
+                    startConnecting()
+                }
             	gameStartMsgCnt = 0
             }
         } else if message.messageType == MessageType.GameStart {
@@ -558,9 +577,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             println("Calculated delta: \(messageSecondTrip.delta - latency), latency: \(latency)")
             sendThirdTrip(calculatedDelta, peer: peerID)
             if (peersInGame.receivedAllDelta()) {
-//                if controller.presentedViewController != nil{
-//                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-//                }
                 if diffController != nil {
                     diffController.transitToInstruction()
                 }
@@ -576,9 +592,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             println("Received Third Trip from \(peerID.displayName)")
             println("3rd Trip: delta \(messageThirdTrip.delta)")
             if (peersInGame.receivedAllDelta()) {
-//                if controller.presentedViewController != nil{
-//                    controller.presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
-//                }
                 if diffController != nil {
                     diffController.transitToInstruction()
                 }
@@ -616,6 +629,23 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if let peer = peersInGame.getPeer(peerID){
                 peersInGame.removePeer(peer)
             }
+        } else if message.messageType == MessageType.ChooseGameMode {
+            let messageChooseGameMode = UnsafePointer<MessageChooseGameMode>(data.bytes).memory
+            let numConnectedPeers = messageChooseGameMode.numConnectedPeers
+            gameState = .WaitingForStart
+            peersInGame.numOfPlayers = Int(numConnectedPeers)	// set numOfPlayersEnterGame
+            stopConnecting()
+            if peersInGame.getNumPlayers() > Int(numConnectedPeers) {
+                for peer in peersInGame.peers {
+                    if !peer.peerID.isEqual(peerID) && !peer.peerID.isEqual(me.peerID) {
+                        sendForceExitSession(peer.peerID)
+                        peersInGame.removePeer(peer)
+                        break
+                    }
+                }
+            }
+        } else if message.messageType == MessageType.ForceExitSession {
+        	session.disconnect()
         }
     }
     
@@ -659,39 +689,44 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
             }
             if state == MCSessionState.Connected {
+                
                 println("Connected to \(peerID.displayName)")
-//                var lblIdx = self.peersInGame.peers.count
-//                dispatch_async(dispatch_get_main_queue()){
-//                    self.controller.playerList[lblIdx]!.text = peerID.displayName
-//                }
+                
+                stopConnecting()	// will restart connecting when finishing randomnumber exchange
+                controller.setHostUI(false)
+                generateRandomNumber()
+                
+                var lblIdx = self.peersInGame.peers.count
+                dispatch_async(dispatch_get_main_queue()){
+                    self.controller.playerList[lblIdx]!.text = peerID.displayName
+                }
                 if !peersInGame.hasPeer(peerID) {
                     println("add: "+peerID.displayName)
                     let peer = Peer(peerID: peerID)
                     peersInGame.addPeer(peer)
                 }
                 println("\(peersInGame.getNumPlayers())")
-                if peersInGame.hasAllPlayers(){
-                    generateRandomNumber()
+                if peersInGame.getNumPlayers() == maxPlayer{
                     var alert = UIAlertController(title: "Connection Complete", message: "You have connected to maximum number of players!", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                     controller.presentViewController(alert, animated: true, completion: nil)
-
-                    dispatch_async(dispatch_get_main_queue()){
-                        self.controller.instructionText.text = "Waiting for the host to start game..."
-                        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
-                            self.controller.instructionText.alpha = 0.5
-                            }, completion: nil)
-                    }
                 }
             }
             else if state == MCSessionState.NotConnected {
                 
                 var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.controller.presentViewController(alert, animated: true, completion: nil)
+                if diffController != nil {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.diffController.presentViewController(alert, animated: true, completion: nil)
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.controller.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }
-                println("should remove"+peerID.displayName)
+
+                println("should remove "+peerID.displayName)
                 if let peer = peersInGame.getPeer(peerID) {
                     peersInGame.removePeer(peer)
                     println("removed "+peerID.displayName)
@@ -723,11 +758,15 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
 //                    }
                 }
                 if gameState != .InViewController && gameState != .InGame {
-                    advertiser.startAdvertisingPeer()
-                    browser.startBrowsingForPeers()
+                    startConnecting()
                 }
             }
-
+            else if state == MCSessionState.Connecting {
+                println("In Connecting Block: GameState \(gameState)")
+                if gameState == .WaitingForStart {
+                    session.cancelConnectPeer(peerID)
+                }
+            }
     }
     
     func checkMatch() -> Bool{
