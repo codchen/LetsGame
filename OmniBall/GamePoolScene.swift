@@ -12,7 +12,6 @@ import SpriteKit
 class GamePoolScene: GameScene {
     
     var boundRect: CGRect!
-    var wave: Int!
     
     override func setupHUD() {
         super.setupHUD()

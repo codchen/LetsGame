@@ -148,13 +148,12 @@ class DifficultyController: UIViewController {
         }
     }
     
-    func transitToPoolArena(wave: Int) {
+    func transitToPoolArena() {
         dispatch_async(dispatch_get_main_queue()) {
             let scene = GamePoolScene.unarchiveFromFile("PoolArena") as GamePoolScene
             scene.slaveNum = 7
             scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager
-            scene.wave = wave
             if self.currentView == nil {
                 self.configureCurrentView()
             }
