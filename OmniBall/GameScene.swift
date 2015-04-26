@@ -87,13 +87,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         connection.gameState = .InGame
         myNodes = MyNodes(connection: connection, scene: self)
         opponentsWrapper = OpponentsWrapper()
-        for var index = 0; index < connection.maxPlayer; ++index {
+        for var index = 0; index < connection.peersInGame.numOfPlayers; ++index {
             if Int(connection.me.playerID) != index {
                 let opponent = OpponentNodes(id: UInt16(index), scene: self)
                 opponentsWrapper.addOpponent(opponent)
             }
         }
         
+		deleteUnecessaryPlayerNode()
         setupNeutral()
         if connection.gameMode == GameMode.HiveMaze || connection.gameMode == GameMode.HiveMaze2{
             enableBackgroundMove = true
@@ -122,6 +123,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node.physicsBody!.categoryBitMask = physicsCategory.wall
         }
         
+    }
+    
+    func deleteUnecessaryPlayerNode() {
+        switch connection.peersInGame.numOfPlayers {
+        case 1:
+            self.enumerateChildNodesWithName("node*") { node, _ in
+                let node0 = node as SKSpriteNode
+                if node0.name != "node1" {
+                    node0.removeFromParent()
+                }
+            }
+        case 2:
+            self.enumerateChildNodesWithName("node3") { node, _ in
+                let node0 = node as SKSpriteNode
+                node0.removeFromParent()
+            }
+        default:
+            return
+        }
     }
     
     func setupDestination(origin: Bool){

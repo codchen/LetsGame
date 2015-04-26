@@ -80,9 +80,10 @@ class GameViewController: DifficultyController {
         connectionManager.controller = self
         connectionManager.gameState = .InGameViewController
         dispatch_async(dispatch_get_main_queue()){
-            self.playBtn.alpha = 0
-            self.playBtn.enabled = false
+            self.playBtn.enabled = true
         }
+        addHostLabel(connectionManager.me.getName())
+        setHostUI(true)
         player1.text = connectionManager.me.getName()
         playerList.append(player1)
         player2.text = ""
@@ -92,13 +93,15 @@ class GameViewController: DifficultyController {
     }
     //disable animation
     override func viewDidAppear(animated: Bool) {
-//        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
-//            self.instructionText.scale = 2
-//            }, completion: nil)
+        if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
+            connectionManager.startConnecting()
+            connectionManager.gameState = .InGameViewController
+        }
     }
     
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
+        	self.connectionManager.readyToChooseGameMode()
             let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
@@ -247,16 +250,32 @@ class GameViewController: DifficultyController {
 //    }
     
     func addHostLabel(peerName: String) {
-//        hostLabel.backgroundColor = UIColor.whiteColor()
-//        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
-//        println("Have we done this \(hostLabel.frame)")
-//        self.view.addSubview(hostLabel)
         dispatch_async(dispatch_get_main_queue()){
             self.lblHost.text = "Host: " + peerName
         }
-//        self.view.drawRect(lblHost.frame)
     }
-//    
+    
+    func setHostUI(isHost: Bool) {
+        dispatch_async(dispatch_get_main_queue()){
+            if isHost {
+                self.playBtn.enabled = true
+                self.instructionText.text = "You are the host. Tap \"Play\" to start game!"
+                self.playBtn.alpha = 0.5
+                UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
+                    self.playBtn.alpha = 1
+                    }, completion: nil)
+            } else {
+                self.playBtn.enabled = false
+                self.instructionText.text = "Waiting for the host to start game..."
+                UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+                    self.instructionText.alpha = 0.5
+                    }, completion: nil)
+                
+            }
+        }
+
+    }
+//
 //    func clearCurrentView() {
 //        self.currentView = nil
 //    }

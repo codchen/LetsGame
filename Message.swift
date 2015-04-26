@@ -9,11 +9,11 @@
 import Foundation
 
 enum MessageType: Int {
-    case RandomNumber, GameReady, GameStart, FirstTrip, SecondTrip, ThirdTrip, Destination, Move, Pause, Dead, GameOver, NeutralInfo, Reborn, Exit
+    case RandomNumber, GameReady, GameStart, FirstTrip, SecondTrip, ThirdTrip, Destination, Move, Pause, Dead, GameOver, NeutralInfo, Reborn, Exit, ChooseGameMode, ForceExitSession
 }
 
 enum GameState: Int {
-    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done, InViewController, InGameViewController
+    case WaitingForMatch, WaitingForRandomNumber, WaitingForReconcil, WaitingForStart, InGame, Done, InViewController, InGameViewController, InLevelViewController
 }
 
 enum GameMode: Int {
@@ -103,6 +103,15 @@ struct MessagePause {
 }
 
 struct MessageExit {
+    let message: Message
+}
+
+struct MessageChooseGameMode {
+    let message: Message
+    let numConnectedPeers: UInt16
+}
+
+struct MessageForceExitSession {
     let message: Message
 }
 

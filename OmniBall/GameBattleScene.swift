@@ -51,7 +51,7 @@ class GameBattleScene: GameScene {
     
     override func setupHUD() {
         super.setupHUD()
-        for var i = 0; i < connection.maxPlayer; ++i {
+        for var i = 0; i < connection.peersInGame.numOfPlayers; ++i {
             var startPos: CGPoint!
             if i == 0 {
                 startPos = CGPoint(x: 100, y: size.height - 300)

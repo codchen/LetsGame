@@ -15,11 +15,11 @@ class MazeDifficultyController: DifficultyController {
         super.viewDidLoad()
     }
     @IBAction func easy(sender: AnyObject) {
-        gameViewController.transitToGame("HiveMaze")
+        transitToGame("HiveMaze")
         //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func hard(sender: AnyObject) {
-        gameViewController.transitToGame("HiveMaze2")
+        transitToGame("HiveMaze2")
         //self.presentingViewController!.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
     @IBAction func back(sender: AnyObject) {

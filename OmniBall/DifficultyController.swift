@@ -28,7 +28,7 @@ class DifficultyController: UIViewController {
                 connectionManager.gameMode = .HiveMaze2
             }
             
-            if self.connectionManager.maxPlayer == 1 {
+            if self.connectionManager.peersInGame.numOfPlayers == 1 {
                 self.transitToInstruction()
             } else {
                 connectionManager.sendGameStart()

@@ -113,7 +113,7 @@ class LeaderBoardScene: SKScene {
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
         addChild(btnNext)
         
-        if (connection.me.playerID == 0 && connection.peersInGame.peers.count == connection.maxPlayer) {
+        if (connection.me.playerID == 0 && connection.peersInGame.getNumPlayers() == connection.peersInGame.numOfPlayers) {
             btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
             btnAgain.position = CGPoint(x: size.width - 500, y: 400)
             addChild(btnAgain)
@@ -134,8 +134,10 @@ class LeaderBoardScene: SKScene {
                     self.view!.removeFromSuperview()
                     self.controller.clearCurrentView()
                 }, completion: nil)
-            if connection.peersInGame.peers.count != connection.maxPlayer {
+            if connection.peersInGame.numOfPlayers != connection.peersInGame.getNumPlayers() {
                 connection.exitGame()
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         } else if btnAgain != nil {
             if btnAgain.containsPoint(loc) {
