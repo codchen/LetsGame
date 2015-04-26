@@ -668,6 +668,24 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func session(session: MCSession!, peer peerID: MCPeerID!,
         didChangeState state: MCSessionState)  {
+            dispatch_async(dispatch_get_main_queue()) {
+                switch self.session.connectedPeers.count {
+                case 0:
+                    self.controller.player2.text = ""
+                    self.controller.player3.text = ""
+                case 1:
+                    let peer1 = self.session.connectedPeers[0] as MCPeerID
+                    self.controller.player2.text = peer1.displayName
+                    self.controller.player3.text = ""
+                case 2:
+                    let peer1 = self.session.connectedPeers[0] as MCPeerID
+                    let peer2 = self.session.connectedPeers[1] as MCPeerID
+                    self.controller.player2.text = peer1.displayName
+                    self.controller.player3.text = peer2.displayName
+                default:
+                    break
+                }
+            }
             if state == MCSessionState.Connected {
                 
                 println("Connected to \(peerID.displayName)")
@@ -676,10 +694,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 controller.setHostUI(false)
                 generateRandomNumber()
                 
-                var lblIdx = self.peersInGame.peers.count
-                dispatch_async(dispatch_get_main_queue()){
-                    self.controller.playerList[lblIdx]!.text = peerID.displayName
-                }
+//                var lblIdx = self.peersInGame.peers.count
+//                dispatch_async(dispatch_get_main_queue()){
+//                    self.controller.playerList[lblIdx]!.text = peerID.displayName
+//                }
                 if !peersInGame.hasPeer(peerID) {
                     println("add: "+peerID.displayName)
                     let peer = Peer(peerID: peerID)
@@ -742,7 +760,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.Connecting {
                 println("In Connecting Block: GameState \(gameState)")
-                if gameState == .WaitingForStart {
+                if gameState == .InLevelViewController {
                     session.cancelConnectPeer(peerID)
                 }
             }
