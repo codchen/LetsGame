@@ -14,9 +14,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "431"
-            endingLineNumber = "431"
-            landmarkName = "ConnectionManager"
-            landmarkType = "3">
+            endingLineNumber = "431">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -30,9 +28,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "651"
-            endingLineNumber = "651"
-            landmarkName = "session(_:peer:didChangeState:)"
-            landmarkType = "5">
+            endingLineNumber = "651">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -46,9 +42,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "573"
-            endingLineNumber = "573"
-            landmarkName = "session(_:didReceiveData:fromPeer:)"
-            landmarkType = "5">
+            endingLineNumber = "573">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
