@@ -119,7 +119,8 @@ class GameViewController: DifficultyController {
     
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
-        	self.connectionManager.readyToChooseGameMode()
+        	//self.connectionManager.readyToChooseGameMode()
+            self.connectionManager.gameState = .InLevelViewController
             let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)

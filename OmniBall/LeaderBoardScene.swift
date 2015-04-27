@@ -44,7 +44,7 @@ class LeaderBoardScene: SKScene {
         connection.controller.currentLevel = 0
         connection = controller.connectionManager
         var startPos: CGFloat!
-        if connection.gameMode == .HiveMaze {
+        if connection.gameMode == .HiveMaze || connection.gameMode == .PoolArena{
         	startPos = 200
         } else {
             startPos = 500

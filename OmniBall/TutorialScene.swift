@@ -19,7 +19,7 @@ class TutorialScene: GameScene {
     var vcontroller: ViewController!
     
     override func didMoveToView(view: SKView) {
-        connection = ConnectionManager()
+        connection = ConnectionManager(pNum: 1)
         connection.advertiser.stopAdvertisingPeer()
         connection.browser.stopBrowsingForPeers()
         myNodes = MyNodes(connection: connection, scene: self)
