@@ -68,14 +68,13 @@ class MyNodes: Player {
     
     override func capture(target: SKSpriteNode, capturedTime: NSTimeInterval) {
         super.capture(target, capturedTime: capturedTime)
-        
 //        target.texture = SKTexture(imageNamed: getSlaveImageName(color!, true))
-        if selectedNode.name!.hasPrefix("neutral"){
-            selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(color, false))
+        if self.selectedNode.name!.hasPrefix("neutral"){
+            self.selectedNode.texture = SKTexture(imageNamed: getSlaveImageName(self.color, false))
         } else {
-            selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(color, false))
+            self.selectedNode.texture = SKTexture(imageNamed: getPlayerImageName(self.color, false))
         }
-        selectedNode = target
+        self.selectedNode = target
         captureAnimation(target, isOppo: false)
         scene.runAction(scene.catchStarSound)
     }
@@ -178,5 +177,33 @@ class MyNodes: Player {
         connection.sendMove(Float(node.position.x), y: Float(node.position.y), dx: Float(node.physicsBody!.velocity.dx), dy: Float(node.physicsBody!.velocity.dy), count: msgCount, index: index, dt: NSDate().timeIntervalSince1970, isSlave: isSlave)
         msgCount++
 
+    }
+    
+    override func captureAnimation(target: SKSpriteNode, isOppo: Bool){
+        let originalTexture = SKTexture(imageNamed: getSlaveImageName(color!, false))
+        let changedTexture = SKTexture(imageNamed: getSlaveImageName(color!, true))
+        let block1 = SKAction.runBlock {
+            target.texture = originalTexture
+        }
+        let block2 = SKAction.runBlock {
+            target.texture = changedTexture
+        }
+        let wait = SKAction.waitForDuration(0.23)
+        var flashAction: SKAction!
+        if isOppo {
+            flashAction = SKAction.sequence([block2, wait, block1, wait])
+        } else {
+            flashAction = SKAction.sequence([block1, wait, block2, wait])
+        }
+        let block3 = SKAction.runBlock {
+            if self.selectedNode.name! == target.name! {
+                target.texture =  SKTexture(imageNamed: getSlaveImageName(self.color!, true))
+            }
+            else {
+                 SKTexture(imageNamed: getSlaveImageName(self.color!, false))
+            }
+        }
+        target.removeAllActions()
+        target.runAction(SKAction.sequence([SKAction.repeatAction(flashAction, count: 4), block3]))
     }
 }

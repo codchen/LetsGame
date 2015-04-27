@@ -69,6 +69,7 @@ func getPlayerImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
 }
 
 func getSlaveImageName(playerColor: PlayerColors, isSelected: Bool) -> String {
+    NSLog("get slave image")
     if !isSelected {
         switch playerColor {
         case .Green:

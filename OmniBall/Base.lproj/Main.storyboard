@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -181,7 +181,7 @@
                             <constraint firstAttribute="centerX" secondItem="xTj-nQ-cwH" secondAttribute="centerX" constant="95" id="fsd-LX-RmN"/>
                             <constraint firstAttribute="centerY" secondItem="GuY-dP-vre" secondAttribute="centerY" constant="60" id="iq9-iJ-V1b"/>
                             <constraint firstAttribute="centerX" secondItem="JVK-XZ-Baa" secondAttribute="centerX" constant="95" id="is8-Hi-OhE"/>
-                            <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="215" id="jP9-A9-ujY"/>
+                            <constraint firstAttribute="centerX" secondItem="0xh-WJ-4qM" secondAttribute="centerX" constant="160" id="jP9-A9-ujY"/>
                             <constraint firstAttribute="centerY" secondItem="DLd-VD-jNO" secondAttribute="centerY" id="pZA-BV-qTN"/>
                             <constraint firstAttribute="centerY" secondItem="ADK-DC-inN" secondAttribute="centerY" constant="20" id="spz-Zf-jzg"/>
                         </constraints>

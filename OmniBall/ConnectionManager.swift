@@ -27,7 +27,7 @@ class Peer: NSObject {
 
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
-    let serviceType = "LetsGame"
+    let serviceType = "LetsGame1"
     let maxPlayer = 3
     var connectedPeer = 0
     
