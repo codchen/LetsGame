@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451847325.150794"
+            timestampString = "451604363.564295"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
-            landmarkName = "readyToChooseGameMode()"
-            landmarkType = "5">
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "ConnectionManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451848733.192177"
+            timestampString = "451759914.005835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "666"
-            endingLineNumber = "666"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
             landmarkName = "session(_:didReceiveData:fromPeer:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451848733.192177"
+            timestampString = "451759914.005835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "588"
-            endingLineNumber = "588"
+            startingLineNumber = "573"
+            endingLineNumber = "573"
             landmarkName = "session(_:didReceiveData:fromPeer:)"
             landmarkType = "5">
          </BreakpointContent>
