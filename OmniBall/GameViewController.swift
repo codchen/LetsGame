@@ -82,7 +82,7 @@ class GameViewController: DifficultyController {
             self.playBtn.enabled = true
         }
         addHostLabel(connectionManager.me.getName())
-        setHostUI(true)
+        setHostUI(isHost: true, isConnecting: false)
         player1.text = connectionManager.me.getName()
         playerList.append(player1)
         player2.text = ""
@@ -111,9 +111,9 @@ class GameViewController: DifficultyController {
     @IBAction func exit(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
         connectionManager.gameState = .InViewController
+        connectionManager.stopConnecting()
         self.connectionManager.session.disconnect()
-        connectionManager.advertiser.stopAdvertisingPeer()
-        connectionManager.browser.stopBrowsingForPeers()
+
 //        dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -277,8 +277,15 @@ class GameViewController: DifficultyController {
 
     }
     
-    func setHostUI(isHost: Bool) {
+    func setHostUI(#isHost: Bool, isConnecting: Bool) {
         dispatch_async(dispatch_get_main_queue()){
+            
+            if isConnecting {
+                self.exitBtn.enabled = false
+            } else {
+                self.exitBtn.enabled = true
+            }
+            
             if isHost {
                 self.playBtn.enabled = true
                 self.instructionText.text = "You are the host. Tap \"Play\" to start game!"
@@ -290,11 +297,14 @@ class GameViewController: DifficultyController {
                 self.playBtn.enabled = false
                 self.playBtn.alpha = 0.1
                 self.playBtn.layer.removeAllAnimations()
-                self.instructionText.text = "Waiting for the host to start game..."
+                if isConnecting {
+                    self.instructionText.text = "Connecting to other players... "
+                } else {
+                    self.instructionText.text = "Waiting for the host to start game..."
+                }
                 UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
                     self.instructionText.alpha = 0.5
                     }, completion: nil)
-                
             }
         }
 

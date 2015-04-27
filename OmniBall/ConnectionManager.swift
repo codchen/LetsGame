@@ -347,11 +347,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         sendData(data, reliable: true)
     }
     
-    func sendExit(){
-        var message = MessageExit(message: Message(messageType: MessageType.Exit))
-        let data = NSData(bytes: &message, length: sizeof(MessageExit))
-        sendData(data, reliable: true)
-    }
+//    func sendExit(){
+//        var message = MessageExit(message: Message(messageType: MessageType.Exit))
+//        let data = NSData(bytes: &message, length: sizeof(MessageExit))
+//        sendData(data, reliable: true)
+//    }
     
     func sendChooseGameMode() {
         var message = MessageChooseGameMode(message: Message(messageType: MessageType.ChooseGameMode), numConnectedPeers: UInt16(peersInGame.getNumPlayers()))
@@ -413,6 +413,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func exitGame() {
         session.disconnect()
+        gameState = .WaitingForStart
+        controller.setHostUI(isHost: true, isConnecting: false)
         invitedPeers = []
         peersInGame = PeersInGame()
         me = Peer(peerID: self.peerID)
@@ -451,8 +453,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func determineHost() {
         stopConnecting()	// will restart connecting when finishing randomnumber exchange
-        controller.setHostUI(false)
-        controller.exitBtn.enabled = false
+        controller.setHostUI(isHost: false, isConnecting: true)
         generateRandomNumber()
     }
     
@@ -464,6 +465,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
+                controller.setHostUI(isHost: false, isConnecting: true)
                 invitationHandler(true, session)
             }
     }
@@ -539,9 +541,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
                 
                	if me.playerID != 0 {
-                    self.controller.setHostUI(false)
-                    self.controller.exitBtn.enabled = true
-                    sendGameReady()
+                    self.controller.setHostUI(isHost: false, isConnecting: false)
+                	sendGameReady()
                 }
                 
 //                gameState = .WaitingForStart
@@ -550,11 +551,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         } else if message.messageType == MessageType.GameReady {
             gameStartMsgCnt++
             if gameStartMsgCnt == peersInGame.getNumPlayers() - 1 {
-            	dispatch_async(dispatch_get_main_queue()){
-                    self.controller.setHostUI(true)
-                    self.controller.exitBtn.enabled = true
-
-                }
+                self.controller.setHostUI(isHost: true, isConnecting: false)
                 if gameStartMsgCnt < maxPlayer {
                     startConnecting()
                 }
@@ -634,10 +631,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if let peer = peersInGame.getPeer(peerID){
                 controller.updateReborn(messageReborn, peerPlayerID: Int(peer.playerID))
             }
-        } else if message.messageType == MessageType.Exit {
-            if let peer = peersInGame.getPeer(peerID){
-                peersInGame.removePeer(peer)
-            }
+//        } else if message.messageType == MessageType.Exit {
+//            if let peer = peersInGame.getPeer(peerID){
+//                peersInGame.removePeer(peer)
+//            }
         } else if message.messageType == MessageType.ChooseGameMode {
             let messageChooseGameMode = UnsafePointer<MessageChooseGameMode>(data.bytes).memory
             let numConnectedPeers = messageChooseGameMode.numConnectedPeers
@@ -700,7 +697,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if state == MCSessionState.Connected {
                 
                 println("Connected to \(peerID.displayName)")
-                
                 determineHost()
                 
                 if !peersInGame.hasPeer(peerID) {
@@ -717,6 +713,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.NotConnected {
                 println("Not connected happened \(invitedPeers.count)")
+                
                 if let peer = peersInGame.getPeer(peerID) {
                     var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -749,14 +746,21 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     }
                     if gameState == .WaitingForStart {
                         if peersInGame.getNumPlayers() == 1 {
-                        	controller.setHostUI(true)
+                            controller.setHostUI(isHost: true, isConnecting: false)
+                            controller.addHostLabel(me.getName())
                             me.playerID = 0
                             startConnecting()
                         } else {
                             determineHost()
                         }
                     }
-                    
+                } else {	// in case initial connection with someone failed
+                    if me.playerID == 0 {
+                        controller.setHostUI(isHost: true, isConnecting: false)
+                        controller.addHostLabel(me.getName())
+                    } else {
+                        controller.setHostUI(isHost: false, isConnecting: false)
+                    }
                 }
             }
             else if state == MCSessionState.Connecting {

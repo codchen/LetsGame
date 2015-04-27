@@ -150,7 +150,7 @@ class GameLevelScene: GameScene {
             println("we got btnexit")
             var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self.connection.sendExit()
+//                self.connection.sendExit()
                 self.connection.exitGame()
                 self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                 self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
