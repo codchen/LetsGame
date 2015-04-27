@@ -42,7 +42,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     struct PeersInGame {
         var peers: [Peer] = []
 //        var maxPlayer: Int = 3
-        var numOfPlayers = 0		// num of players entered the game, will stay unchanged
+        var numOfPlayers = 0
         var numOfRandomNumber = 0
         var numOfDelta = 1
         
@@ -160,7 +160,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
         
        func receivedAllRandomNumbers() -> Bool {
-            if numOfRandomNumber == getNumPlayers() {
+            if numOfRandomNumber == numOfPlayers {
                 return true
             } else {
                 return false
@@ -168,7 +168,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
         
         func receivedAllDelta() -> Bool {
-            if numOfDelta == getNumPlayers() {
+            if numOfDelta == numOfPlayers {
                 return true
             } else {
                 return false
@@ -194,7 +194,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var diffController: DifficultyController!
     var gameState: GameState = .WaitingForStart
     var gameMode: GameMode = .None
-    var receivedAllRandomNumber: Bool = false
     
     // reconcil data info
     var latency: NSTimeInterval!
@@ -223,7 +222,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         self.browser.delegate = self
 		self.startConnecting()
         peersInGame = PeersInGame()
-//        peersInGame.maxPlayer = maxPlayer
+        peersInGame.numOfPlayers = maxPlayer
         self.me = Peer(peerID: self.peerID)
         self.peersInGame.addPeer(me)
     }
@@ -489,11 +488,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if !hasInvitedPeer(peerID) {
                 println("[INVITE] \(peerID.displayName)")
                 browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 10)
+                controller.setHostUI(isHost: false, isConnecting: true)
                 invitedPeers.append(peerID)
                 NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
             }
-            
-            
     }
     
     func deleteFromInvited(timer: NSTimer) {
@@ -552,17 +550,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                	if me.playerID != 0 {
                     println("[SET HOSTUI] false, false")
                     self.controller.setHostUI(isHost: false, isConnecting: false)
-//                	sendGameReady()
                 } else {
                     println("[SET HOSTUI] true, false")
                     self.controller.setHostUI(isHost: true, isConnecting: false)
-                    if peersInGame.getNumPlayers() < maxPlayer {
-                        startConnecting()
-                    }
                 }
-                
-//                gameState = .WaitingForStart
-                diffController = nil
+            	diffController = nil
             }
 //        } else if message.messageType == MessageType.GameReady {
 //            gameStartMsgCnt++
@@ -715,7 +707,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if state == MCSessionState.Connected {
                 
                 println("[CONNECTED] \(peerID.displayName)")
-                determineHost()
                 
                 if !peersInGame.hasPeer(peerID) {
                     println("add: "+peerID.displayName)
@@ -724,6 +715,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
                 println("\(peersInGame.getNumPlayers())")
                 if peersInGame.getNumPlayers() == maxPlayer{
+                    determineHost()
                     var alert = UIAlertController(title: "Connection Complete", message: "You have connected to maximum number of players!", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                     controller.presentViewController(alert, animated: true, completion: nil)
@@ -760,22 +752,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.playBtn.layer.removeAllAnimations()
                     
                     if gameState == .WaitingForStart {
-                        if peersInGame.getNumPlayers() == 1 {
-                            controller.setHostUI(isHost: true, isConnecting: false)
-                            controller.addHostLabel(me.getName())
-                            me.playerID = 0
-                            startConnecting()
-                        } else {
-                            determineHost()
-                        }
-                    }
-                } else {	// in case initial connection with someone failed
-                    if me.playerID == 0 {
-                        controller.setHostUI(isHost: true, isConnecting: false)
-                        controller.addHostLabel(me.getName())
-                    } else {
                         controller.setHostUI(isHost: false, isConnecting: false)
                     }
+                } else {	// in case initial connection with someone failed
+                    controller.setHostUI(isHost: false, isConnecting: false)
                 }
             }
             else if state == MCSessionState.Connecting {
