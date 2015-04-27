@@ -17,10 +17,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMC-cI-gXQ">
-                                <rect key="frame" x="389" y="387" width="172" height="62"/>
+                                <rect key="frame" x="225" y="393" width="150" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="172" id="DZ5-cf-xlC"/>
-                                    <constraint firstAttribute="height" constant="62" id="asu-DC-NAf"/>
+                                    <constraint firstAttribute="width" constant="150" id="DZ5-cf-xlC"/>
+                                    <constraint firstAttribute="height" constant="50" id="asu-DC-NAf"/>
                                 </constraints>
                                 <state key="normal" image="tutorialbtn.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,11 +29,11 @@
                                     <action selector="showTutorial:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="nWc-Vs-C4d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BZ-hn-5Cx">
-                                <rect key="frame" x="175" y="175" width="250" height="250"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BZ-hn-5Cx">
+                                <rect key="frame" x="175" y="175" width="200" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="fOr-2I-OKs"/>
-                                    <constraint firstAttribute="height" constant="250" id="lNq-jh-GZv"/>
+                                    <constraint firstAttribute="width" constant="150" id="fOr-2I-OKs"/>
+                                    <constraint firstAttribute="height" constant="150" id="lNq-jh-GZv"/>
                                 </constraints>
                                 <state key="normal" image="connectbtn.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,11 +42,41 @@
                                     <action selector="showGVC:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="dwL-Zg-2e9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psP-Xs-3Qr">
+                                <rect key="frame" x="-33" y="175" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="2Rf-2m-raO"/>
+                                    <constraint firstAttribute="width" constant="150" id="wiM-Ut-d2A"/>
+                                </constraints>
+                                <state key="normal" image="connectbtn.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onePlayer:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="BtC-Sh-wb9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mE-6T-pPw">
+                                <rect key="frame" x="372" y="175" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="Nhg-gU-bqO"/>
+                                    <constraint firstAttribute="width" constant="150" id="aNw-i1-GKM"/>
+                                </constraints>
+                                <state key="normal" image="connectbtn.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="threePlayer:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="10w-V0-CGY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="fMC-cI-gXQ" secondAttribute="centerX" constant="-175" id="5Xe-DK-H4C"/>
+                            <constraint firstAttribute="centerX" secondItem="fMC-cI-gXQ" secondAttribute="centerX" id="5Xe-DK-H4C"/>
+                            <constraint firstAttribute="centerY" secondItem="3mE-6T-pPw" secondAttribute="centerY" id="Ein-fP-93e"/>
+                            <constraint firstAttribute="centerX" secondItem="psP-Xs-3Qr" secondAttribute="centerX" constant="170" id="Ftd-9Z-JMa"/>
                             <constraint firstAttribute="centerY" secondItem="9BZ-hn-5Cx" secondAttribute="centerY" id="RxV-5q-Zlp"/>
+                            <constraint firstAttribute="centerY" secondItem="psP-Xs-3Qr" secondAttribute="centerY" id="TGD-Yd-AXf"/>
+                            <constraint firstAttribute="centerX" secondItem="3mE-6T-pPw" secondAttribute="centerX" constant="-170" id="XJY-py-lE3"/>
                             <constraint firstAttribute="centerY" secondItem="fMC-cI-gXQ" secondAttribute="centerY" constant="-118" id="bTp-1I-3DZ"/>
                             <constraint firstAttribute="centerX" secondItem="9BZ-hn-5Cx" secondAttribute="centerX" id="sCR-mG-JJh"/>
                         </constraints>
@@ -194,6 +224,8 @@
                         <outlet property="player1" destination="GuY-dP-vre" id="ItM-3E-Y6D"/>
                         <outlet property="player2" destination="xTj-nQ-cwH" id="eKv-Ny-sty"/>
                         <outlet property="player3" destination="JVK-XZ-Baa" id="xEv-oC-yqh"/>
+                        <outlet property="playerIcon2" destination="DLd-VD-jNO" id="NIE-eV-m0S"/>
+                        <outlet property="playerIcon3" destination="DLd-VD-jNO" id="xoK-Fg-BL1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

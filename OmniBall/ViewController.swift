@@ -38,8 +38,19 @@ class ViewController: UIViewController {
         self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(1))
     }
     
+    @IBAction func onePlayer(sender: AnyObject) {
+        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        gameViewController.playerNum = 1
+        self.presentViewController(gameViewController, animated: true, completion: nil)
+    }
+    @IBAction func threePlayer(sender: AnyObject) {
+        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        gameViewController.playerNum = 3
+        self.presentViewController(gameViewController, animated: true, completion: nil)
+    }
     @IBAction func showGVC(sender: UIButton) {
     	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        gameViewController.playerNum = 2
         self.presentViewController(gameViewController, animated: true, completion: nil)
 //        self.dismissViewControllerAnimated(true, completion: nil)
 

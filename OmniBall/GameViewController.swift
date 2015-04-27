@@ -57,13 +57,15 @@ class GameViewController: DifficultyController {
 
     //var connectionManager: ConnectionManager!
     var alias: String!
-    
+    var playerNum: Int!
 //    var currentView: SKView!
 //    var currentGameScene: GameScene!
     
     //var currentLevel = 0
     
     @IBOutlet weak var instructionText: UILabel!
+    @IBOutlet weak var playerIcon2: UIImageView!
+    @IBOutlet weak var playerIcon3: UIImageView!
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var player1: UILabel!
@@ -76,7 +78,7 @@ class GameViewController: DifficultyController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectionManager = ConnectionManager()
+        connectionManager = ConnectionManager(pNum: playerNum)
         connectionManager.controller = self
         dispatch_async(dispatch_get_main_queue()){
             self.playBtn.enabled = true
@@ -85,10 +87,24 @@ class GameViewController: DifficultyController {
         setHostUI(isHost: true, isConnecting: false)
         player1.text = connectionManager.me.getName()
         playerList.append(player1)
-        player2.text = ""
-        playerList.append(player2)
-        player3.text = ""
-        playerList.append(player3)
+        if playerNum > 1 {
+            player2.text = ""
+            playerList.append(player2)
+            if playerNum > 2 {
+                player3.text = ""
+                playerList.append(player3)
+            }
+            else {
+                player3.removeFromSuperview()
+                playerIcon3.removeFromSuperview()
+            }
+        }
+        else{
+            player2.removeFromSuperview()
+            playerIcon2.removeFromSuperview()
+            player3.removeFromSuperview()
+            playerIcon3.removeFromSuperview()
+        }
     }
     //disable animation
     override func viewDidAppear(animated: Bool) {

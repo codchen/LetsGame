@@ -27,8 +27,8 @@ class Peer: NSObject {
 
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
-    let serviceType = "LetsGame1"
-    let maxPlayer = 3
+    var serviceType = "LetsGame"
+    var maxPlayer: Int!
     var connectedPeer = 0
     
     var advertiser: MCNearbyServiceAdvertiser!
@@ -202,7 +202,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var gameStartMsgCnt: Int = 0
     
     
-    override init() {
+    init(pNum: Int) {
         super.init()
         // Do any additional setup after loading the view, typically from a nib.
         if NSUserDefaults.standardUserDefaults().dataForKey("peerID") == nil {
@@ -211,7 +211,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         } else {
             self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as MCPeerID
         }
-
+        self.maxPlayer = pNum
+        self.serviceType = self.serviceType + String(self.maxPlayer)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
         
