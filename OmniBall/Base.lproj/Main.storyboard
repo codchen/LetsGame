@@ -225,7 +225,7 @@
                         <outlet property="player2" destination="xTj-nQ-cwH" id="eKv-Ny-sty"/>
                         <outlet property="player3" destination="JVK-XZ-Baa" id="xEv-oC-yqh"/>
                         <outlet property="playerIcon2" destination="DLd-VD-jNO" id="NIE-eV-m0S"/>
-                        <outlet property="playerIcon3" destination="DLd-VD-jNO" id="xoK-Fg-BL1"/>
+                        <outlet property="playerIcon3" destination="fSY-s9-Im7" id="GP7-sH-3Y6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

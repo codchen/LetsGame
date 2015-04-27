@@ -65,6 +65,7 @@ class GameViewController: DifficultyController {
     
     @IBOutlet weak var instructionText: UILabel!
     @IBOutlet weak var playerIcon2: UIImageView!
+    
     @IBOutlet weak var playerIcon3: UIImageView!
     @IBOutlet weak var lblHost: UILabel!
     @IBOutlet weak var playBtn: UIButton!
