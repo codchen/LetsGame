@@ -813,4 +813,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
     }
     
+    func session(session: MCSession!, didReceiveCertificate certificate: [AnyObject]!, fromPeer peerID: MCPeerID!, certificateHandler: ((Bool) -> Void)!) {
+        if certificateHandler != nil {
+            certificateHandler(true)
+        }
+    }
 }
