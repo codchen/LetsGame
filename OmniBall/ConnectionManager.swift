@@ -440,20 +440,20 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func startConnecting() {
         println("[START CONN]")
-        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: self.serviceType)
-        self.advertiser.delegate = self
-        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
-        self.browser.delegate = self
+//        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: self.serviceType)
+//        self.advertiser.delegate = self
+//        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
+//        self.browser.delegate = self
         advertiser.startAdvertisingPeer()
         browser.startBrowsingForPeers()
     }
     
     func stopConnecting() {
         println("[STOP CONN]")
-        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: self.serviceType)
-        self.advertiser.delegate = self
-        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
-        self.browser.delegate = self
+//        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: self.serviceType)
+//        self.advertiser.delegate = self
+//        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
+//        self.browser.delegate = self
         advertiser.stopAdvertisingPeer()
         browser.stopBrowsingForPeers()
     }
@@ -748,10 +748,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.NotConnected {
                 println("[LOST CONNECTION] \(self.invitedPeers.count) "+peerID.displayName)
-                self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: self.serviceType)
-                self.advertiser.delegate = self
-                self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
-                self.browser.delegate = self
                 if let peer = self.peersInGame.getPeer(peerID) {
                     var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
@@ -764,7 +760,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                             self.controller.presentViewController(alert, animated: true, completion: nil)
                         }
                     }
-                    self.controller.deletePlayerLabel(peerID.displayName)
+                    //self.controller.deletePlayerLabel(peerID.displayName)
                     // when host exit in level view controller
                     if peer.playerID == 0 && self.gameState == .InLevelViewController {
                         self.gameState = .WaitingForStart
@@ -779,16 +775,20 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     }
                     self.controller.playBtn.layer.removeAllAnimations()
                     
-                    if self.gameState == .WaitingForStart {
-                        if self.peersInGame.getNumPlayers() == 1 {
-                            self.controller.setHostUI(isHost: true, isConnecting: false)
-                            self.controller.addHostLabel(self.me.getName())
-                            self.me.playerID = 0
-                            self.startConnecting()
-                        } else {
-                            self.determineHost()
-                        }
-                    }
+//                    if self.gameState == .WaitingForStart {
+//                        self.initHelper()
+//                        self.controller.setHostUI(isHost: true, isConnecting: false)
+//                        self.controller.addHostLabel(self.me.getName())
+                    
+//                        if self.peersInGame.getNumPlayers() == 1 {
+//                            self.controller.setHostUI(isHost: true, isConnecting: false)
+//                            self.controller.addHostLabel(self.me.getName())
+//                            self.me.playerID = 0
+//                            self.startConnecting()
+//                        } else {
+//                            self.determineHost()
+//                        }
+//                    }
                 } else {	// in case initial connection with someone failed
                     if self.me.playerID == 0 {
                         self.controller.setHostUI(isHost: true, isConnecting: false)
@@ -797,7 +797,13 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         self.controller.setHostUI(isHost: false, isConnecting: false)
                     }
                 }
-//                
+                
+                if self.gameState == .WaitingForStart {
+                    self.initHelper()
+                    self.controller.setHostUI(isHost: true, isConnecting: false)
+                    self.controller.addHostLabel(self.me.getName())
+                }
+//
 //                if self.peersInGame.peers.count == 1 {
 //                    println("[RESET]")
 //                    self.initHelper()
