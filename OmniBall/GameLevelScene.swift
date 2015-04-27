@@ -12,7 +12,7 @@ import SpriteKit
 class GameLevelScene: GameScene {
     var destPosList: [CGPoint] = []
     var whichPos = 0
-    let btnComeBack = SKSpriteNode(imageNamed: "circle")
+    let btnComeBack = SKSpriteNode(imageNamed: "locate")
     var currentLevel = 0
     
     override func didMoveToView(view: SKView){

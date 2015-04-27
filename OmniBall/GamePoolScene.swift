@@ -15,6 +15,7 @@ class GamePoolScene: GameScene {
     var wave = 1
     var neutralList: [SKSpriteNode] = []
     var neutralPosList: [CGPoint] = []
+    var renew = false
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
@@ -82,18 +83,30 @@ class GamePoolScene: GameScene {
     }
     
     override func paused(){
-        player.pause()
-        physicsWorld.speed = 0
-        let original = SKTexture(imageNamed: "staro")
-        for var i = 0; i < neutralList.count; ++i {
-            neutralList[i].position = neutralPosList[i]
-            neutralList[i].physicsBody!.dynamic = false
-            neutralList[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            neutralList[i].texture = original
-            NSLog(neutralList[i].name! + " changed to staro")
-            addChild(neutralList[i])
+        renew = true
+    }
+    
+    override func update(currentTime: CFTimeInterval) {
+        super.update(currentTime)
+        if (renew == true) {
+            player.pause()
+            physicsWorld.speed = 0
+            let original = SKTexture(imageNamed: "staro")
+            for var i = 0; i < neutralList.count; ++i {
+                neutralList[i].position = neutralPosList[i]
+                neutralList[i].physicsBody!.dynamic = false
+                neutralList[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                neutralList[i].texture = original
+                NSLog(neutralList[i].name! + " changed to staro")
+                addChild(neutralList[i])
+            }
+            remainingSlave = neutralList.count
+            renew = false
+            myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
+            cleanCapturedArrays()
+            wave++
+            readyGo()
         }
-        remainingSlave = neutralList.count
     }
     
     override func scored() {
@@ -104,10 +117,6 @@ class GamePoolScene: GameScene {
             if (wave < 3) {
                 connection.sendPause()
                 paused()
-                myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
-                cleanCapturedArrays()
-                wave++
-                readyGo()
             }
             else {
                 checkGameOver()
@@ -149,6 +158,7 @@ class GamePoolScene: GameScene {
                 score++
             }
         }
+
         for deleteNode in deCapList {
             enableSound = false
             myNodes.decapture(deleteNode)
