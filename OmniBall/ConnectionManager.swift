@@ -432,11 +432,13 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func startConnecting() {
+        println("[START CONN]")
         advertiser.startAdvertisingPeer()
         browser.startBrowsingForPeers()
     }
     
     func stopConnecting() {
+        println("[STOP CONN]")
         advertiser.stopAdvertisingPeer()
         browser.stopBrowsingForPeers()
     }
@@ -460,8 +462,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func advertiser(advertiser: MCNearbyServiceAdvertiser!, didReceiveInvitationFromPeer peerID: MCPeerID!,
         withContext context: NSData!, invitationHandler: ((Bool,
         MCSession!) -> Void)!) {
-            println("received invitation from \(peerID.displayName)")
-            println("gameState in advertiser: \(gameState.rawValue)")
+            println("[INVITATION FROM] \(peerID.displayName)")
             if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
@@ -482,12 +483,14 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func browser(browser: MCNearbyServiceBrowser!,
         foundPeer peerID: MCPeerID!,
         withDiscoveryInfo info: [NSObject : AnyObject]!) {
+            println("[FOUND] \(peerID.displayName)")
             if !hasInvitedPeer(peerID) {
+                println("[INVITE] \(peerID.displayName)")
                 browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 10)
                 invitedPeers.append(peerID)
                 NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
             }
-            println("found peer \(peerID.displayName)")
+            
             
     }
     
@@ -559,7 +562,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
-//            peersInGame[peerID] = Int(messageGameStart.playerID)
             println("Received game start")
             let mode = GameMode(rawValue: Int(messageGameStart.gameMode))
             if mode != GameMode.None {
@@ -675,6 +677,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func session(session: MCSession!, peer peerID: MCPeerID!,
         didChangeState state: MCSessionState)  {
+            //stopConnecting()
+            println("[numConnectedPeers]: \(session.connectedPeers.count)")
             dispatch_async(dispatch_get_main_queue()) {
                 switch self.session.connectedPeers.count {
                 case 0:
@@ -696,7 +700,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             
             if state == MCSessionState.Connected {
                 
-                println("Connected to \(peerID.displayName)")
+                println("[CONNECTED] \(peerID.displayName)")
                 determineHost()
                 
                 if !peersInGame.hasPeer(peerID) {
@@ -712,7 +716,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
             }
             else if state == MCSessionState.NotConnected {
-                println("Not connected happened \(invitedPeers.count)")
+                println("[LOST CONNECTION] \(invitedPeers.count) "+peerID.displayName)
                 
                 if let peer = peersInGame.getPeer(peerID) {
                     var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
@@ -732,7 +736,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         gameState = .WaitingForStart
                     }
                     peersInGame.removePeer(peer)
-                    println("removed "+peerID.displayName)
+                    println("[REMOVED] "+peerID.displayName)
                     deleteFromInvited(peerID)
                     peersInGame.numOfDelta = 1
                     peersInGame.numOfRandomNumber = 0
@@ -741,9 +745,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     }
                     self.controller.playBtn.layer.removeAllAnimations()
                     
-                    if gameState == .InLevelViewController && me.playerID != 0 {
-                        
-                    }
                     if gameState == .WaitingForStart {
                         if peersInGame.getNumPlayers() == 1 {
                             controller.setHostUI(isHost: true, isConnecting: false)
@@ -764,9 +765,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
             }
             else if state == MCSessionState.Connecting {
-                println("In Connecting Block: GameState \(gameState.rawValue)")
+                println("[CONNECTING] \(peerID.displayName)")
                 if gameState == .InLevelViewController {
-                    println("cancel connection called")
+                    println("[CONNECTION CANCELED]")
                     session.cancelConnectPeer(peerID)
                 }
             }
