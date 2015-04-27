@@ -27,7 +27,7 @@ class Peer: NSObject {
 
 class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate, MCSessionDelegate {
     
-    let serviceType = "LetsGame1"
+    let serviceType = "LetsGame"
     let maxPlayer = 3
     var connectedPeer = 0
     
@@ -200,6 +200,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var latency: NSTimeInterval!
     var maxLevel: Int = 4
     var gameStartMsgCnt: Int = 0
+
+    let randomNumber = arc4random()
     
     
     override init() {
@@ -256,7 +258,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func generateRandomNumber(){
-        peersInGame.setRandomNumber(me.peerID, number: arc4random())
+        peersInGame.setRandomNumber(me.peerID, number: randomNumber)
         println("My Random Number is \(me.randomNumber)")
         sendRandomNumber(me.randomNumber)
     }
