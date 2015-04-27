@@ -455,6 +455,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func determineHost() {
         stopConnecting()	// will restart connecting when finishing randomnumber exchange
+        println("[SET HOSTUI] false true")
         controller.setHostUI(isHost: false, isConnecting: true)
         generateRandomNumber()
     }
@@ -495,6 +496,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func deleteFromInvited(timer: NSTimer) {
+        println("[TIME OUT]")
         let peerID = timer.userInfo as MCPeerID
 		deleteFromInvited(peerID)
     }
@@ -529,8 +531,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
         } else if message.messageType == MessageType.RandomNumber {
             let messageRandomNumber = UnsafePointer<MessageRandomNumber>(data.bytes).memory
+            println("[RANDOM NUM] \(peerID.displayName): \(messageRandomNumber.number)")
             peersInGame.setRandomNumber(peerID, number: messageRandomNumber.number)
             if peersInGame.receivedAllRandomNumbers(){
+                println("[ALL RANDOM NUM] \(peersInGame.getNumPlayers())")
                 let sortedPeers: NSMutableArray = NSMutableArray(array: peersInGame.peers)
                 let sortByRandomNumber = NSSortDescriptor(key: "randomNumber", ascending: false)
                 let sortDescriptors = [sortByRandomNumber]
@@ -539,27 +543,36 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 for var i = 0; i < peersInGame.getNumPlayers(); ++i {
                     peersInGame.peers[i].playerID = UInt16(i)
                     if (i == 0) {
+                        println("[ADD LBLHOST] \(peersInGame.peers[i].getName())")
                         self.controller.addHostLabel(self.peersInGame.peers[i].getName())
                     }
                 }
                 
                	if me.playerID != 0 {
+                    println("[SET HOSTUI] false, false")
                     self.controller.setHostUI(isHost: false, isConnecting: false)
-                	sendGameReady()
+//                	sendGameReady()
+                } else {
+                    println("[SET HOSTUI] true, false")
+                    self.controller.setHostUI(isHost: true, isConnecting: false)
+                    if peersInGame.getNumPlayers() < maxPlayer {
+                        startConnecting()
+                    }
                 }
                 
 //                gameState = .WaitingForStart
                 diffController = nil
             }
-        } else if message.messageType == MessageType.GameReady {
-            gameStartMsgCnt++
-            if gameStartMsgCnt == peersInGame.getNumPlayers() - 1 {
-                self.controller.setHostUI(isHost: true, isConnecting: false)
-                if gameStartMsgCnt < maxPlayer {
-                    startConnecting()
-                }
-            	gameStartMsgCnt = 0
-            }
+//        } else if message.messageType == MessageType.GameReady {
+//            gameStartMsgCnt++
+//            println("[GAME READY] \(peerID.displayName) \(peersInGame.getNumPlayers())")
+//            if gameStartMsgCnt == peersInGame.getNumPlayers() - 1 {
+//                self.controller.setHostUI(isHost: true, isConnecting: false)
+//                if gameStartMsgCnt < maxPlayer {
+//                    startConnecting()
+//                }
+//            	gameStartMsgCnt = 0
+//            }
         } else if message.messageType == MessageType.GameStart {
             let messageGameStart = UnsafePointer<MessageGameStart>(data.bytes).memory
             println("Received game start")
