@@ -453,4 +453,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         label.runAction(SKAction.sequence([action1, block1, action2, block2]))
     }
+    
+    deinit {
+        println("GameScene DEINIT")
+    }
 }

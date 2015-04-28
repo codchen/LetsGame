@@ -144,6 +144,12 @@
 		FF5055391AEECAC400C1D73C /* locate.png in Resources */ = {isa = PBXBuildFile; fileRef = FF5055371AEECAC400C1D73C /* locate.png */; };
 		FF50553A1AEECAC400C1D73C /* Omniball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF5055381AEECAC400C1D73C /* Omniball.png */; };
 		FF50553C1AEECB2400C1D73C /* arena3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF50553B1AEECB2400C1D73C /* arena3.sks */; };
+		FF50A8C51AEF142A006AC0F1 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8C01AEF142A006AC0F1 /* 1.png */; };
+		FF50A8C61AEF142A006AC0F1 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8C11AEF142A006AC0F1 /* 2.png */; };
+		FF50A8C71AEF142A006AC0F1 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8C21AEF142A006AC0F1 /* 3.png */; };
+		FF50A8C81AEF142A006AC0F1 /* OmniballScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8C31AEF142A006AC0F1 /* OmniballScreen.png */; };
+		FF50A8C91AEF142A006AC0F1 /* Tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8C41AEF142A006AC0F1 /* Tutorial.png */; };
+		FF50A8CB1AEF147C006AC0F1 /* ChooseNumPlayer.png in Resources */ = {isa = PBXBuildFile; fileRef = FF50A8CA1AEF147C006AC0F1 /* ChooseNumPlayer.png */; };
 		FF5301201A7D43A300F04937 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* GameScene.swift */; };
 		FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */; };
 		FF6C10491A6572FB00A5C7D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF6C10481A6572FB00A5C7D7 /* Images.xcassets */; };
@@ -310,6 +316,12 @@
 		FF5055371AEECAC400C1D73C /* locate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locate.png; sourceTree = "<group>"; };
 		FF5055381AEECAC400C1D73C /* Omniball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Omniball.png; sourceTree = "<group>"; };
 		FF50553B1AEECB2400C1D73C /* arena3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = arena3.sks; path = Maps/arena3.sks; sourceTree = SOURCE_ROOT; };
+		FF50A8C01AEF142A006AC0F1 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		FF50A8C11AEF142A006AC0F1 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		FF50A8C21AEF142A006AC0F1 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		FF50A8C31AEF142A006AC0F1 /* OmniballScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OmniballScreen.png; sourceTree = "<group>"; };
+		FF50A8C41AEF142A006AC0F1 /* Tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tutorial.png; sourceTree = "<group>"; };
+		FF50A8CA1AEF147C006AC0F1 /* ChooseNumPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChooseNumPlayer.png; sourceTree = "<group>"; };
 		FF53011F1A7D43A300F04937 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6C10401A6572FB00A5C7D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -452,6 +464,12 @@
 		66D5BDF51A79BEC200A34A42 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				FF50A8CA1AEF147C006AC0F1 /* ChooseNumPlayer.png */,
+				FF50A8C01AEF142A006AC0F1 /* 1.png */,
+				FF50A8C11AEF142A006AC0F1 /* 2.png */,
+				FF50A8C21AEF142A006AC0F1 /* 3.png */,
+				FF50A8C31AEF142A006AC0F1 /* OmniballScreen.png */,
+				FF50A8C41AEF142A006AC0F1 /* Tutorial.png */,
 				FF5055371AEECAC400C1D73C /* locate.png */,
 				FF5055381AEECAC400C1D73C /* Omniball.png */,
 				FF4B6D541AE9409600BE12FE /* arena_easy.png */,
@@ -707,6 +725,7 @@
 				FF0DCAA91AE6A16B003EC278 /* staro.png in Resources */,
 				11DCA0381AE548E900BF5766 /* cross.png in Resources */,
 				FF2086521ACC797800F09DB7 /* mini-map-2.png in Resources */,
+				FF50A8C91AEF142A006AC0F1 /* Tutorial.png in Resources */,
 				FF50553C1AEECB2400C1D73C /* arena3.sks in Resources */,
 				FF4B6D6B1AE9409700BE12FE /* tutorialbtn.png in Resources */,
 				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
@@ -720,12 +739,14 @@
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
 				118584921AB09923002622F8 /* 80x80_green_star.png in Resources */,
 				FF3CE8F21AE5519F0035CC75 /* connect.png in Resources */,
+				FF50A8C51AEF142A006AC0F1 /* 1.png in Resources */,
 				FF2086561ACC799800F09DB7 /* back-button.png in Resources */,
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
 				FF3CE8F31AE5519F0035CC75 /* play.png in Resources */,
 				FF0DCAA41AE6A16B003EC278 /* green_star.png in Resources */,
 				FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
+				FF50A8C81AEF142A006AC0F1 /* OmniballScreen.png in Resources */,
 				FF4B6D651AE9409700BE12FE /* exitbtn.png in Resources */,
 				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				FF4B6D791AE9CECF00BE12FE /* HLevel4.sks in Resources */,
@@ -749,6 +770,7 @@
 				11DCA03E1AE5860C00BF5766 /* collision.mp3 in Resources */,
 				113329B11AB0D5A2008B46A2 /* singleButton@2x.png in Resources */,
 				FF0DCAA31AE6A16B003EC278 /* green_circle.png in Resources */,
+				FF50A8CB1AEF147C006AC0F1 /* ChooseNumPlayer.png in Resources */,
 				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				FF4B6D681AE9409700BE12FE /* mazebtn.png in Resources */,
@@ -757,6 +779,7 @@
 				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
 				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
 				FF4C71091A8D322800FB3622 /* 80x80_orange_ball.png in Resources */,
+				FF50A8C61AEF142A006AC0F1 /* 2.png in Resources */,
 				FF4B6D631AE9409700BE12FE /* backbtn.png in Resources */,
 				11D844A31AC9CD2E0078B62B /* Electric Hit 02.mp3 in Resources */,
 				FF0DCAA01AE6A16B003EC278 /* exit.png in Resources */,
@@ -782,6 +805,7 @@
 				FF2086531ACC797800F09DB7 /* mini-map-3.png in Resources */,
 				118584AD1AB0998C002622F8 /* 200x200_button_replay.png in Resources */,
 				FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */,
+				FF50A8C71AEF142A006AC0F1 /* 3.png in Resources */,
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
 				113329AB1AB0D0C9008B46A2 /* Tutorial.sks in Resources */,
 				FF0DCAA81AE6A16B003EC278 /* red_star.png in Resources */,

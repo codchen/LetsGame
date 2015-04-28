@@ -173,4 +173,7 @@ class DifficultyController: UIViewController {
         }
     }
 
+    deinit {
+        println("CONTROLLER DEINIT")
+    }
 }

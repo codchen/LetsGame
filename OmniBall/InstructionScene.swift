@@ -83,5 +83,9 @@ class InstructionScene: SKScene {
         }
         self.runAction(SKAction.sequence([wait, block]))
     }
+    
+    deinit {
+        println("INSTRUCTION DEINIT")
+    }
 
 }

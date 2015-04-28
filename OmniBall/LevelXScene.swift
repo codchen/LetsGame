@@ -56,4 +56,7 @@ class LevelXScene: SKScene {
         self.runAction(SKAction.sequence([wait, block]))
     }
     
+    deinit {
+        println("LEVELX DEINIT")
+    }
 }

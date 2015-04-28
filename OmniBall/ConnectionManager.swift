@@ -191,7 +191,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     var peersInGame: PeersInGame!
     var controller: GameViewController!
-    var diffController: DifficultyController!
+    weak var diffController: DifficultyController!
     var gameState: GameState = .WaitingForStart
     var gameMode: GameMode = .None
     
@@ -220,7 +220,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         self.advertiser.delegate = self
         self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
         self.browser.delegate = self
-		self.startConnecting()
+        if (self.maxPlayer != 1) {
+            self.startConnecting()
+        }
         peersInGame = PeersInGame()
         peersInGame.numOfPlayers = maxPlayer
         self.me = Peer(peerID: self.peerID)
@@ -413,12 +415,12 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func exitGame() {
         gameState = .WaitingForStart
-        controller.setHostUI(isHost: false, isConnecting: false)
         invitedPeers = []
         peersInGame = PeersInGame()
         me = Peer(peerID: self.peerID)
         peersInGame.addPeer(me)
         peersInGame.numOfPlayers = maxPlayer
+        controller.setHostUI()
         controller.currentLevel = 0
         session.disconnect()
 //        startConnecting()
@@ -456,7 +458,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func determineHost() {
         stopConnecting()	// will restart connecting when finishing randomnumber exchange
         println("[SET HOSTUI] false true")
-        controller.setHostUI(isHost: false, isConnecting: true)
+        controller.setHostUI()
         generateRandomNumber()
     }
     
@@ -467,7 +469,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
-                controller.setHostUI(isHost: false, isConnecting: true)
+                controller.setHostUI()
                 invitationHandler(true, session)
             }
     }
@@ -488,7 +490,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if !hasInvitedPeer(peerID) {
                 println("[INVITE] \(peerID.displayName)")
                 browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 10)
-                controller.setHostUI(isHost: false, isConnecting: true)
+                controller.setHostUI()
                 invitedPeers.append(peerID)
                 NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
             }
@@ -542,18 +544,18 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 peersInGame.peers = NSArray(array: sortedPeers) as [Peer]
                 for var i = 0; i < peersInGame.getNumPlayers(); ++i {
                     peersInGame.peers[i].playerID = UInt16(i)
-                    if (i == 0) {
-                        println("[ADD LBLHOST] \(peersInGame.peers[i].getName())")
-                        self.controller.addHostLabel(self.peersInGame.peers[i].getName())
-                    }
+//                    if (i == 0) {
+//                        println("[ADD LBLHOST] \(peersInGame.peers[i].getName())")
+//                        self.controller.addHostLabel()
+//                    }
                 }
                 
                	if me.playerID != 0 {
                     println("[SET HOSTUI] false, false")
-                    self.controller.setHostUI(isHost: false, isConnecting: false)
+                    self.controller.setHostUI()
                 } else {
                     println("[SET HOSTUI] true, false")
-                    self.controller.setHostUI(isHost: true, isConnecting: false)
+                    self.controller.setHostUI()
                 }
             	diffController = nil
             }
@@ -687,6 +689,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             //stopConnecting()
             println("[numConnectedPeers]: \(session.connectedPeers.count)")
             dispatch_async(dispatch_get_main_queue()) {
+                self.controller.setHostUI()
                 switch self.session.connectedPeers.count {
                 case 0:
 					if (self.maxPlayer > 1) {
@@ -751,7 +754,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     dispatch_async(dispatch_get_main_queue()) {
                         self.controller.presentViewController(alert, animated: true, completion: nil)
                     }
-                    self.controller.setHostUI(isHost: false, isConnecting: true)
+                    self.controller.setHostUI()
                     // when host exit in level view controller
                     if peer.playerID == 0 && gameState == .InLevelViewController {
                         gameState = .WaitingForStart
@@ -775,11 +778,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         self.browser = nil
                         self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
                         self.browser.delegate = self
-                        controller.setHostUI(isHost: false, isConnecting: false)
+                        controller.setHostUI()
                         self.startConnecting()
                     }
                 } else {	// in case initial connection with someone failed
-                    controller.setHostUI(isHost: false, isConnecting: false)
+                    controller.setHostUI()
                     self.startConnecting()
                 }
             }
@@ -797,5 +800,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             println("[CERTIFICATE]")
             certificateHandler(true)
         }
+    }
+    
+    deinit {
+        println("CM DEINIT")
     }
 }

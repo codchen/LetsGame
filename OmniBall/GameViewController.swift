@@ -84,7 +84,7 @@ class GameViewController: DifficultyController {
         dispatch_async(dispatch_get_main_queue()){
             self.playBtn.enabled = false
         }
-        setHostUI(isHost: false, isConnecting: true)
+        setHostUI()
         player1.text = connectionManager.me.getName()
         playerList.append(player1)
         if playerNum > 1 {
@@ -130,7 +130,7 @@ class GameViewController: DifficultyController {
         connectionManager.gameState = .InViewController
         connectionManager.stopConnecting()
         self.connectionManager.session.disconnect()
-
+        self.connectionManager = nil
 //        dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -267,36 +267,37 @@ class GameViewController: DifficultyController {
 //        }
 //    }
     
-    func addHostLabel(peerName: String) {
-        dispatch_async(dispatch_get_main_queue()){
-            self.lblHost.text = "Host: " + peerName
-        }
-    }
+//    func addHostLabel(peerName: String) {
+//        dispatch_async(dispatch_get_main_queue()){
+//            self.lblHost.text = "Host: " + peerName
+//        }
+//    }
+//    
+//    func deletePlayerLabel(peerName: String) {
+//        dispatch_async(dispatch_get_main_queue()){
+//            self.lblHost.text = ""
+//            self.playBtn.enabled = false
+//            self.playBtn.alpha = 0.1
+//            for var i = 0; i < self.playerList.count; ++i {
+//                if self.playerList[i].text == peerName {
+//                    if i == 1 {
+//                        self.playerList[i].text = self.playerList[i + 1].text
+//                        self.playerList[i + 1].text = ""
+//                    }
+//                    else{
+//                        self.playerList[i].text = ""
+//                    }
+//                    break
+//                }
+//            }
+//        }
+//
+//    }
     
-    func deletePlayerLabel(peerName: String) {
+    func setHostUI() {
         dispatch_async(dispatch_get_main_queue()){
-            self.lblHost.text = ""
-            self.playBtn.enabled = false
-            self.playBtn.alpha = 0.1
-            for var i = 0; i < self.playerList.count; ++i {
-                if self.playerList[i].text == peerName {
-                    if i == 1 {
-                        self.playerList[i].text = self.playerList[i + 1].text
-                        self.playerList[i + 1].text = ""
-                    }
-                    else{
-                        self.playerList[i].text = ""
-                    }
-                    break
-                }
-            }
-        }
-
-    }
-    
-    func setHostUI(#isHost: Bool, isConnecting: Bool) {
-        dispatch_async(dispatch_get_main_queue()){
-            
+            let isHost = (self.connectionManager.peersInGame.getNumPlayers() == self.connectionManager.peersInGame.numOfPlayers && self.connectionManager.me.playerID == 0) || self.playerNum == 1
+            let isConnecting = self.connectionManager.peersInGame.getNumPlayers() < self.connectionManager.peersInGame.numOfPlayers
             if isHost {
                 self.playBtn.enabled = true
                 self.instructionText.text = "You are the host. Tap \"Play\" to start game!"
@@ -318,6 +319,19 @@ class GameViewController: DifficultyController {
                     self.instructionText.alpha = 0.5
                     }, completion: nil)
             }
+            
+            var name = ""
+            if !isConnecting {
+                for peer in self.connectionManager.peersInGame.peers {
+                    if peer.playerID == 0 {
+                        name = peer.getName()
+                    }
+                }
+            }
+            if self.playerNum == 1 {
+                name = self.connectionManager.me.getName()
+            }
+            self.lblHost.text = "Host: " + name
         }
 
     }

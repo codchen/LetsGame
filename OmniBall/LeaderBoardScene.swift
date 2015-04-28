@@ -151,4 +151,8 @@ class LeaderBoardScene: SKScene {
         return "LeaderBoardScene"
     }
     
+    deinit {
+        println("LEADERBOARD DEINIT")
+    }
+    
 }
