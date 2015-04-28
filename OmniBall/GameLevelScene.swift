@@ -29,8 +29,8 @@ class GameLevelScene: GameScene {
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
-        //destHeart = childNodeWithName("destHeart") as SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
+        destHeart.strokeColor = UIColor.clearColor()
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
         destPointer.physicsBody?.categoryBitMask = physicsCategory.wall

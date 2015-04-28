@@ -21,6 +21,7 @@ class GameBattleScene: GameScene {
         destPointer.physicsBody!.pinned = false
         destHeart = childNodeWithName("destHeart") as SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
+        destHeart.strokeColor = UIColor.clearColor()
         destHeart.zPosition = -10
         let neutral = childNodeWithName("neutral0") as SKSpriteNode
         
