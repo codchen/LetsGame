@@ -465,7 +465,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
-                if controller != nil {
+                if controller == nil {
                 	controller.setHostUI()
                 }
                 invitationHandler(true, session)
