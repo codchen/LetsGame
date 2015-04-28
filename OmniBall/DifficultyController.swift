@@ -10,9 +10,9 @@ import Foundation
 import SpriteKit
 
 class DifficultyController: UIViewController {
-    var gameViewController: GameViewController!
-    var currentView: SKView!
-    var currentGameScene: GameScene!
+    weak var gameViewController: GameViewController!
+    weak var currentView: SKView!
+    weak var currentGameScene: GameScene!
     var connectionManager: ConnectionManager!
     var currentLevel = 0
     
