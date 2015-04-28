@@ -41,8 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scrolling = false
     
     // Opponents Setting
-    weak var myNodes: MyNodes!
-    weak var opponentsWrapper: OpponentsWrapper!
+    var myNodes: MyNodes!
+    var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
 	var connection: ConnectionManager!
     
