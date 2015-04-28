@@ -150,17 +150,27 @@ class GameLevelScene: GameScene {
             println("we got btnexit")
             var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-//                self.connection.sendExit()
-                self.connection.exitGame()
-                self.connection.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
-                self.connection.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.player.stop()
                 UIView.transitionWithView(self.view!, duration: 0.5,
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {
                         self.view!.removeFromSuperview()
                         self.controller.clearCurrentView()
+                        if self.connection.me.playerID == 0 {
+                            self.connection.controller.presentedViewController?
+                                .dismissViewControllerAnimated(false, completion: { _ in
+                                    let col = self.connection.controller
+                                    col.presentedViewController?
+                                        .dismissViewControllerAnimated(false, completion: { _ in
+                                            col.dismissViewControllerAnimated(false, completion: nil)
+                                        })
+                                })
+                        }
+                        else {
+                            self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                        }
                     }, completion: nil)
-                
+                self.connection.exitGame()
             }
             alert.addAction(yesAction)
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))

@@ -270,9 +270,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func sendRandomNumber(number: UInt32){
         var message = MessageRandomNumber(message: Message(messageType: MessageType.RandomNumber), number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageRandomNumber))
-        dispatch_async(dispatch_get_main_queue()) {
-            NSTimer.scheduledTimerWithTimeInterval(Double(5), target: self, selector: "forceDisconnect", userInfo: nil, repeats: false)
-        }
+        var timer: NSTimer!
+        dispatch_async(dispatch_get_main_queue(), {
+            timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(5), target:self, selector:"forceDisconnect", userInfo:nil, repeats:false)
+        })
+        
         sendData(data, reliable: true)
     }
     

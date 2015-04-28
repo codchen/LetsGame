@@ -41,8 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scrolling = false
     
     // Opponents Setting
-    var myNodes: MyNodes!
-    var opponentsWrapper: OpponentsWrapper!
+    weak var myNodes: MyNodes!
+    weak var opponentsWrapper: OpponentsWrapper!
     var neutralBalls: Dictionary<String, NeutralBall> = Dictionary<String, NeutralBall>()
 	var connection: ConnectionManager!
     
@@ -285,14 +285,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     animations: {
                         self.view!.removeFromSuperview()
                         self.controller.clearCurrentView()
-                    	self.connection.controller.presentedViewController?
-                            .dismissViewControllerAnimated(false, completion: { _ in
-                            let col = self.connection.controller
-                            col.presentedViewController?
+                        if self.connection.me.playerID == 0 {
+                            self.connection.controller.presentedViewController?
                                 .dismissViewControllerAnimated(false, completion: { _ in
-                            	col.dismissViewControllerAnimated(false, completion: nil)
+                                let col = self.connection.controller
+                                col.presentedViewController?
+                                    .dismissViewControllerAnimated(false, completion: { _ in
+                                    col.dismissViewControllerAnimated(false, completion: nil)
+                                })
                             })
-                        })
+                        }
+                        else {
+                            self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                        }
                     }, completion: nil)
                 self.connection.exitGame()
             }
@@ -304,6 +309,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        if (myNodes == nil) {
+            return
+        }
         if enableBackgroundMove && myNodes.launchPoint == nil {
             let touch = touches.anyObject() as UITouch
             let currentLocation = touch.locationInNode(self)
