@@ -12,7 +12,7 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var controller: DifficultyController!
+    weak var controller: DifficultyController!
     var margin: CGFloat!
     let ballSize: CGFloat = 110
     var destPos: CGPoint!
@@ -47,7 +47,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	var connection: ConnectionManager!
     
     //physics constants
-    let maxSpeed = 600
     
     //hard coded!!
     let latency = 0.17

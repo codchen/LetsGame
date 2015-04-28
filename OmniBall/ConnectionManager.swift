@@ -190,7 +190,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
     }
     var peersInGame: PeersInGame!
-    unowned var controller: GameViewController
+    weak var controller: GameViewController!
     weak var diffController: DifficultyController!
     var gameState: GameState = .WaitingForStart
     var gameMode: GameMode = .None
@@ -202,7 +202,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     
     init(pNum: Int, control: GameViewController) {
-        self.controller = control
         super.init()
         // Do any additional setup after loading the view, typically from a nib.
         if NSUserDefaults.standardUserDefaults().dataForKey("peerID") == nil {
@@ -212,6 +211,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as MCPeerID
         }
         self.maxPlayer = pNum
+        self.controller = control
         self.serviceType = self.serviceType + String(self.maxPlayer)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
@@ -465,7 +465,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if gameState == .InLevelViewController {
                 invitationHandler(false, session)
             } else {
-                controller.setHostUI()
+                if controller != nil {
+                	controller.setHostUI()
+                }
                 invitationHandler(true, session)
             }
     }
@@ -486,6 +488,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if !hasInvitedPeer(peerID) {
                 println("[INVITE] \(peerID.displayName)")
                 browser.invitePeer(peerID, toSession: session, withContext: nil, timeout: 10)
+                if controller == nil {
+                    return
+                }
                 controller.setHostUI()
                 invitedPeers.append(peerID)
                 NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
@@ -685,6 +690,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             //stopConnecting()
             println("[numConnectedPeers]: \(session.connectedPeers.count)")
             dispatch_async(dispatch_get_main_queue()) {
+                if self.controller == nil {
+                    return
+                }
                 self.controller.setHostUI()
                 switch self.session.connectedPeers.count {
                 case 0:
@@ -738,7 +746,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.NotConnected {
                 println("[LOST CONNECTION] \(invitedPeers.count) "+peerID.displayName)
-                
+                if peerID.displayName == me.getName() {
+                    return
+                }
                 if gameState == .InViewController {
                     return
                 }
@@ -770,12 +780,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.playBtn.layer.removeAllAnimations()
                     
                     if gameState == .WaitingForStart {
-                        self.session = nil
-                        self.session = MCSession(peer: me.peerID)
-                        self.advertiser = nil
                         self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
                         self.advertiser.delegate = self
-                        self.browser = nil
                         self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
                         self.browser.delegate = self
                         controller.setHostUI()

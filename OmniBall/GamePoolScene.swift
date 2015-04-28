@@ -94,11 +94,9 @@ class GamePoolScene: GameScene {
                 let node = SKSpriteNode(imageNamed: "staro")
                 node.name = "neutral" + String(i)
                 node.size = CGSize(width: 110, height: 110)
-                node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), alphaThreshold: 1, size: CGSize(width: 110, height: 110))
+                node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
                 node.position = neutralPosList[i]
-                if (node.physicsBody == nil) {
-                    println("ERROR")
-                }
+                
                 node.physicsBody!.dynamic = false
                 node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 node.physicsBody!.restitution = 1
