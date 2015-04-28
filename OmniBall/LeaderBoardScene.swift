@@ -54,31 +54,31 @@ class LeaderBoardScene: SKScene {
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
         background.position = CGPointZero
-        addChild(background)
+        AddChild(background)
         
         let leaderBoard = SKSpriteNode(imageNamed: "600x200_leaderboard")
         leaderBoard.position = CGPoint(x: size.width/2, y: size.height - 350)
         leaderBoard.setScale(2.0)
-        addChild(leaderBoard)
+        AddChild(leaderBoard)
         
         let lblRank = SKLabelNode(text: "Rank")
         lblRank.fontName = "Chalkduster"
         lblRank.fontSize = 60
         lblRank.position = CGPoint(x: startPos, y: size.height - 600)
-        addChild(lblRank)
+        AddChild(lblRank)
     
         let lblPlayer = SKLabelNode(text: "Player")
         lblPlayer.fontName = "Chalkduster"
         lblPlayer.fontSize = 60
         lblPlayer.position = CGPoint(x: startPos + 500, y: size.height - 600)
-        addChild(lblPlayer)
+        AddChild(lblPlayer)
         
         let lblScore = SKLabelNode(text: "Score")
         lblScore.fontName = "Chalkduster"
         lblScore.fontSize = 60
         lblScore.position = CGPoint(x: startPos + 1000, y: size.height - 600)
         lblScore.horizontalAlignmentMode = .Left
-        addChild(lblScore)
+        AddChild(lblScore)
         
         let peers = connection.peersInGame.peers
         let sortedScore: NSMutableArray = NSMutableArray(array: peers)
@@ -93,30 +93,30 @@ class LeaderBoardScene: SKScene {
             rank.fontName = "Chalkduster"
             rank.fontSize = 60
             rank.position = CGPoint(x: lblRank.position.x, y: lblRank.position.y - CGFloat(index + 1) * 100)
-            addChild(rank)
+            AddChild(rank)
             let name = SKLabelNode(text: player.getName())
             name.fontName = "Chalkduster"
             name.fontSize = 60
             name.position = CGPoint(x: lblPlayer.position.x,
                 y: lblPlayer.position.y - CGFloat(index + 1) * 100)
             name.horizontalAlignmentMode = .Center
-            addChild(name)
+            AddChild(name)
             for var star = 0; star < player.score; ++star {
                 let icnStar = SKSpriteNode(imageNamed: getSlaveImageName(PlayerColors(rawValue: Int(player.playerID))!, false))
                 icnStar.size = CGSize(width: icnStar.size.width * 0.6, height: icnStar.size.height * 0.6)
                 icnStar.position = CGPoint(x: lblScore.position.x + CGFloat(star) * (icnStar.size.width), y: lblScore.position.y - CGFloat(index + 1) * 100)
-                addChild(icnStar)
+                AddChild(icnStar)
             }
         }
         
         btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
-        addChild(btnNext)
+        AddChild(btnNext)
         
         if (connection.me.playerID == 0 && connection.peersInGame.getNumPlayers() == connection.peersInGame.numOfPlayers) {
             btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
             btnAgain.position = CGPoint(x: size.width - 500, y: 400)
-            addChild(btnAgain)
+            AddChild(btnAgain)
         }
         
         connection.gameOver()

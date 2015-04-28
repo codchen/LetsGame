@@ -28,20 +28,20 @@ class TutorialOverScene: SKScene {
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
         background.position = CGPointZero
-        addChild(background)
+        AddChild(background)
         
         var label = SKSpriteNode(imageNamed: "700x200_you_win")
         label.setScale(2.0)
         label.position = CGPointMake(size.width/2, size.height/2)
-        addChild(label)
+        AddChild(label)
         
         btnNext = SKSpriteNode(imageNamed: "200x200_button_next")
         btnNext.position = CGPoint(x: size.width - 300, y: 400)
-        addChild(btnNext)
+        AddChild(btnNext)
         
         btnAgain = SKSpriteNode(imageNamed: "200x200_button_replay")
         btnAgain.position = CGPoint(x: size.width - 500, y: 400)
-        addChild(btnAgain)
+        AddChild(btnAgain)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

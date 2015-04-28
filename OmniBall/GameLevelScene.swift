@@ -34,7 +34,7 @@ class GameLevelScene: GameScene {
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
         destPointer.physicsBody?.categoryBitMask = physicsCategory.wall
-        addChild(destHeart)
+        AddChild(destHeart)
     }
     
     override func setupHUD() {
@@ -46,7 +46,7 @@ class GameLevelScene: GameScene {
             minion.position = startPos + CGPoint(x: CGFloat(i) * (minion.size.width), y: 0)
             minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
             hudMinions.append(minion)
-            hudLayer.addChild(minion)
+            hudLayer.AddChild(minion)
             collectedMinions.append(false)
         }
                 
@@ -62,7 +62,7 @@ class GameLevelScene: GameScene {
         btnComeBack.position = CGPoint(x: size.width - 100, y: 300)
         btnComeBack.position = hudLayer.convertPoint(btnComeBack.position, fromNode: self)
         btnComeBack.setScale(1.5)
-        hudLayer.addChild(btnComeBack)
+        hudLayer.AddChild(btnComeBack)
     }
     
     override func setupNeutral() {
@@ -152,8 +152,8 @@ class GameLevelScene: GameScene {
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
 //                self.connection.sendExit()
                 self.connection.exitGame()
-                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
-                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.connection.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.connection.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                 UIView.transitionWithView(self.view!, duration: 0.5,
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {

@@ -26,7 +26,7 @@ class InstructionScene: SKScene {
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
         background.position = CGPointZero
-        addChild(background)
+        AddChild(background)
         
         var label: SKLabelNode!
         switch connection.gameMode {
@@ -47,7 +47,7 @@ class InstructionScene: SKScene {
         label.fontSize = 120
         label.fontColor = UIColor.whiteColor()
         label.position = CGPoint(x: size.width/2, y: size.height/2)
-        addChild(label)
+        AddChild(label)
         
         let wait = SKAction.waitForDuration(3)
         let block = SKAction.runBlock {

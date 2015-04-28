@@ -48,8 +48,8 @@ public extension SKNode {
    */
   public func bringToFront() {
     if let parent = self.parent{
-      removeFromParent()
-      parent.addChild(self)
+      RemoveFromParent()
+      parent.AddChild(self)
     }
   }
 

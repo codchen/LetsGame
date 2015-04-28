@@ -22,7 +22,7 @@ class WaitingForGameStartScene: SKScene {
         waitingLabel.fontColor = UIColor.whiteColor()
         waitingLabel.position =
             CGPoint(x: size.width/2, y: size.height/2)
-        self.addChild(waitingLabel)
+        self.AddChild(waitingLabel)
 //        let scaleUpAction = SKAction.scaleTo(1.5, duration: 0.5);
 //        let scaleDownAction = SKAction.scaleTo(0.5, duration: 0.5);
 //        let scaleSequenceAction =

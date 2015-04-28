@@ -47,7 +47,7 @@ class TutorialScene: GameScene {
         destHeart.fillColor = UIColor.blackColor()
         destHeart.zPosition = -10
         destHeart.position = destPointer.position
-        addChild(destHeart)
+        AddChild(destHeart)
     }
     
     func setUpAction(){
@@ -65,7 +65,7 @@ class TutorialScene: GameScene {
 //        let text = "Tap to select the ball"
 //        tapLabel.text = text
 //        tapLabel.setScale(0)
-//        addChild(tapLabel)
+//        AddChild(tapLabel)
 //        let wait = SKAction.waitForDuration(0.2)
 //        let block = SKAction.runBlock {
 //            self.tapLabel.setScale(1)
@@ -84,7 +84,7 @@ class TutorialScene: GameScene {
             let text = "Swipe Your Ball to Hit the Star"
             tapLabel.text = text
             tapLabel.setScale(0)
-            addChild(tapLabel)
+            AddChild(tapLabel)
             let wait = SKAction.waitForDuration(0.2)
             let block = SKAction.runBlock {
                 self.tapLabel.setScale(1)

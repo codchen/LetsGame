@@ -33,7 +33,7 @@ class GameOverScene: SKScene {
         let background = SKSpriteNode(color: UIColor.blackColor(), size: self.size)
         background.anchorPoint = CGPointZero
         background.position = CGPointZero
-        addChild(background)
+        AddChild(background)
         
         var label: SKSpriteNode!
         if won {
@@ -43,7 +43,7 @@ class GameOverScene: SKScene {
         }
         label.setScale(2.0)
         label.position = CGPointMake(size.width/2, size.height/2)
-        addChild(label)
+        AddChild(label)
         
         let wait = SKAction.waitForDuration(1)
         let block = SKAction.runBlock {

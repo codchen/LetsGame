@@ -19,7 +19,7 @@ class PresentScene: SKScene{
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         btnNext.position = CGPoint(x: (1 - anchorPoint.x) * size.width - 1000, y: (-anchorPoint.y) * size.height + 900)
         btnNext.fontSize = 512
-        addChild(btnNext)
+        AddChild(btnNext)
     }
     
     

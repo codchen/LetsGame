@@ -13,7 +13,7 @@ class GamePoolScene: GameScene {
     
     var boundRect: CGRect!
     var wave = 1
-    var neutralList: [SKSpriteNode] = []
+    //var neutralList: [SKSpriteNode] = []
     var neutralPosList: [CGPoint] = []
     var renew = false
     
@@ -31,7 +31,7 @@ class GamePoolScene: GameScene {
             minion.position = startPos + CGPoint(x: CGFloat(i) * (minion.size.width), y: 0)
             minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
             hudMinions.append(minion)
-            hudLayer.addChild(minion)
+            hudLayer.AddChild(minion)
             collectedMinions.append(false)
         }
     }
@@ -39,7 +39,7 @@ class GamePoolScene: GameScene {
     override func setupNeutral() {
         enumerateChildNodesWithName("neutral*"){ node, _ in
             let neutralNode = node as SKSpriteNode
-            self.neutralList.append(neutralNode)
+//            self.neutralList.append(neutralNode)
             self.neutralPosList.append(neutralNode.position)
             neutralNode.size = CGSize(width: 110, height: 110)
             neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
@@ -68,7 +68,7 @@ class GamePoolScene: GameScene {
         shape.path = path
         shape.strokeColor = SKColor.redColor()
         shape.lineWidth = 4.0
-        addChild(shape)
+        AddChild(shape)
     }
     
     
@@ -90,16 +90,25 @@ class GamePoolScene: GameScene {
         if (renew == true) {
             player.pause()
             physicsWorld.speed = 0
-            let original = SKTexture(imageNamed: "staro")
-            for var i = 0; i < neutralList.count; ++i {
-                neutralList[i].position = neutralPosList[i]
-                neutralList[i].physicsBody!.dynamic = false
-                neutralList[i].physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-                neutralList[i].texture = original
-                NSLog(neutralList[i].name! + " changed to staro")
-                addChild(neutralList[i])
+            for var i = 0; i < neutralPosList.count; ++i {
+                let node = SKSpriteNode(imageNamed: "staro")
+                node.name = "neutral" + String(i)
+                node.size = CGSize(width: 110, height: 110)
+                node.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), alphaThreshold: 1, size: CGSize(width: 110, height: 110))
+                node.position = neutralPosList[i]
+                if (node.physicsBody == nil) {
+                    println("ERROR")
+                }
+                node.physicsBody!.dynamic = false
+                node.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                node.physicsBody!.restitution = 1
+                node.physicsBody!.linearDamping = 0
+                node.physicsBody!.categoryBitMask = physicsCategory.target
+                node.physicsBody!.contactTestBitMask = physicsCategory.Me
+                self.neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
+                AddChild(node)
             }
-            remainingSlave = neutralList.count
+            remainingSlave = neutralPosList.count
             renew = false
             myNodes.players[0].texture = SKTexture(imageNamed: getPlayerImageName(myNodes.color, true))
             cleanCapturedArrays()
@@ -113,6 +122,7 @@ class GamePoolScene: GameScene {
         super.scored()
         self.remainingSlave--
         addHudStars(myNodes.id)
+        println("SCORED: \(remainingSlave)")
         if (remainingSlave == 0) {
             if (wave < 3) {
                 connection.sendPause()
@@ -153,7 +163,7 @@ class GamePoolScene: GameScene {
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 deCapList.append(slave.node)
-                slave.node.removeFromParent()
+                slave.node.RemoveFromParent()
                 myNodes.sendDead(UInt16(index))
                 score++
             }
@@ -185,10 +195,10 @@ class GamePoolScene: GameScene {
         label.fontSize = 200
         label.fontColor = UIColor.whiteColor()
         label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
-        addChild(label)
+        AddChild(label)
         let action1 = SKAction.waitForDuration(1)
         let block1 = SKAction.runBlock{
-            label.removeFromParent()
+            label.RemoveFromParent()
             self.physicsWorld.speed = 1
             self.player.play()
         }

@@ -123,7 +123,7 @@ class OpponentNodes: Player {
             let name = "neutral" + String(deleteIndex)
             if let node = scene.childNodeWithName(name) as? SKSpriteNode {
                 decapture(node)
-                node.removeFromParent()
+                node.RemoveFromParent()
                 deleteIndex = -1
                 scene.addHudStars(self.id)
                 scene.changeDest()

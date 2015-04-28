@@ -65,7 +65,7 @@ class GameBattleScene: GameScene {
                 minion.position = startPos + CGPoint(x: CGFloat(index) * (minion.size.width), y: 0)
                 minion.position = hudLayer.convertPoint(minion.position, fromNode: self)
                 hudMinions.append(minion)
-                hudLayer.addChild(minion)
+                hudLayer.AddChild(minion)
                 collectedMinions.append(false)
             }
         }
@@ -82,7 +82,7 @@ class GameBattleScene: GameScene {
             node.physicsBody!.linearDamping = 0
             node.physicsBody!.categoryBitMask = physicsCategory.target
             node.physicsBody!.contactTestBitMask = physicsCategory.Me
-            addChild(node)
+            AddChild(node)
             neutralBalls[node.name!] = NeutralBall(node: node, lastCapture: 0)
         }
     }
@@ -205,6 +205,6 @@ class GameBattleScene: GameScene {
         shape.path = path
         shape.strokeColor = SKColor.redColor()
         shape.lineWidth = 4.0
-        addChild(shape)
+        AddChild(shape)
     }
 }

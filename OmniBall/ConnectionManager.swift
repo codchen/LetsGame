@@ -190,7 +190,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         }
     }
     var peersInGame: PeersInGame!
-    var controller: GameViewController!
+    unowned var controller: GameViewController
     weak var diffController: DifficultyController!
     var gameState: GameState = .WaitingForStart
     var gameMode: GameMode = .None
@@ -201,7 +201,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     var gameStartMsgCnt: Int = 0
     
     
-    init(pNum: Int) {
+    init(pNum: Int, control: GameViewController) {
+        self.controller = control
         super.init()
         // Do any additional setup after loading the view, typically from a nib.
         if NSUserDefaults.standardUserDefaults().dataForKey("peerID") == nil {
@@ -745,8 +746,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 if let peer = peersInGame.getPeer(peerID) {
                     println("[GAMESTATE] \(self.gameState.rawValue)")
                     if gameState == .InLevelViewController {
-                        self.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
-                        self.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                        self.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                        self.controller.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                     }
                     var alert = UIAlertController(title: "Lost Connection", message: "Lost connection with " + peerID.displayName, preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))

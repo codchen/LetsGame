@@ -43,6 +43,18 @@ extension SKNode {
             return nil
         }
     }
+    
+    func AddChild(node: SKNode) {
+        if node.parent == nil {
+            addChild(node)
+        }
+    }
+    
+    func RemoveFromParent() {
+        if parent != nil {
+            removeFromParent()
+        }
+    }
 }
 
 extension SKScene {
@@ -79,8 +91,7 @@ class GameViewController: DifficultyController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectionManager = ConnectionManager(pNum: playerNum)
-        connectionManager.controller = self
+        connectionManager = ConnectionManager(pNum: playerNum, control: self)
         dispatch_async(dispatch_get_main_queue()){
             self.playBtn.enabled = false
         }
@@ -132,7 +143,6 @@ class GameViewController: DifficultyController {
         connectionManager.gameState = .InViewController
         connectionManager.stopConnecting()
         self.connectionManager.session.disconnect()
-        self.connectionManager = nil
     }
     
 //    func transitToGame(name: String) {

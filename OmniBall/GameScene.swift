@@ -131,13 +131,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.enumerateChildNodesWithName("node*") { node, _ in
                 let node0 = node as SKSpriteNode
                 if node0.name != "node1" {
-                    node0.removeFromParent()
+                    node0.RemoveFromParent()
                 }
             }
         case 2:
             self.enumerateChildNodesWithName("node3") { node, _ in
                 let node0 = node as SKSpriteNode
-                node0.removeFromParent()
+                node0.RemoveFromParent()
             }
         default:
             return
@@ -152,11 +152,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let tempAnchor = anchorPoint
         hudLayer.position = CGPoint(x: -tempAnchor.x * size.width, y: -tempAnchor.x * size.height)
         hudLayer.zPosition = 5
-        addChild(hudLayer)
+        AddChild(hudLayer)
         
         btnExit.position = CGPoint(x: size.width - 100, y: size.height - 300)
         hudLayer.convertPoint(btnExit.position, fromNode: self)
-        hudLayer.addChild(btnExit)
+        hudLayer.AddChild(btnExit)
     }
     
     func setupNeutral(){
@@ -354,7 +354,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let slaveName = name as NSString
                 let index: Int = slaveName.substringFromIndex(7).toInt()!
                 deCapList.append(slave.node)
-                slave.node.removeFromParent()
+                slave.node.RemoveFromParent()
                 myNodes.sendDead(UInt16(index))
                 scored()
                 changeDest()
@@ -444,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func readyGo(){
         var label = SKSpriteNode(imageNamed: "400x200_ready")
         label.position = CGPoint(x: size.width / 2, y: size.height / 2 - 150)
-        addChild(label)
+        AddChild(label)
         let action1 = SKAction.scaleTo(4, duration: 0.7)
         let block1 = SKAction.runBlock{
             label.texture = SKTexture(imageNamed: "400x200_go")
@@ -452,7 +452,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         let action2 = SKAction.waitForDuration(0.5)
         let block2 = SKAction.runBlock{
-            label.removeFromParent()
+            label.RemoveFromParent()
             self.player.play()
         }
         label.runAction(SKAction.sequence([action1, block1, action2, block2]))
