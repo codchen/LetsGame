@@ -44,7 +44,7 @@ class LeaderBoardScene: SKScene {
         connection.controller.currentLevel = 0
         connection = controller.connectionManager
         var startPos: CGFloat!
-        if connection.gameMode == .HiveMaze || connection.gameMode == .PoolArena{
+        if (connection.gameMode == .HiveMaze || connection.gameMode == .HiveMaze2) || connection.gameMode == .PoolArena{
         	startPos = 200
         } else {
             startPos = 500
@@ -135,6 +135,7 @@ class LeaderBoardScene: SKScene {
                     self.controller.clearCurrentView()
                 }, completion: nil)
             if connection.peersInGame.numOfPlayers != connection.peersInGame.getNumPlayers() {
+                if (self.connection.me.playerID == 0) {
                 self.connection.controller.presentedViewController?
                     .dismissViewControllerAnimated(false, completion: { _ in
                         let col = self.connection.controller
@@ -143,6 +144,10 @@ class LeaderBoardScene: SKScene {
                                 col.dismissViewControllerAnimated(false, completion: nil)
                             })
                     })
+                }
+                else {
+                    self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                }
                 connection.exitGame()
             }
         } else if btnAgain != nil {
