@@ -82,10 +82,9 @@ class GameViewController: DifficultyController {
         connectionManager = ConnectionManager(pNum: playerNum)
         connectionManager.controller = self
         dispatch_async(dispatch_get_main_queue()){
-            self.playBtn.enabled = true
+            self.playBtn.enabled = false
         }
-        addHostLabel(connectionManager.me.getName())
-        setHostUI(isHost: true, isConnecting: false)
+        setHostUI(isHost: false, isConnecting: true)
         player1.text = connectionManager.me.getName()
         playerList.append(player1)
         if playerNum > 1 {
@@ -298,12 +297,6 @@ class GameViewController: DifficultyController {
     func setHostUI(#isHost: Bool, isConnecting: Bool) {
         dispatch_async(dispatch_get_main_queue()){
             
-            if isConnecting {
-                self.exitBtn.enabled = false
-            } else {
-                self.exitBtn.enabled = true
-            }
-            
             if isHost {
                 self.playBtn.enabled = true
                 self.instructionText.text = "You are the host. Tap \"Play\" to start game!"
@@ -313,10 +306,11 @@ class GameViewController: DifficultyController {
                     }, completion: nil)
             } else {
                 self.playBtn.enabled = false
-                self.playBtn.alpha = 0.1
+                self.playBtn.alpha = 0
                 self.playBtn.layer.removeAllAnimations()
+                self.instructionText.alpha = 1
                 if isConnecting {
-                    self.instructionText.text = "Connecting to other players... "
+                    self.instructionText.text = "Waiting for other players... "
                 } else {
                     self.instructionText.text = "Waiting for the host to start game..."
                 }

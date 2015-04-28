@@ -13,7 +13,7 @@ class Peer: NSObject {
     var peerID: MCPeerID!
     var score: Int = 0
     var randomNumber: UInt32 = 0
-    var playerID: UInt16 = 0
+    var playerID: UInt16 = 4
     var delta: Double = 0
     init(peerID: MCPeerID) {
         super.init()
@@ -412,16 +412,16 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func exitGame() {
-        session.disconnect()
         gameState = .WaitingForStart
-        controller.setHostUI(isHost: true, isConnecting: false)
+        controller.setHostUI(isHost: false, isConnecting: false)
         invitedPeers = []
         peersInGame = PeersInGame()
         me = Peer(peerID: self.peerID)
         peersInGame.addPeer(me)
         peersInGame.numOfPlayers = maxPlayer
         controller.currentLevel = 0
-        startConnecting()
+        session.disconnect()
+//        startConnecting()
     }
     
     func readyToChooseGameMode() {
@@ -739,12 +739,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.NotConnected {
                 println("[LOST CONNECTION] \(invitedPeers.count) "+peerID.displayName)
-//                self.advertiser = nil
-//                self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
-//                self.advertiser.delegate = self
-//                self.browser = nil
-//                self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
-//                self.browser.delegate = self
+
                 if let peer = peersInGame.getPeer(peerID) {
                     println("[GAMESTATE] \(self.gameState.rawValue)")
                     if gameState == .InLevelViewController {
@@ -756,7 +751,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     dispatch_async(dispatch_get_main_queue()) {
                         self.controller.presentViewController(alert, animated: true, completion: nil)
                     }
-                    //self.controller.deletePlayerLabel(peerID.displayName)
+                    self.controller.setHostUI(isHost: false, isConnecting: true)
                     // when host exit in level view controller
                     if peer.playerID == 0 && gameState == .InLevelViewController {
                         gameState = .WaitingForStart
@@ -772,6 +767,14 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.playBtn.layer.removeAllAnimations()
                     
                     if gameState == .WaitingForStart {
+                        self.session = nil
+                        self.session = MCSession(peer: me.peerID)
+                        self.advertiser = nil
+                        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+                        self.advertiser.delegate = self
+                        self.browser = nil
+                        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
+                        self.browser.delegate = self
                         controller.setHostUI(isHost: false, isConnecting: false)
                         self.startConnecting()
                     }
@@ -791,6 +794,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func session(session: MCSession!, didReceiveCertificate certificate: [AnyObject]!, fromPeer peerID: MCPeerID!, certificateHandler: ((Bool) -> Void)!) {
         if (certificateHandler != nil) {
+            println("[CERTIFICATE]")
             certificateHandler(true)
         }
     }
