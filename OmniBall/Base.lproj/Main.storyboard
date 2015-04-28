@@ -29,8 +29,8 @@
                                     <action selector="showTutorial:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="nWc-Vs-C4d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BZ-hn-5Cx">
-                                <rect key="frame" x="175" y="175" width="200" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BZ-hn-5Cx">
+                                <rect key="frame" x="225" y="225" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="fOr-2I-OKs"/>
                                     <constraint firstAttribute="height" constant="150" id="lNq-jh-GZv"/>
@@ -42,8 +42,8 @@
                                     <action selector="showGVC:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="dwL-Zg-2e9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psP-Xs-3Qr">
-                                <rect key="frame" x="-33" y="175" width="200" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psP-Xs-3Qr">
+                                <rect key="frame" x="55" y="225" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="2Rf-2m-raO"/>
                                     <constraint firstAttribute="width" constant="150" id="wiM-Ut-d2A"/>
@@ -55,8 +55,8 @@
                                     <action selector="onePlayer:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="BtC-Sh-wb9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mE-6T-pPw">
-                                <rect key="frame" x="372" y="175" width="200" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mE-6T-pPw">
+                                <rect key="frame" x="395" y="225" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="Nhg-gU-bqO"/>
                                     <constraint firstAttribute="width" constant="150" id="aNw-i1-GKM"/>
@@ -68,8 +68,8 @@
                                     <action selector="threePlayer:" destination="BOM-dQ-PGL" eventType="touchUpInside" id="10w-V0-CGY"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ChooseNumPlayer.png" translatesAutoresizingMaskIntoConstraints="NO" id="kvf-k8-PC2">
-                                <rect key="frame" x="104" y="45" width="392" height="64"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ChooseNumPlayer.png" translatesAutoresizingMaskIntoConstraints="NO" id="kvf-k8-PC2">
+                                <rect key="frame" x="104" y="160" width="392" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="392" id="06f-JQ-zC1"/>
                                     <constraint firstAttribute="height" constant="40" id="DTw-fy-u5y"/>
