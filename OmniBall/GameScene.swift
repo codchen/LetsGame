@@ -12,7 +12,7 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    weak var controller: DifficultyController!
+    var controller: DifficultyController!
     var margin: CGFloat!
     let ballSize: CGFloat = 110
     var destPos: CGPoint!

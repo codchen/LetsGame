@@ -227,6 +227,9 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
         peersInGame = PeersInGame()
         peersInGame.numOfPlayers = maxPlayer
         self.me = Peer(peerID: self.peerID)
+        if (self.maxPlayer == 1) {
+            self.me.playerID = 0
+        }
         self.peersInGame.addPeer(me)
     }
     
@@ -267,7 +270,18 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func sendRandomNumber(number: UInt32){
         var message = MessageRandomNumber(message: Message(messageType: MessageType.RandomNumber), number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageRandomNumber))
+        dispatch_async(dispatch_get_main_queue()) {
+            NSTimer.scheduledTimerWithTimeInterval(Double(5), target: self, selector: "forceDisconnect", userInfo: nil, repeats: false)
+        }
         sendData(data, reliable: true)
+    }
+    
+    func forceDisconnect() {
+        println("[FORCE DISCONNECT CALLED]")
+        if !peersInGame.receivedAllRandomNumbers() {
+            println("[FORCE DISCONN]")
+            session.disconnect()
+        }
     }
     
     func sendFirstTrip(peer: MCPeerID){
@@ -453,7 +467,6 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func determineHost() {
         stopConnecting()	// will restart connecting when finishing randomnumber exchange
-        println("[SET HOSTUI] false true")
         controller.setHostUI()
         generateRandomNumber()
     }
@@ -493,7 +506,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
                 controller.setHostUI()
                 invitedPeers.append(peerID)
-                NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
+                NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "deleteFromInvited:", userInfo: peerID, repeats: false)
             }
     }
     
@@ -523,7 +536,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func session(session: MCSession!, didReceiveData data: NSData!,
         fromPeer peerID: MCPeerID!)  {
-            
+            if !peersInGame.hasPeer(peerID) {
+                self.session.disconnect()
+                sendForceExitSession(peerID)
+            }
         var message = UnsafePointer<Message>(data.bytes).memory
         
         if message.messageType == MessageType.Move {
@@ -552,10 +568,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 }
                 
                	if me.playerID != 0 {
-                    println("[SET HOSTUI] false, false")
                     self.controller.setHostUI()
                 } else {
-                    println("[SET HOSTUI] true, false")
                     self.controller.setHostUI()
                 }
             	diffController = nil
@@ -694,7 +708,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     return
                 }
                 self.controller.setHostUI()
-                switch self.session.connectedPeers.count {
+                let cpcopy = self.session.connectedPeers
+                switch cpcopy.count {
                 case 0:
 					if (self.maxPlayer > 1) {
                     	self.controller.player2.text = ""
@@ -703,7 +718,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         }
 					}
                 case 1:
-                    let peer1 = self.session.connectedPeers[0] as MCPeerID
+                    let peer1 = cpcopy[0] as MCPeerID
                     if (self.maxPlayer > 1) {
                     	self.controller.player2.text = peer1.displayName
                         if self.maxPlayer > 2 {
@@ -711,8 +726,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         }
                     }
                 case 2:
-                    let peer1 = self.session.connectedPeers[0] as MCPeerID
-                    let peer2 = self.session.connectedPeers[1] as MCPeerID
+                    let peer1 = cpcopy[0] as MCPeerID
+                    let peer2 = cpcopy[1] as MCPeerID
                     if (self.maxPlayer > 1) {
                         self.controller.player2.text = peer1.displayName
                         if self.maxPlayer > 2 {
@@ -727,7 +742,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             if state == MCSessionState.Connected {
                 
                 println("[CONNECTED] \(peerID.displayName)")
-                if self.session.connectedPeers.count > self.maxPlayer - 1 {
+                if self.peersInGame.peers.count > self.maxPlayer - 1 {
                     sendForceExitSession(peerID)
                     return
                 }
@@ -766,7 +781,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     }
                     self.controller.setHostUI()
                     // when host exit in level view controller
-                    if peer.playerID == 0 && gameState == .InLevelViewController {
+                    if me.playerID == 0 && gameState == .InLevelViewController {
                         gameState = .WaitingForStart
                     }
                     peersInGame.removePeer(peer)
@@ -780,10 +795,13 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     self.controller.playBtn.layer.removeAllAnimations()
                     
                     if gameState == .WaitingForStart {
-                        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
-                        self.advertiser.delegate = self
-                        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
-                        self.browser.delegate = self
+//                        self.advertiser = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: serviceType)
+//                        self.advertiser.delegate = self
+//                        self.browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
+//                        self.browser.delegate = self
+                        for peer in peersInGame.peers {
+                            peer.playerID = 4
+                        }
                         controller.setHostUI()
                         self.startConnecting()
                     }

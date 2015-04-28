@@ -343,6 +343,7 @@ class GameViewController: DifficultyController {
                 name = self.connectionManager.me.getName()
             }
             self.lblHost.text = "Host: " + name
+            println("Host: "+name)
         }
 
     }

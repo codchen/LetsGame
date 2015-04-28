@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451874154.614929"
+            timestampString = "451927180.61975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "438"
-            endingLineNumber = "438"
-            landmarkName = "startConnecting()"
+            startingLineNumber = "450"
+            endingLineNumber = "450"
+            landmarkName = "stopConnecting()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451874154.614929"
+            timestampString = "451927180.61975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "668"
-            endingLineNumber = "668"
-            landmarkName = "ConnectionManager"
-            landmarkType = "3">
+            startingLineNumber = "680"
+            endingLineNumber = "680"
+            landmarkName = "session(_:didReceiveData:fromPeer:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "OmniBall/ConnectionManager.swift"
-            timestampString = "451874154.614929"
+            timestampString = "451927180.61975"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "590"
-            endingLineNumber = "590"
+            startingLineNumber = "602"
+            endingLineNumber = "602"
             landmarkName = "session(_:didReceiveData:fromPeer:)"
             landmarkType = "5">
          </BreakpointContent>
