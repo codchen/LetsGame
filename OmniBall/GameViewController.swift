@@ -130,8 +130,6 @@ class GameViewController: DifficultyController {
         connectionManager.gameState = .InViewController
         connectionManager.stopConnecting()
         self.connectionManager.session.disconnect()
-
-//        dismissViewControllerAnimated(true, completion: nil)
     }
     
 //    func transitToGame(name: String) {

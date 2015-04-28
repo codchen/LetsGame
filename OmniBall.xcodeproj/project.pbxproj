@@ -106,13 +106,7 @@
 		FF2086441AC9C65B00F09DB7 /* MinimapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2086431AC9C65B00F09DB7 /* MinimapController.swift */; };
 		FF20864E1ACC797800F09DB7 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086471ACC797800F09DB7 /* map.png */; };
 		FF20864F1ACC797800F09DB7 /* maze.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086481ACC797800F09DB7 /* maze.png */; };
-		FF2086501ACC797800F09DB7 /* mini-map-0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086491ACC797800F09DB7 /* mini-map-0.png */; };
-		FF2086511ACC797800F09DB7 /* mini-map-1.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864A1ACC797800F09DB7 /* mini-map-1.png */; };
-		FF2086521ACC797800F09DB7 /* mini-map-2.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864B1ACC797800F09DB7 /* mini-map-2.png */; };
-		FF2086531ACC797800F09DB7 /* mini-map-3.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864C1ACC797800F09DB7 /* mini-map-3.png */; };
-		FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864D1ACC797800F09DB7 /* mini-map-4.png */; };
 		FF2086561ACC799800F09DB7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086551ACC799800F09DB7 /* back-button.png */; };
-		FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */; };
 		FF3CE8F21AE5519F0035CC75 /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8EF1AE5519F0035CC75 /* connect.png */; };
 		FF3CE8F31AE5519F0035CC75 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F01AE5519F0035CC75 /* play.png */; };
 		FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F11AE5519F0035CC75 /* playc.png */; };
@@ -142,7 +136,6 @@
 		FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */; };
 		FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF4C71051A8D322800FB3622 /* 80x80_yellow_ball.png */; };
 		FF5055391AEECAC400C1D73C /* locate.png in Resources */ = {isa = PBXBuildFile; fileRef = FF5055371AEECAC400C1D73C /* locate.png */; };
-		FF50553A1AEECAC400C1D73C /* Omniball.png in Resources */ = {isa = PBXBuildFile; fileRef = FF5055381AEECAC400C1D73C /* Omniball.png */; };
 		FF50553C1AEECB2400C1D73C /* arena3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF50553B1AEECB2400C1D73C /* arena3.sks */; };
 		FF5301201A7D43A300F04937 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF53011F1A7D43A300F04937 /* GameScene.swift */; };
 		FF6C10421A6572FB00A5C7D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6C10411A6572FB00A5C7D7 /* AppDelegate.swift */; };
@@ -272,13 +265,7 @@
 		FF2086431AC9C65B00F09DB7 /* MinimapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinimapController.swift; sourceTree = "<group>"; };
 		FF2086471ACC797800F09DB7 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		FF2086481ACC797800F09DB7 /* maze.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maze.png; sourceTree = "<group>"; };
-		FF2086491ACC797800F09DB7 /* mini-map-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-0.png"; sourceTree = "<group>"; };
-		FF20864A1ACC797800F09DB7 /* mini-map-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-1.png"; sourceTree = "<group>"; };
-		FF20864B1ACC797800F09DB7 /* mini-map-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-2.png"; sourceTree = "<group>"; };
-		FF20864C1ACC797800F09DB7 /* mini-map-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-3.png"; sourceTree = "<group>"; };
-		FF20864D1ACC797800F09DB7 /* mini-map-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-4.png"; sourceTree = "<group>"; };
 		FF2086551ACC799800F09DB7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
-		FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300_button_battle_0.png; sourceTree = "<group>"; };
 		FF3CE8EF1AE5519F0035CC75 /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
 		FF3CE8F01AE5519F0035CC75 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		FF3CE8F11AE5519F0035CC75 /* playc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playc.png; sourceTree = "<group>"; };
@@ -308,7 +295,6 @@
 		FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_red_ball.png; sourceTree = "<group>"; };
 		FF4C71051A8D322800FB3622 /* 80x80_yellow_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80x80_yellow_ball.png; sourceTree = "<group>"; };
 		FF5055371AEECAC400C1D73C /* locate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locate.png; sourceTree = "<group>"; };
-		FF5055381AEECAC400C1D73C /* Omniball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Omniball.png; sourceTree = "<group>"; };
 		FF50553B1AEECB2400C1D73C /* arena3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = arena3.sks; path = Maps/arena3.sks; sourceTree = SOURCE_ROOT; };
 		FF53011F1A7D43A300F04937 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF6C103C1A6572FB00A5C7D7 /* OmniBall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmniBall.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -453,7 +439,6 @@
 			isa = PBXGroup;
 			children = (
 				FF5055371AEECAC400C1D73C /* locate.png */,
-				FF5055381AEECAC400C1D73C /* Omniball.png */,
 				FF4B6D541AE9409600BE12FE /* arena_easy.png */,
 				FF4B6D551AE9409600BE12FE /* arena_hard.png */,
 				FF4B6D561AE9409600BE12FE /* arena.png */,
@@ -488,12 +473,6 @@
 				11DCA0371AE548E900BF5766 /* cross.png */,
 				FF2086471ACC797800F09DB7 /* map.png */,
 				FF2086481ACC797800F09DB7 /* maze.png */,
-				FF2086491ACC797800F09DB7 /* mini-map-0.png */,
-				FF20864A1ACC797800F09DB7 /* mini-map-1.png */,
-				FF20864B1ACC797800F09DB7 /* mini-map-2.png */,
-				FF20864C1ACC797800F09DB7 /* mini-map-3.png */,
-				FF20864D1ACC797800F09DB7 /* mini-map-4.png */,
-				FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */,
 				112F12781AC5EA44008E65BF /* wall-mid.png */,
 				116A211B1AB727870025F4C9 /* 80x80_star_slot.png */,
 				FFCF00001AB677BA006FAE44 /* 400x200_go.png */,
@@ -706,7 +685,6 @@
 			files = (
 				FF0DCAA91AE6A16B003EC278 /* staro.png in Resources */,
 				11DCA0381AE548E900BF5766 /* cross.png in Resources */,
-				FF2086521ACC797800F09DB7 /* mini-map-2.png in Resources */,
 				FF50553C1AEECB2400C1D73C /* arena3.sks in Resources */,
 				FF4B6D6B1AE9409700BE12FE /* tutorialbtn.png in Resources */,
 				113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */,
@@ -724,10 +702,8 @@
 				118584971AB09947002622F8 /* 80x80_orange_star_filled.png in Resources */,
 				FF3CE8F31AE5519F0035CC75 /* play.png in Resources */,
 				FF0DCAA41AE6A16B003EC278 /* green_star.png in Resources */,
-				FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */,
 				118BB02C1AAF821B005B1718 /* LevelTraining.sks in Resources */,
 				FF4B6D651AE9409700BE12FE /* exitbtn.png in Resources */,
-				FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */,
 				FF4B6D791AE9CECF00BE12FE /* HLevel4.sks in Resources */,
 				118584A31AB0997D002622F8 /* 80x80_yellow_star_filled.png in Resources */,
 				118584901AB09923002622F8 /* 80x80_green_ball.png in Resources */,
@@ -765,7 +741,6 @@
 				118584AC1AB0998C002622F8 /* 200x200_button_next.png in Resources */,
 				118584891AB098C0002622F8 /* 80x80_blue_star.png in Resources */,
 				FFCF00061AB677BA006FAE44 /* blue_star_filled.png in Resources */,
-				FF2086511ACC797800F09DB7 /* mini-map-1.png in Resources */,
 				11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				1185849C1AB0996F002622F8 /* 80x80_red_ball_filled.png in Resources */,
@@ -779,7 +754,6 @@
 				FF4B6D601AE9409700BE12FE /* arena_easy.png in Resources */,
 				FF0DCAA11AE6A16B003EC278 /* green_aster.png in Resources */,
 				118584871AB098C0002622F8 /* 80x80_blue_ball_filled.png in Resources */,
-				FF2086531ACC797800F09DB7 /* mini-map-3.png in Resources */,
 				118584AD1AB0998C002622F8 /* 200x200_button_replay.png in Resources */,
 				FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */,
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
@@ -797,7 +771,6 @@
 				FF4C710B1A8D322800FB3622 /* 80x80_yellow_ball.png in Resources */,
 				FFCF00051AB677BA006FAE44 /* 400x200_ready.png in Resources */,
 				FF4B6D641AE9409700BE12FE /* connectbtn.png in Resources */,
-				FF2086501ACC797800F09DB7 /* mini-map-0.png in Resources */,
 				FF0DCAA51AE6A16B003EC278 /* red_aster.png in Resources */,
 				118584881AB098C0002622F8 /* 80x80_blue_star_filled.png in Resources */,
 				118584B11AB0998C002622F8 /* 700x200_you_lose.png in Resources */,
@@ -814,7 +787,6 @@
 				FF0DCA9D1AE6A16B003EC278 /* blue_aster.png in Resources */,
 				112F12791AC5EA44008E65BF /* wall-mid.png in Resources */,
 				118584B01AB0998C002622F8 /* 300x300_button_connect.png in Resources */,
-				FF50553A1AEECAC400C1D73C /* Omniball.png in Resources */,
 				FF4B6D6A1AE9409700BE12FE /* playericon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

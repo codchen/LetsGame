@@ -412,16 +412,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func exitGame() {
-        gameState = .WaitingForStart
-        controller.setHostUI(isHost: false, isConnecting: false)
-        invitedPeers = []
-        peersInGame = PeersInGame()
-        me = Peer(peerID: self.peerID)
-        peersInGame.addPeer(me)
-        peersInGame.numOfPlayers = maxPlayer
-        controller.currentLevel = 0
+        gameState = .InViewController
+        stopConnecting()
         session.disconnect()
-//        startConnecting()
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func readyToChooseGameMode() {
