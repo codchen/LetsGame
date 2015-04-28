@@ -109,10 +109,12 @@ class GameViewController: DifficultyController {
     //disable animation
     override func viewDidAppear(animated: Bool) {
         println("Called?")
-        if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
-            connectionManager.startConnecting()
-            connectionManager.gameState = .WaitingForStart
-            connectionManager.diffController = nil
+        if connectionManager.gameState != .InViewController {
+            if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
+                connectionManager.startConnecting()
+                connectionManager.gameState = .WaitingForStart
+                connectionManager.diffController = nil
+            }
         }
     }
     
@@ -131,7 +133,6 @@ class GameViewController: DifficultyController {
         connectionManager.stopConnecting()
         self.connectionManager.session.disconnect()
         self.connectionManager = nil
-//        dismissViewControllerAnimated(true, completion: nil)
     }
     
 //    func transitToGame(name: String) {

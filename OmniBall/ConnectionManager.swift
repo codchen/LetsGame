@@ -414,16 +414,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     }
     
     func exitGame() {
-        gameState = .WaitingForStart
-        invitedPeers = []
-        peersInGame = PeersInGame()
-        me = Peer(peerID: self.peerID)
-        peersInGame.addPeer(me)
-        peersInGame.numOfPlayers = maxPlayer
-        controller.setHostUI()
-        controller.currentLevel = 0
+        println("[EXIT GAME]")
+//        controller.dismissViewControllerAnimated(true, completion: nil)
+        gameState = .InViewController
+        stopConnecting()
         session.disconnect()
-//        startConnecting()
     }
     
     func readyToChooseGameMode() {
@@ -742,6 +737,10 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             }
             else if state == MCSessionState.NotConnected {
                 println("[LOST CONNECTION] \(invitedPeers.count) "+peerID.displayName)
+                
+                if gameState == .InViewController {
+                    return
+                }
 
                 if let peer = peersInGame.getPeer(peerID) {
                     println("[GAMESTATE] \(self.gameState.rawValue)")

@@ -58,7 +58,7 @@ class GamePoolScene: GameScene {
         let leftWall = childNodeWithName("barLeft") as SKSpriteNode
         let rightWall = childNodeWithName("barRight") as SKSpriteNode
         boundRect = CGRect(x: leftWall.position.x, y: bottomWall.position.y, width: rightWall.position.x - leftWall.position.x, height: topWall.position.y - bottomWall.position.y)
-        debugDrawPlayableArea(boundRect)
+//        debugDrawPlayableArea(boundRect)
     }
     
     func debugDrawPlayableArea(rect: CGRect) {
@@ -87,7 +87,6 @@ class GamePoolScene: GameScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        super.update(currentTime)
         if (renew == true) {
             player.pause()
             physicsWorld.speed = 0
@@ -107,6 +106,7 @@ class GamePoolScene: GameScene {
             wave++
             readyGo()
         }
+        super.update(currentTime)
     }
     
     override func scored() {
