@@ -270,15 +270,19 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     func sendRandomNumber(number: UInt32){
         var message = MessageRandomNumber(message: Message(messageType: MessageType.RandomNumber), number: number)
         let data = NSData(bytes: &message, length: sizeof(MessageRandomNumber))
+<<<<<<< Updated upstream
         var timer: NSTimer!
         dispatch_async(dispatch_get_main_queue(), {
             timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(5), target:self, selector:"forceDisconnect", userInfo:nil, repeats:false)
         })
         
+=======
+        NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "forceQuit", userInfo: nil, repeats: false)
+>>>>>>> Stashed changes
         sendData(data, reliable: true)
     }
     
-    func forceDisconnect() {
+    func forceQuit() {
         println("[FORCE DISCONNECT CALLED]")
         if !peersInGame.receivedAllRandomNumbers() {
             println("[FORCE DISCONN]")
