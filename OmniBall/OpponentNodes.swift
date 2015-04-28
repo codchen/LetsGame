@@ -14,75 +14,108 @@ class OpponentNodes: Player {
     struct OpponentSpecs {
         var info: [nodeInfo] = []
         var updated: [Bool] = []
-        
+//        let execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.oppospecs", DISPATCH_QUEUE_SERIAL)
         mutating func add(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16) {
-                info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
-        	updated.append(false)
+//                dispatch_sync(execQ){
+                    self.info.append(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index))
+                    self.updated.append(false)
+//                }
         }
         mutating func update (x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16){
-                info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-            updated[Int(index)] = true
+//                dispatch_sync(execQ){
+                    self.info[Int(index)] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
+                    self.updated[Int(index)] = true
+//                }
         }
         
         mutating func setUpdated(index: Int, update: Bool) {
-            updated[index] = update
+//            dispatch_sync(execQ){
+                self.updated[index] = update
+//            }
         }
         
-        func getInfoPosition(index: Int) -> CGPoint {
-            return CGPoint(x: info[index].x, y: info[index].y)
+		func getInfoPosition(index: Int) -> CGPoint {
+            var result: CGPoint!
+//            dispatch_sync(execQ) {
+                result = CGPoint(x: self.info[index].x, y: self.info[index].y)
+//            }
+            return result
         }
         
         func getInfoVelocity(index: Int) -> CGVector {
-            return CGVector(dx: info[index].dx, dy: info[index].dy)
+            var result: CGVector!
+//            dispatch_sync(execQ) {
+                result = CGVector(dx: self.info[index].dx, dy: self.info[index].dy)
+//            }
+            return result
         }
         
         func isUpdated(index: Int) -> Bool {
-            return updated[index]
+            var result: Bool!
+//            dispatch_sync(execQ) {
+                result = self.updated[index]
+//            }
+            return result
         }
     }
     
     struct SlaveSpecs {
         var info: Dictionary<String, nodeInfo> = Dictionary<String, nodeInfo>()
         var updated: Dictionary<String, Bool> = Dictionary<String, Bool>()
-        
+//        let execQ: dispatch_queue_t = dispatch_queue_create("org.omniball.slavespecs", DISPATCH_QUEUE_SERIAL)
         mutating func update(x: CGFloat, y: CGFloat, dx: CGFloat, dy: CGFloat,
             dt: CGFloat, index: UInt16, hasUpdated: Bool) {
-            let name = "neutral" + String(index)
-//                println("updating \(name)")
-//                if hasUpdated {
-//                    assert(info[name] != nil, "The neutral doesn't exists")
-//                }
-                
-            if !hasUpdated || (hasUpdated && info[name] != nil) {
-                info[name] = nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index)
-                updated[name] = hasUpdated
-            }
+//            dispatch_sync(execQ){
+                let name = "neutral" + String(index)
+                if let node = self.info[name] {
+                    self.info.updateValue(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index), forKey: name)
+                    self.updated.updateValue(hasUpdated, forKey: name)
+                } else if !hasUpdated {
+                    self.info.updateValue(nodeInfo(x: x, y: y, dx: dx, dy: dy, dt: dt, index: index), forKey: name)
+                    self.updated.updateValue(hasUpdated, forKey: name)
+                }
+//            }
         }
         
         func isUpdated(name: String) -> Bool {
-            if updated[name] == nil {
-                return false
-            }
-            return updated[name]!
+            var result = false
+//            dispatch_sync(execQ) {
+                if self.updated[name] != nil{
+                    result = self.updated[name]!
+                }
+//            }
+            return result
         }
         
         func getInfoPosition(name: String) -> CGPoint {
-            return CGPoint(x: info[name]!.x, y: info[name]!.y)
+            var result: CGPoint!
+//            dispatch_sync(execQ) {
+                result = CGPoint(x: self.info[name]!.x, y: self.info[name]!.y)
+//            }
+            return result
         }
         
         func getInfoVelocity(name: String) -> CGVector {
-            return CGVector(dx: info[name]!.dx, dy: info[name]!.dy)
+            var result: CGVector!
+//            dispatch_sync(execQ) {
+                result = CGVector(dx: self.info[name]!.dx, dy: self.info[name]!.dy)
+//            }
+            return result
         }
         
         mutating func setUpdated(name: String, update: Bool) {
-            updated[name] = update
+//            dispatch_sync(execQ){
+                self.updated.updateValue(update, forKey: name)
+//            }
         }
         
         mutating func delete(name: String) {
-            info[name] = nil
-            updated[name] = nil
+//            dispatch_sync(execQ){
+                self.info.removeValueForKey(name)
+                self.updated.removeValueForKey(name)
+//            }
         }
     }
     
@@ -121,12 +154,13 @@ class OpponentNodes: Player {
     func checkDead(){
         if deleteIndex != -1 {
             let name = "neutral" + String(deleteIndex)
-            let node = scene.childNodeWithName(name) as SKSpriteNode
-            decapture(node)
-            node.removeFromParent()
-            deleteIndex = -1
-            scene.addHudStars(self.id)
-            scene.changeDest()
+            if let node = scene.childNodeWithName(name) as? SKSpriteNode {
+                decapture(node)
+                node.removeFromParent()
+                deleteIndex = -1
+                scene.addHudStars(self.id)
+                scene.changeDest()
+            }
         }
     }
     
@@ -149,8 +183,8 @@ class OpponentNodes: Player {
     }
     
     override func decapture(target: SKSpriteNode) {
-        if slaves[target.name!] != nil {
-            slaves[target.name!] = nil
+        if let slave = slaves[target.name!] {
+            slaves.removeValueForKey(target.name!)
             slaveSpecs.delete(target.name!)
         }
     }
@@ -172,37 +206,31 @@ class OpponentNodes: Player {
             	else {
                 	players[index].physicsBody!.velocity = specs.getInfoVelocity(index) + CGVector(point: specs.getInfoPosition(index) - players[index].position)
                 }
-            	specs.setUpdated(index, update: false)
+                specs.setUpdated(index, update: false)
             }
         }
         
         // update opponent slave nodes
         for (name, slave) in slaves {
-            if slaves[name] != nil {
+            if let slaveNode = slaves[name] {
                 if slaveSpecs.isUpdated(name) {
-                    if closeEnough(slaveSpecs.getInfoPosition(name), point2: slaves[name]!.node.position){
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
+                    if closeEnough(slaveSpecs.getInfoPosition(name), point2: slaveNode.node.position){
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
                     }
-                    else if farEnough(slaveSpecs.getInfoPosition(name), point2: slaves[name]!.node.position){
-                        slaves[name]!.node.position = slaveSpecs.getInfoPosition(name)
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
+                    else if farEnough(slaveSpecs.getInfoPosition(name), point2: slaveNode.node.position){
+                        slaveNode.node.position = slaveSpecs.getInfoPosition(name)
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name)
                     }
                     else {
-                        slaves[name]!.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name) + CGVector(point: slaveSpecs.getInfoPosition(name) - slaves[name]!.node.position)
+                        slaveNode.node.physicsBody!.velocity = slaveSpecs.getInfoVelocity(name) + CGVector(point: slaveSpecs.getInfoPosition(name) - slaveNode.node.position)
                     }
                     slaveSpecs.setUpdated(name, update: false)
                 }
-
-            } else {
-                println("YAY it's nil!")
             }
         }
     }
     
     func updatePeerPos(message: MessageMove) {
-//        if Int(message.index) >= count{
-//            return
-//        }
         if (message.count > lastCount){
             lastCount = message.count
             if message.isSlave {

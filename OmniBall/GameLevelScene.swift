@@ -13,18 +13,23 @@ class GameLevelScene: GameScene {
     var destPosList: [CGPoint] = []
     var whichPos = 0
     let btnComeBack = SKSpriteNode(imageNamed: "circle")
-    var currentLevel = 0
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
+        physicsWorld.speed = 0
+        enableBackgroundMove = true
+        setupDestination(false)
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
             node.physicsBody = nil
         }
+        readyGo(1.5)
     }
     
+    var currentLevel = 0
+    
     override func setupDestination(origin: Bool) {
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
@@ -38,8 +43,8 @@ class GameLevelScene: GameScene {
     }
     
     override func setupHUD() {
-        super.setupHUD()
-        let totalSlaveNum = ((1 + slaveNum) * (connection.maxLevel + 1))/2
+		super.setupHUD()
+        let totalSlaveNum = ((1 + slaveNum) * (_scene2modelAdptr.getMaxLevel() + 1))/2
         let startPos = CGPoint(x: 100, y: size.height - 300)
         for var i = 0; i < totalSlaveNum; ++i {
             let minion = SKSpriteNode(imageNamed: "80x80_star_slot")
@@ -50,7 +55,8 @@ class GameLevelScene: GameScene {
             collectedMinions.append(false)
         }
                 
-        for peer in connection.peersInGame.peers {
+        for peer in _scene2modelAdptr.getPeers() {
+            println("ADD HUD STARS!!" + String(peer.playerID))
             var peerScore: Int = peer.score
             while peerScore > 0 {
                 addHudStars(peer.playerID)
@@ -67,9 +73,9 @@ class GameLevelScene: GameScene {
     
     override func setupNeutral() {
         enumerateChildNodesWithName("neutral*"){ node, _ in
-            let neutralNode = node as SKSpriteNode
+            let neutralNode = node as! SKSpriteNode
             neutralNode.size = CGSize(width: 110, height: 110)
-            neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
+            neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "80x80_orange_star"), size: CGSize(width: 110, height: 110))
             neutralNode.physicsBody?.dynamic = false
             neutralNode.physicsBody!.restitution = 1
             neutralNode.physicsBody!.linearDamping = 0
@@ -77,6 +83,12 @@ class GameLevelScene: GameScene {
             neutralNode.physicsBody!.contactTestBitMask = physicsCategory.Me
             self.neutralBalls[neutralNode.name!] = NeutralBall(node: neutralNode, lastCapture: 0)
         }
+    }
+    
+    override func update(currentTime: CFTimeInterval) {
+        performScheduledCapture()
+        myNodes.checkOutOfBound()
+        opponentsWrapper.checkDead()
     }
     
     override func addHudStars(id: UInt16) {
@@ -87,17 +99,18 @@ class GameLevelScene: GameScene {
         }
         collectedMinions[startIndex] = true
         hudMinions[startIndex].texture = SKTexture(imageNamed: getSlaveImageName(player.color, false))
+
     }
     
     override func checkGameOver() {
-        
-        if remainingSlave == 0 && currentLevel == connection.maxLevel {
-            var maxScore: Int = connection.peersInGame.getMaxScore()
+        println("CurrentLevel is " + String(currentLevel))
+        println("Remaining slave is " + String(remainingSlave))
+        if remainingSlave == 0 && currentLevel == _scene2modelAdptr.getMaxLevel() {
+            var maxScore: Int = _scene2modelAdptr.getMaxScore()
             println("in checking game over")
-            println("maxscore: \(maxScore), me score: \(connection.me.score)")
-            if maxScore == connection.me.score {
+            if maxScore == _scene2modelAdptr.getScore(playerID: myNodes.id) {
                 gameOver = true
-                connection.sendGameOver()
+                _scene2modelAdptr.sendGameOver()
                 println("Game Over?")
                 gameOver(won: true)
             }
@@ -105,13 +118,14 @@ class GameLevelScene: GameScene {
     }
     
     override func scored() {
-        super.scored()
-        self.remainingSlave--
         addHudStars(myNodes.id)
+        self.remainingSlave--
+        runAction(scoredSound)
+        println(remainingSlave)
         if remainingSlave == 0 {
             checkGameOver()
-            if (gameOver == false && connection.controller.currentLevel < connection.maxLevel){
-                connection.sendPause()
+            if (gameOver == false && _scene2controllerAdptr.getCurrentLevel() < _scene2modelAdptr.getMaxLevel()){
+                _scene2modelAdptr.sendPause()
                 paused()
             }
         }
@@ -120,10 +134,10 @@ class GameLevelScene: GameScene {
     override func paused(){
         player.stop()
         physicsWorld.speed = 0
-        let levelScene = LevelXScene(size: self.size, level: currentLevel + 1)
+        currentLevel++
+        let levelScene = LevelXScene(size: self.size, level: currentLevel)
         levelScene.scaleMode = self.scaleMode
-        levelScene.controller = connection.controller
-        levelScene.connection = connection
+        levelScene._scene2controllerAdptr = _scene2controllerAdptr
         let reveal = SKTransition.flipHorizontalWithDuration(0.5)
         view?.presentScene(levelScene, transition: reveal)
         
@@ -135,33 +149,16 @@ class GameLevelScene: GameScene {
         destHeart.position = destPosList[whichPos % destPosList.count]
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-        if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-            println("pressed button")
-            anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
-                y: -myNodes.players[0].position.y/size.height + 0.5)
-            hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
-        }
-        else if btnExit.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-            println("we got btnexit")
-            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self.connection.sendExit()
-                self.connection.exitGame()
-                UIView.transitionWithView(self.view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self.connection.controller.clearCurrentView()
-                    }, completion: nil)
-                
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+            if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+                println("pressed button")
+                anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
+                    y: -myNodes.players[0].position.y/size.height + 0.5)
+                hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
             }
-            alert.addAction(yesAction)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            connection.controller.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }

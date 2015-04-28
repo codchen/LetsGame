@@ -24,19 +24,13 @@ class LevelViewController: UIViewController {
     
     @IBAction func mazeTransit(sender: AnyObject) {
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("HiveMaze")
+        gameViewController.transitToGame(GameMode.HiveMaze, gameState: GameState.WaitingForReconcil)
     }
     
     @IBAction func arenaTransit(sender: AnyObject) {
         self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("BattleArena")
+        gameViewController.transitToGame(GameMode.BattleArena, gameState: GameState.WaitingForReconcil)
     }
-
-    @IBAction func poolTransit(sender: UIButton) {
-        self.presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
-        gameViewController.transitToGame("PoolArena")
-    }
-
 
     @IBAction func back(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)

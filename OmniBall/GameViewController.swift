@@ -12,29 +12,13 @@ import MultipeerConnectivity
 import CoreMotion
 
 extension SKNode {
-    class func unarchiveFromFile(file : NSString) -> SKNode? {
+    class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
-            archiver.finishDecoding()
-            return scene
-            
-        } else {
-            println("is nil")
-            return nil
-        }
-    }
-    
-    class func unarchiveFromFilePresent(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as PresentScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
             archiver.finishDecoding()
             return scene
             
@@ -61,14 +45,19 @@ class GameViewController: UIViewController {
     var currentView: SKView!
     var currentGameScene: GameScene!
     
-    var currentLevel = 0
+    var currentLevel = -1
+    var _scene2modelAdptr: SceneToModelAdapter!
+    var _scene2controllerAdptr: SceneToControllerAdapter!
+    var _model2sceneAdptr: ModelToSceneAdapter!
     
-    @IBOutlet weak var connectBtn: UIButton!
-    @IBOutlet weak var instructionText: UILabel!
+    var canTransitToGame = false
+    
     @IBOutlet weak var lblHost: UILabel!
+    @IBOutlet weak var connectBtn: UIButton!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var connectPrompt: UILabel!
     @IBOutlet weak var connectedPeers: UILabel!
+    @IBOutlet weak var instructionText: UILabel!
 //    var hostLabel: UILabel!
     var canStart = false
     
@@ -80,7 +69,7 @@ class GameViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()){
             if (self.connectionManager.peersInGame.getNumPlayers() != self.connectionManager.maxPlayer){
                 self.playBtn.enabled = false
-                self.connectPrompt.text = self.connectionManager.getConnectionPrompt()
+                self.connectPrompt.text = "Need to connect to \(self.connectionManager.maxPlayer - 1) more peer"
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
             }
             else{
@@ -88,8 +77,13 @@ class GameViewController: UIViewController {
                 self.connectedPeers.text = self.connectionManager.getConnectedMessage()
                 self.instructionText.text = "Click \"play\" to start game!"
             }
-            self.connectBtn.alpha = 0.5
+            self.connectPrompt.alpha = 0
         }
+        _scene2modelAdptr = SceneToModelAdapter()
+        _scene2modelAdptr.model = connectionManager
+        _scene2controllerAdptr = SceneToControllerAdapter()
+        _scene2controllerAdptr.controller = self
+        _model2sceneAdptr = ModelToSceneAdapter()
 //        hostLabel = UILabel(frame: CGRect(x: 315, y: 375, width: 300, height: 100))
 //        hostLabel.text = "Host: "
 //        hostLabel.font = UIFont(name: "Chalkduster", size: 17)
@@ -97,17 +91,20 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse, animations: {
+            self.connectPrompt.alpha = 1
+            }, completion: nil)
         if connectionManager.maxPlayer != 1 {
             UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
-                self.connectBtn.alpha = 1
-                }, completion: nil)
+                self.connectBtn.alpha = 0.5
+            }, completion: nil)
         }
         else {
             UIView.animateWithDuration(0.8, delay: 0, options: UIViewAnimationOptions.Repeat | UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.AllowUserInteraction, animations: {
                 self.playBtn.alpha = 0.5
                 }, completion: nil)
             dispatch_async(dispatch_get_main_queue()){
-                self.view.setNeedsDisplay()
+               self.view.setNeedsDisplay()
             }
         }
     }
@@ -119,43 +116,50 @@ class GameViewController: UIViewController {
     
     @IBAction func play(sender: UIButton) {
         dispatch_async(dispatch_get_main_queue()) {
-            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
+            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as! LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
         }
     }
     
-    func transitToGame(name: String) {
+    func transitToGame(gameMode: GameMode, gameState: GameState) {
         println("\(connectionManager.gameState.rawValue)")
-        if connectionManager.gameState == .WaitingForStart {
-            if name == "BattleArena"  {
-                connectionManager.gameMode = .BattleArena
-            } else if name == "HiveMaze" {
+        switch gameState {
+        case .WaitingForReconcil:
+            switch gameMode {
+            case .HiveMaze:
                 connectionManager.gameMode = .HiveMaze
-            } else if name == "PoolArena" {
-                connectionManager.gameMode = .PoolArena
+            case .BattleArena:
+                connectionManager.gameMode = .BattleArena
+            default:
+                return
             }
             
-            if self.connectionManager.maxPlayer == 1 {
-                self.transitToInstruction()
-            } else {
+            if self.connectionManager.maxPlayer > 1 {
                 connectionManager.sendGameStart()
                 connectionManager.readyToSendFirstTrip()
+            } else {
+                connectionManager.gameState = .WaitingForStart
+                connectionManager.me.playerID = 0
+                transitToInstruction()
             }
-        }
-    }
-    
-    func transitToWaitForGameStart(){
-        dispatch_async(dispatch_get_main_queue()){
-            let scene = WaitingForGameStartScene()
-            scene.scaleMode = .AspectFill
-            scene.connection = self.connectionManager
-            scene.controller = self
-            if self.currentView == nil {
-				self.configureCurrentView()
+//            transitToInstruction()
+            
+        case .WaitingForStart:
+            switch gameMode {
+            case .HiveMaze:
+                transitToLevelScene()
+            case .BattleArena:
+                if connectionManager.me.playerID == 0 {
+                    transitToBattleArena()
+                }
+            default:
+                return
             }
-            self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+        default:
+            return
         }
+
     }
     
     func configureCurrentView(){
@@ -174,14 +178,22 @@ class GameViewController: UIViewController {
         dispatch_async(dispatch_get_main_queue()) {
             let scene = InstructionScene(size: CGSize(width: 2048, height: 1536))
                 scene.scaleMode = .AspectFit
+            
                 scene.connection = self.connectionManager
                 scene.controller = self
                 if self.currentView == nil {
                     self.configureCurrentView()
             	}
             self.currentView.presentScene(scene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+            
+            println("Instruction Scene opened")
         }
+//        let timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "enableTransit", userInfo: nil, repeats: false)
     }
+    
+//    func enableTransit() {
+//        self.canTransitToGame = true
+//    }
     
     func transitToBattleArena(destination: CGPoint = CGPointZero, rotate: CGFloat = 1, starPos: CGPoint = CGPointZero){
         dispatch_async(dispatch_get_main_queue()) {
@@ -190,9 +202,12 @@ class GameViewController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as GameBattleScene
+                println("opening scene \(NSDate().timeIntervalSince1970)")
+                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
+                scene._scene2modelAdptr = self._scene2modelAdptr
+                scene._scene2controllerAdptr = self._scene2controllerAdptr
+                self.connectionManager._model2sceneAdptr.scene = scene
                 scene.scaleMode = .AspectFill
-                scene.connection = self.connectionManager
                 if self.currentView == nil {
                     self.configureCurrentView()
                 }
@@ -203,17 +218,21 @@ class GameViewController: UIViewController {
                 }
                 self.currentGameScene = scene
                 self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+                println("Battle Areana Scene opened \(NSDate().timeIntervalSince1970)")
             }
         }
     }
     
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
+            println("Current level is " + String(self.currentLevel))
+            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as! GameLevelScene
         	scene.currentLevel = self.currentLevel
-            scene.slaveNum = self.currentLevel
+            scene.slaveNum = self.currentLevel + 1
+            scene._scene2modelAdptr = self._scene2modelAdptr
+            scene._scene2controllerAdptr = self._scene2controllerAdptr
+            self.connectionManager._model2sceneAdptr.scene = scene
             scene.scaleMode = .AspectFill
-            scene.connection = self.connectionManager
             if self.currentView == nil {
                 self.configureCurrentView()
             }
@@ -223,18 +242,16 @@ class GameViewController: UIViewController {
         }
     }
     
-    func transitToPoolArena() {
+    func transitToLevelScene() {
         dispatch_async(dispatch_get_main_queue()) {
-            println("called 2")
-            let scene = GamePoolScene.unarchiveFromFile("PoolArena") as GamePoolScene
-            scene.slaveNum = 7
-            scene.scaleMode = .AspectFill
-            scene.connection = self.connectionManager
+            let levelScene = LevelXScene(size: CGSize(width: 1024, height: 768), level: self.currentLevel+1)
+            levelScene.scaleMode = .AspectFit
+            levelScene._scene2controllerAdptr = self._scene2controllerAdptr
+            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
             if self.currentView == nil {
                 self.configureCurrentView()
             }
-            self.currentGameScene = scene
-            self.currentView.presentScene(self.currentGameScene, transition: SKTransition.flipHorizontalWithDuration(0.5))
+            self.currentView?.presentScene(levelScene, transition: reveal)
         }
     }
     
@@ -249,61 +266,11 @@ class GameViewController: UIViewController {
 //        self.view.drawRect(lblHost.frame)
     }
     
-    func clearCurrentView() {
-        self.currentView = nil
-    }
-    
-    func pause(){
-        dispatch_async(dispatch_get_main_queue()) {
-            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
-                self.currentGameScene.paused()
-            }
-        }
-    }
-    
-    func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
-        dispatch_async(dispatch_get_main_queue()) {
-            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
-                self.currentGameScene.updatePeerPos(message, peerPlayerID: peerPlayerID)
-            }
-        }
-    }
-    
-    func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
-        dispatch_async(dispatch_get_main_queue()){
-            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
-                self.currentGameScene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
-            }
-        }
-    }
-    
+
     func updateDestination(message: MessageDestination){
-        transitToBattleArena(destination: CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate), starPos: CGPointMake(CGFloat(message.starX), CGFloat(message.starY)))
-    }
-    
-    func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
-        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-            self.currentGameScene = self.currentView.scene! as GameScene
-            self.currentGameScene.updateNeutralInfo(message, playerID: peerPlayerID)
-        }
-    }
-    
-    func updateReborn(message: MessageReborn, peerPlayerID: Int){
-        if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-            self.currentGameScene = self.currentView.scene! as GameScene
-            self.currentGameScene.updateReborn(message, peerPlayerID: peerPlayerID)
-        }
-    }
-    
-    func gameOver(){
-        dispatch_async(dispatch_get_main_queue()){
-            if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene.gameOver(won: false)
-            }
-        }
+//        dispatch_async(dispatch_get_main_queue()) {
+            self.transitToBattleArena(destination: CGPointMake(CGFloat(message.x), CGFloat(message.y)), rotate: CGFloat(message.rotate), starPos: CGPointMake(CGFloat(message.starX), CGFloat(message.starY)))
+//        }
     }
     
 
