@@ -280,16 +280,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("we got btnexit")
             var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
             let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self.player.stop()                
+                self.player.stop()
+//                self.connection.sendExit()
+                self.connection.exitGame()
                 UIView.transitionWithView(self.view!, duration: 0.5,
                     options: UIViewAnimationOptions.TransitionFlipFromBottom,
                     animations: {
                         self.view!.removeFromSuperview()
                         self.controller.clearCurrentView()
-                    	self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
-                   	 	self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                        self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                        self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                     }, completion: nil)
-                self.connection.exitGame()
                 
             }
             alert.addAction(yesAction)

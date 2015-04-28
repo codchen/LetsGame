@@ -135,9 +135,9 @@ class LeaderBoardScene: SKScene {
                     self.controller.clearCurrentView()
                 }, completion: nil)
             if connection.peersInGame.numOfPlayers != connection.peersInGame.getNumPlayers() {
-                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
-                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
                 connection.exitGame()
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
+                self.connection.controller!.presentedViewController?.dismissViewControllerAnimated(false, completion: nil)
             }
         } else if btnAgain != nil {
             if btnAgain.containsPoint(loc) {
