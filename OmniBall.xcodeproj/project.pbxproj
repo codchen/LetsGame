@@ -15,7 +15,6 @@
 		112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12701AC5DC13008E65BF /* Switch3.mp3 */; };
 		112F12731AC5DDF6008E65BF /* What.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12721AC5DDF6008E65BF /* What.mp3 */; };
 		112F12751AC5E684008E65BF /* Yeah.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 112F12741AC5E684008E65BF /* Yeah.mp3 */; };
-		112F12771AC5E947008E65BF /* new-map-1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 112F12761AC5E947008E65BF /* new-map-1.sks */; };
 		112F12791AC5EA44008E65BF /* wall-mid.png in Resources */ = {isa = PBXBuildFile; fileRef = 112F12781AC5EA44008E65BF /* wall-mid.png */; };
 		113063C11ABB2B67006340AE /* ProtectionHalo.sks in Resources */ = {isa = PBXBuildFile; fileRef = 113063BF1ABB2B67006340AE /* ProtectionHalo.sks */; };
 		113063C21ABB2B67006340AE /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 113063C01ABB2B67006340AE /* spark.png */; };
@@ -43,7 +42,7 @@
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
 		11A57C6A1A96871800C695E7 /* OpponentsWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C691A96871800C695E7 /* OpponentsWrapper.swift */; };
-		11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 11B79C4F1A9D8F8E0035D4E1 /* wall.png */; };
+		11B79C501A9D8F8E0035D4E1 /* wall-thick.png in Resources */ = {isa = PBXBuildFile; fileRef = 11B79C4F1A9D8F8E0035D4E1 /* wall-thick.png */; };
 		11BF7FC11AB1E190002C7371 /* 200x200_hole.png in Resources */ = {isa = PBXBuildFile; fileRef = 11BF7FC01AB1E190002C7371 /* 200x200_hole.png */; };
 		11D844A11AC9C5360078B62B /* Electric Hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A01AC9C5360078B62B /* Electric Hit.mp3 */; };
 		11D844A31AC9CD2E0078B62B /* Electric Hit 02.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */; };
@@ -87,7 +86,7 @@
 		FF0DCAA71AE6A16B003EC278 /* red_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0DCA991AE6A16B003EC278 /* red_circle.png */; };
 		FF0DCAA81AE6A16B003EC278 /* red_star.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0DCA9A1AE6A16B003EC278 /* red_star.png */; };
 		FF0DCAA91AE6A16B003EC278 /* staro.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0DCA9B1AE6A16B003EC278 /* staro.png */; };
-		FF0DCAAA1AE6A16B003EC278 /* wall5.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0DCA9C1AE6A16B003EC278 /* wall5.png */; };
+		FF0DCAAA1AE6A16B003EC278 /* wall-thin.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0DCA9C1AE6A16B003EC278 /* wall-thin.png */; };
 		FF2086441AC9C65B00F09DB7 /* MinimapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2086431AC9C65B00F09DB7 /* MinimapController.swift */; };
 		FF20864E1ACC797800F09DB7 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086471ACC797800F09DB7 /* map.png */; };
 		FF20864F1ACC797800F09DB7 /* maze.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086481ACC797800F09DB7 /* maze.png */; };
@@ -172,7 +171,6 @@
 		112F12701AC5DC13008E65BF /* Switch3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Switch3.mp3; sourceTree = "<group>"; };
 		112F12721AC5DDF6008E65BF /* What.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = What.mp3; sourceTree = "<group>"; };
 		112F12741AC5E684008E65BF /* Yeah.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Yeah.mp3; sourceTree = "<group>"; };
-		112F12761AC5E947008E65BF /* new-map-1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "new-map-1.sks"; sourceTree = "<group>"; };
 		112F12781AC5EA44008E65BF /* wall-mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall-mid.png"; sourceTree = "<group>"; };
 		113063BF1ABB2B67006340AE /* ProtectionHalo.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ProtectionHalo.sks; sourceTree = "<group>"; };
 		113063C01ABB2B67006340AE /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -199,7 +197,7 @@
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
 		11A57C691A96871800C695E7 /* OpponentsWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentsWrapper.swift; sourceTree = "<group>"; };
-		11B79C4F1A9D8F8E0035D4E1 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
+		11B79C4F1A9D8F8E0035D4E1 /* wall-thick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall-thick.png"; sourceTree = "<group>"; };
 		11BF7FC01AB1E190002C7371 /* 200x200_hole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 200x200_hole.png; sourceTree = "<group>"; };
 		11D844A01AC9C5360078B62B /* Electric Hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit.mp3"; sourceTree = "<group>"; };
 		11D844A21AC9CD2E0078B62B /* Electric Hit 02.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Electric Hit 02.mp3"; sourceTree = "<group>"; };
@@ -243,7 +241,7 @@
 		FF0DCA991AE6A16B003EC278 /* red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_circle.png; sourceTree = "<group>"; };
 		FF0DCA9A1AE6A16B003EC278 /* red_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_star.png; sourceTree = "<group>"; };
 		FF0DCA9B1AE6A16B003EC278 /* staro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = staro.png; sourceTree = "<group>"; };
-		FF0DCA9C1AE6A16B003EC278 /* wall5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall5.png; sourceTree = "<group>"; };
+		FF0DCA9C1AE6A16B003EC278 /* wall-thin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall-thin.png"; sourceTree = "<group>"; };
 		FF2086431AC9C65B00F09DB7 /* MinimapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinimapController.swift; sourceTree = "<group>"; };
 		FF2086471ACC797800F09DB7 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		FF2086481ACC797800F09DB7 /* maze.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maze.png; sourceTree = "<group>"; };
@@ -380,7 +378,6 @@
 				FF4B6D741AE9CECF00BE12FE /* HLevel5.sks */,
 				FF4B6D751AE9CECF00BE12FE /* HLevel6.sks */,
 				11DCA0411AE730CC00BF5766 /* PoolArena.sks */,
-				112F12761AC5E947008E65BF /* new-map-1.sks */,
 				113329AA1AB0D0C9008B46A2 /* Tutorial.sks */,
 				118BB02B1AAF821B005B1718 /* LevelTraining.sks */,
 				FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */,
@@ -465,7 +462,7 @@
 				FF0DCA991AE6A16B003EC278 /* red_circle.png */,
 				FF0DCA9A1AE6A16B003EC278 /* red_star.png */,
 				FF0DCA9B1AE6A16B003EC278 /* staro.png */,
-				FF0DCA9C1AE6A16B003EC278 /* wall5.png */,
+				FF0DCA9C1AE6A16B003EC278 /* wall-thin.png */,
 				FF3CE8EF1AE5519F0035CC75 /* connect.png */,
 				FF3CE8F01AE5519F0035CC75 /* play.png */,
 				FF3CE8F11AE5519F0035CC75 /* playc.png */,
@@ -496,7 +493,7 @@
 				11BF7FC01AB1E190002C7371 /* 200x200_hole.png */,
 				118584AA1AB0998C002622F8 /* 700x200_you_lose.png */,
 				118584AB1AB0998C002622F8 /* 700x200_you_win.png */,
-				11B79C4F1A9D8F8E0035D4E1 /* wall.png */,
+				11B79C4F1A9D8F8E0035D4E1 /* wall-thick.png */,
 				FF4C71011A8D322800FB3622 /* 80x80_blue_ball.png */,
 				FF4C71031A8D322800FB3622 /* 80x80_orange_ball.png */,
 				FF4C71041A8D322800FB3622 /* 80x80_red_ball.png */,
@@ -721,7 +718,6 @@
 				112F12711AC5DC13008E65BF /* Switch3.mp3 in Resources */,
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				FF4B6D681AE9409700BE12FE /* mazebtn.png in Resources */,
-				112F12771AC5E947008E65BF /* new-map-1.sks in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
 				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
 				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
@@ -738,9 +734,9 @@
 				11174ECD1AB28B20006013D7 /* 600x200_leaderboard.png in Resources */,
 				3C8530E11A8BE20300FFD14C /* GameScene.sks in Resources */,
 				66C206FA1A6EF6B700F4782C /* circle.png in Resources */,
-				FF0DCAAA1AE6A16B003EC278 /* wall5.png in Resources */,
+				FF0DCAAA1AE6A16B003EC278 /* wall-thin.png in Resources */,
 				FF0DCAA71AE6A16B003EC278 /* red_circle.png in Resources */,
-				11B79C501A9D8F8E0035D4E1 /* wall.png in Resources */,
+				11B79C501A9D8F8E0035D4E1 /* wall-thick.png in Resources */,
 				FF4B6D671AE9409700BE12FE /* maze_hard.png in Resources */,
 				FF20864E1ACC797800F09DB7 /* map.png in Resources */,
 				FF4B6D601AE9409700BE12FE /* arena_easy.png in Resources */,
@@ -960,7 +956,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OmniBall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";
@@ -974,7 +970,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OmniBall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = OmniBall;
 				PROVISIONING_PROFILE = "";

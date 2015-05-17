@@ -54,10 +54,6 @@ class GameViewController: DifficultyController {
     //var connectionManager: ConnectionManager!
     var alias: String!
     var playerNum: Int!
-//    var currentView: SKView!
-//    var currentGameScene: GameScene!
-    
-    //var currentLevel = 0
     
     @IBOutlet weak var instructionText: UILabel!
     @IBOutlet weak var playerIcon2: UIImageView!

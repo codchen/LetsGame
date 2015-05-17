@@ -789,7 +789,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                     }
                     peersInGame.removePeer(peer)
                     println("[REMOVED] "+peerID.displayName)
-                    deleteFromInvited(peerID)
+                    deleteFromInvitedHelper(peerID)
                     peersInGame.numOfDelta = 1
                     peersInGame.numOfRandomNumber = 0
                     for peer in peersInGame.peers {

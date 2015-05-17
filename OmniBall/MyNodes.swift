@@ -11,7 +11,7 @@ import SpriteKit
 
 class MyNodes: Player {
     
-    let connection: ConnectionManager = nil
+    let connection: ConnectionManager!
     var deadNodes:[Int] = []
     var successNodes: Int = 0
     var msgCount: UInt32 = 0
@@ -23,9 +23,9 @@ class MyNodes: Player {
     var score = 0
     
     init(connection: ConnectionManager, scene: GameScene) {
+        self.connection = connection
         super.init()
         
-        self.connection = connection
         self.scene = scene
         self.id = connection.me.playerID
         if (Int(id) >= 0 && Int(id) <= 3) {

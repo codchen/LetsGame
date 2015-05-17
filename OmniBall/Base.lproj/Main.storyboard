@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BOM-dQ-PGL">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -12,7 +12,7 @@
                         <viewControllerLayoutGuide type="top" id="pwf-cy-yYj"/>
                         <viewControllerLayoutGuide type="bottom" id="ztf-Y7-1NZ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Xd1-zx-XLf">
+                    <view key="view" contentMode="scaleAspectFill" id="Xd1-zx-XLf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -103,7 +103,7 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFit" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleAspectFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -249,7 +249,7 @@
                         <viewControllerLayoutGuide type="top" id="XJE-yW-D7l"/>
                         <viewControllerLayoutGuide type="bottom" id="gXU-FK-J1Q"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleAspectFit" id="2Tz-1b-3tE">
+                    <view key="view" contentMode="scaleAspectFill" id="2Tz-1b-3tE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -336,7 +336,7 @@
                         <viewControllerLayoutGuide type="top" id="Yo7-RQ-haV"/>
                         <viewControllerLayoutGuide type="bottom" id="Svt-OK-qDS"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="fSA-aE-b0b">
+                    <view key="view" contentMode="scaleAspectFill" id="fSA-aE-b0b">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -415,7 +415,7 @@
                         <viewControllerLayoutGuide type="top" id="jdI-pR-fjm"/>
                         <viewControllerLayoutGuide type="bottom" id="DMK-Hr-Z66"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="W7M-y3-ff7">
+                    <view key="view" contentMode="scaleAspectFill" id="W7M-y3-ff7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
