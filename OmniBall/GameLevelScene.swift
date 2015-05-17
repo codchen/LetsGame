@@ -24,7 +24,7 @@ class GameLevelScene: GameScene {
     }
     
     override func setupDestination(origin: Bool) {
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
@@ -67,7 +67,7 @@ class GameLevelScene: GameScene {
     
     override func setupNeutral() {
         enumerateChildNodesWithName("neutral*"){ node, _ in
-            let neutralNode = node as SKSpriteNode
+            let neutralNode = node as! SKSpriteNode
             neutralNode.size = CGSize(width: 110, height: 110)
             neutralNode.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "staro"), size: CGSize(width: 110, height: 110))
             neutralNode.physicsBody?.dynamic = false
@@ -136,45 +136,47 @@ class GameLevelScene: GameScene {
         destHeart.position = destPosList[whichPos % destPosList.count]
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-        if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-            println("pressed button")
-            anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
-                y: -myNodes.players[0].position.y/size.height + 0.5)
-            hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
-        }
-        else if btnExit.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
-            println("we got btnexit")
-            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self.player.stop()
-                UIView.transitionWithView(self.view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self.controller.clearCurrentView()
-                        if self.connection.me.playerID == 0 {
-                            self.connection.controller.presentedViewController?
-                                .dismissViewControllerAnimated(false, completion: { _ in
-                                    let col = self.connection.controller
-                                    col.presentedViewController?
-                                        .dismissViewControllerAnimated(false, completion: { _ in
-                                            col.dismissViewControllerAnimated(false, completion: nil)
-                                        })
-                                })
-                        }
-                        else {
-                            self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
-                        }
-                    }, completion: nil)
-                self.connection.exitGame()
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+            if btnComeBack.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+                println("pressed button")
+                anchorPoint = CGPoint(x: -myNodes.players[0].position.x/size.width + 0.5,
+                    y: -myNodes.players[0].position.y/size.height + 0.5)
+                hudLayer.position = CGPoint(x: -anchorPoint.x * size.width, y: -anchorPoint.y * size.height)
             }
-            alert.addAction(yesAction)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            controller.presentViewController(alert, animated: true, completion: nil)
+            else if btnExit.containsPoint(hudLayer.convertPoint(loc, fromNode: self)) {
+                println("we got btnexit")
+                var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+                let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                    self.player.stop()
+                    UIView.transitionWithView(self.view!, duration: 0.5,
+                        options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                        animations: {
+                            self.view!.removeFromSuperview()
+                            self.controller.clearCurrentView()
+                            if self.connection.me.playerID == 0 {
+                                self.connection.controller.presentedViewController?
+                                    .dismissViewControllerAnimated(false, completion: { _ in
+                                        let col = self.connection.controller
+                                        col.presentedViewController?
+                                            .dismissViewControllerAnimated(false, completion: { _ in
+                                                col.dismissViewControllerAnimated(false, completion: nil)
+                                            })
+                                    })
+                            }
+                            else {
+                                self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                            }
+                        }, completion: nil)
+                    self.connection.exitGame()
+                }
+                alert.addAction(yesAction)
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                controller.presentViewController(alert, animated: true, completion: nil)
+            }
+
         }
     }
 }

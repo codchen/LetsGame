@@ -44,22 +44,25 @@ class TutorialOverScene: SKScene {
         AddChild(btnAgain)
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        if btnNext.containsPoint(loc) {
-            UIView.transitionWithView(view!, duration: 0.5,
-                options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                animations: {
-            		self.view!.removeFromSuperview()
-                    self.controller.currentView = nil
-            	}, completion: nil)
-        } else if btnAgain.containsPoint(loc) {
-            let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
-            scene.vcontroller = controller
-            scene.scaleMode = scaleMode
-            let reveal = SKTransition.flipHorizontalWithDuration(0.5)
-            view?.presentScene(scene, transition: reveal)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            if btnNext.containsPoint(loc) {
+                UIView.transitionWithView(view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.controller.currentView = nil
+                    }, completion: nil)
+            } else if btnAgain.containsPoint(loc) {
+                let scene = TutorialScene.unarchiveFromFile("Tutorial") as! TutorialScene
+                scene.vcontroller = controller
+                scene.scaleMode = scaleMode
+                let reveal = SKTransition.flipHorizontalWithDuration(0.5)
+                view?.presentScene(scene, transition: reveal)
+            }
+
         }
+        
     }
 }

@@ -14,22 +14,22 @@ class GameBattleScene: GameScene {
     var destRect: CGRect!
     
     override func setupDestination(origin: Bool){
-        destPointer = childNodeWithName("destPointer") as SKSpriteNode
+        destPointer = childNodeWithName("destPointer") as! SKSpriteNode
         destPointer.zPosition = -5
         destPointer.physicsBody!.allowsRotation = false
         destPointer.physicsBody!.dynamic = false
         destPointer.physicsBody!.pinned = false
-        destHeart = childNodeWithName("destHeart") as SKShapeNode
+        destHeart = childNodeWithName("destHeart") as! SKShapeNode
         destHeart = SKShapeNode(circleOfRadius: 200)
         destHeart.strokeColor = UIColor.clearColor()
         destHeart.zPosition = -10
-        let neutral = childNodeWithName("neutral0") as SKSpriteNode
+        let neutral = childNodeWithName("neutral0") as! SKSpriteNode
         
         if origin {
-            let topWall = childNodeWithName("barTop") as SKSpriteNode
-            let bottomWall = childNodeWithName("barBottom") as SKSpriteNode
-            let leftWall = childNodeWithName("barLeft") as SKSpriteNode
-            let rightWall = childNodeWithName("barRight") as SKSpriteNode
+            let topWall = childNodeWithName("barTop") as! SKSpriteNode
+            let bottomWall = childNodeWithName("barBottom") as! SKSpriteNode
+            let leftWall = childNodeWithName("barLeft") as! SKSpriteNode
+            let rightWall = childNodeWithName("barRight") as! SKSpriteNode
             neutralPos = randomPos()
             destRect = CGRectMake(leftWall.position.x + ballSize + 0.5 * destPointer.size.width,
                 bottomWall.position.y + ballSize + 0.5 * destPointer.size.height,

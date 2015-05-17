@@ -85,7 +85,7 @@ class LeaderBoardScene: SKScene {
         let sortByScore = NSSortDescriptor(key: "score", ascending: false)
         let sortDescriptors = [sortByScore]
         sortedScore.sortUsingDescriptors(sortDescriptors)
-        var peerScore = NSArray(array: sortedScore) as [Peer]
+        var peerScore = NSArray(array: sortedScore) as! [Peer]
         
         for var index = 0; index < peerScore.count; ++index {
             let player = peerScore[index]
@@ -123,36 +123,37 @@ class LeaderBoardScene: SKScene {
     
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        
-        if btnNext.containsPoint(loc) {
-            UIView.transitionWithView(view!, duration: 0.5,
-                options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                animations: {
-                    self.view!.removeFromSuperview()
-                    self.controller.clearCurrentView()
-                }, completion: nil)
-            if connection.peersInGame.numOfPlayers != connection.peersInGame.getNumPlayers() {
-                if (self.connection.me.playerID == 0) {
-                self.connection.controller.presentedViewController?
-                    .dismissViewControllerAnimated(false, completion: { _ in
-                        let col = self.connection.controller
-                        col.presentedViewController?
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            
+            if btnNext.containsPoint(loc) {
+                UIView.transitionWithView(view!, duration: 0.5,
+                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                    animations: {
+                        self.view!.removeFromSuperview()
+                        self.controller.clearCurrentView()
+                    }, completion: nil)
+                if connection.peersInGame.numOfPlayers != connection.peersInGame.getNumPlayers() {
+                    if (self.connection.me.playerID == 0) {
+                        self.connection.controller.presentedViewController?
                             .dismissViewControllerAnimated(false, completion: { _ in
-                                col.dismissViewControllerAnimated(false, completion: nil)
+                                let col = self.connection.controller
+                                col.presentedViewController?
+                                    .dismissViewControllerAnimated(false, completion: { _ in
+                                        col.dismissViewControllerAnimated(false, completion: nil)
+                                    })
                             })
-                    })
+                    }
+                    else {
+                        self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                    }
+                    connection.exitGame()
                 }
-                else {
-                    self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+            } else if btnAgain != nil {
+                if btnAgain.containsPoint(loc) {
+                    self.controller.transitToGame(gameType)
                 }
-                connection.exitGame()
-            }
-        } else if btnAgain != nil {
-            if btnAgain.containsPoint(loc) {
-                self.controller.transitToGame(gameType)
             }
         }
         

@@ -128,14 +128,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch connection.peersInGame.numOfPlayers {
         case 1:
             self.enumerateChildNodesWithName("node*") { node, _ in
-                let node0 = node as SKSpriteNode
+                let node0 = node as! SKSpriteNode
                 if node0.name != "node1" {
                     node0.RemoveFromParent()
                 }
             }
         case 2:
             self.enumerateChildNodesWithName("node3") { node, _ in
-                let node0 = node as SKSpriteNode
+                let node0 = node as! SKSpriteNode
                 node0.RemoveFromParent()
             }
         default:
@@ -165,19 +165,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         let collision: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        var slaveNode: SKSpriteNode = contact.bodyA.node! as SKSpriteNode
-        var hunterNode: SKSpriteNode = contact.bodyB.node! as SKSpriteNode
+        var slaveNode: SKSpriteNode = contact.bodyA.node! as! SKSpriteNode
+        var hunterNode: SKSpriteNode = contact.bodyB.node! as! SKSpriteNode
 
         if collision == physicsCategory.Me | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as SKSpriteNode
+                slaveNode = contact.bodyB.node! as! SKSpriteNode
             }
             runAction(collisionSound)
             capture(target: slaveNode, hunter: myNodes)
         } else if collision == physicsCategory.Opponent | physicsCategory.target{
             if contact.bodyB.node!.name?.hasPrefix("neutral") == true{
-                slaveNode = contact.bodyB.node! as SKSpriteNode
-                hunterNode = contact.bodyA.node! as SKSpriteNode
+                slaveNode = contact.bodyB.node! as! SKSpriteNode
+                hunterNode = contact.bodyA.node! as! SKSpriteNode
             }
             var opp = opponentsWrapper.getOpponentByName(hunterNode.name!)
             runAction(collisionSound)
@@ -220,7 +220,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             assert(!scheduleCaptureBy.isEmpty, "ScheduleCaptureBy is not empty")
             scheduleCaptureBy[0].capture(scheduleToCapture[0], capturedTime: scheduleUpdateTime[0])
 //            hudMinions[index].texture = scheduleToCapture[0].texture
-            neutralBalls[name]?.lastCapture = scheduleUpdateTime[0]
+            neutralBalls[name as String]?.lastCapture = scheduleUpdateTime[0]
             scheduleToCapture.removeAtIndex(0)
             scheduleCaptureBy.removeAtIndex(0)
             scheduleUpdateTime.removeAtIndex(0)
@@ -270,67 +270,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: Gestures
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesBegan(loc)
-        if btnExit.containsPoint(loc) {
-            println("we got btnexit")
-            var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
-            let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
-                self.player.stop()
-                UIView.transitionWithView(self.view!, duration: 0.5,
-                    options: UIViewAnimationOptions.TransitionFlipFromBottom,
-                    animations: {
-                        self.view!.removeFromSuperview()
-                        self.controller.clearCurrentView()
-                        if self.connection.me.playerID == 0 {
-                            self.connection.controller.presentedViewController?
-                                .dismissViewControllerAnimated(false, completion: { _ in
-                                let col = self.connection.controller
-                                col.presentedViewController?
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesBegan(loc)
+            if btnExit.containsPoint(loc) {
+                println("we got btnexit")
+                var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
+                let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
+                    self.player.stop()
+                    UIView.transitionWithView(self.view!, duration: 0.5,
+                        options: UIViewAnimationOptions.TransitionFlipFromBottom,
+                        animations: {
+                            self.view!.removeFromSuperview()
+                            self.controller.clearCurrentView()
+                            if self.connection.me.playerID == 0 {
+                                self.connection.controller.presentedViewController?
                                     .dismissViewControllerAnimated(false, completion: { _ in
-                                    col.dismissViewControllerAnimated(false, completion: nil)
-                                })
-                            })
-                        }
-                        else {
-                            self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
-                        }
-                    }, completion: nil)
-                self.connection.exitGame()
+                                        let col = self.connection.controller
+                                        col.presentedViewController?
+                                            .dismissViewControllerAnimated(false, completion: { _ in
+                                                col.dismissViewControllerAnimated(false, completion: nil)
+                                            })
+                                    })
+                            }
+                            else {
+                                self.connection.controller.dismissViewControllerAnimated(false, completion: nil)
+                            }
+                        }, completion: nil)
+                    self.connection.exitGame()
+                }
+                alert.addAction(yesAction)
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                controller.presentViewController(alert, animated: true, completion: nil)
             }
-            alert.addAction(yesAction)
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-            controller.presentViewController(alert, animated: true, completion: nil)
         }
-
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         if (myNodes == nil) {
             return
         }
         if enableBackgroundMove && myNodes.launchPoint == nil {
-            let touch = touches.anyObject() as UITouch
-            let currentLocation = touch.locationInNode(self)
-            let previousLocation = touch.previousLocationInNode(self)
-            if myNodes.launchPoint == nil {
-                let translation = currentLocation - previousLocation
-                // move anchorPoint
-                anchorPoint += translation/CGPointMake(size.width, size.height)
-                // move hudLayer
-                hudLayer.position -= translation
-                checkBackgroundBound()
+            if let touch = touches.first as? UITouch {
+                let currentLocation = touch.locationInNode(self)
+                let previousLocation = touch.previousLocationInNode(self)
+                if myNodes.launchPoint == nil {
+                    let translation = currentLocation - previousLocation
+                    // move anchorPoint
+                    anchorPoint += translation/CGPointMake(size.width, size.height)
+                    // move hudLayer
+                    hudLayer.position -= translation
+                    checkBackgroundBound()
+                }
+
             }
         }
     }
     
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let loc = touch.locationInNode(self)
-        myNodes.touchesEnded(loc)
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let touch = touches.first as? UITouch {
+            let loc = touch.locationInNode(self)
+            myNodes.touchesEnded(loc)
+        }
     }
     
     func checkBackgroundBound() {

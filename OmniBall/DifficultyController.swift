@@ -85,7 +85,7 @@ class DifficultyController: UIViewController {
                     self.currentGameScene.updateDestination(destination, desRotation: rotate, starPos: starPos)
                 }
             } else {
-                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as GameBattleScene
+                let scene = GameBattleScene.unarchiveFromFile("LevelTraining") as! GameBattleScene
                 scene.scaleMode = .AspectFill
                 scene.connection = self.connectionManager
                 if self.currentView == nil {
@@ -109,7 +109,7 @@ class DifficultyController: UIViewController {
     func transitToHiveMaze(){
         dispatch_async(dispatch_get_main_queue()) {
             self.connectionManager.maxLevel = 4
-            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as GameLevelScene
+            let scene = GameLevelScene.unarchiveFromFile("Level"+String(self.currentLevel)) as! GameLevelScene
             scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel
             scene.scaleMode = .AspectFill
@@ -130,7 +130,7 @@ class DifficultyController: UIViewController {
     func transitToHiveMaze2(){
         dispatch_async(dispatch_get_main_queue()) {
             self.connectionManager.maxLevel = 6
-            let scene = GameLevelScene.unarchiveFromFile("HLevel"+String(self.currentLevel)) as GameLevelScene
+            let scene = GameLevelScene.unarchiveFromFile("HLevel"+String(self.currentLevel)) as! GameLevelScene
             scene.currentLevel = self.currentLevel
             scene.slaveNum = self.currentLevel
             scene.scaleMode = .AspectFill
@@ -150,7 +150,7 @@ class DifficultyController: UIViewController {
     
     func transitToPoolArena() {
         dispatch_async(dispatch_get_main_queue()) {
-            let scene = GamePoolScene.unarchiveFromFile("PoolArena") as GamePoolScene
+            let scene = GamePoolScene.unarchiveFromFile("PoolArena") as! GamePoolScene
             scene.slaveNum = 7
             scene.scaleMode = .AspectFill
             scene.connection = self.connectionManager

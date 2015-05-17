@@ -23,7 +23,7 @@ class LevelViewController: UIViewController {
     }
     
     @IBAction func mazeTransit(sender: AnyObject) {
-        let mazeDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("MazeDifficultyController") as MazeDifficultyController
+        let mazeDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("MazeDifficultyController") as! MazeDifficultyController
         mazeDifficultyController.gameViewController = self.gameViewController
         mazeDifficultyController.connectionManager = self.gameViewController.connectionManager
         mazeDifficultyController.connectionManager.diffController = mazeDifficultyController
@@ -31,7 +31,7 @@ class LevelViewController: UIViewController {
     }
     
     @IBAction func arenaTransit(sender: AnyObject) {
-        let arenaDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("ArenaDifficultyController") as ArenaDifficultyController
+        let arenaDifficultyController = self.storyboard?.instantiateViewControllerWithIdentifier("ArenaDifficultyController") as! ArenaDifficultyController
         arenaDifficultyController.gameViewController = self.gameViewController
         arenaDifficultyController.connectionManager = self.gameViewController.connectionManager
         arenaDifficultyController.connectionManager.diffController = arenaDifficultyController

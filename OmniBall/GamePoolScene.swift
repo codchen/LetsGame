@@ -38,7 +38,7 @@ class GamePoolScene: GameScene {
     
     override func setupNeutral() {
         enumerateChildNodesWithName("neutral*"){ node, _ in
-            let neutralNode = node as SKSpriteNode
+            let neutralNode = node as! SKSpriteNode
 //            self.neutralList.append(neutralNode)
             self.neutralPosList.append(neutralNode.position)
             neutralNode.size = CGSize(width: 110, height: 110)
@@ -53,10 +53,10 @@ class GamePoolScene: GameScene {
     }
     
     override func setupDestination(origin: Bool) {
-        let topWall = childNodeWithName("barTop") as SKSpriteNode
-        let bottomWall = childNodeWithName("barBottom") as SKSpriteNode
-        let leftWall = childNodeWithName("barLeft") as SKSpriteNode
-        let rightWall = childNodeWithName("barRight") as SKSpriteNode
+        let topWall = childNodeWithName("barTop") as! SKSpriteNode
+        let bottomWall = childNodeWithName("barBottom") as! SKSpriteNode
+        let leftWall = childNodeWithName("barLeft") as! SKSpriteNode
+        let rightWall = childNodeWithName("barRight") as! SKSpriteNode
         boundRect = CGRect(x: leftWall.position.x, y: bottomWall.position.y, width: rightWall.position.x - leftWall.position.x, height: topWall.position.y - bottomWall.position.y)
 //        debugDrawPlayableArea(boundRect)
     }

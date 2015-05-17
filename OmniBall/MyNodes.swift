@@ -11,7 +11,7 @@ import SpriteKit
 
 class MyNodes: Player {
     
-    let connection: ConnectionManager!
+    let connection: ConnectionManager = nil
     var deadNodes:[Int] = []
     var successNodes: Int = 0
     var msgCount: UInt32 = 0

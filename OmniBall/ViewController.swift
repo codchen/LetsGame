@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBAction func showTutorial(sender: UIButton) {
         
-        let scene = TutorialScene.unarchiveFromFile("Tutorial") as TutorialScene
+        let scene = TutorialScene.unarchiveFromFile("Tutorial") as! TutorialScene
         if self.currentView == nil {
             let skView = SKView(frame: self.view.frame)
             // Configure the view.
@@ -39,17 +39,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onePlayer(sender: AnyObject) {
-        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
         gameViewController.playerNum = 1
         self.presentViewController(gameViewController, animated: true, completion: nil)
     }
     @IBAction func threePlayer(sender: AnyObject) {
-        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
         gameViewController.playerNum = 3
         self.presentViewController(gameViewController, animated: true, completion: nil)
     }
     @IBAction func showGVC(sender: UIButton) {
-    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+    	let gameViewController: GameViewController = self.storyboard?.instantiateViewControllerWithIdentifier("GameViewController") as! GameViewController
         gameViewController.playerNum = 2
         self.presentViewController(gameViewController, animated: true, completion: nil)
 //        self.dismissViewControllerAnimated(true, completion: nil)

@@ -210,7 +210,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
             self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
             NSUserDefaults.standardUserDefaults().setObject(NSKeyedArchiver.archivedDataWithRootObject(self.peerID), forKey: "peerID")
         } else {
-            self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as MCPeerID
+            self.peerID = NSKeyedUnarchiver.unarchiveObjectWithData(NSUserDefaults.standardUserDefaults().dataForKey("peerID")!) as! MCPeerID
         }
         self.maxPlayer = pNum
         self.controller = control
@@ -514,11 +514,11 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
     
     func deleteFromInvited(timer: NSTimer) {
         println("[TIME OUT]")
-        let peerID = timer.userInfo as MCPeerID
-		deleteFromInvited(peerID)
+        let peerID = timer.userInfo as! MCPeerID
+		deleteFromInvitedHelper(peerID)
     }
     
-    func deleteFromInvited(peerID: MCPeerID) {
+    func deleteFromInvitedHelper(peerID: MCPeerID) {
         if !peersInGame.hasPeer(peerID) && !invitedPeers.isEmpty{
             var idx2remove = 0
             for var i = 0; i < invitedPeers.count; ++i {
@@ -561,7 +561,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                 let sortByRandomNumber = NSSortDescriptor(key: "randomNumber", ascending: false)
                 let sortDescriptors = [sortByRandomNumber]
                 sortedPeers.sortUsingDescriptors(sortDescriptors)
-                peersInGame.peers = NSArray(array: sortedPeers) as [Peer]
+                peersInGame.peers = NSArray(array: sortedPeers) as! [Peer]
                 for var i = 0; i < peersInGame.getNumPlayers(); ++i {
                     peersInGame.peers[i].playerID = UInt16(i)
 //                    if (i == 0) {
@@ -721,7 +721,7 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         }
 					}
                 case 1:
-                    let peer1 = cpcopy[0] as MCPeerID
+                    let peer1 = cpcopy[0] as! MCPeerID
                     if (self.maxPlayer > 1) {
                     	self.controller.player2.text = peer1.displayName
                         if self.maxPlayer > 2 {
@@ -729,8 +729,8 @@ class ConnectionManager: NSObject, MCNearbyServiceBrowserDelegate, MCNearbyServi
                         }
                     }
                 case 2:
-                    let peer1 = cpcopy[0] as MCPeerID
-                    let peer2 = cpcopy[1] as MCPeerID
+                    let peer1 = cpcopy[0] as! MCPeerID
+                    let peer2 = cpcopy[1] as! MCPeerID
                     if (self.maxPlayer > 1) {
                         self.controller.player2.text = peer1.displayName
                         if self.maxPlayer > 2 {

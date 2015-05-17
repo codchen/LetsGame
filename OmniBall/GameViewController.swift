@@ -13,28 +13,12 @@ import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
+        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
-            archiver.finishDecoding()
-            return scene
-            
-        } else {
-            println("is nil")
-            return nil
-        }
-    }
-    
-    class func unarchiveFromFilePresent(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as PresentScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
             archiver.finishDecoding()
             return scene
             
@@ -133,7 +117,7 @@ class GameViewController: DifficultyController {
         dispatch_async(dispatch_get_main_queue()) {
         	//self.connectionManager.readyToChooseGameMode()
             self.connectionManager.gameState = .InLevelViewController
-            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as LevelViewController
+            let levelViewController = self.storyboard?.instantiateViewControllerWithIdentifier("LevelViewController") as! LevelViewController
             levelViewController.gameViewController = self
             self.presentViewController(levelViewController, animated: true, completion: nil)
         }
@@ -355,7 +339,7 @@ class GameViewController: DifficultyController {
     func pause(){
         dispatch_async(dispatch_get_main_queue()) {
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene = self.currentView.scene! as! GameScene
                 self.currentGameScene.paused()
             }
         }
@@ -364,7 +348,7 @@ class GameViewController: DifficultyController {
     func updatePeerPos(message: MessageMove, peerPlayerID: Int) {
         dispatch_async(dispatch_get_main_queue()) {
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene = self.currentView.scene! as! GameScene
                 self.currentGameScene.updatePeerPos(message, peerPlayerID: peerPlayerID)
             }
         }
@@ -373,7 +357,7 @@ class GameViewController: DifficultyController {
     func updatePeerDeath(message: MessageDead, peerPlayerID: Int){
         dispatch_async(dispatch_get_main_queue()){
             if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-                self.currentGameScene = self.currentView.scene! as GameScene
+                self.currentGameScene = self.currentView.scene! as! GameScene
                 self.currentGameScene.deletePeerBalls(message, peerPlayerID: peerPlayerID)
             }
         }
@@ -385,14 +369,14 @@ class GameViewController: DifficultyController {
     
     func updateNeutralInfo(message: MessageNeutralInfo, peerPlayerID: Int){
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene = self.currentView.scene! as! GameScene
             self.currentGameScene.updateNeutralInfo(message, playerID: peerPlayerID)
         }
     }
     
     func updateReborn(message: MessageReborn, peerPlayerID: Int){
         if self.currentView != nil && self.currentView.scene!.className() == "GameScene" {
-            self.currentGameScene = self.currentView.scene! as GameScene
+            self.currentGameScene = self.currentView.scene! as! GameScene
             self.currentGameScene.updateReborn(message, peerPlayerID: peerPlayerID)
         }
     }
