@@ -69,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
-        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("Flynn", ofType: "mp3")!)
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("newMusic", ofType: "mp3")!)
         player = AVAudioPlayer(contentsOfURL: url, error: nil)
         player.numberOfLoops = -1
         player.prepareToPlay()
