@@ -149,6 +149,7 @@
 		FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFF81AAE16A3006FAE44 /* Level2.sks */; };
 		FFCFFFFB1AAE16B8006FAE44 /* Level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */; };
 		FFCFFFFD1AAE16D9006FAE44 /* Level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */; };
+		FFD7D8F21B4E05A600650B8B /* newMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FFD7D8F11B4E05A600650B8B /* newMusic.mp3 */; };
 		FFE557221AEAE4B200F2045A /* DifficultyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE557211AEAE4B200F2045A /* DifficultyController.swift */; };
 /* End PBXBuildFile section */
 
@@ -309,6 +310,7 @@
 		FFCFFFF81AAE16A3006FAE44 /* Level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level2.sks; path = ../Maps/Level2.sks; sourceTree = "<group>"; };
 		FFCFFFFA1AAE16B8006FAE44 /* Level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level3.sks; path = ../Maps/Level3.sks; sourceTree = "<group>"; };
 		FFCFFFFC1AAE16D9006FAE44 /* Level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Level4.sks; path = ../Maps/Level4.sks; sourceTree = "<group>"; };
+		FFD7D8F11B4E05A600650B8B /* newMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = newMusic.mp3; path = Music/newMusic.mp3; sourceTree = SOURCE_ROOT; };
 		FFE557211AEAE4B200F2045A /* DifficultyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -334,6 +336,7 @@
 		112F126D1AC5D761008E65BF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				FFD7D8F11B4E05A600650B8B /* newMusic.mp3 */,
 				FF3CE8F51AE573D70035CC75 /* Flynn.mp3 */,
 				11DCA0391AE5860C00BF5766 /* catch_star.mp3 */,
 				11DCA03A1AE5860C00BF5766 /* collision.mp3 */,
@@ -764,6 +767,7 @@
 				118584AF1AB0998C002622F8 /* 300x300_button_battle.png in Resources */,
 				11D844A51ACC3C330078B62B /* 100x100_icon_rank.png in Resources */,
 				FF20864F1ACC797800F09DB7 /* maze.png in Resources */,
+				FFD7D8F21B4E05A600650B8B /* newMusic.mp3 in Resources */,
 				118BB02E1AAF890F005B1718 /* Level1.sks in Resources */,
 				116A211C1AB727870025F4C9 /* 80x80_star_slot.png in Resources */,
 				FF4B6D761AE9CECF00BE12FE /* HLevel1.sks in Resources */,
