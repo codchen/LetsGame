@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 import MultipeerConnectivity
 import CoreMotion
+import AVFoundation
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -47,6 +48,8 @@ extension SKScene {
     }
 }
 
+
+
 class GameViewController: DifficultyController {
 
     //let motionManager: CMMotionManager = CMMotionManager()
@@ -54,6 +57,7 @@ class GameViewController: DifficultyController {
     //var connectionManager: ConnectionManager!
     var alias: String!
     var playerNum: Int!
+    var player: AVAudioPlayer!
 //    var currentView: SKView!
 //    var currentGameScene: GameScene!
     
@@ -103,7 +107,11 @@ class GameViewController: DifficultyController {
     }
     //disable animation
     override func viewDidAppear(animated: Bool) {
-        println("Called?")
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("lobby", ofType: "wav")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
         if connectionManager.gameState != .InViewController {
             if connectionManager.peersInGame.getNumPlayers() < connectionManager.maxPlayer {
                 connectionManager.startConnecting()
@@ -114,6 +122,7 @@ class GameViewController: DifficultyController {
     }
     
     @IBAction func play(sender: UIButton) {
+        player.stop()
         dispatch_async(dispatch_get_main_queue()) {
         	//self.connectionManager.readyToChooseGameMode()
             self.connectionManager.gameState = .InLevelViewController
@@ -123,6 +132,7 @@ class GameViewController: DifficultyController {
         }
     }
     @IBAction func exit(sender: AnyObject) {
+        player.stop()
         dismissViewControllerAnimated(true, completion: nil)
         connectionManager.gameState = .InViewController
         connectionManager.stopConnecting()

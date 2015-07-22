@@ -23,10 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enableBackgroundMove: Bool = true
     var updateDest: Bool = false
     
-    let collisionSound = SKAction.playSoundFileNamed("collision.mp3", waitForCompletion: false)
+    let collisionSound = SKAction.playSoundFileNamed("collide.wav", waitForCompletion: false)
     let whatSound = SKAction.playSoundFileNamed("What.mp3", waitForCompletion: false)
     let yeahSound = SKAction.playSoundFileNamed("Yeah.mp3", waitForCompletion: false)
-    let catchStarSound = SKAction.playSoundFileNamed("catch_star.mp3", waitForCompletion: false)
+    let catchStarSound = SKAction.playSoundFileNamed("activate.wav", waitForCompletion: false)
     let loseStarSound = SKAction.playSoundFileNamed("lose_star.mp3", waitForCompletion: false)
     let scoredSound = SKAction.playSoundFileNamed("score_star.mp3", waitForCompletion: false)
     var player: AVAudioPlayer!
@@ -69,11 +69,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 	
     // MARK: Game Scene Setup
     override func didMoveToView(view: SKView) {
-        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("newMusic", ofType: "mp3")!)
-        player = AVAudioPlayer(contentsOfURL: url, error: nil)
-        player.numberOfLoops = -1
-        player.prepareToPlay()
-        player.play()
         
         size = CGSize(width: 2048, height: 1536)
         let maxAspectRatio: CGFloat = 16.0/9.0

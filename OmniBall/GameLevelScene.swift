@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class GameLevelScene: GameScene {
     var destPosList: [CGPoint] = []
@@ -17,6 +18,11 @@ class GameLevelScene: GameScene {
     
     override func didMoveToView(view: SKView){
         super.didMoveToView(view)
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("maze", ofType: "wav")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
         enumerateChildNodesWithName("destHeart*") {node, _ in
             self.destPosList.append(node.position)
             node.physicsBody = nil

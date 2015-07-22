@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class GamePoolScene: GameScene {
     
@@ -19,7 +20,10 @@ class GamePoolScene: GameScene {
     
     override func didMoveToView(view: SKView) {
         super.didMoveToView(view)
-        player.stop()
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("pool", ofType: "mp3")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
         readyGo()
     }
     

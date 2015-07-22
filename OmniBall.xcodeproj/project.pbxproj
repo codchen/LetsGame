@@ -98,6 +98,12 @@
 		FF2086541ACC797800F09DB7 /* mini-map-4.png in Resources */ = {isa = PBXBuildFile; fileRef = FF20864D1ACC797800F09DB7 /* mini-map-4.png */; };
 		FF2086561ACC799800F09DB7 /* back-button.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2086551ACC799800F09DB7 /* back-button.png */; };
 		FF2DC1C61AC88103008C6C02 /* 300x300_button_battle_0.png in Resources */ = {isa = PBXBuildFile; fileRef = FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */; };
+		FF32B2E01B5F854900B43751 /* activate.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DA1B5F854900B43751 /* activate.wav */; };
+		FF32B2E11B5F854900B43751 /* arena.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DB1B5F854900B43751 /* arena.mp3 */; };
+		FF32B2E21B5F854900B43751 /* collide.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DC1B5F854900B43751 /* collide.wav */; };
+		FF32B2E31B5F854900B43751 /* lobby.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DD1B5F854900B43751 /* lobby.wav */; };
+		FF32B2E41B5F854900B43751 /* maze.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DE1B5F854900B43751 /* maze.wav */; };
+		FF32B2E51B5F854900B43751 /* pool.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DF1B5F854900B43751 /* pool.mp3 */; };
 		FF3CE8F21AE5519F0035CC75 /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8EF1AE5519F0035CC75 /* connect.png */; };
 		FF3CE8F31AE5519F0035CC75 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F01AE5519F0035CC75 /* play.png */; };
 		FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F11AE5519F0035CC75 /* playc.png */; };
@@ -255,6 +261,12 @@
 		FF20864D1ACC797800F09DB7 /* mini-map-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mini-map-4.png"; sourceTree = "<group>"; };
 		FF2086551ACC799800F09DB7 /* back-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-button.png"; sourceTree = "<group>"; };
 		FF2DC1C51AC88103008C6C02 /* 300x300_button_battle_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300_button_battle_0.png; sourceTree = "<group>"; };
+		FF32B2DA1B5F854900B43751 /* activate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = activate.wav; path = Music/activate.wav; sourceTree = SOURCE_ROOT; };
+		FF32B2DB1B5F854900B43751 /* arena.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = arena.mp3; path = Music/arena.mp3; sourceTree = SOURCE_ROOT; };
+		FF32B2DC1B5F854900B43751 /* collide.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = collide.wav; path = Music/collide.wav; sourceTree = SOURCE_ROOT; };
+		FF32B2DD1B5F854900B43751 /* lobby.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lobby.wav; path = Music/lobby.wav; sourceTree = SOURCE_ROOT; };
+		FF32B2DE1B5F854900B43751 /* maze.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = maze.wav; path = Music/maze.wav; sourceTree = SOURCE_ROOT; };
+		FF32B2DF1B5F854900B43751 /* pool.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = pool.mp3; path = Music/pool.mp3; sourceTree = SOURCE_ROOT; };
 		FF3CE8EF1AE5519F0035CC75 /* connect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect.png; sourceTree = "<group>"; };
 		FF3CE8F01AE5519F0035CC75 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		FF3CE8F11AE5519F0035CC75 /* playc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playc.png; sourceTree = "<group>"; };
@@ -338,6 +350,12 @@
 		112F126D1AC5D761008E65BF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				FF32B2DA1B5F854900B43751 /* activate.wav */,
+				FF32B2DB1B5F854900B43751 /* arena.mp3 */,
+				FF32B2DC1B5F854900B43751 /* collide.wav */,
+				FF32B2DD1B5F854900B43751 /* lobby.wav */,
+				FF32B2DE1B5F854900B43751 /* maze.wav */,
+				FF32B2DF1B5F854900B43751 /* pool.mp3 */,
 				FFD7D8F11B4E05A600650B8B /* newMusic.mp3 */,
 				FF3CE8F51AE573D70035CC75 /* Flynn.mp3 */,
 				11DCA0391AE5860C00BF5766 /* catch_star.mp3 */,
@@ -691,6 +709,7 @@
 				11DCA03D1AE5860C00BF5766 /* catch_star.mp3 in Resources */,
 				FF3CE8F61AE573D70035CC75 /* Flynn.mp3 in Resources */,
 				FFCF00041AB677BA006FAE44 /* 400x200_go.png in Resources */,
+				FF32B2E11B5F854900B43751 /* arena.mp3 in Resources */,
 				FF3CE8F21AE5519F0035CC75 /* connect.png in Resources */,
 				FF50A8C51AEF142A006AC0F1 /* 1.png in Resources */,
 				FF2086561ACC799800F09DB7 /* back-button.png in Resources */,
@@ -711,6 +730,7 @@
 				FF4B6D611AE9409700BE12FE /* arena_hard.png in Resources */,
 				FF4B6D7B1AE9CECF00BE12FE /* HLevel6.sks in Resources */,
 				FF5055391AEECAC400C1D73C /* locate.png in Resources */,
+				FF32B2E31B5F854900B43751 /* lobby.wav in Resources */,
 				FF4B6D691AE9409700BE12FE /* playbtn.png in Resources */,
 				FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */,
 				11DCA0401AE5860C00BF5766 /* score_star.mp3 in Resources */,
@@ -725,6 +745,7 @@
 				113329B01AB0D5A2008B46A2 /* multiButton@2x.png in Resources */,
 				FF4B6D681AE9409700BE12FE /* mazebtn.png in Resources */,
 				112F12771AC5E947008E65BF /* new-map-1.sks in Resources */,
+				FF32B2E51B5F854900B43751 /* pool.mp3 in Resources */,
 				113063C21ABB2B67006340AE /* spark.png in Resources */,
 				112F12731AC5DDF6008E65BF /* What.mp3 in Resources */,
 				112F126F1AC5D8DB008E65BF /* BodyHit01.wav in Resources */,
@@ -755,6 +776,7 @@
 				FF4C71071A8D322800FB3622 /* 80x80_blue_ball.png in Resources */,
 				113329AB1AB0D0C9008B46A2 /* Tutorial.sks in Resources */,
 				FF0DCAA81AE6A16B003EC278 /* red_star.png in Resources */,
+				FF32B2E21B5F854900B43751 /* collide.wav in Resources */,
 				11BF7FC11AB1E190002C7371 /* 200x200_hole.png in Resources */,
 				FFCF00071AB677BA006FAE44 /* blue_star.png in Resources */,
 				FF4B6D661AE9409700BE12FE /* maze_easy.png in Resources */,
@@ -769,6 +791,7 @@
 				118584B11AB0998C002622F8 /* 700x200_you_lose.png in Resources */,
 				118584B21AB0998C002622F8 /* 700x200_you_win.png in Resources */,
 				118584AF1AB0998C002622F8 /* 300x300_button_battle.png in Resources */,
+				FF32B2E41B5F854900B43751 /* maze.wav in Resources */,
 				11D844A51ACC3C330078B62B /* 100x100_icon_rank.png in Resources */,
 				FF20864F1ACC797800F09DB7 /* maze.png in Resources */,
 				FFD7D8F21B4E05A600650B8B /* newMusic.mp3 in Resources */,
@@ -782,6 +805,7 @@
 				118584B01AB0998C002622F8 /* 300x300_button_connect.png in Resources */,
 				FF50553A1AEECAC400C1D73C /* Omniball.png in Resources */,
 				FF4B6D6A1AE9409700BE12FE /* playericon.png in Resources */,
+				FF32B2E01B5F854900B43751 /* activate.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
