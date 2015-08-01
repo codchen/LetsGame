@@ -8,10 +8,20 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class GameBattleScene: GameScene {
     
     var destRect: CGRect!
+    
+    override func didMoveToView(view: SKView) {
+        super.didMoveToView(view)
+        let url = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("arena", ofType: "mp3")!)
+        player = AVAudioPlayer(contentsOfURL: url, error: nil)
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
+    }
     
     override func setupDestination(origin: Bool){
         destPointer = childNodeWithName("destPointer") as! SKSpriteNode
