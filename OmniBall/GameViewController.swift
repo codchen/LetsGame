@@ -57,6 +57,7 @@ class GameViewController: DifficultyController {
     //var connectionManager: ConnectionManager!
     var alias: String!
     var playerNum: Int!
+    var player: AVAudioPlayer!
     
     @IBOutlet weak var instructionText: UILabel!
     @IBOutlet weak var playerIcon2: UIImageView!

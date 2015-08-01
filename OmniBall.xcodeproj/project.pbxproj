@@ -38,6 +38,7 @@
 		119C5AE31A9D1C0D002012AC /* WaitingForGameStartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */; };
 		119DB08F1A9F7E390044F397 /* OmniBallUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */; };
 		119F18711AB7B751002A7EAA /* GameBattleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119F18701AB7B751002A7EAA /* GameBattleScene.swift */; };
+		11A2E32D1B6C82D400147CC7 /* Omniball Success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 11A2E32C1B6C82D400147CC7 /* Omniball Success.wav */; };
 		11A57C641A9681C800C695E7 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C631A9681C800C695E7 /* Player.swift */; };
 		11A57C661A96820F00C695E7 /* MyNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C651A96820F00C695E7 /* MyNodes.swift */; };
 		11A57C681A96824500C695E7 /* OpponentNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A57C671A96824500C695E7 /* OpponentNodes.swift */; };
@@ -102,7 +103,6 @@
 		FF32B2E21B5F854900B43751 /* collide.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DC1B5F854900B43751 /* collide.wav */; };
 		FF32B2E31B5F854900B43751 /* lobby.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DD1B5F854900B43751 /* lobby.wav */; };
 		FF32B2E41B5F854900B43751 /* maze.wav in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DE1B5F854900B43751 /* maze.wav */; };
-		FF32B2E51B5F854900B43751 /* pool.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FF32B2DF1B5F854900B43751 /* pool.mp3 */; };
 		FF3CE8F21AE5519F0035CC75 /* connect.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8EF1AE5519F0035CC75 /* connect.png */; };
 		FF3CE8F31AE5519F0035CC75 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F01AE5519F0035CC75 /* play.png */; };
 		FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */ = {isa = PBXBuildFile; fileRef = FF3CE8F11AE5519F0035CC75 /* playc.png */; };
@@ -200,6 +200,7 @@
 		119C5AE21A9D1C0D002012AC /* WaitingForGameStartScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingForGameStartScene.swift; sourceTree = "<group>"; };
 		119DB08E1A9F7E390044F397 /* OmniBallUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniBallUtil.swift; sourceTree = "<group>"; };
 		119F18701AB7B751002A7EAA /* GameBattleScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameBattleScene.swift; sourceTree = "<group>"; };
+		11A2E32C1B6C82D400147CC7 /* Omniball Success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Omniball Success.wav"; sourceTree = "<group>"; };
 		11A57C631A9681C800C695E7 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11A57C651A96820F00C695E7 /* MyNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNodes.swift; sourceTree = "<group>"; };
 		11A57C671A96824500C695E7 /* OpponentNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpponentNodes.swift; sourceTree = "<group>"; };
@@ -354,6 +355,7 @@
 				FF32B2DD1B5F854900B43751 /* lobby.wav */,
 				FF32B2DE1B5F854900B43751 /* maze.wav */,
 				FF32B2DF1B5F854900B43751 /* pool.mp3 */,
+				11A2E32C1B6C82D400147CC7 /* Omniball Success.wav */,
 				FFD7D8F11B4E05A600650B8B /* newMusic.mp3 */,
 				FF3CE8F51AE573D70035CC75 /* Flynn.mp3 */,
 				11DCA0391AE5860C00BF5766 /* catch_star.mp3 */,
@@ -731,6 +733,7 @@
 				FF4B6D691AE9409700BE12FE /* playbtn.png in Resources */,
 				FF3CE8F41AE5519F0035CC75 /* playc.png in Resources */,
 				11DCA0401AE5860C00BF5766 /* score_star.mp3 in Resources */,
+				11A2E32D1B6C82D400147CC7 /* Omniball Success.wav in Resources */,
 				FFCFFFF91AAE16A3006FAE44 /* Level2.sks in Resources */,
 				FF4C710A1A8D322800FB3622 /* 80x80_red_ball.png in Resources */,
 				FF0DCAA61AE6A16B003EC278 /* red_ball.png in Resources */,
