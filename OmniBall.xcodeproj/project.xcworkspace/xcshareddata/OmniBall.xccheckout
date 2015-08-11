@@ -6,19 +6,15 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>58E2D8F7-BC06-47C0-B98C-3AA9136B9859</string>
-	<key>IDESourceControlProjectName</key>
-	<string>OmniBall</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>90B6448C9EE3490AAABC09BCDB26DB3C8998BAC8</key>
 		<string>https://github.com/codchen/LetsGame.git</string>
 	</dict>
-	<key>IDESourceControlProjectPath</key>
-	<string>OmniBall.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>90B6448C9EE3490AAABC09BCDB26DB3C8998BAC8</key>
-		<string>../..</string>
+		<string>LetsGame/</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/codchen/LetsGame.git</string>
