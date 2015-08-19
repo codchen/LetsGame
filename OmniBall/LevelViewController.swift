@@ -8,13 +8,15 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class LevelViewController: UIViewController {
-    
+    var player: AVAudioPlayer!
     var gameViewController: GameViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        player = gameViewController.player
 //        scrollController = self.storyboard?.instantiateViewControllerWithIdentifier("MinimapController") as MinimapController
 //        scrollController.view.frame = CGRectMake(0, 75, 650, 650)
 //        scrollController.gameViewController = gameViewController
@@ -27,6 +29,7 @@ class LevelViewController: UIViewController {
         mazeDifficultyController.gameViewController = self.gameViewController
         mazeDifficultyController.connectionManager = self.gameViewController.connectionManager
         mazeDifficultyController.connectionManager.diffController = mazeDifficultyController
+        mazeDifficultyController.player = player
         self.presentViewController(mazeDifficultyController, animated: true, completion: nil)
     }
     
@@ -35,6 +38,7 @@ class LevelViewController: UIViewController {
         arenaDifficultyController.gameViewController = self.gameViewController
         arenaDifficultyController.connectionManager = self.gameViewController.connectionManager
         arenaDifficultyController.connectionManager.diffController = arenaDifficultyController
+        arenaDifficultyController.player = player
         self.presentViewController(arenaDifficultyController, animated: true, completion: nil)
     }
 

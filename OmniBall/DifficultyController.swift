@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class DifficultyController: UIViewController {
     weak var gameViewController: GameViewController!
@@ -15,6 +16,7 @@ class DifficultyController: UIViewController {
     weak var currentGameScene: GameScene!
     var connectionManager: ConnectionManager!
     var currentLevel = 0
+    var player: AVAudioPlayer!
     
     func transitToGame(name: String) {
         if connectionManager.gameState == .InLevelViewController {
@@ -67,6 +69,7 @@ class DifficultyController: UIViewController {
     
     func transitToInstruction(){
         dispatch_async(dispatch_get_main_queue()) {
+            self.player.stop()
             let scene = InstructionScene(size: CGSize(width: 2048, height: 1536))
             scene.scaleMode = .AspectFit
             scene.connection = self.connectionManager
