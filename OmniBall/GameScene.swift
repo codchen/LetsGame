@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let catchStarSound = SKAction.playSoundFileNamed("activate.wav", waitForCompletion: false)
     let loseStarSound = SKAction.playSoundFileNamed("lose_star.mp3", waitForCompletion: false)
     let scoredSound = SKAction.playSoundFileNamed("score_star.mp3", waitForCompletion: false)
+    let successSound = SKAction.playSoundFileNamed("Omniball Success.wav", waitForCompletion: false)
     var player: AVAudioPlayer!
     var enableSound: Bool = true
     
@@ -257,6 +258,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func gameOver(#won: Bool) {
         player.stop()
+        if won {
+            runAction(successSound)
+        }
         let gameOverScene = GameOverScene(size: size, won: won)
         gameOverScene.scaleMode = scaleMode
         gameOverScene.controller = controller
@@ -271,7 +275,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let loc = touch.locationInNode(self)
             myNodes.touchesBegan(loc)
             if btnExit.containsPoint(loc) {
-                println("we got btnexit")
                 var alert = UIAlertController(title: "Exit Game", message: "Are you sure you want to exit game?", preferredStyle: UIAlertControllerStyle.Alert)
                 let yesAction = UIAlertAction(title: "Yes", style: .Default) { action in
                     self.player.stop()
